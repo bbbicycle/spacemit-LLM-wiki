@@ -210,5 +210,57 @@ updated: 2026-06-29
 
 
 
+---
+
+## [2026-08-10] maintenance | Git Submodule 架构重构 — 绑定 Spacemit 官方 GitHub 仓库
+
+*   **架构升级背景**：将项目从本地静态镜像模式重构为 Git Submodules 架构，`Sources/` 下的五大文档目录直接锚定 Spacemit 官方 GitHub 组织，彻底消除本地副本与官方内容的同步延迟问题。
+*   **子模块绑定配置**：
+    *   新建 `.gitmodules` 将以下 5 个目录设置为官方 upstream 子模块：
+        *   `Sources/docs-chip` → `https://github.com/spacemit-com/docs-chip.git`
+        *   `Sources/docs-buildroot` → `https://github.com/spacemit-com/docs-buildroot.git`
+        *   `Sources/docs-product` → `https://github.com/spacemit-com/docs-product.git`
+        *   `Sources/docs-ai` → `https://github.com/spacemit-com/docs-ai.git`
+        *   `Sources/docs-ros` → `https://github.com/spacemit-com/docs-ros.git`
+*   **开发者工具升级**：
+    *   升级 `双击更新文档.command`（macOS 双击一键同步）。
+    *   新建 `update_sources.sh`（Linux / WSL / Terminal 命令行版本）。
+    *   新建 `.github/workflows/sync_sources.yml`（GitHub Actions 每日定时自动同步 Spacemit 官方 upstream）。
+*   **开源发布**：项目初始化 Git 仓库并推送至 `https://github.com/bbbicycle/spacemit-LLM-wiki`，面向社区开发者开放。
+*   **完整性自检**：运行 `vault_linker_lint.py` 通过，60 篇文档 / 5 张静态配图 / 0 死链。
+
+---
+
+## [2026-08-10] ingest | 同步 Spacemit 官方三批 upstream 更新
+
+*   **触发原因**：执行 `git submodule update --remote --merge` 后，检测到三个官方仓库存在实质性内容更新，需逐条审查并同步至对应知识原子。
+
+### `docs-chip` (+28 commits) — 主要变更
+
+| 变更类型 | 官方文件 | 影响知识原子 | 同步状态 |
+|---|---|---|---|
+| 修改 | K3 eDP 信号命名修正 + 原理图链接升级至 v2.1 | [[Knowledge_Atoms/K3_COM260_板级硬件设计专题]] / [[Knowledge_Atoms/K3_Pico_板级硬件设计专题]] | ⏳ 待同步 |
+| **删除** ⚠️ | `k3_thermal_design.md`（K3 热设计文档被官方撤回） | [[Knowledge_Atoms/K3热设计与散热专题档案]] | ⏳ 需标注官方已撤文 |
+| 修改 | K3 JTAG TDI/TDO 调试说明更新，新增 `com260_debug_00.png` 配图 | [[Knowledge_Atoms/K3启动模式与Strap管脚配置专题档案]] | ⏳ 待同步 |
+| 修改 | K3 Datasheet v1.6 — 视频参数、Boot Mode、地址映射 | [[Knowledge_Atoms/K1_K3显示系统与多媒体输出专题档案]] | ⏳ 待同步 |
+| 修改 | P1 Datasheet 5.3 版本修订 | [[Knowledge_Atoms/SpacemiT生态板卡与PMIC电源配合专题档案]] | ⏳ 待同步 |
+| 修改 | K1 高速接口章节 (Ch.15) 文档更新 | [[Knowledge_Atoms/K1_K3高速外设接口专题档案]] | ⏳ 待同步 |
+
+### `docs-buildroot` (+8 commits) — 主要变更
+
+| 变更类型 | 官方文件 | 影响知识原子 | 同步状态 |
+|---|---|---|---|
+| **新增** 🆕 | `k3_buildroot/device/secureboot.md`（K3 Secure Boot 安全启动指南） | 无对应知识原子 | ⏳ 需新建 |
+| 修改 | K3 PCIe 16-bit MSI 问题诊断指南 | [[Knowledge_Atoms/K1_K3高速外设接口专题档案]] | ⏳ 待同步 |
+
+### `docs-product` (+47 commits) — 主要变更
+
+| 变更类型 | 官方文件 | 影响知识原子 | 同步状态 |
+|---|---|---|---|
+| **新增** 🆕 | `k3_rv2768/` — RV2768 White Paper、Redfish、Quick Guide 全套文档 | 无对应知识原子（K3 RV2768 服务器管理平台全新方向） | ⏳ 需新建 |
+| 修改 | K3 RV2768 系统架构拓扑图更新（多张 `.png` 更新） | 无对应知识原子 | ⏳ 待新建后同步 |
+| 修改 | K1 Muse Box PDF 链接修正 | [[Knowledge_Atoms/Muse_Pi_板级硬件设计专题]] | ⏳ 待同步 |
+
+*   **整体同步进度**：已完成官方 upstream 拉取与审查记录，具体知识原子内容更新待执行。
 
 
