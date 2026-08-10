@@ -13,3 +13,7 @@ __pycache__/
 
 # Environment Files
 .env
+
+# Agent Workspace Logs
+.agents/
+

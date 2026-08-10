@@ -5,6 +5,7 @@ status: needs_review
 created: 2026-06-30
 updated: 2026-06-30
 aliases: ["Muse Pi 开发板快速上手向导", "Muse Pi Quick Start Guide", "muse_pi_quick_start"]
+domain: hardware_schematic_design
 ---
 # MUSE Pi 开发板快速上手向导
 

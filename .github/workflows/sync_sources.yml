@@ -1,0 +1,50 @@
+name: Sync Sources & Validate Vault Topology
+
+on:
+  schedule:
+    # 每日凌晨 UTC 00:00 (北京时间 08:00) 自动触发同步
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync-and-validate:
+    name: Sync Submodules & Run Linker Lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Make sync script executable
+        run: chmod +x update_sources.sh
+
+      - name: Execute submodule sync
+        run: ./update_sources.sh
+
+      - name: Run Vault Linker Lint
+        run: python3 vault_linker_lint.py
+
+      - name: Commit and push changes if updated
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "检测到子模块更新或文档变更，正在自动提交并推送..."
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add .
+            git commit -m "chore(auto-sync): 自动同步 Spacemit 官方文档子模块及校验拓扑 [skip ci]"
+            git push origin HEAD
+          else
+            echo "未检测到任何文档变动，跳过 Commit & Push。"
+          fi

@@ -2,18 +2,29 @@
 # -*- coding: utf-8 -*-
 
 """
-Spacemit LLM Wiki - 图拓扑自检工具 (Vault Topology Linter)
+Spacemit LLM Wiki - 图拓扑与静态配图自检工具 (Vault Topology & Static Asset Linter)
 功能：
 1. YAML Frontmatter 格式与字段合规性校验
 2. 破损链接检测 (Wikilinks 存在性检查，支持 aliases 别名和 title 映射)
-3. 知识图谱三层架构拓扑规则校验 (线-面-点 引用合规性)
-4. 孤立节点检测 (Orphan Nodes)
-5. index.md 索引挂载覆盖率校验
+3. 静态资源与配图完整性保护 (static/ 文件无损校验 & Markdown 相对路径图片死链检测)
+4. 知识图谱三层架构拓扑规则校验 (线-面-点 引用合规性)
+5. 孤立节点检测 (Orphan Nodes)
+6. index.md 索引挂载覆盖率校验
 """
 
 import os
 import re
 import sys
+
+# 6 大前瞻技术领域 (Domain) 定义与合法枚举
+VALID_DOMAINS = [
+    "chip_product_specs",        # 芯片选型与产品物理规格
+    "hardware_schematic_design",  # 硬件电路设计与 PCB 避坑
+    "bsp_kernel_drivers",         # BSP Bootloader 与内核驱动
+    "bianbu_os_distribution",     # Bianbu OS 系统与软件生态
+    "toolchain_debug_tools",      # 工具链 Debug 调试与编译支持
+    "edge_ai_robotics"            # 端侧 AI 推理与机器人应用
+]
 
 # ANSI 颜色高亮
 COLOR_RESET = "\033[0m"
@@ -112,6 +123,9 @@ class VaultLinter:
         self.alias_map = {}   # alias_name -> list of file_rel_paths
         self.title_map = {}   # title_name -> file_rel_path
         self.basename_map = {} # basename -> file_rel_path
+        self.static_assets = {} # file_rel_path -> {size, width, height}
+        self.image_links_count = 0
+        self.domain_counts = {d: 0 for d in VALID_DOMAINS}
         
         self.errors = []
         self.warnings = []
@@ -146,8 +160,8 @@ class VaultLinter:
                         self.log_error(file_rel_path, f"Frontmatter 解析失败: {content}")
                         continue
                     
-                    # 校验 YAML 关键字段
-                    required_fields = ["type", "title", "status"]
+                    # 校验 YAML 关键字段 (新增 domain 必填校验)
+                    required_fields = ["type", "title", "status", "domain"]
                     for field in required_fields:
                         if field not in fm or not fm[field]:
                             self.log_error(file_rel_path, f"缺失必填 Frontmatter 字段: {field}")
@@ -164,6 +178,14 @@ class VaultLinter:
                     if status and status not in valid_statuses:
                         self.log_error(file_rel_path, f"不合法的 status 值: '{status}'，必须为 {valid_statuses} 之一")
 
+                    # 校验 6 大技术领域 (Domain) 是否合法
+                    domain = fm.get("domain")
+                    if domain:
+                        if domain not in VALID_DOMAINS:
+                            self.log_error(file_rel_path, f"不合法的 domain 值: '{domain}'，必须为 {VALID_DOMAINS} 之一")
+                        else:
+                            self.domain_counts[domain] += 1
+
                     title = fm.get("title", basename)
                     aliases = fm.get("aliases", [])
                     
@@ -171,6 +193,7 @@ class VaultLinter:
                         "path": file_rel_path,
                         "type": actual_type or doc_type,
                         "title": title,
+                        "domain": domain,
                         "aliases": aliases,
                         "status": status,
                         "content": content,
@@ -217,6 +240,126 @@ class VaultLinter:
                     if alias not in self.alias_map:
                         self.alias_map[alias] = []
                     self.alias_map[alias].append(special_file)
+
+    def scan_static_assets(self):
+        """
+        校验 static/ 目录下的所有静态资源与高清硬件原理图/引脚图，
+        确保文件真实存在、非 0 字节且 PNG 图像二进制 Structure 完好。
+        """
+        static_dir = os.path.join(self.root_dir, "static")
+        if not os.path.exists(static_dir):
+            self.log_warning("static", "静态资源目录 'static' 不存在")
+            return
+
+        for root, _, files in os.walk(static_dir):
+            for file in sorted(files):
+                if file.startswith("."):
+                    continue
+                file_abs_path = os.path.join(root, file)
+                file_rel_path = os.path.relpath(file_abs_path, self.root_dir)
+
+                try:
+                    size = os.path.getsize(file_abs_path)
+                    if size == 0:
+                        self.log_error(file_rel_path, "静态资源文件大小为 0 字节（空文件）")
+                        continue
+
+                    if file.lower().endswith(".png"):
+                        with open(file_abs_path, "rb") as f:
+                            header = f.read(24)
+                            if len(header) < 24:
+                                self.log_error(file_rel_path, "PNG 文件头长度不足 24 字节（文件损坏）")
+                                continue
+                            if header[:8] != b"\x89PNG\r\n\x1a\n":
+                                self.log_error(file_rel_path, "无效的 PNG 魔数 Header（非合法 PNG 图像）")
+                                continue
+                            if header[12:16] != b"IHDR":
+                                self.log_error(file_rel_path, "缺失 PNG IHDR 数据块")
+                                continue
+                            width = int.from_bytes(header[16:20], byteorder="big")
+                            height = int.from_bytes(header[20:24], byteorder="big")
+                            if width <= 0 or height <= 0:
+                                self.log_error(file_rel_path, f"异常的图像分辨率: {width}x{height}")
+                                continue
+                            self.static_assets[file_rel_path] = {
+                                "size": size,
+                                "width": width,
+                                "height": height
+                            }
+                    else:
+                        self.static_assets[file_rel_path] = {
+                            "size": size,
+                            "width": None,
+                            "height": None
+                        }
+                except Exception as e:
+                    self.log_error(file_rel_path, f"无法读取静态文件: {e}")
+
+    def extract_and_validate_image_links(self):
+        """
+        扫描 Markdown 中的所有相对路径图片引用 (Standard Markdown `![alt](src)`,
+        HTML `<img src="...">`, Obsidian `![[image.png]]`), 校验物理文件真实存在且非空。
+        """
+        md_img_pattern = re.compile(r'!\[(.*?)\]\((.*?)\)')
+        html_img_pattern = re.compile(r'<img\s+[^>]*src=["\'](.*?)["\']', re.IGNORECASE)
+        wiki_img_pattern = re.compile(r'!\[\[(.*?\.(?:png|jpg|jpeg|gif|svg|webp))\]\]', re.IGNORECASE)
+
+        for file_rel_path, node in self.nodes.items():
+            content = node["content"]
+            lines = content.split("\n")
+            doc_dir = os.path.dirname(os.path.join(self.root_dir, file_rel_path))
+
+            in_code_block = False
+            for line_idx, line in enumerate(lines):
+                line_num = line_idx + 1
+                line_strip = line.strip()
+
+                if line_strip.startswith("```") or line_strip.startswith("~~~"):
+                    in_code_block = not in_code_block
+                    continue
+
+                if in_code_block:
+                    continue
+
+                clean_line = re.sub(r'`[^`]+`', '', line)
+
+                raw_targets = []
+                for match in md_img_pattern.findall(clean_line):
+                    alt, src = match
+                    raw_targets.append((src.strip(), f"![{alt}]({src})"))
+                for src in html_img_pattern.findall(clean_line):
+                    raw_targets.append((src.strip(), f'<img src="{src}">'))
+                for match in wiki_img_pattern.findall(clean_line):
+                    target = match.split("|")[0].strip()
+                    raw_targets.append((target, f"![[{match}]]"))
+
+                for img_src, raw_syntax in raw_targets:
+                    if not img_src or img_src.startswith(("http://", "https://", "data:", "file://")):
+                        continue
+
+                    self.image_links_count += 1
+                    clean_src = img_src.split("?")[0].split("#")[0].strip()
+
+                    abs_path_rel_doc = os.path.normpath(os.path.join(doc_dir, clean_src))
+                    abs_path_rel_root = os.path.normpath(os.path.join(self.root_dir, clean_src))
+                    abs_path_static = os.path.normpath(os.path.join(self.root_dir, "static", os.path.basename(clean_src)))
+
+                    target_file = None
+                    if os.path.isfile(abs_path_rel_doc):
+                        target_file = abs_path_rel_doc
+                    elif os.path.isfile(abs_path_rel_root):
+                        target_file = abs_path_rel_root
+                    elif os.path.isfile(abs_path_static):
+                        target_file = abs_path_static
+
+                    if not target_file:
+                        self.log_error(file_rel_path, f"破损图片死链: {raw_syntax} 指向的物理资源文件不存在", line_num)
+                    else:
+                        try:
+                            if os.path.getsize(target_file) == 0:
+                                self.log_error(file_rel_path, f"损坏图片资源: {raw_syntax} 指向的物理文件大小为 0 字节", line_num)
+                        except Exception as e:
+                            self.log_error(file_rel_path, f"损坏图片资源无法读取: {e}", line_num)
 
     def extract_links(self):
         # 匹配 Obsidian [[wikilink]] 双链
@@ -384,16 +527,20 @@ class VaultLinter:
 def main():
     # 自动定位到 Spacemit LLM Wiki 目录
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    print(f"{COLOR_CYAN}=== Spacemit LLM Wiki 图拓扑自检启动 ==={COLOR_RESET}")
+    print(f"{COLOR_CYAN}=== Spacemit LLM Wiki 图拓扑与静态配图自检启动 ==={COLOR_RESET}")
     print(f"工作目录: {COLOR_WHITE}{script_dir}{COLOR_RESET}\n")
 
     linter = VaultLinter(script_dir)
     
-    # 扫描与提取
+    # 1. 扫描静态资源与图片完整性
+    linter.scan_static_assets()
+
+    # 2. 扫描 Markdown 文档与提取双链、图片引用
     linter.scan_vault()
     linter.extract_links()
+    linter.extract_and_validate_image_links()
     
-    # 核心校验
+    # 3. 核心校验拓扑与死链
     linter.validate_links_and_topology()
     
     # 打印警告 (Warnings)
@@ -413,8 +560,21 @@ def main():
         print(f"{COLOR_RED}❌ 自检失败！请修正上述严重错误后重新校验。{COLOR_RESET}")
         sys.exit(1)
     else:
-        print(f"{COLOR_GREEN}==== 恭喜！Spacemit LLM Wiki 拓扑自检 100% 通过！ ===={COLOR_RESET}")
-        print(f"成功扫描 {len(linter.nodes)} 个物理文档，链接关系完全健康。")
+        print(f"{COLOR_GREEN}==== 恭喜！Spacemit LLM Wiki 拓扑与静态资源自检 100% 通过！ ===={COLOR_RESET}")
+        print(f"成功扫描 {len(linter.nodes)} 个物理文档，{len(linter.static_assets)} 个静态资源文件 ({linter.image_links_count} 处配图引用)，拓扑与死链关系完全健康。")
+        print(f"\n{COLOR_CYAN}📊 6 大前瞻技术领域 (Domain) 覆盖分布统计:{COLOR_RESET}")
+        domain_labels = {
+            "chip_product_specs": "芯片选型与产品物理规格 (chip_product_specs)",
+            "hardware_schematic_design": "硬件电路设计与 PCB 避坑 (hardware_schematic_design)",
+            "bsp_kernel_drivers": "BSP、Bootloader 与内核驱动 (bsp_kernel_drivers)",
+            "bianbu_os_distribution": "Bianbu OS 系统与软件生态 (bianbu_os_distribution)",
+            "toolchain_debug_tools": "工具链、调试与编译支持 (toolchain_debug_tools)",
+            "edge_ai_robotics": "端侧 AI 推理与机器人应用 (edge_ai_robotics)"
+        }
+        for d, count in linter.domain_counts.items():
+            label = domain_labels.get(d, d)
+            print(f"  • {COLOR_WHITE}{label}{COLOR_RESET}: {COLOR_GREEN}{count}{COLOR_RESET} 篇")
+        print()
         sys.exit(0)
 
 

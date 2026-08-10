@@ -5,6 +5,7 @@ status: needs_review
 created: 2026-06-30
 updated: 2026-06-30
 aliases: ["K3 Pico 开发板快速上手向导", "K3 Pico Quick Start Guide", "k3_pico_quick_start"]
+domain: hardware_schematic_design
 ---
 # K3 Pico-ITX 开发板快速上手向导
 

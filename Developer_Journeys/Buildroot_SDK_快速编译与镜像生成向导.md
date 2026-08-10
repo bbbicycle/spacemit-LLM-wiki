@@ -5,6 +5,7 @@ status: needs_review
 created: 2026-08-10
 updated: 2026-08-10
 aliases: [Buildroot_SDK_快速编译与镜像生成向导, Buildroot Quick Start Guide]
+domain: bsp_kernel_drivers
 ---
 
 # Buildroot SDK 快速编译与镜像生成向导

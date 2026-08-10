@@ -5,6 +5,7 @@ status: needs_review
 created: 2026-08-10
 updated: 2026-08-10
 aliases: [ROS2_机器人与具身智能快速上手向导, ROS2 Robotics Quick Start Guide]
+domain: edge_ai_robotics
 ---
 
 # ROS 2 机器人与具身智能快速上手向导
