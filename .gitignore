@@ -1,0 +1,15 @@
+# Operating System Files
+.DS_Store
+Thumbs.db
+
+# Obsidian Temporary Workspace Files
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+.obsidian/cache/
+
+# Python Cache
+__pycache__/
+*.pyc
+
+# Environment Files
+.env
