@@ -1,0 +1,15 @@
+[submodule "Sources/docs-chip"]
+	path = Sources/docs-chip
+	url = https://github.com/spacemit-com/docs-chip.git
+[submodule "Sources/docs-buildroot"]
+	path = Sources/docs-buildroot
+	url = https://github.com/spacemit-com/docs-buildroot.git
+[submodule "Sources/docs-product"]
+	path = Sources/docs-product
+	url = https://github.com/spacemit-com/docs-product.git
+[submodule "Sources/docs-ai"]
+	path = Sources/docs-ai
+	url = https://github.com/spacemit-com/docs-ai.git
+[submodule "Sources/docs-ros"]
+	path = Sources/docs-ros
+	url = https://github.com/spacemit-com/docs-ros.git
