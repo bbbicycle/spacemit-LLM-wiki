@@ -146,6 +146,25 @@ sequenceDiagram
     4.  **产品-芯片对齐检查**：扫描所有生态产品文档，确保它们在相关的芯片级专题档案中已被双链引用。如果发现遗漏（如某款产品未在对应的芯片外设或功耗专题中提及），应自动提示并在 `needs_review` 状态下在芯片专题中添加引用。
     5.  **收敛建议**：如果发现多个文档中反复提到了同一个未被定义为双链的关键词，建议将其提炼为新的 `Evidence` 或 `Knowledge_Atom`。
 
+### 工作流四：Upstream Sync & Refactoring (官方 GitHub 上游自动同步与重构)
+*   **触发场景**：用户对 Agent 发出“检查更新”、“同步 Spacemit GitHub”、“拉取最新文档”等指令，或子模块检测到 remote upstream 存在新提交。
+*   **Agent 核心闭环 SOP**：
+    1.  **上游检测与拉取**：Agent 首先检查 `Sources/` 5 大 Git Submodules 的 remote upstream 提交状态（或调用 `update_sources.sh`）。
+    2.  **影响范围精准分析**：运行项目工具 `python3 check_upstream_impact.py`，自动获取：
+        - 变更文件清单（`docs-chip`, `docs-buildroot`, `docs-product` 等中的 A/M/D 记录）。
+        - **已受影响的现有知识原子**（Knowledge_Atoms）映射关系。
+        - **未被覆盖的新增/重大文件**（潜在盲区文档）。
+    3.  **知识提炼与档案重构**：
+        - **更新现有知识原子**：对受影响的知识档案进行语义级比对，将上游的勘误、新配图、版本参数更新写入对应的 `Knowledge_Atoms/`，并标注 `updated: YYYY-MM-DD`。
+        - **新建知识原子**：对于全新的技术领域或产品（如新的 PMIC 芯片、服务器架构或安全机制），在 `Knowledge_Atoms/` 下创建新的主题档案。
+        - **官方撤文处理**：若上游删除了某篇文档（如撤回热设计指南），不得直接删除对应的知识原子，而应在原知识档案开头添加 `> [!CAUTION]` 撤文警告，并指向替代参考源。
+    4.  **索引与日志同步挂载**：
+        - 在 `index.md` 的对应技术领域板块挂载新建/更新的知识原子节点。
+        - 在 `log.md` 中记录本次同步批次（commit hash、影响的文件清单、同步状态）。
+    5.  **自动化 Lint 校验与提交**：
+        - 运行 `python3 vault_linker_lint.py`，确保死链为 0、孤立节点为 0。
+        - 完成全自动 `git commit & push` 到 GitHub 主仓库。
+
 ---
 
 ## 6. 知识库协作红线
