@@ -55,7 +55,8 @@ aliases: [index, index.md, 索引, 全局索引]
 ### 主题档案 (Knowledge Atoms)
 *   [[Knowledge_Atoms/K1启动模式与Strap管脚配置专题档案]] —— 汇总 K1 芯片上电采样、Strap 硬件配置阻值与调试 JTAG 路由。
 *   [[Knowledge_Atoms/K3启动模式与Strap管脚配置专题档案]] —— 汇总 K3 芯片 Strap 管脚配置、启动介质选择与硬件上下拉设计要求。
-*   [[Knowledge_Atoms/SpacemiT生态板卡与PMIC电源配合专题档案]] —— 汇总 K1/P1 与 K3/P1S 电源轨配合、动态反馈调压以及 SW/FB PCB 布局走线。
+*   [[Knowledge_Atoms/SpacemiT生态板卡与PMIC电源配合专题档案]] —— 汇总 K1/P1 与 K3/P1S/P3 电源轨配合、动态反馈调压以及 SW/FB PCB 布局走线。
+*   [[Knowledge_Atoms/SpacemiT_P3_PMIC电源芯片专题档案]] —— 🆕 汇总 P3 四相 32A 大电流 Buck PMIC、5 种相位组合与 WLCSP 超小封装。
 *   [[Knowledge_Atoms/K1_K3显示系统与多媒体输出专题档案]] —— 汇总 HDMI/DSI 接口设计、电平转换、防静电与多媒体硬件规范。
 *   [[Knowledge_Atoms/K1_K3摄像系统与图像处理专题档案]] —— 汇总 MIPI CSI 100Ω 差分走线等长、三摄/四摄并发与 DTS 通道绑定。
 *   [[Knowledge_Atoms/K1_K3网络通信与千兆网口专题档案]] —— 汇总双路 GMAC 以太网、百兆 PHY 兼容限值及 Wi-Fi/BT 模组联调。
@@ -184,6 +185,7 @@ aliases: [index, index.md, 索引, 全局索引]
 *   [P1 硬件设计指南（原始文件）](Sources/docs-chip/zh/power_stone/p1/p1_hw/p1_pcb_guide.md)
 *   [P1S 产品简介（原始文件）](Sources/docs-chip/zh/power_stone/p1s/p1s_docs/root_overview.md)
 *   [P1S 数据手册（原始文件）](Sources/docs-chip/zh/power_stone/p1s/p1s_docs/p1s_ds.md)
+*   [P3 产品简介（原始文件）](Sources/docs-chip/zh/power_stone/p3/p3_docs/root_overview.md)
 
 ### 生态产品与终端系列 (docs-product)
 *   **MUSE Pi 开发板**：[产品简介](Sources/docs-product/zh/k1_muse_pi/root_overview.md) · [用户使用指南](Sources/docs-product/zh/k1_muse_pi/pi_user_guide.md) · [硬件设计资源](Sources/docs-product/zh/k1_muse_pi/pi_hw.md)

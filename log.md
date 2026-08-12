@@ -263,4 +263,19 @@ updated: 2026-06-29
 
 *   **整体同步进度**：全部 11 项变更已完成知识原子同步更新。新建知识原子 2 篇，更新现有知识原子 8 篇。
 
+---
+
+## [2026-08-12] ingest | 同步 Spacemit 官方最新提交 (Power Stone P3 PMIC & SDHC)
+
+*   **触发场景**：根据 `Agent.md` [工作流四] SOP，Agent 自动响应用户“检查并同步 Spacemit 官方 GitHub 最新更新”指令，拉取 remote upstream。
+*   **拉取成果**：
+    *   `docs-chip` (`bdec867`): 🆕 新增 **Power Stone P3 高性能四相降压 PMIC 芯片** 官方全套文档与原理图架构。
+    *   `docs-buildroot` (`30c42c5`): 更新 `08-SDHC.md` (SDHC 调试场景 pinctrl 配置、JTAG 复用调试) 与蓝牙 USB 接口支持。
+*   **知识库自动同步与重构**：
+    *   新建知识原子：[[Knowledge_Atoms/SpacemiT_P3_PMIC电源芯片专题档案]]（覆盖 32A 大电流、5 种相位组合与 WLCSP 80-ball 封装）。
+    *   更新知识原子：[[Knowledge_Atoms/SpacemiT生态板卡与PMIC电源配合专题档案]]（增加对 P3 PMIC 32A 大电流供电拓扑的引述）。
+    *   索引挂载：[[index]] 模块 2 正式注册 P3 知识节点与 P3 原始文件链接。
+*   **自检状态**：运行 `vault_linker_lint.py` 100% 通过，63 篇物理文档，0 破损链接，0 孤立节点。
+
+
 
