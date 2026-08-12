@@ -3,7 +3,7 @@ type: knowledge_atom
 title: "K3 启动模式与 Strap 管脚配置专题档案"
 status: needs_review
 created: 2026-06-29
-updated: 2026-06-29
+updated: 2026-08-10
 aliases: ["K3启动模式与Strap配置专题", "K3 Boot Mode and Strap Config Topic", "k3_boot_strap_config"]
 domain: hardware_schematic_design
 target_audience: [硬件电路工程师, 嵌入式驱动]
@@ -56,6 +56,15 @@ K3 芯片的 GPIO 电平支持 1.8V 与 3.3V 自适应切换：
 
 ### 2.5 LPDDR 64-bit 物理连线红线
 *   **设计红线**：K3 芯片支持 LPDDR5 和 LPDDR4x。当设计中采用 64-bit 位宽的 DDR 拓扑时，**绝对不能仅使用其中的 32-bit 而将另外 32-bit 悬空**。必须保证 64-bit 物理连线完整，否则内存控制器将无法正确初始化。
+
+### 2.6 JTAG 调试连接与 CoM260 交叉接线注意事项
+
+> [!WARNING]
+> **2026-08 官方更新**：Spacemit 官方在 `docs-chip` 仓库的 `k3_hw_faq.md` 中新增了 K3 Pico-ITX 和 K3 CoM260 的 JTAG 调试接线详细说明。
+
+*   **K3 Pico-ITX 调试**：串口线 TX 接 K3 Pico-ITX 的 RX，RX 接 TX。串口调试要求使用 **3.3V** 电平串口线。PRI JTAG 直接连接即可。
+*   **K3 CoM260 JTAG 调试红线**：CoM260 开发套件支持通过 TF 卡接口转 JTAG 进行调试。**特别注意：JTAG 调试器与转接子板的 TMS 和 TDI 需要交叉连接（TDO 直连）**。误接将导致 JTAG 完全无法通信。
+*   详细接线图片参考官方文档：[K3 硬件 FAQ - JTAG 调试图解](../Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_faq.md)（含 `com260_debug_00.png` 配图）
 
 ---
 

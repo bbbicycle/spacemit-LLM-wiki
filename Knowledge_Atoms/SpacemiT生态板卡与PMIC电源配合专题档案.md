@@ -3,7 +3,7 @@ type: knowledge_atom
 title: "SpacemiT 生态板卡与 PMIC 电源配合专题档案"
 status: needs_review
 created: 2026-06-29
-updated: 2026-06-29
+updated: 2026-08-10
 aliases: ["SpacemiT生态板卡与PMIC电源配合专题", "SpacemiT Board and PMIC Power Matching Topic", "spacemit_pmic_matching"]
 domain: hardware_schematic_design
 target_audience: [电源电路工程师, PCB Layout]
@@ -64,6 +64,9 @@ target_audience: [电源电路工程师, PCB Layout]
 ---
 
 ## 3. 关联事实证据与参考源
+
+> [!NOTE]
+> **2026-08 官方更新**：P1 Datasheet 已更新至 **V2.1**（2026.05.21），主要变更为“更新寄存器描述”。其中 5.3 节 `Digital I/O Electrical Characteristics` 详细列出了 I/O 输入/输出电气特性参数（包括 V(IH)/V(IL)/V(OH)/V(OL) 及弱上拉/下拉电阻值）。
 
 *   PMIC 芯片规格：[[Evidence/p1_pmic_specs|P1 PMIC 核心规格]]，[[Evidence/p1s_pmic_specs|P1S PMIC 核心规格]]
 *   物理参数对比表：[[Evidence/muse_pi_vs_pi_pro_specs|Muse Pi 与 Muse Pi Pro 对比表]]

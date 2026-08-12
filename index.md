@@ -28,7 +28,8 @@ aliases: [index, index.md, 索引, 全局索引]
 
 ### 主题档案 (Knowledge Atoms)
 *   [[Knowledge_Atoms/K1热设计与功耗专题档案]] —— 汇总 K1 芯片 3W ~ 5W 超低 TDP 功耗、DVFS 调压与极简被动散热。
-*   [[Knowledge_Atoms/K3热设计与散热专题档案]] —— 汇总 K3 芯片热学特性、结温限制与硬件散热设计指南。
+*   [[Knowledge_Atoms/K3热设计与散热专题档案]] —— 汇总 K3 芯片热学特性、结温限制与硬件散热设计指南。⚠️ 官方已撤回 `k3_thermal_design.md`。
+*   [[Knowledge_Atoms/K3_RV2768_集群服务器专题档案]] —— �ᥰ 汇总基于 K3 处理器的 2U 768核 RISC-V 集群服务器架构、Redfish API 与计算节点管理。
 
 ### 事实证据与硬数据 (Evidence)
 *   [[Evidence/k1_thermal_specs]] —— K1 芯片工作温度与 3W ~ 5W TDP 参数。
@@ -86,6 +87,7 @@ aliases: [index, index.md, 索引, 全局索引]
 *   [[Knowledge_Atoms/K1系统启动与分区配置专题档案]] —— 汇总 K1 芯片 ramfs 调试启动、自启脚本、U-Boot与OpenSBI合并及隐藏分区配置。
 *   [[Knowledge_Atoms/K1驱动调试与设备控制专题档案]] —— 汇总 K1 芯片 PD 充电、DTS 启用 I2C、PWM 控制及 GPADC 采集调试方法。
 *   [[Knowledge_Atoms/K1_DDR_eMMC_AVL兼容性验证SOP专题档案]] —— 汇总 LPDDR4x 与 eMMC 兼容性测试、温箱压测及判定标准。
+*   [[Knowledge_Atoms/K3安全启动SecureBoot开发专题档案]] —— �ᥰ 汇总 K3 芯片安全启动信任链架构、eFuse 不可逆烧录约束、FIT 签名容器与密钥管理规范。
 
 ### 事实证据 (Evidence)
 *   [[Evidence/buildroot_bsp_specs]] —— K1 与 K3 Buildroot SDK 核心组件、Repo 版本分支映射表与宿主机/Docker 依赖规格。
@@ -155,6 +157,7 @@ aliases: [index, index.md, 索引, 全局索引]
 *   [K1 Buildroot 源码下载与编译指南（原始文件）](Sources/docs-buildroot/zh/k1_buildroot/source.md)
 *   [K3 Buildroot 简介（原始文件）](Sources/docs-buildroot/zh/k3_buildroot/intro.md)
 *   [K3 Buildroot 源码下载与编译指南（原始文件）](Sources/docs-buildroot/zh/k3_buildroot/source.md)
+*   [K3 安全启动开发指南（原始文件）](Sources/docs-buildroot/zh/k3_buildroot/device/secureboot.md)
 
 ### K1 芯片系列 (docs-chip)
 *   [K1 产品简介（原始文件）](Sources/docs-chip/zh/key_stone/k1/k1_docs/root_overview.md)
@@ -171,8 +174,10 @@ aliases: [index, index.md, 索引, 全局索引]
 *   [K3 产品简介（原始文件）](Sources/docs-chip/zh/key_stone/k3/k3_docs/root_overview.md)
 *   [K3 数据手册（原始文件）](Sources/docs-chip/zh/key_stone/k3/k3_docs/k3_ds.md)
 *   [K3 硬件设计指南（原始文件）](Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md)
-*   [K3 热设计指南（原始文件）](Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_thermal_design.md)
+*   ~~[K3 热设计指南（原始文件）](Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_thermal_design.md)~~ **⚠️ 官方已于 2026-08 撤回**
 *   [K3 SDK 使用指南（原始文件）](Sources/docs-chip/zh/key_stone/k3/k3_sw/k3_sdk_user_guide.md)
+*   [K3 硬件资源下载 (v2.1)](Sources/docs-chip/en/key_stone/k3/k3_hw/k3_hw_resources.md)
+*   [K3 硬件 FAQ（原始文件）](Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_faq.md)
 
 ### 伴随电源系列 (Power Stone PMIC)
 *   [P1 产品简介（原始文件）](Sources/docs-chip/zh/power_stone/p1/p1_docs/root_overview.md)
@@ -191,6 +196,7 @@ aliases: [index, index.md, 索引, 全局索引]
 *   **MUSE Box 迷你主机**：[产品简介](Sources/docs-product/zh/k1_muse_box/root_overview.md) · [用户使用指南](Sources/docs-product/zh/k1_muse_box/box_user_guide.md)
 *   **MUSE Shelf 实验架**：[产品简介](Sources/docs-product/zh/k1_muse_shelf/root_overview.md)
 *   **RISC-V Labkit 实验箱**：[产品简介](Sources/docs-product/zh/k1_riscv_labkit/root_overview.md)
+*   **K3 RV2768 集群服务器**：[产品简介](Sources/docs-product/zh/k3_rv2768/root_overview.md) · [技术白皮书](Sources/docs-product/zh/k3_rv2768/rv2768_white_paper.md) · [Redfish 接口说明](Sources/docs-product/zh/k3_rv2768/rv2768_redfish.md)
 *   **售后服务规范**：[售后服务说明](Sources/docs-product/zh/service.md)
 
 ---

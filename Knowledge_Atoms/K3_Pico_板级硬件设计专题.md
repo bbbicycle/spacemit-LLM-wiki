@@ -3,7 +3,7 @@ type: knowledge_atom
 title: "K3 Pico-ITX 板级硬件设计与调试专题档案"
 status: needs_review
 created: 2026-06-30
-updated: 2026-06-30
+updated: 2026-08-10
 aliases: ["K3 Pico 板级硬件设计专题", "K3 Pico Board Hardware Design Topic", "k3_pico_hw_design"]
 domain: hardware_schematic_design
 target_audience: [硬件电路工程师, 系统工程师]
@@ -72,6 +72,10 @@ K3 Pico-ITX 专为机器人和工业控制设计了外设扩展通道：
 ---
 
 ## 5. 关联事实证据与芯片专题
+
+> [!NOTE]
+> **2026-08 官方更新**：K3 硬件资源文件已更新至 **v2.1**，包括 Pin List 与最小系统参考设计原理图。eDP 信号命名已修正。请确保使用最新版本硬件资源进行设计。
+*   [K3 硬件资源下载页 (v2.1)](../Sources/docs-chip/en/key_stone/k3/k3_hw/k3_hw_resources.md)
 
 * 物理规格数据：[[Evidence/k3_pico_specs|K3 Pico-ITX 规格参数]]
 * FPC扩展管脚映射：[[Knowledge_Atoms/K3_Pico_扩展接口管脚映射专题|K3 Pico 扩展接口管脚映射专题]]

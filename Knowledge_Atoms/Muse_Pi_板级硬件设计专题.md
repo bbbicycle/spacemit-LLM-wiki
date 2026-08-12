@@ -3,7 +3,7 @@ type: knowledge_atom
 title: "MUSE Pi / Pro 板级硬件设计与调试专题档案"
 status: needs_review
 created: 2026-06-30
-updated: 2026-06-30
+updated: 2026-08-10
 aliases: ["Muse Pi 板级硬件设计专题", "Muse Pi Board Hardware Design Topic", "muse_pi_hw_design"]
 domain: hardware_schematic_design
 target_audience: [硬件电路工程师, 嵌入式工程师]
@@ -74,8 +74,12 @@ MUSE Pi 通过板载双位拨码开关（Strap Pins）选择上电时的第一�
 
 ## 4. 关联事实证据与芯片专题
 
+> [!NOTE]
+> **2026-08 官方更新**：`docs-product` 仓库中 K1 Muse Box 产品简介页的 PDF 下载链接文件名已修正。若此前下载失败，请重新获取。
+
 * 物理规格对比：[[Evidence/muse_pi_vs_pi_pro_specs|Muse Pi 与 Muse Pi Pro 物理规格对比]]
 * 板级扩展管脚映射：[[Knowledge_Atoms/MUSE_Pi_26Pin_IOMAP管脚映射专题|MUSE Pi 26-Pin IOMAP 管脚映射专题]]
 * 芯片级启动机制：[[Knowledge_Atoms/K1启动模式与Strap管脚配置专题档案|K1 启动模式与 JTAG 路由专题]]
 * 板级供电配合：[[Knowledge_Atoms/SpacemiT生态板卡与PMIC电源配合专题档案|SpacemiT 生态板卡与 PMIC 电源配合专题]]
 * 原始文档参考：[MUSE Pi 用户指南](file:///Users/bicycle/Spacemit%20LLM%20Wiki/Sources/docs-product/zh/k1_muse_pi/pi_user_guide.md)
+* K1 Muse Box 参考：[Muse Box 产品简介](../Sources/docs-product/zh/k1_muse_box/root_overview.md)

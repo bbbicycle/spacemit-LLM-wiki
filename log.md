@@ -239,28 +239,28 @@ updated: 2026-06-29
 
 | 变更类型 | 官方文件 | 影响知识原子 | 同步状态 |
 |---|---|---|---|
-| 修改 | K3 eDP 信号命名修正 + 原理图链接升级至 v2.1 | [[Knowledge_Atoms/K3_COM260_板级硬件设计专题]] / [[Knowledge_Atoms/K3_Pico_板级硬件设计专题]] | ⏳ 待同步 |
-| **删除** ⚠️ | `k3_thermal_design.md`（K3 热设计文档被官方撤回） | [[Knowledge_Atoms/K3热设计与散热专题档案]] | ⏳ 需标注官方已撤文 |
-| 修改 | K3 JTAG TDI/TDO 调试说明更新，新增 `com260_debug_00.png` 配图 | [[Knowledge_Atoms/K3启动模式与Strap管脚配置专题档案]] | ⏳ 待同步 |
-| 修改 | K3 Datasheet v1.6 — 视频参数、Boot Mode、地址映射 | [[Knowledge_Atoms/K1_K3显示系统与多媒体输出专题档案]] | ⏳ 待同步 |
-| 修改 | P1 Datasheet 5.3 版本修订 | [[Knowledge_Atoms/SpacemiT生态板卡与PMIC电源配合专题档案]] | ⏳ 待同步 |
-| 修改 | K1 高速接口章节 (Ch.15) 文档更新 | [[Knowledge_Atoms/K1_K3高速外设接口专题档案]] | ⏳ 待同步 |
+| 修改 | K3 eDP 信号命名修正 + 原理图链接升级至 v2.1 | [[Knowledge_Atoms/K3_COM260_板级硬件设计专题]] / [[Knowledge_Atoms/K3_Pico_板级硬件设计专题]] | ✅ 已同步 |
+| **删除** ⚠️ | `k3_thermal_design.md`（K3 热设计文档被官方撤回） | [[Knowledge_Atoms/K3热设计与散热专题档案]] | ✅ 已标注官方撤文 |
+| 修改 | K3 JTAG TDI/TDO 调试说明更新，新增 `com260_debug_00.png` 配图 | [[Knowledge_Atoms/K3启动模式与Strap管脚配置专题档案]] | ✅ 已同步 |
+| 修改 | K3 Datasheet v1.6 — 视频参数、Boot Mode、地址映射 | [[Knowledge_Atoms/K1_K3显示系统与多媒体输出专题档案]] | ✅ 已同步 |
+| 修改 | P1 Datasheet 5.3 版本修订 | [[Knowledge_Atoms/SpacemiT生态板卡与PMIC电源配合专题档案]] | ✅ 已同步 |
+| 修改 | K1 高速接口章节 (Ch.15) 文档更新 | [[Knowledge_Atoms/K1_K3高速外设接口专题档案]] | ✅ 已同步 |
 
 ### `docs-buildroot` (+8 commits) — 主要变更
 
 | 变更类型 | 官方文件 | 影响知识原子 | 同步状态 |
 |---|---|---|---|
-| **新增** 🆕 | `k3_buildroot/device/secureboot.md`（K3 Secure Boot 安全启动指南） | 无对应知识原子 | ⏳ 需新建 |
-| 修改 | K3 PCIe 16-bit MSI 问题诊断指南 | [[Knowledge_Atoms/K1_K3高速外设接口专题档案]] | ⏳ 待同步 |
+| **新增** 🆕 | `k3_buildroot/device/secureboot.md`（K3 Secure Boot 安全启动指南） | [[Knowledge_Atoms/K3安全启动SecureBoot开发专题档案]] | ✅ 已新建 |
+| 修改 | K3 PCIe 16-bit MSI 问题诊断指南 | [[Knowledge_Atoms/K1_K3高速外设接口专题档案]] | ✅ 已同步 |
 
 ### `docs-product` (+47 commits) — 主要变更
 
 | 变更类型 | 官方文件 | 影响知识原子 | 同步状态 |
 |---|---|---|---|
-| **新增** 🆕 | `k3_rv2768/` — RV2768 White Paper、Redfish、Quick Guide 全套文档 | 无对应知识原子（K3 RV2768 服务器管理平台全新方向） | ⏳ 需新建 |
-| 修改 | K3 RV2768 系统架构拓扑图更新（多张 `.png` 更新） | 无对应知识原子 | ⏳ 待新建后同步 |
-| 修改 | K1 Muse Box PDF 链接修正 | [[Knowledge_Atoms/Muse_Pi_板级硬件设计专题]] | ⏳ 待同步 |
+| **新增** 🆕 | `k3_rv2768/` — RV2768 White Paper、Redfish、Quick Guide 全套文档 | [[Knowledge_Atoms/K3_RV2768_集群服务器专题档案]] | ✅ 已新建 |
+| 修改 | K3 RV2768 系统架构拓扑图更新（多张 `.png` 更新） | [[Knowledge_Atoms/K3_RV2768_集群服务器专题档案]] | ✅ 已同步 |
+| 修改 | K1 Muse Box PDF 链接修正 | [[Knowledge_Atoms/Muse_Pi_板级硬件设计专题]] | ✅ 已同步 |
 
-*   **整体同步进度**：已完成官方 upstream 拉取与审查记录，具体知识原子内容更新待执行。
+*   **整体同步进度**：全部 11 项变更已完成知识原子同步更新。新建知识原子 2 篇，更新现有知识原子 8 篇。
 
 
