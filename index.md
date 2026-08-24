@@ -3,19 +3,22 @@ type: vault_index
 title: "Spacemit LLM Wiki · 6大前瞻技术领域全栈索引"
 status: approved
 created: 2026-06-29
-updated: 2026-08-10
+updated: 2026-08-24
 aliases: [index, index.md, 索引, 全局索引]
 ---
 
 # Spacemit LLM Wiki · 全栈索引网络
 
 > [!NOTE]
-> 本索引专为 **SpacemiT K1 / K3 处理器、PMIC 伴随电源芯片及生态开发板** 打造，全面解构芯片选型、电路设计、BSP 内核、Bianbu OS 生态、编译工具链及端侧 AI / 机器人应用。
-> 知识库采用 **“线 - 面 - 点” 三层解构架构** 并按 **6 大前瞻技术领域** 归类展示：
+> 本索引系统整理了 **SpacemiT K1 / K3 处理器、配套 PMIC 芯片及生态开发板** 的全栈软硬件技术资产，覆盖芯片选型、电路设计、BSP 内核、Bianbu OS、编译工具链及端侧 AI / 机器人应用。
+> 
+> 知识库采用 **“线 - 面 - 点” 三层知识架构** 组织：
 > 1. **开发者旅程 (Developer Journeys - 线)**：任务驱动的极简通关上手向导。
-> 2. **主题档案 (Knowledge Atoms - 面)**：软硬融合的排坑避坑与技术专题。
+> 2. **主题档案 (Knowledge Atoms - 面)**：软硬融合的技术专题与排坑指南。
 > 3. **事实证据 (Evidence - 点)**：芯片级物理参数、寄存器与测试数据。
-> 4. **原始参考源 (Sources)**：GitHub 官方仓原始对照文件。
+> *(底层对照出处见文末 **原始参考源 (Sources)**)*
+> 
+> 全库内容按 **6 大核心技术模块** 归类索引如下：
 
 ---
 
