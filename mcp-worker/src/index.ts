@@ -1,10 +1,6 @@
 /**
- * Spacemit LLM Wiki - Cloudflare Worker MCP Server (v2.0 双层知识图谱架构)
- * 严格遵循 Agent.md 规范与 Anthropic MCP 协议
- * 
- * 核心设计：
- * 1. 精炼知识图谱层 (60 篇)：Journeys (线) -> Atoms (面) -> Evidence (点) 零切片直出
- * 2. 原始资料源清单层 (1052 篇)：Sources/docs-* 动态穿透至 GitHub Raw 实时拉取
+ * Spacemit LLM Wiki - Cloudflare Worker 生产级 MCP Server (v2.1)
+ * 严格遵循 MCP 官方标准 SSE 协议 (支持 Event Stream 双向会话与保活心跳)
  */
 
 import wikiData from "./data/wiki_graph.json";
@@ -45,10 +41,9 @@ const SYSTEM_INSTRUCTIONS = `
    - 芯片外设驱动/技术专题 -> 调用 read_knowledge_atom (整篇无损上下文)
    - 引脚复用/寄存器/电气参数 -> 调用 get_evidence_fact (精准数据表)
    - 上下游依赖关系 -> 调用 get_graph_relations
-2. 严禁编造：若精炼原子库中未收录冷门细节，请调用 search_raw_sources 与 read_raw_source_file 穿透查询 1052 篇 Sources 原始芯片与产品手册。
+2. 严禁编造：若精炼原子库中未收录冷门细节，请调用 search_raw_sources 与 read_raw_source_file 穿透查询 1052 篇 Sources 原始手册。
 `;
 
-// 工具定义列表 (MCP Specification)
 const TOOLS = [
   {
     name: "search_wiki",
@@ -133,6 +128,9 @@ const TOOLS = [
   }
 ];
 
+// 内存会话订阅池 (用于将 POST 的响应推送到对应的 GET /sse 流)
+const activeSessions = new Map<string, (data: string) => void>();
+
 function resolveNodeId(nameOrAlias: string): string | null {
   let q = nameOrAlias.trim().toLowerCase();
   if (q.endsWith(".md")) q = q.slice(0, -3);
@@ -152,7 +150,6 @@ function resolveNodeId(nameOrAlias: string): string | null {
 }
 
 async function handleToolCall(name: string, args: any) {
-  // 1. search_wiki
   if (name === "search_wiki") {
     const q = (args.query || "").toLowerCase();
     const domain = args.domain;
@@ -180,7 +177,6 @@ async function handleToolCall(name: string, args: any) {
     return { content: [{ type: "text", text: JSON.stringify(results.slice(0, 5), null, 2) }] };
   }
 
-  // 2. get_developer_journey
   if (name === "get_developer_journey") {
     const nodeId = resolveNodeId(args.board_or_task || "");
     if (!nodeId || !nodes[nodeId]) return { isError: true, content: [{ type: "text", text: `未找到相关动线: ${args.board_or_task}` }] };
@@ -199,7 +195,6 @@ async function handleToolCall(name: string, args: any) {
     };
   }
 
-  // 3. read_knowledge_atom
   if (name === "read_knowledge_atom") {
     const nodeId = resolveNodeId(args.atom_name || "");
     if (!nodeId || !nodes[nodeId]) return { isError: true, content: [{ type: "text", text: `未找到专题档案: ${args.atom_name}` }] };
@@ -218,7 +213,6 @@ async function handleToolCall(name: string, args: any) {
     };
   }
 
-  // 4. get_evidence_fact
   if (name === "get_evidence_fact") {
     const nodeId = resolveNodeId(args.spec_name || "");
     if (!nodeId || !nodes[nodeId]) return { isError: true, content: [{ type: "text", text: `未找到事实数据: ${args.spec_name}` }] };
@@ -235,7 +229,6 @@ async function handleToolCall(name: string, args: any) {
     };
   }
 
-  // 5. get_graph_relations
   if (name === "get_graph_relations") {
     const nodeId = resolveNodeId(args.node_name || "");
     if (!nodeId || !nodes[nodeId]) return { isError: true, content: [{ type: "text", text: `未找到节点: ${args.node_name}` }] };
@@ -254,7 +247,6 @@ async function handleToolCall(name: string, args: any) {
     };
   }
 
-  // 6. search_raw_sources (新增)
   if (name === "search_raw_sources") {
     const q = (args.query || "").toLowerCase();
     const sub = args.submodule;
@@ -283,11 +275,9 @@ async function handleToolCall(name: string, args: any) {
     return { content: [{ type: "text", text: JSON.stringify(matches.slice(0, 8), null, 2) }] };
   }
 
-  // 7. read_raw_source_file (新增：按需从 GitHub Raw 实时读取)
   if (name === "read_raw_source_file") {
     let targetUrl = args.file_path_or_url || "";
     if (!targetUrl.startsWith("http")) {
-      // 路径转换
       const cleanPath = targetUrl.replace(/^Sources\//, "");
       const matched = rawSources.find(s => s.rel_path === cleanPath || s.rel_path.endsWith(cleanPath));
       if (matched) {
@@ -330,7 +320,6 @@ async function handleToolCall(name: string, args: any) {
   return { isError: true, content: [{ type: "text", text: `未知工具: ${name}` }] };
 }
 
-// JSON-RPC 消息分发器
 async function handleJsonRpc(body: any): Promise<any> {
   const { jsonrpc, id, method, params } = body;
   if (method === "initialize") {
@@ -340,7 +329,7 @@ async function handleJsonRpc(body: any): Promise<any> {
       result: {
         protocolVersion: "2024-11-05",
         capabilities: { tools: {} },
-        serverInfo: { name: "spacemit-wiki-mcp", version: "2.0.0" },
+        serverInfo: { name: "spacemit-wiki-mcp", version: "2.1.0" },
         instructions: SYSTEM_INSTRUCTIONS
       }
     };
@@ -360,8 +349,11 @@ async function handleJsonRpc(body: any): Promise<any> {
       result
     };
   }
-  if (method === "notifications/initialized") {
+  if (method === "notifications/initialized" || method === "notifications/cancelled") {
     return null;
+  }
+  if (method === "ping") {
+    return { jsonrpc: "2.0", id, result: {} };
   }
   return {
     jsonrpc: "2.0",
@@ -374,61 +366,96 @@ export default {
   async fetch(request: Request): Promise<Response> {
     const url = new URL(request.url);
 
-    // 跨域处理 (CORS)
+    // CORS 处理
+    const corsHeaders = {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type, Authorization",
+      "Access-Control-Max-Age": "86400"
+    };
+
     if (request.method === "OPTIONS") {
-      return new Response(null, {
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-          "Access-Control-Allow-Headers": "Content-Type"
-        }
-      });
+      return new Response(null, { headers: corsHeaders });
     }
 
-    // 1. SSE 模式 (用于 Claude Desktop / Cursor 连接)
+    // 1. GET /sse：建立标准 SSE 长连接
     if (url.pathname === "/sse" || url.pathname === "/") {
       if (request.method === "GET") {
+        const sessionId = crypto.randomUUID();
         const { readable, writable } = new TransformStream();
         const writer = writable.getWriter();
         const encoder = new TextEncoder();
 
-        writer.write(encoder.encode(`event: endpoint\ndata: ${url.origin}/messages\n\n`));
+        const sendEvent = (event: string, data: string) => {
+          try {
+            writer.write(encoder.encode(`event: ${event}\ndata: ${data}\n\n`));
+          } catch (_) {}
+        };
+
+        // 注册到会话池
+        activeSessions.set(sessionId, (payload: string) => {
+          sendEvent("message", payload);
+        });
+
+        // 发送初始 endpoint 事件（携带明确的 sessionId）
+        const endpointUrl = `${url.origin}/messages?sessionId=${sessionId}`;
+        sendEvent("endpoint", endpointUrl);
+
+        // 设置定时心跳保持连接不断开
+        const keepAliveInterval = setInterval(() => {
+          sendEvent("ping", "{}");
+        }, 15000);
+
+        request.signal.addEventListener("abort", () => {
+          clearInterval(keepAliveInterval);
+          activeSessions.delete(sessionId);
+          try { writer.close(); } catch (_) {}
+        });
 
         return new Response(readable, {
           headers: {
+            ...corsHeaders,
             "Content-Type": "text/event-stream",
-            "Cache-Control": "no-cache",
-            "Connection": "keep-alive",
-            "Access-Control-Allow-Origin": "*"
+            "Cache-Control": "no-cache, no-transform",
+            "Connection": "keep-alive"
           }
         });
       }
     }
 
-    // 2. HTTP POST JSON-RPC 消息处理
+    // 2. POST /messages 或 POST /：处理客户端发来的 JSON-RPC 请求
     if (request.method === "POST") {
+      const sessionId = url.searchParams.get("sessionId") || "";
       try {
         const body = await request.json();
         const responseData = await handleJsonRpc(body);
-        if (!responseData) {
-          return new Response(null, { status: 204 });
-        }
-        return new Response(JSON.stringify(responseData), {
-          headers: {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*"
+
+        if (responseData) {
+          const stringified = JSON.stringify(responseData);
+          // 如果存在匹配的 SSE 活跃长连接，通过 SSE 推送回去（标准 MCP 规范）
+          const sseSender = activeSessions.get(sessionId);
+          if (sseSender) {
+            sseSender(stringified);
           }
-        });
+          // 同时在 HTTP POST 中直接返回（兼容部分直接读取 POST body 的客户端）
+          return new Response(stringified, {
+            headers: {
+              ...corsHeaders,
+              "Content-Type": "application/json"
+            }
+          });
+        }
+        return new Response(null, { status: 202, headers: corsHeaders });
       } catch (err: any) {
         return new Response(JSON.stringify({ jsonrpc: "2.0", error: { code: -32700, message: "Parse error" } }), {
           status: 400,
-          headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
+          headers: { ...corsHeaders, "Content-Type": "application/json" }
         });
       }
     }
 
-    return new Response("Spacemit LLM Wiki MCP Server v2.0 is running! Endpoint: /sse or POST /", {
-      headers: { "Content-Type": "text/plain; charset=utf-8" }
+    return new Response("Spacemit LLM Wiki MCP Server v2.1 is running!", {
+      headers: { ...corsHeaders, "Content-Type": "text/plain; charset=utf-8" }
     });
   }
 };
