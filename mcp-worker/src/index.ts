@@ -1,5 +1,5 @@
 /**
- * Spacemit LLM Wiki - Cloudflare Worker 生产级 MCP Server (v2.1)
+ * Spacemit LLM Wiki - Cloudflare Worker 生产级 MCP Server (v2.1.1 CI/CD Auto-Deploy Active)
  * 严格遵循 MCP 官方标准 SSE 协议 (支持 Event Stream 双向会话与保活心跳)
  */
 
