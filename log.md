@@ -3,15 +3,29 @@ type: vault_log
 title: "SpacemiT K3 芯片文档重构日志"
 status: active
 created: 2026-06-29
-updated: 2026-06-29
+updated: 2026-08-25
 ---
 
 # SpacemiT K3 芯片文档重构日志 (log.md)
 
 > [!NOTE]
-> 本文件用于记录 K3 芯片测试知识库的重构、清理和验证日志。
+> 本文件用于记录 Spacemit LLM Wiki 知识库的重构、清理、验证与 MCP 服务演进日志。
 
 ---
+
+## [2026-08-25] feature & deploy | 构建双层零切片 MCP Server 并部署上线至 Cloudflare Workers
+*   **背景与动机**：为了解决外部开发者消费知识库需克隆大仓库和配置本地环境的痛点，构建了专为 Spacemit 知识库定制的 **Model Context Protocol (MCP) Server**。
+*   **架构升级 (双层协同)**：
+    *   **第一层（精炼知识图谱）**：对 60 个语义原子（7 篇动线、29 篇专题、24 篇事实）建立 85 条双链拓扑索引，杜绝传统 RAG 暴力切片导致的表格截断与上下文丢失。
+    *   **第二层（原始资料源穿透）**：扫描 `Sources/` 下 5 大子模块（`docs-chip`, `docs-product`, `docs-buildroot`, `docs-ai`, `docs-ros`），提取 1052 篇原始官方手册的章节与标题大纲，支持按需动态通过 GitHub Raw API 实时穿透拉取。
+    *   **规范注入**：将 `Agent.md` 行为准则（【线-面-点】导航、严禁编造、长尾穿透）内置为 MCP 系统指令。
+*   **工具实现 (7 大核心 Tools)**：
+    *   `search_wiki` / `get_developer_journey` / `read_knowledge_atom` / `get_evidence_fact` / `get_graph_relations` / `search_raw_sources` / `read_raw_source_file`
+*   **云端部署与域名绑定**：
+    *   构建了基于 Cloudflare Workers 的无服务器运行环境，整体索引压缩至 963 KB，启动延迟仅 15 ms。
+    *   成功自动绑定独立顶级域名：`https://mcp.yao1302.xyz/sse`，实测 HTTP 200 与 SSE 握手完全正常。
+*   **本地套件与文档**：
+    *   创建 `scripts/build_mcp_index.py`、`mcp/test_navigation.py`、`mcp-worker/` 与接入说明 `mcp/README.md`，并在 `README.md` 中补充了 Cursor / Claude Desktop 的接入配置。
 
 ## [2026-06-29] ingest | 导入并清洗 K3 开源文档基础源
 *   **数据源**：从 GitHub `spacemit-com/docs-chip` 递归抓取 `zh/key_stone/k3` 的核心文件。

@@ -23,9 +23,49 @@
 
 ---
 
-### 2. 🏛️ 项目架构与目录布局 (Architecture & Directory Layout)
+### 2. 🌐 Model Context Protocol (MCP) 云端服务接入
 
-#### 2.1 三层拓扑关系 (Three-Tier Topology)
+外部开发者**无需克隆代码库、无需本地安装 Python/Obsidian**，即可在 **Cursor、Claude Desktop、Antigravity、Windsurf** 等现代 AI 开发环境中直接连接并消费本知识库！
+
+* **官方公共 MCP SSE 服务端点**：
+  👉 `https://mcp.yao1302.xyz/sse`
+
+#### 2.1 客户端一键配置
+
+* **Cursor IDE 配置**：
+  在 Cursor 设置中进入 `Features -> MCP Servers -> Add New MCP Server`：
+  - **Name**: `spacemit`
+  - **Type**: `sse`
+  - **URL**: `https://mcp.yao1302.xyz/sse`
+
+* **Claude Desktop 配置** (`claude_desktop_config.json`)：
+  ```json
+  {
+    "mcpServers": {
+      "spacemit-wiki": {
+        "url": "https://mcp.yao1302.xyz/sse"
+      }
+    }
+  }
+  ```
+
+#### 2.2 核心 7 大零切片 MCP 工具
+
+| 层级 | 工具名称 | 功能描述 |
+| :--- | :--- | :--- |
+| **精炼知识层** | `search_wiki` | 按关键词、别名或技术领域搜索精炼知识库 |
+| **精炼知识层** | `get_developer_journey` | 整篇获取开发板通关动线与步骤（线） |
+| **精炼知识层** | `read_knowledge_atom` | 整篇获取驱动/外设/电源等专题档案（面，零切片） |
+| **精炼事实层** | `get_evidence_fact` | 直出结构化引脚表、Strap 配置、电气参数（点，100% 精确） |
+| **图谱拓扑层** | `get_graph_relations` | 顺着双链探索依赖出链与被引用入链 |
+| **原始资料层** | `search_raw_sources` | 在 1052 篇 Sources 原始芯片/产品手册清单中检索 |
+| **原始资料层** | `read_raw_source_file` | 按需实时穿透拉取 GitHub 官方仓库的原始 Markdown/源码 |
+
+---
+
+### 3. 🏛️ 项目架构与目录布局 (Architecture & Directory Layout)
+
+#### 3.1 三层拓扑关系 (Three-Tier Topology)
 
 知识库严格遵循 **单向引用红线**，划分为三个递进层次：
 
@@ -189,6 +229,34 @@ GitHub Actions 工作流位于 `.github/workflows/sync_sources.yml`。
 Built upon **Obsidian Wikilinks** and a **Three-Tier Topology Architecture (Journeys - Atoms - Evidence)**, it provides:
 - **Human Readability**: Clear developer quick-start paths, modular topic archives, and inline tips for debugging.
 - **AI/RAG Optimization**: Strict YAML Frontmatter metadata, 6 domain taxonomy classifications, and clear line-surface-point referencing to ensure high precision in Graph RAG and semantic vector retrieval.
+
+---
+
+### 2. 🌐 Model Context Protocol (MCP) Cloud Service
+
+External developers can directly consume this knowledge base in modern AI IDEs (**Cursor, Claude Desktop, Antigravity, Windsurf**) without cloning the repository or installing local environments:
+
+* **Official Public MCP SSE Endpoint**:
+  👉 `https://mcp.yao1302.xyz/sse`
+
+#### Client Configuration
+
+* **Cursor IDE**:
+  `Settings -> Features -> MCP Servers -> Add New MCP Server`:
+  - **Name**: `spacemit`
+  - **Type**: `sse`
+  - **URL**: `https://mcp.yao1302.xyz/sse`
+
+* **Claude Desktop** (`claude_desktop_config.json`):
+  ```json
+  {
+    "mcpServers": {
+      "spacemit-wiki": {
+        "url": "https://mcp.yao1302.xyz/sse"
+      }
+    }
+  }
+  ```
 
 ---
 

@@ -16,5 +16,8 @@ __pycache__/
 
 # Agent Workspace Logs
 .agents/
-
 .last_synced_commits.json
+
+# Node & Wrangler Build Artifacts
+node_modules/
+.wrangler/
