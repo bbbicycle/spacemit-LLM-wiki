@@ -1,0 +1,53 @@
+name: Auto Build & Deploy MCP to Cloudflare Workers
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'Developer_Journeys/**'
+      - 'Knowledge_Atoms/**'
+      - 'Evidence/**'
+      - 'Sources/**'
+      - 'scripts/**'
+      - 'mcp-worker/**'
+      - 'mcp/**'
+      - '.github/workflows/deploy_mcp.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  deploy-mcp:
+    name: Build Graph Index & Deploy MCP Worker
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Rebuild MCP Dual-Layer Knowledge Index
+        run: |
+          python3 scripts/build_mcp_index.py
+
+      - name: Verify Index File Exists
+        run: |
+          test -f mcp-worker/src/data/wiki_graph.json || exit 1
+          echo "✅ 知识图谱索引文件准备就绪"
+
+      - name: Deploy to Cloudflare Workers
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          workingDirectory: 'mcp-worker'
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
