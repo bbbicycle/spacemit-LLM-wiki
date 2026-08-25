@@ -44,10 +44,14 @@ jobs:
           test -f mcp-worker/src/data/wiki_graph.json || exit 1
           echo "✅ 知识图谱索引文件准备就绪"
 
-      - name: Deploy to Cloudflare Workers
-        uses: cloudflare/wrangler-action@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
         with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          workingDirectory: 'mcp-worker'
+          node-version: '20'
+
+      - name: Deploy to Cloudflare Workers
+        working-directory: mcp-worker
+        run: |
+          npx wrangler deploy
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
