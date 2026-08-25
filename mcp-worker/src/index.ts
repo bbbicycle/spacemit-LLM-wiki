@@ -401,10 +401,10 @@ export default {
         const endpointUrl = `${url.origin}/messages?sessionId=${sessionId}`;
         sendEvent("endpoint", endpointUrl);
 
-        // 设置定时心跳保持连接不断开
+        // 设置 30 秒定时心跳保活（温和防断连）
         const keepAliveInterval = setInterval(() => {
           sendEvent("ping", "{}");
-        }, 15000);
+        }, 30000);
 
         request.signal.addEventListener("abort", () => {
           clearInterval(keepAliveInterval);
