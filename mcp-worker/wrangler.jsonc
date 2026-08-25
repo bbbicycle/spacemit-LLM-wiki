@@ -12,6 +12,13 @@
       "custom_domain": true
     }
   ],
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "spacemit-wiki-db",
+      "database_id": "f37a731d-be82-452b-b740-3b068b6f1973"
+    }
+  ],
   "observability": {
     "enabled": true
   }
