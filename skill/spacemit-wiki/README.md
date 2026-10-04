@@ -43,16 +43,20 @@ Then copy [`SKILL.md`](./SKILL.md) to your workspace's skill directory (or appen
   * Standardized Bianbu OS & Linux 6.1/6.6 BSP baseline (blocks incompatible Raspberry Pi commands).
   * Mandatory MoE architecture disclosure for 30B-scale models (Active 3B tokens).
   * Hardware safety rules for JTAG pinout reversal, Strap resistor isolation, and unpowered peripheral domains.
-* **Token-Efficient Context Reuse**: Reuses evidence already present in conversation history, eliminating duplicate MCP round-trips.
+* **Token-Efficient Context Reuse & Search Ceilings**:
+  * Reuses evidence already present in conversation history, eliminating duplicate MCP round-trips.
+  * Strict L1~L4 search depth ceilings and sufficiency stop checks to prevent over-searching and token drain.
+  * Hourglass communication model: Bottom-Line-Up-Front (BLUF) + accessible analogies before dense registers.
 
 ---
 
 ## How It Works
 
-1. **Intent Routing**: Routes developer inquiries directly to the optimal tool layer.
-2. **Context Reuse**: Reuses loaded topic archives across follow-up questions to save tokens.
-3. **Deep Fallback**: Automatically drills down into 1,052 official datasheet chapters (`search_raw_sources` ➔ `read_raw_source_file`) when topic archives lack obscure details.
-4. **Structured Output**: Formats pin muxing, thermal impedance, and register maps into clean Markdown tables.
+1. **Intent Leveling & Depth Ceiling**: Routes developer inquiries directly to the optimal tool layer and strictly caps search depth for conceptual/architectural queries.
+2. **Sufficiency Stop**: Terminates further queries immediately once core claims and evidence are validated.
+3. **Context Reuse**: Reuses loaded topic archives across follow-up questions to save tokens.
+4. **Deep Fallback**: Drills down into 1,052 official datasheet chapters (`search_raw_sources` ➔ `read_raw_source_file`) only for L4-level error debugging.
+5. **Hourglass Output**: Leads with clear conclusions and practical analogies, backed by exact facts, with on-demand drill-down invitations.
 
 ---
 
@@ -60,6 +64,7 @@ Then copy [`SKILL.md`](./SKILL.md) to your workspace's skill directory (or appen
 
 * [SKILL.md](./SKILL.md) — Master instructions and tool selection matrix
 * [mcp.md](./mcp.md) — MCP setup and tool schema reference
+* [rules/search-efficiency.md](./rules/search-efficiency.md) — Search efficiency, sufficiency stop & accessible communication
 * [rules/hardware-safety.md](./rules/hardware-safety.md) — Hardware wiring & debugging guardrails
 * [rules/generational.md](./rules/generational.md) — Generational isolation & model transparency
 * [rules/system-baseline.md](./rules/system-baseline.md) — Operating system & software stack baseline
