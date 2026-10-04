@@ -1,0 +1,63 @@
+{
+  "skill_name": "spacemit-wiki",
+  "version": "1.0.0",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "我想在 SpacemiT K3 芯片上运行 30B 规模的大模型，硬件和性能上有什么要求和预期？",
+      "expected_output": "准确阐述 K3 芯片的算力规格，明确指出 30B 模型为 MoE 稀疏激活架构（单 Token 激活约 3B 参数），并给出首词延迟与推理速度实测指标。",
+      "expectations": [
+        "明确标注 30B 属于 MoE (Mixture of Experts) 架构，而非 30B Dense 全参数模型",
+        "明确说明单 Token 实际激活参数约为 3B (Active 3B)",
+        "提及 60 TOPS 融合 AI 算力与双通道 64-bit LPDDR5 统一内存架构",
+        "给出实测指标（如 Qwen3-30B-A3B 首词延迟约 0.9s，生成速度 15~18 Tokens/s）",
+        "没有虚构或承诺在单芯片上流畅运行 30B Dense 全参数模型"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "基于 K1 芯片画原理图，如果要把系统默认启动介质设置为从 SD 卡引导，Strap 管脚应该怎么连？可以直接接 3.3V 吗？",
+      "expected_output": "指出 SD 卡引导所需的 Strap 0 和 1 电平组合，严厉警告禁止直接短接 3.3V，必须串联 4.7kΩ~10kΩ 强上拉电阻。",
+      "expectations": [
+        "指出 SD 卡引导需要将 Strap 0 和 Strap 1 均配置为高电平 (1 1)",
+        "明确警告严禁直接将 Strap 引脚短接至 VCC 或 GND",
+        "解释禁止直接短接的原因：复位后引脚会复用为 QSPI/GPIO 高速功能，短接会导致瞬间烧毁主控",
+        "给出标准的 4.7kΩ ~ 10kΩ 上拉电阻阻值范围",
+        "调用或引用了 k1_strap_pins_config 事实表"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "请帮我查一下 Muse Pi 开发板上的 26Pin 扩展排针定义，特别是调试串口和 I2C 都在哪个引脚？",
+      "expected_output": "调用知识库获取完整的 MUSE Pi 26Pin 映射表，清晰列出物理引脚号、信号名、GPIO 编号与复用功能。",
+      "expectations": [
+        "优先调用 read_knowledge_atom 或 search_wiki 获取 MUSE_Pi_26Pin_IOMAP 专题",
+        "以结构化 Markdown 表格形式呈现引脚定义",
+        "准确标明串口引脚与 I2C 引脚的物理 Pin 号",
+        "没有给出树莓派专用的 raspi-gpio 或 wiringPi 控制指令"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "我用 J-Link 调试 K3 CoM260 核心板，接上官方 TF 调试子板后扫描不到 CPU 挂死了，可能是什么原因？",
+      "expected_output": "立刻识别出 K1 与 K3 JTAG 核心引脚相反的致命硬件陷阱，指出 CoM260 JTAG 的 TMS 与 TDI 必须交叉反接。",
+      "expectations": [
+        "明确指出 K1 与 K3 在 TF 调试子板牛角座上的 TDI 和 TMS 引脚完全相反",
+        "指出 K1 Pin 5 为 TDI、Pin 7 为 TMS；而 K3 Pin 5 为 TMS、Pin 7 为 TDI",
+        "明确指出 CoM260 转接排线必须将 TMS 和 TDI 交叉连接（TDO 直连）",
+        "提醒调试串口要求 3.3V 电平"
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "我正在用 Buildroot 裁剪一个最小根文件系统部署到 K1 上，为什么内核引导到一半就死锁挂起了？",
+      "expected_output": "定位到自定义系统常遗漏的 RCPU 实时协处理器固件 esos.elf，指导开发者补齐固件。",
+      "expectations": [
+        "指出必须检查 /lib/firmware/esos.elf 固件是否存在",
+        "解释 esos.elf 的作用：由 RCPU 小核运行，负责硬件初始化与中断通信转发",
+        "指出若缺少该固件会导致 Linux 内核引导在 RCPU 握手阶段永久死锁",
+        "给出正确的固件获取路径（board/spacemit/k1/target_overlay）"
+      ]
+    }
+  ]
+}
