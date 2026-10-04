@@ -94,7 +94,7 @@ echo -e "${GREEN}${BOLD}   🎉 所有子模块 (${TOTAL}/${TOTAL}) 已成功同
 echo -e "${GREEN}${BOLD}=====================================================${NC}"
 
 # 自动运行上游变更影响分析
-IMPACT_SCRIPT="${SCRIPT_DIR}/check_upstream_impact.py"
+IMPACT_SCRIPT="${SCRIPT_DIR}/scripts/check_upstream_impact.py"
 if [ -f "$IMPACT_SCRIPT" ]; then
     echo -e "\n${BLUE}${BOLD}[自动检查] 正在运行上游变更影响分析...${NC}"
     python3 "$IMPACT_SCRIPT" --cached 2>/dev/null || echo -e "${YELLOW}[提示] 影响分析工具未生成报告（可能是首次运行或无缓存指针）${NC}"

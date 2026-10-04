@@ -5,17 +5,17 @@ domain: edge_ai_robotics
 target_audience: [AI算法工程师, 软件开发工程师]
 status: needs_review
 created: 2026-08-10
-updated: 2026-08-10
+updated: 2026-10-04
 aliases: [SpaceAI_端侧大模型量化与部署专题档案, SpaceAI Deployment Dossier, SpaceAI SDK Guide]
 ---
 
 # SpaceAI 端侧大模型量化与部署专题档案
 
 > [!TIP]
-> **💡 工程师导读与排坑焦点**：详解 SpacemiT AI CPU（A60 智算核）同构融合原理、XSlim 量化工具链、ONNX Runtime `SpaceMITExecutionProvider` 接入及 vLLM / llama.cpp 端侧部署。
+> **💡 工程师导读与排坑焦点**：详解 SpacemiT AI CPU（A60 智算核）同构融合原理、XSlim 量化工具链、ONNX Runtime `SpaceMITExecutionProvider` 接入、vLLM / llama.cpp 端侧部署及官方 AI Computer 解决方案矩阵。
 > **目标读者**：`AI算法工程师 / 软件开发工程师` | **技术领域**：`edge_ai_robotics`
 
-本专题档案系统性解构基于 SpacemiT K1 与 K3 RISC-V 平台的 SpaceAI 软件栈全景。涵盖同构智算核架构原理、XSlim 工具链量化转码、ONNX Runtime 专属硬件执行提供者接入，以及端侧 LLM 推理引擎（llama.cpp / vLLM）的部署调优。
+本专题档案系统性解构基于 SpacemiT K1 与 K3 RISC-V 平台的 SpaceAI 软件栈全景。涵盖同构智算核架构原理、XSlim 工具链量化转码、ONNX Runtime 专属硬件执行提供者接入、端侧 LLM 推理引擎部署，以及官方发布的 AI Computer 桌面级解决方案矩阵。
 
 ---
 
@@ -81,3 +81,16 @@ Ort::Session session(env, "quantized_model.onnx", session_options);
    利用 SpacemiT vLLM 分支启动 Open-AI 兼容的 Web API 服务，支持并发 Context 缓存优化。
 
 更详细的大模型实测与调频干货请查阅 [[Knowledge_Atoms/K1大模型本地推理与AI算力专题档案|K1 大模型本地推理专题]] 与 [[Knowledge_Atoms/K3大模型本地推理与AI算力专题档案|K3 大模型本地推理专题]]。
+
+---
+
+## 5. 官方 AI Computer 落地应用与评估方案全景
+
+SpacemiT 基于 K3 高算力平台，在官方 `docs-ai` 中推出了完整的端侧全栈 AI 应用落地方案：
+
+*   **File2MD 本地文档解析应用**：针对 SpacemiT K3 Bianbu 桌面系统打造的本地文档转 Markdown 工具。支持 PDF、Office、扫描图像的本地版面分析、OCR 与公式表格提取，实现“数据不出端”的安全办公。
+*   **与会 (Yumeet) & 多路实时 ASR**：集成 VAD 语音激活检测、端侧 ASR、声纹说话人分离（Diarization）与 LLM 总结能力，实现全离线会议录制、实时字幕与智能纪要生成。
+*   **知了 (Zenow)**：设备端本地运行的个人与企业知识库问答助手，深度结合 RAG 向量检索与本地离线 LLM。
+*   **见智 (Seewise) & 多路视觉分析**：支持本地视频或 RTSP 摄像头接入，通过端侧视觉特征提取与自然语言跨模态匹配，实现毫秒级自然语言以图搜视频。
+*   **点将 (Agentforce)**：基于端侧轻量 Agent 框架与数字员工多角色管理调度平台。
+*   **SpacemiT AI Lab 在线评估云平台**：官方搭建的网页化 K3 算力沙箱体验平台，开发者无需实体开发板即可一键申请云端 K3 实例进行模型评测。

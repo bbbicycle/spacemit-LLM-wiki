@@ -28,7 +28,7 @@ target_audience: [核心板选型工程师, 硬件工程师]
 | **通用 CPU** | 8 核 X100™ 64 位 RISC-V CPU | 2 Clusters x 4 Cores，每个 Cluster 拥有 4MB 共享 L2 缓存，通用计算 130 KDMIPS |
 | **智算 NPU** | 8 核 A100™ 64 位 AI 核心 | 融合 60 TOPS AI 算力，每个 Cluster 拥有 1MB L2 共享缓存及 1.5MB 专用 TCM 紧耦合存储 |
 | **图形 GPU** | 集成 3D-GPU | 支持 Vulkan、OpenCL、OpenGL ES，满足机器人图形化界面或视觉渲染 |
-| **内存 (DRAM)** | 64-bit LPDDR5，6400 MT/s | 可选 8GB / 16GB / 32GB 容量，统一内存架构，支持 30B 大模型推理 |
+| **内存 (DRAM)** | 64-bit LPDDR5，6400 MT/s | 可选 8GB / 16GB / 32GB 容量，统一内存架构，支持 30B MoE 稀疏大模型推理 |
 | **视频编码** | 4K @ 60Hz (H.264 / H.265) | 满足机器人多路高清行车记录与推流 |
 | **视频解码** | 4K @ 120Hz (单路) 或 1080p @ 60Hz (8路) | 支持多路摄像头并发画面的实时解码与视觉处理 |
 | **典型功耗** | 18W ~ 35W | 视算力负载动态调压与变频 |

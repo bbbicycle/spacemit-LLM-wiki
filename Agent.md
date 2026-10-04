@@ -150,7 +150,7 @@ sequenceDiagram
 *   **触发场景**：用户对 Agent 发出“检查更新”、“同步 Spacemit GitHub”、“拉取最新文档”等指令，或子模块检测到 remote upstream 存在新提交。
 *   **Agent 核心闭环 SOP**：
     1.  **上游检测与拉取**：Agent 首先检查 `Sources/` 5 大 Git Submodules 的 remote upstream 提交状态（或调用 `update_sources.sh`）。
-    2.  **影响范围精准分析**：运行项目工具 `python3 check_upstream_impact.py`，自动获取：
+    2.  **影响范围精准分析**：运行项目工具 `python3 scripts/check_upstream_impact.py`，自动获取：
         - 变更文件清单（`docs-chip`, `docs-buildroot`, `docs-product` 等中的 A/M/D 记录）。
         - **已受影响的现有知识原子**（Knowledge_Atoms）映射关系。
         - **未被覆盖的新增/重大文件**（潜在盲区文档）。
@@ -161,8 +161,9 @@ sequenceDiagram
     4.  **索引与日志同步挂载**：
         - 在 `index.md` 的对应技术领域板块挂载新建/更新的知识原子节点。
         - 在 `log.md` 中记录本次同步批次（commit hash、影响的文件清单、同步状态）。
-    5.  **自动化 Lint 校验与提交**：
+    5.  **自动化 Lint 双重校验与提交**：
         - 运行 `python3 vault_linker_lint.py`，确保死链为 0、孤立节点为 0。
+        - 运行 `python3 scripts/lint_wiki_integrity.py`，确保事实完整性、无伪概念与代际混淆。
         - 完成全自动 `git commit & push` 到 GitHub 主仓库。
 
 ---

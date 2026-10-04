@@ -1,8 +1,8 @@
 {
   "version": "2.0.0",
   "generated_at": "2026-08-25",
-  "total_nodes": 60,
-  "total_raw_sources": 1052,
+  "total_nodes": 62,
+  "total_raw_sources": 1180,
   "nodes": {
     "Buildroot_SDK_快速编译与镜像生成向导": {
       "id": "Buildroot_SDK_快速编译与镜像生成向导",
@@ -67,7 +67,7 @@
       ],
       "backlinks": [],
       "summary": "# K3 Pico-ITX 开发板快速上手向导  本向导旨在帮助开发者快速熟悉 K3 Pico-ITX 迷你 AI 计算机，包括如何使用全功能 Type-C 单线点亮设备、烧录 Bianbu 3.0 系统、配置 UEFI 启动，并跑通 60 TOPS 算力的本地大语言模型。  ---  ## 阶段 1：点亮设备（推荐单线方案）  K3 Pico-ITX 支持极其简洁的**单线缆（Single-Cable）**启动方案： * **硬要求**：准备一台具备 **65W 或更大功率**、且支持 **Type-C 反向充电**的显示器。 * **连接步骤**：使用一根**全功能 Type-C 线缆**",
-      "content": "# K3 Pico-ITX 开发板快速上手向导\n\n本向导旨在帮助开发者快速熟悉 K3 Pico-ITX 迷你 AI 计算机，包括如何使用全功能 Type-C 单线点亮设备、烧录 Bianbu 3.0 系统、配置 UEFI 启动，并跑通 60 TOPS 算力的本地大语言模型。\n\n---\n\n## 阶段 1：点亮设备（推荐单线方案）\n\nK3 Pico-ITX 支持极其简洁的**单线缆（Single-Cable）**启动方案：\n* **硬要求**：准备一台具备 **65W 或更大功率**、且支持 **Type-C 反向充电**的显示器。\n* **连接步骤**：使用一根**全功能 Type-C 线缆**（必须支持高功率供电与 DP 替代模式），直接连接显示器与 K3 Pico-ITX 的 **全功能 Type-C 接口 (Pin 17)**。\n* **效果**：显示器将同时为板卡提供 65W 电源，并接收板卡输出的 4K@60Hz 视频信号，一屏一板一线即可点亮算力。\n\n> [!NOTE]\n> 若显示器不支持反向供电，请通过扩展坞接入全功能 Type-C 口，并在扩展坞上接入 PD 65W 电源与 HDMI/DP 线。或者，使用 2-Pin ATX 接口提供 12V @ 5A~7A 直流供电。\n\n---\n\n## 阶段 2：烧录操作系统 (Bianbu 3.0)\n\nK3 Pico-ITX 预装了 Bianbu 操作系统。如果需要重装系统（支持 U-Boot 版本或 UEFI 体验版）：\n\n### 步骤 1：准备烧录接口\n1. 准备一根支持高速数据通讯的 Type-C 线。\n2. 将线的一端连接到主板的 **DRD Type-C 烧录接口 (Pin 18)**，另一端连接至上位机电脑。\n   > [!WARNING]\n   > 烧录接口（Pin 18）**不可向内供电**。烧录过程中，必须保持全功能 Type-C 口或 ATX 口处于正常供电状态。\n\n### 步骤 2：进入烧录模式\n* **若设备处于关机状态**：按住主板侧边的 **FDL 烧录键** 不松开 ➡️ 插入电源上电 ➡️ 松开 **FDL 键**。\n* **若设备处于开机状态**：按住 **FDL 键** 不松开 ➡️ 短按一下 **RST 复位键** ➡️ 松开 **FDL 键**。\n\n### 步骤 3：执行烧录\n在上位机上使用进迭时空官方刷机工具 **Titan** 或通过终端执行 `fastboot` 刷机命令，将系统镜像烧录至板载 UFS2.2 本地存储或 M.2 NVMe SSD。\n\n---\n\n## 阶段 3：UEFI 启动与配置体验\n\nK3 Pico-ITX 提供了完整的 UEFI 体验版：\n1. **进入设置**：在上电开机 3 秒内，按下键盘上的 **F2** 键，即可进入 UEFI 蓝底配置界面。\n2. **启动介质管理 (Boot Manager)**：可在此菜单中自由选择从 `NVMe SSD`、`USB 外部硬盘` 或 `UFS 闪存` 启动。\n3. **更改启动顺序**：在 `Boot Maintenance Manager` ➡️ `Boot Options` ➡️ `Change Boot Order` 中，使用 `<+>` 和 `<->` 调整介质优先级，按 `<F10>` 保存。\n\n---\n\n## 阶段 4：跑通 60 TOPS 本地大模型\n\nK3 Pico-ITX 具备 60 TOPS 的通用 AI 算力与计算-智算统一内存架构，最高支持 **300 亿 (30B)** 参数级别的大模型在本地部署。\n\n### 步骤 1：更新 Bianbu 软件源\n```bash\nsudo apt update\nsudo apt install python3-onnxruntime-k3 llama.cpp -y\n```\n\n### 步骤 2：下载并部署 Llama-3-8B-GGUF\n利用统一内存架构，大模型推理不会因为显存不足而受限。我们可以直接使用 `llama.cpp` 加载 **Llama-3-8B (INT4)** 模型：\n```bash\nllama-cli -m ./Meta-Llama-3-8B-Instruct-Q4_K_M.gguf -p \"介绍一下 RISC-V 架构\" -n 128\n```\n系统将自动调度 K3 内部的 A100 智算核，结合 64-bit LPDDR5 的高带宽，实现极速流畅的本地对话。\n\n---\n\n## 5. 关联技术专题与规格\n\n* 硬件避坑与优先级：[[Knowledge_Atoms/K3_Pico_板级硬件设计专题|K3 Pico-ITX 板级硬件设计与调试专题]]\n* 芯片级 AI 部署指南：[[Knowledge_Atoms/K3大模型本地推理与AI算力专题档案|K3 大模型本地推理与 AI 算力专题]]\n* 官方完整指南：[K3 Pico 使用指南（原始文件）](file:///Users/bicycle/Spacemit%20LLM%20Wiki/Sources/docs-product/zh/k3_pico/pico_user_guide.md)"
+      "content": "# K3 Pico-ITX 开发板快速上手向导\n\n本向导旨在帮助开发者快速熟悉 K3 Pico-ITX 迷你 AI 计算机，包括如何使用全功能 Type-C 单线点亮设备、烧录 Bianbu 3.0 系统、配置 UEFI 启动，并跑通 60 TOPS 算力的本地大语言模型。\n\n---\n\n## 阶段 1：点亮设备（推荐单线方案）\n\nK3 Pico-ITX 支持极其简洁的**单线缆（Single-Cable）**启动方案：\n* **硬要求**：准备一台具备 **65W 或更大功率**、且支持 **Type-C 反向充电**的显示器。\n* **连接步骤**：使用一根**全功能 Type-C 线缆**（必须支持高功率供电与 DP 替代模式），直接连接显示器与 K3 Pico-ITX 的 **全功能 Type-C 接口 (Pin 17)**。\n* **效果**：显示器将同时为板卡提供 65W 电源，并接收板卡输出的 4K@60Hz 视频信号，一屏一板一线即可点亮算力。\n\n> [!NOTE]\n> 若显示器不支持反向供电，请通过扩展坞接入全功能 Type-C 口，并在扩展坞上接入 PD 65W 电源与 HDMI/DP 线。或者，使用 2-Pin ATX 接口提供 12V @ 5A~7A 直流供电。\n\n---\n\n## 阶段 2：烧录操作系统 (Bianbu 3.0)\n\nK3 Pico-ITX 预装了 Bianbu 操作系统。如果需要重装系统（支持 U-Boot 版本或 UEFI 体验版）：\n\n### 步骤 1：准备烧录接口\n1. 准备一根支持高速数据通讯的 Type-C 线。\n2. 将线的一端连接到主板的 **DRD Type-C 烧录接口 (Pin 18)**，另一端连接至上位机电脑。\n   > [!WARNING]\n   > 烧录接口（Pin 18）**不可向内供电**。烧录过程中，必须保持全功能 Type-C 口或 ATX 口处于正常供电状态。\n\n### 步骤 2：进入烧录模式\n* **若设备处于关机状态**：按住主板侧边的 **FDL 烧录键** 不松开 ➡️ 插入电源上电 ➡️ 松开 **FDL 键**。\n* **若设备处于开机状态**：按住 **FDL 键** 不松开 ➡️ 短按一下 **RST 复位键** ➡️ 松开 **FDL 键**。\n\n### 步骤 3：执行烧录\n在上位机上使用进迭时空官方刷机工具 **Titan** 或通过终端执行 `fastboot` 刷机命令，将系统镜像烧录至板载 UFS2.2 本地存储或 M.2 NVMe SSD。\n\n---\n\n## 阶段 3：UEFI 启动与配置体验\n\nK3 Pico-ITX 提供了完整的 UEFI 体验版：\n1. **进入设置**：在上电开机 3 秒内，按下键盘上的 **F2** 键，即可进入 UEFI 蓝底配置界面。\n2. **启动介质管理 (Boot Manager)**：可在此菜单中自由选择从 `NVMe SSD`、`USB 外部硬盘` 或 `UFS 闪存` 启动。\n3. **更改启动顺序**：在 `Boot Maintenance Manager` ➡️ `Boot Options` ➡️ `Change Boot Order` 中，使用 `<+>` 和 `<->` 调整介质优先级，按 `<F10>` 保存。\n\n---\n\n## 阶段 4：跑通 60 TOPS 本地大模型\n\nK3 Pico-ITX 具备 60 TOPS 的通用 AI 算力与计算-智算统一内存架构，最高支持 **300 亿 (30B) 参数级别的 MoE 稀疏大模型**（如 Qwen3-30B-A3B，实际激活约 3B）或 8B 稠密大模型在本地流畅部署。\n\n### 步骤 1：更新 Bianbu 软件源\n```bash\nsudo apt update\nsudo apt install python3-onnxruntime-k3 llama.cpp -y\n```\n\n### 步骤 2：下载并部署 Llama-3-8B-GGUF\n利用统一内存架构，大模型推理不会因为显存不足而受限。我们可以直接使用 `llama.cpp` 加载 **Llama-3-8B (INT4)** 模型：\n```bash\nllama-cli -m ./Meta-Llama-3-8B-Instruct-Q4_K_M.gguf -p \"介绍一下 RISC-V 架构\" -n 128\n```\n系统将自动调度 K3 内部的 A100 智算核，结合 64-bit LPDDR5 的高带宽，实现极速流畅的本地对话。\n\n---\n\n## 5. 关联技术专题与规格\n\n* 硬件避坑与优先级：[[Knowledge_Atoms/K3_Pico_板级硬件设计专题|K3 Pico-ITX 板级硬件设计与调试专题]]\n* 芯片级 AI 部署指南：[[Knowledge_Atoms/K3大模型本地推理与AI算力专题档案|K3 大模型本地推理与 AI 算力专题]]\n* 官方完整指南：[K3 Pico 使用指南（原始文件）](file:///Users/bicycle/Spacemit%20LLM%20Wiki/Sources/docs-product/zh/k3_pico/pico_user_guide.md)"
     },
     "K3芯片开发快速上手向导": {
       "id": "K3芯片开发快速上手向导",
@@ -90,8 +90,8 @@
         "k3_ai_performance_data"
       ],
       "backlinks": [],
-      "summary": "# K3 芯片开发快速上手向导  本向导为开发者提供一条从零开始熟悉 K3 芯片、进行单板硬件散热设计、配置启动模式、到最终在板端跑通本地 30B 大模型的**极简任务动线**。  ---  ## 🏁 开发者通关动线  ```mermaid graph TD     Step1[第一步: 熟悉 K3 规格指标] --> Step2[第二步: 进行系统散热设计]     Step2 --> Step3[第三步: 配置上电启动模式]     Step3 --> Step4[第四步: 编译与烧录 SDK]     Step4 --> Step5[第五步: 部署本地大模型] ```  ### 1. 第",
-      "content": "# K3 芯片开发快速上手向导\n\n本向导为开发者提供一条从零开始熟悉 K3 芯片、进行单板硬件散热设计、配置启动模式、到最终在板端跑通本地 30B 大模型的**极简任务动线**。\n\n---\n\n## 🏁 开发者通关动线\n\n```mermaid\ngraph TD\n    Step1[第一步: 熟悉 K3 规格指标] --> Step2[第二步: 进行系统散热设计]\n    Step2 --> Step3[第三步: 配置上电启动模式]\n    Step3 --> Step4[第四步: 编译与烧录 SDK]\n    Step4 --> Step5[第五步: 部署本地大模型]\n```\n\n### 1. 第一步：熟悉 K3 规格指标\n*   **目标**：快速了解 K3 芯片的计算架构与基本接口能力。\n*   **行动**：阅读 [K3 产品简介（原始文件）](../Sources/docs-chip/zh/key_stone/k3/k3_docs/root_overview.md)，重点关注通用 X100 计算核与 AI A100 核的数量与主频。\n\n### 2. 第二步：进行系统散热设计\n*   **目标**：设计符合 K3 热学指标的散热方案，避免满载过温降频。\n*   **行动**：\n    *   阅读 **[[Knowledge_Atoms/K3热设计与散热专题档案]]**。\n    *   根据其引用的物理热阻与 TDP 功耗限额（参见 [[Evidence/k3_thermal_specs]]），为你的开发板设计主动风冷或金属外壳被动散热。\n\n### 3. 第三步：配置上电启动模式\n*   **目标**：设计并检查开发板的 Strap Pins 上下拉电阻，确保芯片能正确从 eMMC/SD/Flash 引导或进入 USB 烧录。\n*   **行动**：\n    *   阅读 **[[Knowledge_Atoms/K3启动模式与Strap管脚配置专题档案]]**。\n    *   对照其中的电平组合表（参见 [[Evidence/k3_strap_pins_config]]），检查硬件原理图上 GPIO65、GPIO66、GPIO69 的电阻连接。\n\n### 4. 第四步：编译并烧录 SDK 系统\n*   **目标**：在宿主机上搭建开发环境，编译并烧录最小 Bianbu Linux 系统。\n*   **行动**：参考 [K3 SDK 使用指南（原始文件）](../Sources/docs-chip/zh/key_stone/k3/k3_sw/k3_sdk_user_guide.md)，下载源码，执行 `make` 编译出系统镜像，并使用烧录工具写入开发板。\n\n### 5. 第五步：部署本地大模型\n*   **目标**：利用 K3 的 60 TOPS AI 算力，在本地流畅运行大语言模型或视觉多模态模型。\n*   **行动**：\n    *   阅读 **[[Knowledge_Atoms/K3大模型本地推理与AI算力专题档案]]**。\n    *   了解大模型量化格式（支持 FP8 原生推理，参见 [[Evidence/k3_ai_performance_data]]）。\n    *   使用 AI 工具链编译模型，并在开发板上加载运行，体验端侧 > 10 Tokens/s 的大模型推理。"
+      "summary": "# K3 芯片开发快速上手向导  本向导为开发者提供一条从零开始熟悉 K3 芯片、进行单板硬件散热设计、配置启动模式、到最终在板端跑通本地 30B MoE 稀疏大模型（如 Qwen3-30B-A3B）的**极简任务动线**。  ---  ## 🏁 开发者通关动线  ```mermaid graph TD     Step1[第一步: 熟悉 K3 规格指标] --> Step2[第二步: 进行系统散热设计]     Step2 --> Step3[第三步: 配置上电启动模式]     Step3 --> Step4[第四步: 编译与烧录 SDK]     Step4 --> Step5[第五步:",
+      "content": "# K3 芯片开发快速上手向导\n\n本向导为开发者提供一条从零开始熟悉 K3 芯片、进行单板硬件散热设计、配置启动模式、到最终在板端跑通本地 30B MoE 稀疏大模型（如 Qwen3-30B-A3B）的**极简任务动线**。\n\n---\n\n## 🏁 开发者通关动线\n\n```mermaid\ngraph TD\n    Step1[第一步: 熟悉 K3 规格指标] --> Step2[第二步: 进行系统散热设计]\n    Step2 --> Step3[第三步: 配置上电启动模式]\n    Step3 --> Step4[第四步: 编译与烧录 SDK]\n    Step4 --> Step5[第五步: 部署本地大模型]\n```\n\n### 1. 第一步：熟悉 K3 规格指标\n*   **目标**：快速了解 K3 芯片的计算架构与基本接口能力。\n*   **行动**：阅读 [K3 产品简介（原始文件）](../Sources/docs-chip/zh/key_stone/k3/k3_docs/root_overview.md)，重点关注通用 X100 计算核与 AI A100 核的数量与主频。\n\n### 2. 第二步：进行系统散热设计\n*   **目标**：设计符合 K3 热学指标的散热方案，避免满载过温降频。\n*   **行动**：\n    *   阅读 **[[Knowledge_Atoms/K3热设计与散热专题档案]]**。\n    *   根据其引用的物理热阻与 TDP 功耗限额（参见 [[Evidence/k3_thermal_specs]]），为你的开发板设计主动风冷或金属外壳被动散热。\n\n### 3. 第三步：配置上电启动模式\n*   **目标**：设计并检查开发板的 Strap Pins 上下拉电阻，确保芯片能正确从 eMMC/SD/Flash 引导或进入 USB 烧录。\n*   **行动**：\n    *   阅读 **[[Knowledge_Atoms/K3启动模式与Strap管脚配置专题档案]]**。\n    *   对照其中的电平组合表（参见 [[Evidence/k3_strap_pins_config]]），检查硬件原理图上 GPIO65、GPIO66、GPIO69 的电阻连接。\n\n### 4. 第四步：编译并烧录 SDK 系统\n*   **目标**：在宿主机上搭建开发环境，编译并烧录最小 Bianbu Linux 系统。\n*   **行动**：参考 [K3 SDK 使用指南（原始文件）](../Sources/docs-chip/zh/key_stone/k3/k3_sw/k3_sdk_user_guide.md)，下载源码，执行 `make` 编译出系统镜像，并使用烧录工具写入开发板。\n\n### 5. 第五步：部署本地大模型\n*   **目标**：利用 K3 的 60 TOPS AI 算力与 A100 智算核，在本地流畅运行大语言模型（如 30B MoE 稀疏大模型 Qwen3-30B-A3B）或 0.5B~4B 视觉多模态模型。\n*   **行动**：\n    *   阅读 **[[Knowledge_Atoms/K3大模型本地推理与AI算力专题档案]]**。\n    *   了解大模型量化格式（支持 FP8 原生推理，参见 [[Evidence/k3_ai_performance_data]]）。\n    *   使用 AI 工具链编译模型，并在开发板上加载运行，体验端侧 > 10 Tokens/s 的大模型推理。"
     },
     "Muse_Pi_开发板快速上手向导": {
       "id": "Muse_Pi_开发板快速上手向导",
@@ -132,7 +132,7 @@
       ],
       "backlinks": [],
       "summary": "# ROS 2 机器人与具身智能快速上手向导  本向导提供从环境搭建、硬件连接、micro-ROS 节点启动到端侧模仿学习（ACT / SmolVLA）模型部署的极简通关动线，帮助开发者快速在 SpacemiT K1 / K3 芯片与生态板卡上开发具身智能机器人应用。  ---  ## 🗺️ 通关路线图  ```mermaid graph LR     Step1[1. 环境准备] --> Step2[2. 硬件连接与 micro-ROS]     Step2 --> Step3[3. ROS 2 驱动启动]     Step3 --> Step4[4. 具身 AI 模型部署] ```  --",
-      "content": "# ROS 2 机器人与具身智能快速上手向导\n\n本向导提供从环境搭建、硬件连接、micro-ROS 节点启动到端侧模仿学习（ACT / SmolVLA）模型部署的极简通关动线，帮助开发者快速在 SpacemiT K1 / K3 芯片与生态板卡上开发具身智能机器人应用。\n\n---\n\n## 🗺️ 通关路线图\n\n```mermaid\ngraph LR\n    Step1[1. 环境准备] --> Step2[2. 硬件连接与 micro-ROS]\n    Step2 --> Step3[3. ROS 2 驱动启动]\n    Step3 --> Step4[4. 具身 AI 模型部署]\n```\n\n---\n\n## 步骤 1：准备 ROS 2 开发环境\n\n推荐在 **Bianbu OS** 或 **Ubuntu 24.04** 上安装 ROS 2 Humble 或 Jazzy 环境：\n\n```bash\n# 1. 软件源与 ROS 2 基础环境安装\nsudo apt update && sudo apt install -y ros-humble-ros-base ros-humble-rviz2\n\n# 2. 设置 ROS 2 环境变量\nsource /opt/ros/humble/setup.bash\n\n# 3. 指定 Cyclone DDS 中间件\nexport RMW_IMPLEMENTATION=rmw_cyclonedds_cpp\n```\n\n详细环境依赖与节点消耗请参考 [[Evidence/ros2_platform_specs|SpacemiT ROS 2 平台规格表]]。\n\n---\n\n## 步骤 2：硬件接口连接与 micro-ROS Agent 启动\n\n将微控制器 / 机械臂舵机板通过 UART 串口线连接至主板（如 `/dev/ttyS1`）：\n\n```bash\n# 启动 micro-ROS 串口桥接节点\nros2 run micro_ros_agent micro_ros_agent serial --dev /dev/ttyS1 -b 115200\n```\n\n板级 JTAG / UART 调试排针规范参考 [[Knowledge_Atoms/Muse_Pi_板级硬件设计专题|Muse Pi 板级硬件设计专题]]。\n\n---\n\n## 步骤 3：部署 LeRobot 机械臂或 Reachy Mini 应用\n\n### 3.1 运行 SO101 机械臂 ACT 模仿学习推理\n\n使用已安装的 LeRobot 库，在 K1/K3 端侧直接运行 ACT 轨迹预测模型驱动 SO101 6-DoF 机械臂：\n\n```bash\n# 运行端侧抓取推理闭环\npython3 -m lerobot.scripts.control_robot --robot-type so101 --policy-type act --eval\n```\n\n### 3.2 运行 Reachy Mini 视线追踪与交互\n\n```bash\nros2 launch reachy_mini_bringup reachy_mini.launch.py\n```\n\n更多机械臂与具身智能模型规格详见 [[Evidence/robot_hardware_specs|SpacemiT 机器人硬件与具身 AI 模型参数规格]] 及 [[Knowledge_Atoms/SpacemiT_ROS2_机器人与具身智能专题档案|SpacemiT ROS 2 机器人与具身智能专题档案]]。"
+      "content": "# ROS 2 机器人与具身智能快速上手向导\n\n本向导提供从环境搭建、硬件连接、micro-ROS 节点启动到端侧模仿学习（ACT / SmolVLA）模型部署的极简通关动线，帮助开发者快速在 SpacemiT K1 / K3 芯片与生态板卡上开发具身智能机器人应用。\n\n---\n\n## 🗺️ 通关路线图\n\n```mermaid\ngraph LR\n    Step1[1. 环境准备] --> Step2[2. 硬件连接与 micro-ROS]\n    Step2 --> Step3[3. ROS 2 驱动启动]\n    Step3 --> Step4[4. 具身 AI 模型部署]\n```\n\n---\n\n## 步骤 1：准备 ROS 2 开发环境\n\n推荐在 **Bianbu OS** 或 **Ubuntu 24.04** 上安装 ROS 2 Humble 或 Jazzy 环境：\n\n```bash\n# 1. 软件源与 ROS 2 基础环境安装\nsudo apt update && sudo apt install -y ros-humble-ros-base ros-humble-rviz2\n\n# 2. 设置 ROS 2 环境变量\nsource /opt/ros/humble/setup.bash\n\n# 3. 指定 Cyclone DDS 中间件\nexport RMW_IMPLEMENTATION=rmw_cyclonedds_cpp\n```\n\n详细环境依赖与节点消耗请参考 [[Evidence/ros2_platform_specs|SpacemiT ROS 2 平台规格表]]。\n\n---\n\n## 步骤 2：硬件接口连接与 micro-ROS Agent 启动\n\n将微控制器 / 机械臂舵机板通过 UART 串口线连接至主板（如 `/dev/ttyS1`）：\n\n```bash\n# 启动 micro-ROS 串口桥接节点\nros2 run micro_ros_agent micro_ros_agent serial --dev /dev/ttyS1 -b 115200\n```\n\n板级 JTAG / UART 调试排针规范参考 [[Knowledge_Atoms/Muse_Pi_板级硬件设计专题|Muse Pi 板级硬件设计专题]]。\n\n---\n\n## 步骤 3：部署 LeRobot 机械臂或 Reachy Mini 应用\n\n### 3.1 运行 SO101 机械臂模仿学习推理 (K1 / K3)\n\n使用已安装的 LeRobot 库与模型：\n* 在 **K1 (Muse Pi)** 平台上直接运行 **ACT** 轨迹预测模型驱动 SO101 6-DoF 机械臂（端侧实测 25 FPS）：\n  ```bash\n  python3 -m lerobot.scripts.control_robot --robot-type so101 --policy-type act --eval\n  ```\n* 在 **K3 (K3 Pico)** 平台上可通过 Robot SDK 运行 **SmolVLA** 多模态策略模型的 4 子图 ONNX 推理，实现端侧视觉-语言-动作闭环。\n\n### 3.2 运行 Reachy Mini 视线追踪与交互\n\n```bash\nros2 launch reachy_mini_bringup reachy_mini.launch.py\n```\n\n更多机械臂与具身智能模型规格详见 [[Evidence/robot_hardware_specs|SpacemiT 机器人硬件与具身 AI 模型参数规格]] 及 [[Knowledge_Atoms/SpacemiT_ROS2_机器人与具身智能专题档案|SpacemiT ROS 2 机器人与具身智能专题档案]]。"
     },
     "SpaceAI_模型量化与端侧推理快速上手向导": {
       "id": "SpaceAI_模型量化与端侧推理快速上手向导",
@@ -265,7 +265,8 @@
       ],
       "target_audience": [
         "硬件电路工程师",
-        "网口驱动"
+        "网口驱动",
+        "高性能网络工程师"
       ],
       "outlinks": [
         "k1_k3_network_specs"
@@ -273,8 +274,8 @@
       "backlinks": [
         "K3_Pico_板级硬件设计专题"
       ],
-      "summary": "# K1/K3 网络通信与千兆网口专题档案  > [!TIP] > **💡 工程师导读与排坑焦点**：指导双 GMAC 千兆网口电路、百兆 PHY 兼容避坑与无线 SDIO 联调。 > **目标读者**：`硬件电路工程师 / 网口驱动` | **技术领域**：`hardware_schematic_design`  本专题档案汇总了 SpacemiT K1 和 K3 芯片在双路以太网控制器（GMAC）、板级 PHY 芯片选型、以及 Wi-Fi/BT 模组接口联调方面的核心规范与常见避坑点。  ---  ## 1. 千兆以太网 (GMAC) 硬件选型避坑  在进行 K1 或 K3 开发板设计时，",
-      "content": "# K1/K3 网络通信与千兆网口专题档案\n\n> [!TIP]\n> **💡 工程师导读与排坑焦点**：指导双 GMAC 千兆网口电路、百兆 PHY 兼容避坑与无线 SDIO 联调。\n> **目标读者**：`硬件电路工程师 / 网口驱动` | **技术领域**：`hardware_schematic_design`\n\n本专题档案汇总了 SpacemiT K1 和 K3 芯片在双路以太网控制器（GMAC）、板级 PHY 芯片选型、以及 Wi-Fi/BT 模组接口联调方面的核心规范与常见避坑点。\n\n---\n\n## 1. 千兆以太网 (GMAC) 硬件选型避坑\n\n在进行 K1 或 K3 开发板设计时，网络 PHY 芯片的选型至关重要：\n*   **不支持纯百兆 PHY**：\n    *   **红线警告**：K1/K3 的 GMAC 控制器在物理设计上**不兼容百兆（100M）以太网 PHY 芯片**（即使在实际使用中只需要 100M 带宽，外围也必须配置千兆级以太网 PHY 芯片）。\n    *   接口仅支持千兆级 `RGMII` 协议规范。\n*   **单网口与双网口设计**：\n    *   K1/K3 内部拥有两路独立的千兆以太网 MAC（`GMAC0` 和 `GMAC1`）。\n    *   若硬件为了控制成本或减小体积，设计为单网口产品（例如 Muse Pi 仅引出 GMAC0 对应的网口），在 BSP 软件端配置正确的设备树（DTS）后，**完全不会影响操作系统的网络功能或导致底层驱动报错**。\n\n---\n\n## 2. 无线模组接口联调 (Wi-Fi / BT)\n\n*   **SDIO 3.0 通道**：用于 Wi-Fi 模组的数据传输。由于 SDIO 3.0 的高速率（最高 104MB/s），PCB 走线必须控制在 **50 Ω** 单端阻抗，且时钟线与数据线等长必须严格控制在 1mm 以内。\n*   **电平匹配**：Wi-Fi 模组引脚通常工作在 1.8V 逻辑电平，若选用 3.3V 的模组，必须在 SDIO 通道上增加高速电平转换芯片，或配置芯片内对应的 `VCC1833_MMC` 电源轨。\n\n---\n\n## 3. 关联事实证据与参考源\n\n*   物理网络指标参见：[[Evidence/k1_k3_network_specs]] (千兆 GMAC 速率与 PHY 电压)\n*   [K1 硬件常见问题 FAQ - 原始文档](../Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_faq.md)\n*   [K1 SDK 使用指南 - 原始文档](../Sources/docs-chip/zh/key_stone/k1/k1_sw/k1_sdk_user_guide.md)"
+      "summary": "# K1/K3 网络通信与千兆网口专题档案  > [!TIP] > **💡 工程师导读与排坑焦点**：指导双 GMAC 千兆网口电路、百兆 PHY 兼容避坑、无线 SDIO 联调与 K3 GMAC DPDK 用户态网络旁路加速。 > **目标读者**：`硬件电路工程师 / 网口驱动 / 高性能网络工程师` | **技术领域**：`hardware_schematic_design`  本专题档案汇总了 SpacemiT K1 和 K3 芯片在双路以太网控制器（GMAC）、板级 PHY 芯片选型、无线 Wi-Fi/BT 模组接口联调，以及 K3 GMAC DPDK 高性能网络加速方案的核心规范。",
+      "content": "# K1/K3 网络通信与千兆网口专题档案\n\n> [!TIP]\n> **💡 工程师导读与排坑焦点**：指导双 GMAC 千兆网口电路、百兆 PHY 兼容避坑、无线 SDIO 联调与 K3 GMAC DPDK 用户态网络旁路加速。\n> **目标读者**：`硬件电路工程师 / 网口驱动 / 高性能网络工程师` | **技术领域**：`hardware_schematic_design`\n\n本专题档案汇总了 SpacemiT K1 和 K3 芯片在双路以太网控制器（GMAC）、板级 PHY 芯片选型、无线 Wi-Fi/BT 模组接口联调，以及 K3 GMAC DPDK 高性能网络加速方案的核心规范。\n\n---\n\n## 1. 千兆以太网 (GMAC) 硬件选型避坑\n\n在进行 K1 或 K3 开发板设计时，网络 PHY 芯片的选型至关重要：\n*   **不支持纯百兆 PHY**：\n    *   **红线警告**：K1/K3 的 GMAC 控制器在物理设计上**不兼容百兆（100M）以太网 PHY 芯片**（即使在实际使用中只需要 100M 带宽，外围也必须配置千兆级以太网 PHY 芯片）。\n    *   接口仅支持千兆级 `RGMII` 协议规范。\n*   **单网口与双网口设计**：\n    *   K1/K3 内部拥有两路独立的千兆以太网 MAC（`GMAC0` 和 `GMAC1`）。\n    *   若硬件为了控制成本或减小体积，设计为单网口产品（例如 Muse Pi 仅引出 GMAC0 对应的网口），在 BSP 软件端配置正确的设备树（DTS）后，**完全不会影响操作系统的网络功能或导致底层驱动报错**。\n\n---\n\n## 2. 无线模组接口联调 (Wi-Fi / BT)\n\n*   **SDIO 3.0 通道**：用于 Wi-Fi 模组的数据传输。由于 SDIO 3.0 的高速率（最高 104MB/s），PCB 走线必须控制在 **50 Ω** 单端阻抗，且时钟线与数据线等长必须严格控制在 1mm 以内。\n*   **电平匹配**：Wi-Fi 模组引脚通常工作在 1.8V 逻辑电平，若选用 3.3V 的模组，必须在 SDIO 通道上增加高速电平转换芯片，或配置芯片内对应的 `VCC1833_MMC` 电源轨。\n\n---\n\n## 3. K3 GMAC DPDK 高性能用户态数据平面加速\n\n针对边缘网关、网络流量监测与 RISC-V 软路由等高性能数据包吞吐场景，SpacemiT 在 K3 平台提供了官方 **DPDK (Data Plane Development Kit)** 支持：\n\n*   **架构优势（Kernel Bypass）**：传统 Linux 内核协议栈存在中断开销、多次内存复制（sk_buff）及进程上下文切换。DPDK 采用用户态轮询模式驱动（PMD），直接接管 GMAC 硬件收发队列，极大压降网络延迟。\n*   **核心组件分工**：\n    *   **EAL (环境抽象层)**：完成大页内存（Hugepages）分配、CPU 亲和性核心绑定与 PCIe/GMAC 硬件抽象。\n    *   **Ring & Mempool**：无锁多生产者/多消费者 FIFO 队列管理数据包包头与缓冲区释放。\n    *   **PMD 驱动**：K3 GMAC 轮询模式驱动直接在用户空间与网卡 DMA 交互。\n*   **工程编译配置**：在 Buildroot 编译配置中启用 `BR2_PACKAGE_DPDK=y`，并在系统引导后通过驱动解绑脚本将目标 GMAC 从标准内核驱动切换至用户态框架。\n\n---\n\n## 4. 关联事实证据与参考源\n\n*   物理网络指标参见：[[Evidence/k1_k3_network_specs]] (千兆 GMAC 速率与 PHY 电压)\n*   [K3 GMAC DPDK 用户使用指南（官方原始文档）](../Sources/docs-buildroot/zh/k3_buildroot/dpdk/k3_GMAC_DPDK_user_guide.md)\n*   [K1 硬件常见问题 FAQ - 原始文档](../Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_faq.md)\n*   [K1 SDK 使用指南 - 原始文档](../Sources/docs-chip/zh/key_stone/k1/k1_sw/k1_sdk_user_guide.md)"
     },
     "K1_K3高速外设接口专题档案": {
       "id": "K1_K3高速外设接口专题档案",
@@ -393,8 +394,8 @@
       "backlinks": [
         "MUSE_Pi_26Pin_IOMAP管脚映射专题"
       ],
-      "summary": "# K1 硬件外设接口与物理调试专题档案  > [!TIP] > **💡 工程师导读与排坑焦点**：详解 K1 串口/JTAG 物理引脚定义、电平匹配与调试供电避坑原则。 > **目标读者**：`硬件调试工程师 / 嵌入式工程师` | **技术领域**：`toolchain_debug_tools`  本专题档案汇总了 K1 芯片板级硬件原理图设计、PCB 走线阻抗以及物理调试（串口/JTAG）的实用技术指导。  ---  ## 1. 物理调试接口设计  在进行 K1 单板调试时，串口与 JTAG 是最核心的底层通道：  ### 1.1 调试串口设计 *   **物理连接**：调试串口通常设计",
-      "content": "# K1 硬件外设接口与物理调试专题档案\n\n> [!TIP]\n> **💡 工程师导读与排坑焦点**：详解 K1 串口/JTAG 物理引脚定义、电平匹配与调试供电避坑原则。\n> **目标读者**：`硬件调试工程师 / 嵌入式工程师` | **技术领域**：`toolchain_debug_tools`\n\n本专题档案汇总了 K1 芯片板级硬件原理图设计、PCB 走线阻抗以及物理调试（串口/JTAG）的实用技术指导。\n\n---\n\n## 1. 物理调试接口设计\n\n在进行 K1 单板调试时，串口与 JTAG 是最核心的底层通道：\n\n### 1.1 调试串口设计\n*   **物理连接**：调试串口通常设计为 3 Pin 插针（如 Muse Pi 位于 Wi-Fi 模组旁）。连接时，单板 TX 需与串口板 RX 交叉相连，RX 与 TX 交叉。\n*   **电气规范**：必须采用 3.3V 电平串口线，波特率固定为 115200（底层事实参见 [[Evidence/k1_hardware_debug_parameters]]）。\n\n### 1.2 JTAG 调试路由\nK1 支持两套 JTAG 接口（通过 `JTAG_SEL` 管脚切换，参见 [[Evidence/k1_strap_pins_config]]）：\n*   **PRI JTAG (主调试口)**：位于 26 Pin 插针的 7, 11, 13, 15 号引脚（分别对应 `TDI`, `TMS`, `TCK`, `TDO`），可以直接使用 J-Link 仿真器连接调试。\n*   **SEC JTAG (辅助调试口)**：复用了 SD 卡槽的 CLK 与 DATA0~3 管脚。在开发板上由于封装限制通常未引出，需制作转接小板或拆除卡槽飞线进行调试。\n\n---\n\n## 2. 电源与高速信号设计避坑\n\n### 2.1 模拟供电与磁珠隔离\n*   **红线警告**：K1 各模拟 PHY 模块（如 PLL、Audio、CSI/DSI、HDMI 等）的供电磁珠**绝对不能省略**。磁珠（推荐 120Ω@100MHz）能有效隔离模拟电源与数字电源的杂讯，省略会导致信号完整性变差，甚至导致外设无法初始化。\n\n### 2.2 闲置外设的供电原则\n*   **设计规则**：即使在项目中**不用** HDMI、PCIe、MIPI CSI、MIPI DSI、eMMC 或 USB2.0 等模块，**其对应的芯片引脚电源域也必须正常供电**，不能悬空或断电。否则会引起 SoC 内部漏电或逻辑异常。\n\n### 2.3 GPIO90 的复用机制\n*   **Strap复用**：`GPIO_90` 在系统上电复位瞬间作为 `Strap 4` 采样以配置 QSPI 的工作电压（1.8V 或 3.3V，参见 [[Evidence/k1_strap_pins_config]]）。在系统启动完成后，该管脚完全可以作为普通 GPIO 使用，无需闲置。\n\n---\n\n## 3. 关联原始参考文档\n\n关于具体的 PCB 叠层阻抗匹配与单端/差分线宽设计，请参阅：\n*   [K1 硬件设计指南 - 原始文档](../Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_design_guide.md)\n*   [K1 硬件常见问题 FAQ - 原始文档](../Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_faq.md)\n*   [K1 硬件参考资源 - 原始文档](../Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_resources.md)"
+      "summary": "# K1 硬件外设接口与物理调试专题档案  > [!TIP] > **💡 工程师导读与排坑焦点**：详解 K1 串口/JTAG 物理引脚定义、官方 TF 卡扩展调试子板用法、K1 与 K3 JTAG 线序相反避坑红线及供电设计准则。 > **目标读者**：`硬件调试工程师 / 嵌入式工程师` | **技术领域**：`toolchain_debug_tools`  本专题档案汇总了 K1 芯片板级硬件原理图设计、PCB 走线阻抗以及物理调试（串口/JTAG/TF卡转接）的实用技术指导。  ---  ## 1. 物理调试接口设计与官方 TF 卡调试子板  在进行 K1 单板调试时，串口与 JTAG",
+      "content": "# K1 硬件外设接口与物理调试专题档案\n\n> [!TIP]\n> **💡 工程师导读与排坑焦点**：详解 K1 串口/JTAG 物理引脚定义、官方 TF 卡扩展调试子板用法、K1 与 K3 JTAG 线序相反避坑红线及供电设计准则。\n> **目标读者**：`硬件调试工程师 / 嵌入式工程师` | **技术领域**：`toolchain_debug_tools`\n\n本专题档案汇总了 K1 芯片板级硬件原理图设计、PCB 走线阻抗以及物理调试（串口/JTAG/TF卡转接）的实用技术指导。\n\n---\n\n## 1. 物理调试接口设计与官方 TF 卡调试子板\n\n在进行 K1 单板调试时，串口与 JTAG 是最核心的底层通道：\n\n### 1.1 调试串口设计\n*   **物理连接**：调试串口通常设计为 3 Pin 插针（如 Muse Pi 位于 Wi-Fi 模组旁）。连接时，单板 TX 需与串口板 RX 交叉相连，RX 与 TX 交叉。\n*   **电气规范**：必须采用 3.3V 电平串口线，波特率固定为 115200（底层事实参见 [[Evidence/k1_hardware_debug_parameters]]）。\n\n### 1.2 JTAG 调试路由与官方 TF 卡调试子板\nK1 支持两套 JTAG 接口（通过 `JTAG_SEL` 管脚切换，参见 [[Evidence/k1_strap_pins_config]]）：\n*   **PRI JTAG (主调试口)**：位于 26 Pin 插针的 7, 11, 13, 15 号引脚（分别对应 `TDI`, `TMS`, `TCK`, `TDO`），可以直接使用 J-Link 仿真器连接调试。\n*   **SEC JTAG (辅助调试口)**：复用了 SD 卡槽的 CLK 与 DATA0~3 管脚。官方已推出 **TF 卡扩展调试子板（TF Card Debug Board）**，可直接插入 MicroSD 卡槽，引出 20-pin 标准 J-Link 牛角座与 XH2.54-4P 3.3V 串口座。\n\n> [!CAUTION]\n> **⚠️ 跨代排坑红线：K1 与 K3 的 TF 调试子板 JTAG 线序相反！**\n> 当使用官方 TF 卡扩展调试子板连接 J-Link 时，请注意牛角座管脚定义在两代芯片上存在关键硬件差异：\n> *   **K1 系列**：Pin 5 为 **`TDI`**，Pin 7 为 **`TMS`**（通过调整子板 J3/J4/J5 跳线配置 JTAG 模式或 RCPU 小核串口）。\n> *   **K3 系列**：Pin 5 为 **`TMS`**，Pin 7 为 **`TDI`**（两脚信号物理反转！若按 K1 线序直连会导致 JTAG 识别超时挂死）。\n\n---\n\n## 2. 电源与高速信号设计避坑\n\n### 2.1 模拟供电与磁珠隔离\n*   **红线警告**：K1 各模拟 PHY 模块（如 PLL、Audio、CSI/DSI、HDMI 等）的供电磁珠**绝对不能省略**。磁珠（推荐 120Ω@100MHz）能有效隔离模拟电源与数字电源的杂讯，省略会导致信号完整性变差，甚至导致外设无法初始化。\n\n### 2.2 闲置外设的供电原则\n*   **设计规则**：即使在项目中**不用** HDMI、PCIe、MIPI CSI、MIPI DSI、eMMC 或 USB2.0 等模块，**其对应的芯片引脚电源域也必须正常供电**，不能悬空或断电。否则会引起 SoC 内部漏电或逻辑异常。\n\n### 2.3 GPIO90 的复用机制\n*   **Strap复用**：`GPIO_90` 在系统上电复位瞬间作为 `Strap 4` 采样以配置 QSPI 的工作电压（1.8V 或 3.3V，参见 [[Evidence/k1_strap_pins_config]]）。在系统启动完成后，该管脚完全可以作为普通 GPIO 使用，无需闲置。\n\n---\n\n## 3. 关联原始参考文档\n\n*   [TF 卡扩展调试子板使用说明（官方原始文档）](../Sources/docs-product/zh/hw_accessories/tf_card_debug_board.md)\n*   [K1 硬件设计指南 - 原始文档](../Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_design_guide.md)\n*   [K1 硬件常见问题 FAQ - 原始文档](../Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_faq.md)\n*   [K1 硬件参考资源 - 原始文档](../Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_resources.md)"
     },
     "K1系统启动与分区配置专题档案": {
       "id": "K1系统启动与分区配置专题档案",
@@ -641,7 +642,7 @@
         "SpaceAI_端侧大模型量化与部署专题档案"
       ],
       "summary": "# K3 大模型本地推理与 AI 算力专题档案  > [!TIP] > **💡 工程师导读与排坑焦点**：详解 K3 大模型本地运行吞吐、统一内存共享与多线程推理加速。 > **目标读者**：`AI 算法工程师 / 系统优化` | **技术领域**：`edge_ai_robotics`  本主题档案汇总了 K3 芯片在本地端侧部署大语言模型（LLM）与多模态模型（VLM）的软硬件架构、实测速度与部署流程。  ---  ## 1. 核心 AI 性能指标  K3 芯片作为高性能 RISC-V AI CPU，具备强大的端侧推理能力（底层数据参见 [[Evidence/k3_ai_performanc",
-      "content": "# K3 大模型本地推理与 AI 算力专题档案\n\n> [!TIP]\n> **💡 工程师导读与排坑焦点**：详解 K3 大模型本地运行吞吐、统一内存共享与多线程推理加速。\n> **目标读者**：`AI 算法工程师 / 系统优化` | **技术领域**：`edge_ai_robotics`\n\n本主题档案汇总了 K3 芯片在本地端侧部署大语言模型（LLM）与多模态模型（VLM）的软硬件架构、实测速度与部署流程。\n\n---\n\n## 1. 核心 AI 性能指标\n\nK3 芯片作为高性能 RISC-V AI CPU，具备强大的端侧推理能力（底层数据参见 [[Evidence/k3_ai_performance_data]]）：\n*   **算力保障**：搭载 8 核高性能 A100 核，提供 **60 TOPS** 的通用 AI 算力。\n*   **本地大模型支持**：最高流畅支持 **30B 参数** 级别的模型本地运行，满足端侧“高智力”本地化部署需求。\n*   **首创特性**：全球首颗支持 **FP8 原生推理** 的 RISC-V 芯片，极大地降低了模型量化后的精度损失。\n\n---\n\n## 2. 本地部署软硬件融合设计\n\n为了在端侧将 60 TOPS 算力完全榨干，K3 采用了软硬件同构融合的设计：\n\n### 2.1 硬件加速核心：TCM 缓存\n*   K3 设计有 **3MB 专用加速缓存 TCM**。\n*   在运行大模型推理时，TCM 作为算力核心的“超快速草稿纸”，使高频数据读写性能直接提升 **3 倍**，大幅降低了对外部 DDR 带宽的依赖。\n\n### 2.2 内存配置限制\n*   运行 30B 级别大模型，系统内存必须配置为最大支持的 **32GB LPDDR5**，以防止内存溢出。\n*   内存带宽最大可达 **51.2GB/s**（LPDDR5-6400Mbps，双通道 64-bit），为大模型的 Token 持续生成提供数据吞吐保障。\n\n### 2.3 软件部署流\n*   开发者可以通过 SpacemiT 提供的 AI 工具链，将 HuggingFace 上的大模型编译转换为适用于 A100 核的格式。\n*   当前 SDK 完整支持 FP16, BF16, FP8, INT8, INT4 格式。目前**暂不支持 FP4/FP6** 格式。\n\n---\n\n## 3. 关联原始参考文档\n\n关于具体的 AI 编译器使用、SDK 依赖库安装以及模型量化命令，请进一步参阅：\n*   [K3 产品简介 - 原始文档](../Sources/docs-chip/zh/key_stone/k3/k3_docs/root_overview.md)\n*   [K3 SDK 使用指南 - 原始文档](../Sources/docs-chip/zh/key_stone/k3/k3_sw/k3_sdk_user_guide.md)"
+      "content": "# K3 大模型本地推理与 AI 算力专题档案\n\n> [!TIP]\n> **💡 工程师导读与排坑焦点**：详解 K3 大模型本地运行吞吐、统一内存共享与多线程推理加速。\n> **目标读者**：`AI 算法工程师 / 系统优化` | **技术领域**：`edge_ai_robotics`\n\n本主题档案汇总了 K3 芯片在本地端侧部署大语言模型（LLM）与多模态模型（VLM）的软硬件架构、实测速度与部署流程。\n\n---\n\n## 1. 核心 AI 性能指标\n\nK3 芯片作为高性能 RISC-V AI CPU，具备强大的端侧推理能力（底层数据参见 [[Evidence/k3_ai_performance_data]]）：\n*   **智算算力保障**：搭载 8 核高性能 A100 智算核，提供 **60 TOPS** 的通用 AI 算力，支持高达 **1024-bit** 的超宽并行向量计算。\n*   **计算大核与数学加速**：搭载 8 核高性能 X100 计算大核（最大主频 2.4 GHz，130 KDMIPS 算力），支持标准 256-bit RVV 1.0 指令集，为 OpenCV-RVV / Eigen-RVV 提供加速。\n*   **本地大模型支持 (MoE 架构)**：最高流畅支持 **300 亿 (30B) 参数级别的 MoE 稀疏大模型**（如 `Qwen3-30B-A3B`，单 Token 实际激活参数约 3B，端侧生成速度达 15~18 Tokens/s）。对于稠密（Dense）大模型，端侧推荐部署 0.5B ~ 8B 规模。\n*   **端侧多模态 (VLM) 支持**：支持通过优化版 llama.cpp 部署 **0.5B ~ 4B 级别的轻量级多模态视觉模型**（如 `fastvlm-0.5B`、`Qwen3.5-0.8B/2B/4B`）。\n*   **硬件首创**：全球首颗支持 **FP8 原生推理** 的 RISC-V 芯片，显著降低模型量化后的精度损失。\n\n---\n\n## 2. 本地部署软硬件融合设计\n\n为了在端侧将 60 TOPS 算力完全榨干，K3 采用了软硬件同构融合的设计：\n\n### 2.1 硬件加速核心：TCM 缓存与 1024-bit RVV\n*   A100 智算核配备 **3MB 专用加速缓存 TCM**（紧耦合内存）。\n*   在运行神经网络推理时，TCM 作为智算核心的超高速草稿纸，使高频数据读写性能直接提升 **3 倍**，大幅降低了对外部 DDR 内存带宽的依赖。\n\n### 2.2 内存配置与物理带宽\n*   运行 30B MoE 级别大模型，系统内存建议配置为最大支持的 **32GB LPDDR5**，以防止大上下文 KV Cache 溢出。\n*   内存带宽最高可达 **51.2GB/s**（LPDDR5-6400Mbps，双通道 64-bit），为大模型的 Token 持续生成提供数据吞吐物理保障。\n\n### 2.3 软件部署流与工具链\n*   开发者可以通过 SpacemiT 提供的 AI 工具链（`spacemit-onnxruntime`、SpacemiT 加速版 `llama.cpp`），将 HuggingFace 上的开源模型量化编译并部署到板端。\n*   当前 SDK 完整支持 FP16, BF16, FP8, INT8, INT4 格式（目前暂不支持 FP4/FP6 格式）。\n\n---\n\n## 3. 关联原始参考文档\n\n关于具体的 AI 编译器使用、SDK 依赖库安装以及模型量化命令，请进一步参阅：\n*   [K3 产品简介 - 原始文档](../Sources/docs-chip/zh/key_stone/k3/k3_docs/root_overview.md)\n*   [K3 SDK 使用指南 - 原始文档](../Sources/docs-chip/zh/key_stone/k3/k3_sw/k3_sdk_user_guide.md)"
     },
     "K3安全启动SecureBoot开发专题档案": {
       "id": "K3安全启动SecureBoot开发专题档案",
@@ -799,8 +800,8 @@
       "backlinks": [
         "SpaceAI_模型量化与端侧推理快速上手向导"
       ],
-      "summary": "# SpaceAI 端侧大模型量化与部署专题档案  > [!TIP] > **💡 工程师导读与排坑焦点**：详解 SpacemiT AI CPU（A60 智算核）同构融合原理、XSlim 量化工具链、ONNX Runtime `SpaceMITExecutionProvider` 接入及 vLLM / llama.cpp 端侧部署。 > **目标读者**：`AI算法工程师 / 软件开发工程师` | **技术领域**：`edge_ai_robotics`  本专题档案系统性解构基于 SpacemiT K1 与 K3 RISC-V 平台的 SpaceAI 软件栈全景。涵盖同构智算核架构原理、XSl",
-      "content": "# SpaceAI 端侧大模型量化与部署专题档案\n\n> [!TIP]\n> **💡 工程师导读与排坑焦点**：详解 SpacemiT AI CPU（A60 智算核）同构融合原理、XSlim 量化工具链、ONNX Runtime `SpaceMITExecutionProvider` 接入及 vLLM / llama.cpp 端侧部署。\n> **目标读者**：`AI算法工程师 / 软件开发工程师` | **技术领域**：`edge_ai_robotics`\n\n本专题档案系统性解构基于 SpacemiT K1 与 K3 RISC-V 平台的 SpaceAI 软件栈全景。涵盖同构智算核架构原理、XSlim 工具链量化转码、ONNX Runtime 专属硬件执行提供者接入，以及端侧 LLM 推理引擎（llama.cpp / vLLM）的部署调优。\n\n---\n\n## 1. 同构智算核 (AI CPU) 与 IME 矩阵扩展原理\n\n传统的 AI 加速依赖异构 NPU/GPGPU，带来繁重的驱动层与上下文切换开销。SpacemiT 提出了 **AI CPU 同构融合技术**：\n\n```mermaid\ngraph TD\n    UserApp[用户软件 / 应用线程] --> LinuxKernel[Linux 标准线程调度]\n    LinuxKernel --> AICPU[SpacemiT A60 智算核 (AI CPU)]\n\n    subgraph HardwareCore [智算核同构内部]\n        AICPU --> Scalar[Scalar 标量指令]\n        AICPU --> Vector[RVV 1.0 256-bit 向量指令]\n        AICPU --> IME[IME 矩阵指令 vmadot (4x8x4 TensorCore)]\n    end\n\n    subgraph MemoryAccess [零 DMA 延时访问]\n        IME --> TCM[512KB 紧耦合加速存储器 (TCM)]\n        TCM --> LPDDR4[32-bit LPDDR4/4X 物理内存]\n    end\n```\n\n详细的 `cpufp` 算力实测数据（2.046 TOPS Int8 / 533.65 GFLOPS FP16）请参考 [[Evidence/space_ai_architecture_specs|A60 AI CPU 智算核规格]]。\n\n---\n\n## 2. XSlim 模型量化与裁剪工具链\n\n针对端侧有限的物理内存带宽 (10.6 GB/s)，在部署模型前须通过 XSlim 工具链进行量化：\n\n1. **PTQ 静态后量化**：准备少量校准数据集，执行张量级与通道级量化。\n2. **算子融合**：自动将 Conv+BN+ReLU、MatMul+Add 融合成 IME 硬件直接支持的超节点算子。\n3. **输出导出**：生成集成 `SpaceMITExecutionProvider` 描述节点的 `.onnx` 模型。\n\n工具链参数与命令请参阅 [[Evidence/space_ai_software_stack_specs|SpaceAI 软件栈与 XSlim 规格]]。\n\n---\n\n## 3. ONNX Runtime 硬件执行提供者 (EP) 接入\n\n在应用代码中加入 `SpaceMITExecutionProvider`，推理引擎会自动将 GEMM（矩阵乘法）下发至 Cluster 0 的 A60 智算核：\n\n```cpp\n// C++ API 接入示例\nOrt::Env env(ORT_LOGGING_LEVEL_WARNING, \"SpacemiT_AI\");\nOrt::SessionOptions session_options;\n\n// 追加 SpacemiT 专属 Execution Provider\nOrt::ThrowOnError(OrtSessionOptionsAppendExecutionProvider_SpaceMIT(session_options, 0));\n\nOrt::Session session(env, \"quantized_model.onnx\", session_options);\n```\n\n---\n\n## 4. 端侧大模型 (LLM) 推理引擎部署\n\n1. **llama.cpp 部署**：\n   通过编译标志 `-DGGML_CPU_RISCV64_SPACEMIT=ON` 开启 IME 矩阵加速，部署 Q4_K_M 4-bit 量化 GGUF 模型。\n2. **vLLM 服务部署**：\n   利用 SpacemiT vLLM 分支启动 Open-AI 兼容的 Web API 服务，支持并发 Context 缓存优化。\n\n更详细的大模型实测与调频干货请查阅 [[Knowledge_Atoms/K1大模型本地推理与AI算力专题档案|K1 大模型本地推理专题]] 与 [[Knowledge_Atoms/K3大模型本地推理与AI算力专题档案|K3 大模型本地推理专题]]。"
+      "summary": "# SpaceAI 端侧大模型量化与部署专题档案  > [!TIP] > **💡 工程师导读与排坑焦点**：详解 SpacemiT AI CPU（A60 智算核）同构融合原理、XSlim 量化工具链、ONNX Runtime `SpaceMITExecutionProvider` 接入、vLLM / llama.cpp 端侧部署及官方 AI Computer 解决方案矩阵。 > **目标读者**：`AI算法工程师 / 软件开发工程师` | **技术领域**：`edge_ai_robotics`  本专题档案系统性解构基于 SpacemiT K1 与 K3 RISC-V 平台的 SpaceAI",
+      "content": "# SpaceAI 端侧大模型量化与部署专题档案\n\n> [!TIP]\n> **💡 工程师导读与排坑焦点**：详解 SpacemiT AI CPU（A60 智算核）同构融合原理、XSlim 量化工具链、ONNX Runtime `SpaceMITExecutionProvider` 接入、vLLM / llama.cpp 端侧部署及官方 AI Computer 解决方案矩阵。\n> **目标读者**：`AI算法工程师 / 软件开发工程师` | **技术领域**：`edge_ai_robotics`\n\n本专题档案系统性解构基于 SpacemiT K1 与 K3 RISC-V 平台的 SpaceAI 软件栈全景。涵盖同构智算核架构原理、XSlim 工具链量化转码、ONNX Runtime 专属硬件执行提供者接入、端侧 LLM 推理引擎部署，以及官方发布的 AI Computer 桌面级解决方案矩阵。\n\n---\n\n## 1. 同构智算核 (AI CPU) 与 IME 矩阵扩展原理\n\n传统的 AI 加速依赖异构 NPU/GPGPU，带来繁重的驱动层与上下文切换开销。SpacemiT 提出了 **AI CPU 同构融合技术**：\n\n```mermaid\ngraph TD\n    UserApp[用户软件 / 应用线程] --> LinuxKernel[Linux 标准线程调度]\n    LinuxKernel --> AICPU[SpacemiT A60 智算核 (AI CPU)]\n\n    subgraph HardwareCore [智算核同构内部]\n        AICPU --> Scalar[Scalar 标量指令]\n        AICPU --> Vector[RVV 1.0 256-bit 向量指令]\n        AICPU --> IME[IME 矩阵指令 vmadot (4x8x4 TensorCore)]\n    end\n\n    subgraph MemoryAccess [零 DMA 延时访问]\n        IME --> TCM[512KB 紧耦合加速存储器 (TCM)]\n        TCM --> LPDDR4[32-bit LPDDR4/4X 物理内存]\n    end\n```\n\n详细的 `cpufp` 算力实测数据（2.046 TOPS Int8 / 533.65 GFLOPS FP16）请参考 [[Evidence/space_ai_architecture_specs|A60 AI CPU 智算核规格]]。\n\n---\n\n## 2. XSlim 模型量化与裁剪工具链\n\n针对端侧有限的物理内存带宽 (10.6 GB/s)，在部署模型前须通过 XSlim 工具链进行量化：\n\n1. **PTQ 静态后量化**：准备少量校准数据集，执行张量级与通道级量化。\n2. **算子融合**：自动将 Conv+BN+ReLU、MatMul+Add 融合成 IME 硬件直接支持的超节点算子。\n3. **输出导出**：生成集成 `SpaceMITExecutionProvider` 描述节点的 `.onnx` 模型。\n\n工具链参数与命令请参阅 [[Evidence/space_ai_software_stack_specs|SpaceAI 软件栈与 XSlim 规格]]。\n\n---\n\n## 3. ONNX Runtime 硬件执行提供者 (EP) 接入\n\n在应用代码中加入 `SpaceMITExecutionProvider`，推理引擎会自动将 GEMM（矩阵乘法）下发至 Cluster 0 的 A60 智算核：\n\n```cpp\n// C++ API 接入示例\nOrt::Env env(ORT_LOGGING_LEVEL_WARNING, \"SpacemiT_AI\");\nOrt::SessionOptions session_options;\n\n// 追加 SpacemiT 专属 Execution Provider\nOrt::ThrowOnError(OrtSessionOptionsAppendExecutionProvider_SpaceMIT(session_options, 0));\n\nOrt::Session session(env, \"quantized_model.onnx\", session_options);\n```\n\n---\n\n## 4. 端侧大模型 (LLM) 推理引擎部署\n\n1. **llama.cpp 部署**：\n   通过编译标志 `-DGGML_CPU_RISCV64_SPACEMIT=ON` 开启 IME 矩阵加速，部署 Q4_K_M 4-bit 量化 GGUF 模型。\n2. **vLLM 服务部署**：\n   利用 SpacemiT vLLM 分支启动 Open-AI 兼容的 Web API 服务，支持并发 Context 缓存优化。\n\n更详细的大模型实测与调频干货请查阅 [[Knowledge_Atoms/K1大模型本地推理与AI算力专题档案|K1 大模型本地推理专题]] 与 [[Knowledge_Atoms/K3大模型本地推理与AI算力专题档案|K3 大模型本地推理专题]]。\n\n---\n\n## 5. 官方 AI Computer 落地应用与评估方案全景\n\nSpacemiT 基于 K3 高算力平台，在官方 `docs-ai` 中推出了完整的端侧全栈 AI 应用落地方案：\n\n*   **File2MD 本地文档解析应用**：针对 SpacemiT K3 Bianbu 桌面系统打造的本地文档转 Markdown 工具。支持 PDF、Office、扫描图像的本地版面分析、OCR 与公式表格提取，实现“数据不出端”的安全办公。\n*   **与会 (Yumeet) & 多路实时 ASR**：集成 VAD 语音激活检测、端侧 ASR、声纹说话人分离（Diarization）与 LLM 总结能力，实现全离线会议录制、实时字幕与智能纪要生成。\n*   **知了 (Zenow)**：设备端本地运行的个人与企业知识库问答助手，深度结合 RAG 向量检索与本地离线 LLM。\n*   **见智 (Seewise) & 多路视觉分析**：支持本地视频或 RTSP 摄像头接入，通过端侧视觉特征提取与自然语言跨模态匹配，实现毫秒级自然语言以图搜视频。\n*   **点将 (Agentforce)**：基于端侧轻量 Agent 框架与数字员工多角色管理调度平台。\n*   **SpacemiT AI Lab 在线评估云平台**：官方搭建的网页化 K3 算力沙箱体验平台，开发者无需实体开发板即可一键申请云端 K3 实例进行模型评测。"
     },
     "SpacemiT_P3_PMIC电源芯片专题档案": {
       "id": "SpacemiT_P3_PMIC电源芯片专题档案",
@@ -818,13 +819,14 @@
         "PCB Layout"
       ],
       "outlinks": [
+        "p3_pmic_specs",
         "SpacemiT生态板卡与PMIC电源配合专题档案"
       ],
       "backlinks": [
         "SpacemiT生态板卡与PMIC电源配合专题档案"
       ],
-      "summary": "# SpacemiT P3 PMIC 电源管理芯片专题档案  > [!TIP] > **💡 工程师导读与排坑焦点**：详解 P3 四相 Buck 32A 大电流 PMIC、5 种相位组合配置、WLCSP 超小封装与 I2C/SPI 调压设计。 > **目标读者**：`电源电路工程师 / PCB Layout` | **技术领域**：`hardware_schematic_design`  > [!IMPORTANT] > **🆕 2026-08 新增知识原子**：本文档基于 Spacemit 官方 `docs-chip` 仓库新增的 `power_stone/p3/` 官方文档构建。  本专题",
-      "content": "# SpacemiT P3 PMIC 电源管理芯片专题档案\n\n> [!TIP]\n> **💡 工程师导读与排坑焦点**：详解 P3 四相 Buck 32A 大电流 PMIC、5 种相位组合配置、WLCSP 超小封装与 I2C/SPI 调压设计。\n> **目标读者**：`电源电路工程师 / PCB Layout` | **技术领域**：`hardware_schematic_design`\n\n> [!IMPORTANT]\n> **🆕 2026-08 新增知识原子**：本文档基于 Spacemit 官方 `docs-chip` 仓库新增的 `power_stone/p3/` 官方文档构建。\n\n本专题档案汇总了 SpacemiT Power Stone 系列高性能伴随电源管理芯片 **P3 PMIC** 的核心物理参数、相位配置模式、降压电路拓扑与接口控制规范。\n\n---\n\n## 1. 芯片概述与四大核心优势\n\nP3 是一款专为大电流、紧凑型场景（如边缘计算主板、无人机主控、AR/VR、光模块）设计的高性能四相降压（Buck）电源管理芯片：\n\n*   **32 A 大电流 × 5 种相位配置**：四相并联最大输出电流达 **32 A**（峰值 **40 A**），支持 4+0、3+1、2+2、2+1+1、1+1+1+1 灵活输出架构。\n*   **91% 峰值效率 × COT 快速响应**：采用 Constant On-Time (COT) 架构，负载突变快速稳压；支持 PFM/PWM 自动切换与强制 PWM 模式。\n*   **WLCSP 超小封装**：80 焊球（Ball）、0.4 mm 间距的晶圆级 WLCSP 封装，满足高密度 PCB 布局。\n*   **MTP 可编程时序 & 动态调压**：集成了 MTP 存储，支持灵活配置开关机时序，内置 3.4 MHz 高速 I2C / 30 MHz SPI 接口。\n\n---\n\n## 2. 核心物理与电气规格\n\n| 规格项目 | 参数值 / 说明 |\n| :--- | :--- |\n| **输入电压 (VIN)** | 2.5 V 至 5.5 V |\n| **输出电压 (VOUT)** | 0.25 V ~ 1.20 V (5 mV/step)；1.20 V ~ 1.83 V (10 mV/step) |\n| **最大输出电流** | 单芯片最高 32 A 持续（40 A 峰值） |\n| **峰值效率** | 91% (VIN = 3.6 V, VOUT = 0.85 V) |\n| **斜率控制** | 各路 Buck 输出电压 Ramp-up / Ramp-down 斜率可调 |\n| **内置 ADC** | 8 通道 12 位可配置监控 ADC |\n| **扩展 GPIO** | 4 路多功能 GPIO 口 |\n| **保护机制** | 欠压锁定 (UVLO)、输出短路保护 (SCP) 与过热保护 (OTP) |\n| **工作温度** | -40 °C 至 85 °C |\n\n---\n\n## 3. 相位配置模式与拓扑结构\n\nP3 支持 5 种不同的相位分配组合，以适应不同的处理器 Core + IO 电源轨组合：\n\n1.  **4 + 0 模式**：4 相完全并联，单路独享 **32 A** 大电流输出（专门供给超级大核 Core）。\n2.  **3 + 1 模式**：3 相并联 (24 A) + 1 相独立 (8 A)。\n3.  **2 + 2 模式**：双路双相并联（16 A + 16 A），供给核心与 GPU/NPU。\n4.  **2 + 1 + 1 模式**：2 相并联 (16 A) + 2 路单相独立 (8 A + 8 A)。\n5.  **1 + 1 + 1 + 1 模式**：4 路完全独立单相 Buck 输出（8 A × 4）。\n\n---\n\n## 4. 关联原始参考文档\n\n*   [P3 简介（官方原始文档）](../Sources/docs-chip/zh/power_stone/p3/p3_docs/root_overview.md)\n*   [P3 PDF 产品简介](https://cdn-resource.spacemit.com/file/chip/P3/P3_brief_zh.pdf)\n*   生态 PMIC 配合专题：[[Knowledge_Atoms/SpacemiT生态板卡与PMIC电源配合专题档案|SpacemiT 生态板卡与 PMIC 电源配合专题]]"
+      "summary": "# SpacemiT P3 PMIC 电源管理芯片专题档案  > [!TIP] > **💡 工程师导读与排坑焦点**：详解 P3 四相 Buck 32A 大电流 PMIC、5 种相位组合配置、WLCSP 超小封装与 I2C/SPI 调压设计。 > **目标读者**：`电源电路工程师 / PCB Layout` | **技术领域**：`hardware_schematic_design`  > [!IMPORTANT] > **🆕 2026-10 架构升级**：本专题档案已与官方最新发布的 P3 数据手册（V1.0）及物理规格点 [[Evidence/p3_pmic_specs|P3 PMIC",
+      "content": "# SpacemiT P3 PMIC 电源管理芯片专题档案\n\n> [!TIP]\n> **💡 工程师导读与排坑焦点**：详解 P3 四相 Buck 32A 大电流 PMIC、5 种相位组合配置、WLCSP 超小封装与 I2C/SPI 调压设计。\n> **目标读者**：`电源电路工程师 / PCB Layout` | **技术领域**：`hardware_schematic_design`\n\n> [!IMPORTANT]\n> **🆕 2026-10 架构升级**：本专题档案已与官方最新发布的 P3 数据手册（V1.0）及物理规格点 [[Evidence/p3_pmic_specs|P3 PMIC 核心规格]] 完成对齐绑定。\n\n本专题档案汇总了 SpacemiT Power Stone 系列高性能伴随电源管理芯片 **P3 PMIC** 的核心物理参数、相位配置模式、降压电路拓扑与接口控制规范。\n\n---\n\n## 1. 芯片概述与四大核心优势\n\nP3 是一款专为大电流、紧凑型场景（如边缘计算主板、无人机主控、AR/VR、光模块）设计的高性能四相降压（Buck）电源管理芯片：\n\n*   **32 A 大电流 × 5 种相位配置**：四相并联最大输出电流达 **32 A**（峰值 **40 A**），支持 4+0、3+1、2+2、2+1+1、1+1+1+1 灵活输出架构。\n*   **91% 峰值效率 × COT 快速响应**：采用 Constant On-Time (COT) 架构，负载突变快速稳压；支持 PFM/PWM 自动切换与强制 PWM 模式。\n*   **WLCSP 超小封装**：80 焊球（Ball）、0.4 mm 间距的晶圆级 WLCSP 封装，满足高密度 PCB 布局。\n*   **MTP 可编程时序 & 动态调压**：集成了 MTP 存储，支持灵活配置开关机时序，内置 3.4 MHz 高速 I2C / 30 MHz SPI 接口。\n\n---\n\n## 2. 核心物理与电气规格\n\n完整硬数据与电气限制请查阅数据事实点：[[Evidence/p3_pmic_specs|P3 PMIC 核心规格与电气参数]]。\n\n| 规格项目 | 参数值 / 说明 |\n| :--- | :--- |\n| **输入电压 (VIN)** | 2.5 V 至 5.5 V |\n| **输出电压 (VOUT)** | 0.25 V ~ 1.20 V (5 mV/step)；1.20 V ~ 1.83 V (10 mV/step) |\n| **最大输出电流** | 单芯片最高 32 A 持续（40 A 峰值） |\n| **峰值效率** | 91% (VIN = 3.6 V, VOUT = 0.85 V) |\n| **斜率控制** | 各路 Buck 输出电压 Ramp-up / Ramp-down 斜率可调 |\n| **内置 ADC** | 8 通道 12 位可配置监控 ADC |\n| **扩展 GPIO** | 4 路多功能 GPIO 口 |\n| **保护机制** | 欠压锁定 (UVLO)、输出短路保护 (SCP) 与过热保护 (OTP) |\n| **工作结温 (T_J)** | -40 °C 至 125 °C |\n\n---\n\n## 3. 相位配置模式与拓扑结构\n\nP3 支持 5 种不同的相位分配组合，以适应不同的处理器 Core + IO 电源轨组合：\n\n1.  **4 + 0 模式**：4 相完全并联，单路独享 **32 A** 大电流输出（专门供给超级大核 Core）。\n2.  **3 + 1 模式**：3 相并联 (24 A) + 1 相独立 (8 A)。\n3.  **2 + 2 模式**：双路双相并联（16 A + 16 A），供给核心与 GPU/NPU。\n4.  **2 + 1 + 1 模式**：2 相并联 (16 A) + 2 路单相独立 (8 A + 8 A)。\n5.  **1 + 1 + 1 + 1 模式**：4 路完全独立单相 Buck 输出（8 A × 4）。\n\n---\n\n## 4. 关联原始参考文档与双链\n\n*   物理参数直通：[[Evidence/p3_pmic_specs|P3 PMIC 核心电气规格数据表]]\n*   [P3 数据手册（官方原始文档）](../Sources/docs-chip/zh/power_stone/p3/p3_docs/p3_ds.md)\n*   [P3 简介（官方原始文档）](../Sources/docs-chip/zh/power_stone/p3/p3_docs/root_overview.md)\n*   [P3 PDF 产品简介](https://cdn-resource.spacemit.com/file/chip/P3/P3_brief_zh.pdf)\n*   生态 PMIC 配合专题：[[Knowledge_Atoms/SpacemiT生态板卡与PMIC电源配合专题档案|SpacemiT 生态板卡与 PMIC 电源配合专题]]"
     },
     "SpacemiT_ROS2_机器人与具身智能专题档案": {
       "id": "SpacemiT_ROS2_机器人与具身智能专题档案",
@@ -851,7 +853,7 @@
         "ROS2_机器人与具身智能快速上手向导"
       ],
       "summary": "# SpacemiT ROS 2 机器人与具身智能专题档案  > [!TIP] > **💡 工程师导读与排坑焦点**：详解 ROS 2 架构、micro-ROS 串口总线、LeRobot SO101 ACT 模仿学习与 SLAM 导航。 > **目标读者**：`机器人工程师 / 具身 AI 开发者` | **技术领域**：`edge_ai_robotics`  本专题档案系统性解构基于 SpacemiT K1 与 K3 RISC-V 芯片平台的 ROS 2（Robot Operating System）软件架构与具身智能（Embodied AI）应用生态。包含 ROS 2 Humble/Jaz",
-      "content": "# SpacemiT ROS 2 机器人与具身智能专题档案\n\n> [!TIP]\n> **💡 工程师导读与排坑焦点**：详解 ROS 2 架构、micro-ROS 串口总线、LeRobot SO101 ACT 模仿学习与 SLAM 导航。\n> **目标读者**：`机器人工程师 / 具身 AI 开发者` | **技术领域**：`edge_ai_robotics`\n\n本专题档案系统性解构基于 SpacemiT K1 与 K3 RISC-V 芯片平台的 ROS 2（Robot Operating System）软件架构与具身智能（Embodied AI）应用生态。包含 ROS 2 Humble/Jazzy 运行时搭建、DDS 通信调优、micro-ROS 串口/硬件总线桥接、模仿学习模型 (ACT / SmolVLA) 端侧部署，以及 Reachy Mini、SO101 机械臂、Linksee 移动机器人的开发实践。\n\n---\n\n## 1. ROS 2 系统架构与中间件集成\n\nSpacemiT 为端侧机器人开发提供了从底层 Linux 内核到上层机器人框架的全栈支持：\n\n```mermaid\ngraph TD\n    Hardware[K1 / K3 RISC-V SoC & 生态开发板] --> BSP[SpacemiT BSP & Linux Kernel 6.6/6.18]\n    BSP --> RCPU[RCPU ESOS 实时固件 - esos.elf]\n    BSP --> ROS2[ROS 2 Humble / Jazzy 运行时]\n\n    subgraph Middleware [中间件 & 通信总线]\n        ROS2 --> DDS[Cyclone DDS / Fast DDS 组网调优]\n        ROS2 --> MicroROS[micro-ROS Agent - UART/USB 桥接]\n        BSP --> CAN[SocketCAN / PWM / GPIO 硬件接口]\n    end\n\n    subgraph EmbodiedAI [具身智能与机器人应用]\n        ROS2 --> Reachy[Reachy Mini - 桌面交互与视觉跟踪]\n        ROS2 --> LeRobot[LeRobot SO101 - ACT/SmolVLA 模仿学习抓取]\n        ROS2 --> Linksee[Linksee - 2D/3D SLAM 建图与 Nav2 导航]\n        ROS2 --> RL[MuJoCo 强化学习步态策略推理]\n    end\n```\n\n具体的 ROS 2 发行版与节点开销数据请查阅 [[Evidence/ros2_platform_specs|SpacemiT ROS 2 平台规格表]]。\n\n---\n\n## 2. ROS 2 环境配置与 DDS 调优\n\n### 2.1 Bianbu OS 与 Docker 部署\n\n可以在 Bianbu OS (Debian-based) 或 Ubuntu 24.04 上直接通过 `apt` 安装 ROS 2 二进制包，也可直接启动官方预构建 Docker 镜像：\n\n```bash\n# 启动 ROS 2 镜像容器\ndocker run -it --net=host --privileged -v /dev:/dev spacemit/ros:humble-desktop\n```\n\n### 2.2 多节点 DDS 网络通信优化\n\n对于需要同时传输 MIPI CSI 图像帧或 3D 激光雷达点云的机器人节点，利用 K1/K3 芯片的双 GMAC 以太网与 Cyclone DDS 进行多播流量调优：\n\n```bash\nexport RMW_IMPLEMENTATION=rmw_cyclonedds_cpp\n```\n\n详细参数见 [[Evidence/ros2_platform_specs|ROS 2 平台支持与 DDS 参数]]。\n\n---\n\n## 3. micro-ROS 与底层硬件总线桥接\n\n为了实现毫秒级硬件电机控制，SpacemiT 方案支持将高层逻辑运行于 K1/K3 主核，而将底层 PWM / 编码器计数交付给协同 MCU，并通过 `micro-ROS` 节点通信：\n\n```bash\n# 启动 micro-ROS Agent 串口节点\nros2 run micro_ros_agent micro_ros_agent serial --dev /dev/ttyS1 -b 115200\n```\n\n板级 JTAG / UART 与串口物理排针参考 [[Knowledge_Atoms/Muse_Pi_板级硬件设计专题|Muse Pi 板级硬件设计专题]] 与 [[Knowledge_Atoms/K3_COM260_板级硬件设计专题|K3 COM260 板级硬件设计专题]]。\n\n---\n\n## 4. 具身智能 (Embodied AI) 模仿学习与端侧部署\n\n### 4.1 SO101 机械臂与 LeRobot 框架\n\nSpacemiT 芯片集成了 RISC-V Vector 指令扩展与 2.0 TOPS AI 算力，支持直接在端侧运行 Transformer 架构的模仿学习算法 **ACT (Action Chunking with Transformers)** 与 **SmolVLA**：\n\n* **动作预测速率**：在 K1 平台上 ACT 模型达到 25 FPS 实时轨迹输出。\n* **命令行运行**：\n  ```bash\n  python3 -m lerobot.scripts.control_robot --robot-type so101 --policy-type act --eval\n  ```\n\n### 4.2 Reachy Mini 桌面机器人\n\n通过 ROS 2 节点驱动 Reachy Mini 头部 3 自由度舵机与双目摄像头，串联本地端侧 1B 大语言模型（SpaceLLM）实现全双工语音与视线互动。\n\n### 4.3 Linksee 移动机器人 SLAM 导航\n\n通过硬解码 (MPP) 处理 CSI 摄像头视频流，结合激光雷达点云，在 K3 Pico 上跑通 Cartographer 2D SLAM 建图与 Nav2 路径规划。\n\n详细硬件与 AI 模型性能对比详见 [[Evidence/robot_hardware_specs|SpacemiT 机器人硬件与具身 AI 模型参数规格]]。"
+      "content": "# SpacemiT ROS 2 机器人与具身智能专题档案\n\n> [!TIP]\n> **💡 工程师导读与排坑焦点**：详解 ROS 2 架构、micro-ROS 串口总线、LeRobot SO101 ACT 模仿学习与 SLAM 导航。\n> **目标读者**：`机器人工程师 / 具身 AI 开发者` | **技术领域**：`edge_ai_robotics`\n\n本专题档案系统性解构基于 SpacemiT K1 与 K3 RISC-V 芯片平台的 ROS 2（Robot Operating System）软件架构与具身智能（Embodied AI）应用生态。包含 ROS 2 Humble/Jazzy 运行时搭建、DDS 通信调优、micro-ROS 串口/硬件总线桥接、模仿学习模型 (ACT / SmolVLA) 端侧部署，以及 Reachy Mini、SO101 机械臂、Linksee 移动机器人的开发实践。\n\n---\n\n## 1. ROS 2 系统架构与中间件集成\n\nSpacemiT 为端侧机器人开发提供了从底层 Linux 内核到上层机器人框架的全栈支持：\n\n```mermaid\ngraph TD\n    Hardware[K1 / K3 RISC-V SoC & 生态开发板] --> BSP[SpacemiT BSP & Linux Kernel 6.6/6.18]\n    BSP --> RCPU[RCPU ESOS 实时固件 - esos.elf]\n    BSP --> ROS2[ROS 2 Humble / Jazzy 运行时]\n\n    subgraph Middleware [中间件 & 通信总线]\n        ROS2 --> DDS[Cyclone DDS / Fast DDS 组网调优]\n        ROS2 --> MicroROS[micro-ROS Agent - UART/USB 桥接]\n        BSP --> CAN[SocketCAN / PWM / GPIO 硬件接口]\n    end\n\n    subgraph EmbodiedAI [具身智能与机器人应用]\n        ROS2 --> Reachy[Reachy Mini - 桌面交互与视觉跟踪]\n        ROS2 --> LeRobot[LeRobot SO101 - ACT/SmolVLA 模仿学习抓取]\n        ROS2 --> Linksee[Linksee - 2D/3D SLAM 建图与 Nav2 导航]\n        ROS2 --> RL[MuJoCo 强化学习步态策略推理]\n    end\n```\n\n具体的 ROS 2 发行版与节点开销数据请查阅 [[Evidence/ros2_platform_specs|SpacemiT ROS 2 平台规格表]]。\n\n---\n\n## 2. ROS 2 环境配置与 DDS 调优\n\n### 2.1 Bianbu OS 与 Docker 部署\n\n可以在 Bianbu OS (Debian-based) 或 Ubuntu 24.04 上直接通过 `apt` 安装 ROS 2 二进制包，也可直接启动官方预构建 Docker 镜像：\n\n```bash\n# 启动 ROS 2 镜像容器\ndocker run -it --net=host --privileged -v /dev:/dev spacemit/ros:humble-desktop\n```\n\n### 2.2 多节点 DDS 网络通信优化\n\n对于需要同时传输 MIPI CSI 图像帧或 3D 激光雷达点云的机器人节点，利用 K1/K3 芯片的双 GMAC 以太网与 Cyclone DDS 进行多播流量调优：\n\n```bash\nexport RMW_IMPLEMENTATION=rmw_cyclonedds_cpp\n```\n\n详细参数见 [[Evidence/ros2_platform_specs|ROS 2 平台支持与 DDS 参数]]。\n\n---\n\n## 3. micro-ROS 与底层硬件总线桥接\n\n为了实现毫秒级硬件电机控制，SpacemiT 方案支持将高层逻辑运行于 K1/K3 主核，而将底层 PWM / 编码器计数交付给协同 MCU，并通过 `micro-ROS` 节点通信：\n\n```bash\n# 启动 micro-ROS Agent 串口节点\nros2 run micro_ros_agent micro_ros_agent serial --dev /dev/ttyS1 -b 115200\n```\n\n板级 JTAG / UART 与串口物理排针参考 [[Knowledge_Atoms/Muse_Pi_板级硬件设计专题|Muse Pi 板级硬件设计专题]] 与 [[Knowledge_Atoms/K3_COM260_板级硬件设计专题|K3 COM260 板级硬件设计专题]]。\n\n---\n\n## 4. 具身智能 (Embodied AI) 模仿学习与端侧部署\n\nSpacemiT 提供了从轻量级端侧抓取到多模态具身大模型的多层级端侧部署支持：\n\n### 4.1 SO101 机械臂与 LeRobot 模仿学习 (K1 / K3 分级方案)\n\n* **K1 平台（2.0 TOPS AI / 8 核 X60 算力）**：\n  * 支持轻量级 **ACT (Action Chunking with Transformers)** 模仿学习抓取策略。\n  * 实测在 K1 (Muse Pi) 平台上可达到 **25 FPS** 实时轨迹动作输出。\n  * 命令行运行：\n    ```bash\n    python3 -m lerobot.scripts.control_robot --robot-type so101 --policy-type act --eval\n    ```\n* **K3 平台（60 TOPS AI / 8 核 A100 智算核）**：\n  * 支持参数量更大的 **SmolVLA (Vision-Language-Action)** 多模态具身策略模型。\n  * **工具链适配方案**：官方 Robot SDK 将 SmolVLA 拆解为 4 个 ONNX 子图（Vision Encoder、Text Embed、Action Head 等），通过 `spacemit-onnxruntime` 调用 A100 核进行前向推理，结合 Python/C++ 运行时管理 KV Cache 与 Action 反归一化，实现端侧 8 FPS 闭环控制。\n\n### 4.2 Reachy Mini 桌面机器人 (K1)\n\n通过 ROS 2 节点驱动 Reachy Mini 头部 3 自由度舵机与双目摄像头，串联本地端侧 1B 大语言模型（SpaceLLM）实现全双工语音与视线互动。\n\n### 4.3 Linksee 移动机器人 SLAM 导航 (K3 Pico / Muse Pi)\n\n通过硬解码 (MPP) 处理 CSI 摄像头视频流，结合激光雷达点云，在 K3 Pico 上跑通 Cartographer 2D SLAM 建图与 Nav2 路径规划。\n\n详细硬件与 AI 模型性能对比详见 [[Evidence/robot_hardware_specs|SpacemiT 机器人硬件与具身 AI 模型参数规格]]。"
     },
     "SpacemiT生态板卡与PMIC电源配合专题档案": {
       "id": "SpacemiT生态板卡与PMIC电源配合专题档案",
@@ -1173,8 +1175,8 @@
         "K3_RV2768_集群服务器专题档案",
         "K3大模型本地推理与AI算力专题档案"
       ],
-      "summary": "# K3 芯片 AI 算力与大模型推理数据  > [!TIP] > **💡 工程师导读与排坑焦点**：存放 K3 芯片在 AI 算力与主流 8B/30B 大模型本地推理的实测数据。 > **目标读者**：`AI 算法工程师 / 系统架构师` | **技术领域**：`edge_ai_robotics`  本文件包含 K3 芯片的本地 AI 算力及大模型推理的实测与指标数据。  ## 1. 算力指标 *   **通用 AI 算力**: **60 TOPS** *   **通用通用计算算力**: **130 KDMIPS** (由 8 个高性能 X100 大核提供) *   **并行计算位宽**:",
-      "content": "# K3 芯片 AI 算力与大模型推理数据\n\n> [!TIP]\n> **💡 工程师导读与排坑焦点**：存放 K3 芯片在 AI 算力与主流 8B/30B 大模型本地推理的实测数据。\n> **目标读者**：`AI 算法工程师 / 系统架构师` | **技术领域**：`edge_ai_robotics`\n\n本文件包含 K3 芯片的本地 AI 算力及大模型推理的实测与指标数据。\n\n## 1. 算力指标\n*   **通用 AI 算力**: **60 TOPS**\n*   **通用通用计算算力**: **130 KDMIPS** (由 8 个高性能 X100 大核提供)\n*   **并行计算位宽**: A100 核支持 **1024bit** 的 RVV 1.0 并行计算\n\n## 2. 大模型本地推理性能 (2026年测算)\n*   **本地大模型支持上限**: 可流畅运行最高 **300 亿 (30B) 参数** 的本地大模型。\n*   **Qwen3-30B-A3B 本地推理速度**:\n    *   首词延迟 (1st-Word Latency): **0.9 秒**\n    *   输出速度: **15 Tokens/s** (部分汇报材料中使用 **18 Tokens/s**，存在口径差异，待复核)\n*   **FastVLM-1.5B (多模态)**:\n    *   首词延迟: **0.5 秒**\n    *   输出速度: **40 Tokens/s**\n*   **VIT_b_16 (视觉模型) 运行帧率**: **90 fps**\n\n## 3. 部署与数据格式\n*   **格式支持**: 支持 FP16, BF16, FP8, INT8, INT4。\n*   **硬件首创**: 全球首颗支持 **FP8 原生推理** 的 RISC-V AI 芯片。\n*   **社区模型兼容性**: 可部署 HuggingFace 社区上除 **FP4/FP6** 之外的所有主流大模型。"
+      "summary": "# K3 芯片 AI 算力与大模型推理数据  > [!TIP] > **💡 工程师导读与排坑焦点**：存放 K3 芯片在 AI 算力与主流 8B / 30B MoE 稀疏大模型本地推理的实测数据。 > **目标读者**：`AI 算法工程师 / 系统架构师` | **技术领域**：`edge_ai_robotics`  本文件包含 K3 芯片的本地 AI 算力及大模型推理的实测与指标数据。  ## 1. 算力指标 *   **通用 AI 算力**: **60 TOPS** (由 8 个 A100 智算核提供，支持 1024-bit 智算并行) *   **通用计算算力**: **130 KDMI",
+      "content": "# K3 芯片 AI 算力与大模型推理数据\n\n> [!TIP]\n> **💡 工程师导读与排坑焦点**：存放 K3 芯片在 AI 算力与主流 8B / 30B MoE 稀疏大模型本地推理的实测数据。\n> **目标读者**：`AI 算法工程师 / 系统架构师` | **技术领域**：`edge_ai_robotics`\n\n本文件包含 K3 芯片的本地 AI 算力及大模型推理的实测与指标数据。\n\n## 1. 算力指标\n*   **通用 AI 算力**: **60 TOPS** (由 8 个 A100 智算核提供，支持 1024-bit 智算并行)\n*   **通用计算算力**: **130 KDMIPS** (由 8 个高性能 X100 大核提供，支持 256-bit RVV 1.0)\n*   **专用加速缓存**: 智算核配备 **3MB 专用 TCM** 紧耦合存储\n\n## 2. 大模型本地推理性能 (2026年测算)\n*   **本地 MoE 大模型支持**: 可流畅运行最高 **300 亿 (30B) 参数级别的 MoE 稀疏大模型**（单 Token 实际激活约 3B 参数）。\n*   **Qwen3-30B-A3B (MoE 架构) 本地推理速度**:\n    *   首词延迟 (1st-Word Latency): **0.9 秒**\n    *   输出速度: **15 Tokens/s** (部分汇报材料中使用 **18 Tokens/s**，存在口径差异，待复核)\n*   **FastVLM-1.5B (端侧多模态 VLM)**:\n    *   首词延迟: **0.5 秒**\n    *   输出速度: **40 Tokens/s**\n*   **Qwen3.5-0.8B / 2B / 4B (VLM)**: 官方 llama.cpp 推荐端侧多模态基线模型\n*   **VIT_b_16 (视觉模型) 运行帧率**: **90 fps**\n\n## 3. 部署与数据格式\n*   **格式支持**: 支持 FP16, BF16, FP8, INT8, INT4。\n*   **硬件首创**: 全球首颗支持 **FP8 原生推理** 的 RISC-V AI 芯片。\n*   **模型部署边界**: 支持通过 `spacemit-onnxruntime` 及 SpacemiT 优化版 `llama.cpp` 部署主流量化模型；受 32GB 物理内存与算子适配限制，超大模型（>30B MoE 规模或 >8B Dense 规模）或未适配算子模型需通过集群服务器或云端协同运行。"
     },
     "k3_com260_specs": {
       "id": "k3_com260_specs",
@@ -1197,7 +1199,28 @@
         "K3_CoM260_40Pin_IOMAP管脚映射专题"
       ],
       "summary": "# K3 CoM260 机器人开发套件物理规格参数  > [!TIP] > **💡 工程师导读与排坑焦点**：存放 K3 CoM260 核心板与参考载板金手指引脚及物理规格。 > **目标读者**：`核心板选型工程师 / 硬件工程师` | **技术领域**：`chip_product_specs`  本文件汇总了 K3 CoM260 核心板及其参考载板的硬件规格数据，主要用于服务机器人、自主智能体开发与核心板集成参考。  ## 1. 核心模组 (CoM) 参数  | 规格维度 | 详细参数规格 | 说明 / 调试设计 | | :--- | :--- | :--- | | **主控芯片** |",
-      "content": "# K3 CoM260 机器人开发套件物理规格参数\n\n> [!TIP]\n> **💡 工程师导读与排坑焦点**：存放 K3 CoM260 核心板与参考载板金手指引脚及物理规格。\n> **目标读者**：`核心板选型工程师 / 硬件工程师` | **技术领域**：`chip_product_specs`\n\n本文件汇总了 K3 CoM260 核心板及其参考载板的硬件规格数据，主要用于服务机器人、自主智能体开发与核心板集成参考。\n\n## 1. 核心模组 (CoM) 参数\n\n| 规格维度 | 详细参数规格 | 说明 / 调试设计 |\n| :--- | :--- | :--- |\n| **主控芯片** | SpacemiT K3 RISC-V 芯片 | 机器人专用多核异构处理器 |\n| **通用 CPU** | 8 核 X100™ 64 位 RISC-V CPU | 2 Clusters x 4 Cores，每个 Cluster 拥有 4MB 共享 L2 缓存，通用计算 130 KDMIPS |\n| **智算 NPU** | 8 核 A100™ 64 位 AI 核心 | 融合 60 TOPS AI 算力，每个 Cluster 拥有 1MB L2 共享缓存及 1.5MB 专用 TCM 紧耦合存储 |\n| **图形 GPU** | 集成 3D-GPU | 支持 Vulkan、OpenCL、OpenGL ES，满足机器人图形化界面或视觉渲染 |\n| **内存 (DRAM)** | 64-bit LPDDR5，6400 MT/s | 可选 8GB / 16GB / 32GB 容量，统一内存架构，支持 30B 大模型推理 |\n| **视频编码** | 4K @ 60Hz (H.264 / H.265) | 满足机器人多路高清行车记录与推流 |\n| **视频解码** | 4K @ 120Hz (单路) 或 1080p @ 60Hz (8路) | 支持多路摄像头并发画面的实时解码与视觉处理 |\n| **典型功耗** | 18W ~ 35W | 视算力负载动态调压与变频 |\n| **安全方案** | 基于 HW-RoT 的可信引导，PMP/IOPMP 隔离 | 支持 OP-TEE 安全可信操作系统，集成硬件加解密引擎（AES/SM4/RSA等） |\n\n## 2. 参考载板 (Carrier Board) 外设接口\n\n| 接口类别 | 详细物理接口规格 | 说明 / 调试设计 |\n| :--- | :--- | :--- |\n| **摄像头接口** | 2 × MIPI CSI-1.1 连接器 (22-Pin) | 支持多路差分摄像头视频信号接入 |\n| **PCIe 扩展槽** | 1 × M.2 M-Key (PCIe Gen3 x4)<br>1 × M.2 M-Key (PCIe Gen3 x1)<br>1 × M.2 E-Key | 用于扩展 NVMe SSD（最高带宽达 4GB/s）及 Wi-Fi/BT 无线网卡 |\n| **USB 接口** | 4 × USB 3.0 Type-A Host<br>1 × USB Type-C | 用于连接深度相机、激光雷达等外部机器人传感器 |\n| **以太网接口** | 1 × 千兆以太网 (RJ45) | 提供稳定的有线网络连接 |\n| **显示接口** | 1 × DP 1.2<br>1 × MIPI DSI-1.2 连接器 (30-Pin) | 支持多路双屏异显 |\n| **其他 I/O 排针** | 40-Pin 扩展接口 | 兼容主流开发套件引脚，支持 UART、SPI、I2S、I2C、GPIO 调试 |\n| **机械尺寸** | 103 mm x 90.5 mm x 35 mm | 包含底座脚垫、载板、核心模组及散热器整机尺寸 |"
+      "content": "# K3 CoM260 机器人开发套件物理规格参数\n\n> [!TIP]\n> **💡 工程师导读与排坑焦点**：存放 K3 CoM260 核心板与参考载板金手指引脚及物理规格。\n> **目标读者**：`核心板选型工程师 / 硬件工程师` | **技术领域**：`chip_product_specs`\n\n本文件汇总了 K3 CoM260 核心板及其参考载板的硬件规格数据，主要用于服务机器人、自主智能体开发与核心板集成参考。\n\n## 1. 核心模组 (CoM) 参数\n\n| 规格维度 | 详细参数规格 | 说明 / 调试设计 |\n| :--- | :--- | :--- |\n| **主控芯片** | SpacemiT K3 RISC-V 芯片 | 机器人专用多核异构处理器 |\n| **通用 CPU** | 8 核 X100™ 64 位 RISC-V CPU | 2 Clusters x 4 Cores，每个 Cluster 拥有 4MB 共享 L2 缓存，通用计算 130 KDMIPS |\n| **智算 NPU** | 8 核 A100™ 64 位 AI 核心 | 融合 60 TOPS AI 算力，每个 Cluster 拥有 1MB L2 共享缓存及 1.5MB 专用 TCM 紧耦合存储 |\n| **图形 GPU** | 集成 3D-GPU | 支持 Vulkan、OpenCL、OpenGL ES，满足机器人图形化界面或视觉渲染 |\n| **内存 (DRAM)** | 64-bit LPDDR5，6400 MT/s | 可选 8GB / 16GB / 32GB 容量，统一内存架构，支持 30B MoE 稀疏大模型推理 |\n| **视频编码** | 4K @ 60Hz (H.264 / H.265) | 满足机器人多路高清行车记录与推流 |\n| **视频解码** | 4K @ 120Hz (单路) 或 1080p @ 60Hz (8路) | 支持多路摄像头并发画面的实时解码与视觉处理 |\n| **典型功耗** | 18W ~ 35W | 视算力负载动态调压与变频 |\n| **安全方案** | 基于 HW-RoT 的可信引导，PMP/IOPMP 隔离 | 支持 OP-TEE 安全可信操作系统，集成硬件加解密引擎（AES/SM4/RSA等） |\n\n## 2. 参考载板 (Carrier Board) 外设接口\n\n| 接口类别 | 详细物理接口规格 | 说明 / 调试设计 |\n| :--- | :--- | :--- |\n| **摄像头接口** | 2 × MIPI CSI-1.1 连接器 (22-Pin) | 支持多路差分摄像头视频信号接入 |\n| **PCIe 扩展槽** | 1 × M.2 M-Key (PCIe Gen3 x4)<br>1 × M.2 M-Key (PCIe Gen3 x1)<br>1 × M.2 E-Key | 用于扩展 NVMe SSD（最高带宽达 4GB/s）及 Wi-Fi/BT 无线网卡 |\n| **USB 接口** | 4 × USB 3.0 Type-A Host<br>1 × USB Type-C | 用于连接深度相机、激光雷达等外部机器人传感器 |\n| **以太网接口** | 1 × 千兆以太网 (RJ45) | 提供稳定的有线网络连接 |\n| **显示接口** | 1 × DP 1.2<br>1 × MIPI DSI-1.2 连接器 (30-Pin) | 支持多路双屏异显 |\n| **其他 I/O 排针** | 40-Pin 扩展接口 | 兼容主流开发套件引脚，支持 UART、SPI、I2S、I2C、GPIO 调试 |\n| **机械尺寸** | 103 mm x 90.5 mm x 35 mm | 包含底座脚垫、载板、核心模组及散热器整机尺寸 |"
+    },
+    "k3_material_avl_specs": {
+      "id": "k3_material_avl_specs",
+      "title": "K3 关键器件经认证厂商列表 (AVL) 规格",
+      "type": "evidence",
+      "domain": "chip_product_specs",
+      "status": "needs_review",
+      "aliases": [
+        "K3关键器件AVL",
+        "K3物料清单",
+        "k3_material_avl_specs"
+      ],
+      "target_audience": [
+        "硬件采购",
+        "硬件电路工程师",
+        "系统架构师"
+      ],
+      "outlinks": [],
+      "backlinks": [],
+      "summary": "# K3 关键器件经认证厂商列表 (AVL) 规格  > [!TIP] > **💡 工程师导读与排坑焦点**：存放经进迭时空官方压测验证通过的 K3 芯片 LPDDR5、UFS 闪存及 eMMC 存储元器件选型表。 > **目标读者**：`硬件采购 / 硬件电路工程师 / 系统架构师` | **技术领域**：`chip_product_specs`  **AVL (Approved Vendor List)** 包含了进迭时空官方经验证、可量产的 K3 平台兼容器件，用以辅助客户进行高速存储与内存芯片选型，规避信号完整性与高速读写稳定性隐患，并保障供应链可交付性。  ## 1. 涵盖的核心高速",
+      "content": "# K3 关键器件经认证厂商列表 (AVL) 规格\n\n> [!TIP]\n> **💡 工程师导读与排坑焦点**：存放经进迭时空官方压测验证通过的 K3 芯片 LPDDR5、UFS 闪存及 eMMC 存储元器件选型表。\n> **目标读者**：`硬件采购 / 硬件电路工程师 / 系统架构师` | **技术领域**：`chip_product_specs`\n\n**AVL (Approved Vendor List)** 包含了进迭时空官方经验证、可量产的 K3 平台兼容器件，用以辅助客户进行高速存储与内存芯片选型，规避信号完整性与高速读写稳定性隐患，并保障供应链可交付性。\n\n## 1. 涵盖的核心高速存储器件类别\n*   **高速内存颗粒**：LPDDR5（支持高达 5500 Mbps / 6400 Mbps 高速通道，要求严格遵循眼图与 PCB 阻抗规范）\n*   **高速闪存介质**：UFS（通用闪存存储，提供高吞吐系统盘支持）\n*   **标准嵌入式存储**：eMMC 5.1（支持工业级与车规级选型）\n\n## 2. 官方 AVL 下载通道\n官方定期维护并发布最新验证的 xlsm 格式 AVL 表格：\n\n*   **官方发布资源**：[K3 关键器件 AVL 表格下载](https://cdn-resource.spacemit.com/file/chip/K3/K3_Key_Parts_AVL.xlsm)\n*   **硬件验证建议**：在进行 K3 核心板或主板 Layout 前，建议对比最新 AVL 清单中的已验证封装引脚与推荐阻抗匹配网络，若选型不在 AVL 列表内，需提前进行信号质量压测与高低温环境温箱筛选。"
     },
     "k3_pico_specs": {
       "id": "k3_pico_specs",
@@ -1220,7 +1243,7 @@
         "K3_Pico_板级硬件设计专题"
       ],
       "summary": "# K3 Pico-ITX 迷你 AI 计算机物理规格参数  > [!TIP] > **💡 工程师导读与排坑焦点**：存放 K3 Pico-ITX 迷你主板处理器、存储、光口与外设物理规格。 > **目标读者**：`硬件工程师 / 产品架构师` | **技术领域**：`chip_product_specs`  本文件汇总了 K3 Pico-ITX 迷你计算机的硬件规格数据，可用于系统集成与硬件开发设计参考。  | 规格维度 | 详细参数规格 | 说明 / 调试设计 | | :--- | :--- | :--- | | **主控处理器** | SpacemiT K3 8核（8计算核 + 8智算核",
-      "content": "# K3 Pico-ITX 迷你 AI 计算机物理规格参数\n\n> [!TIP]\n> **💡 工程师导读与排坑焦点**：存放 K3 Pico-ITX 迷你主板处理器、存储、光口与外设物理规格。\n> **目标读者**：`硬件工程师 / 产品架构师` | **技术领域**：`chip_product_specs`\n\n本文件汇总了 K3 Pico-ITX 迷你计算机的硬件规格数据，可用于系统集成与硬件开发设计参考。\n\n| 规格维度 | 详细参数规格 | 说明 / 调试设计 |\n| :--- | :--- | :--- |\n| **主控处理器** | SpacemiT K3 8核（8计算核 + 8智算核） | 融合 60 TOPS AI 算力，符合 RVA23 标准，支持 IME 向量扩展与完整虚拟化 |\n| **内存 (DRAM)** | 双通道 2 × 32-bit LPDDR5，6400 MT/s | 可选 16GB / 32GB 容量，计算核与智算核统一内存架构，支持 30B 大模型推理 |\n| **本地存储** | 板载 UFS 2.2 闪存 | 可选 128GB / 256GB 容量，读取速率比普通 eMMC 提升 3.4 倍 |\n| **存储扩展** | M.2 M-Key (2280) 连接器 | 支持 PCIe Gen3 x4 链路，可挂载 NVMe SSD（注：B-Key 插入设备时降为 Gen3 x2） |\n| **高速扩展** | M.2 B-Key (2242/3042) 连接器 | 提供 PCIe Gen3 x2 及 USB 信号，可扩展 SSD 或 4G 模组 |\n| **实时运动控制** | FPC 柔性连接器 | 由实时核 **RT24** 直出，支持 EtherCAT、5路 CAN-FD、SPI、I2C、UART，满足微秒级控制 |\n| **有线网络** | 1 × 千兆网口 (RJ45) | 支持 1000M / 100M 自适应 |\n| **光纤网络** | 1 × 万兆光口 (SFP+) | 支持 10G BASE-R / 10G BASE-X，支持 QinQ、MSI-X 及 WOL |\n| **无线网络** | 板载 PCIe Wi-Fi 6 + 蓝牙 5.2 模组 | 支持 802.11a/b/g/n/ac/ax 标准，双天线设计 |\n| **显示接口** | 1 × DP (Type-C)<br>1 × eDP (40-Pin FPC) | DP 最高支持 4K @ 60Hz 刷新率<br>eDP 最高支持 2.5K 2560×1600 @ 90Hz 刷新率 |\n| **USB 接口** | 2 × USB 3.2 Gen1 Type-C<br>4 × USB 2.0 Type-A Host | Type-C 一路为全功能（支持 DP/供电），一路为 OTG 烧录口 |\n| **电源输入** | USB-PD 3.0 (Type-C) 或 2-Pin ATX | Type-C 口额定输入 65W 功率；ATX 端子支持 12V @ 7A 供电 |\n| **管理系统** | 板载 EC (Embedded Controller) | 负责电源管理、智能风扇散热策略、RTC 时钟管理及状态监控 |\n| **机械尺寸** | 100 mm × 86 mm | 2.5寸 Pico-ITX Plus 紧凑规格 |\n| **可靠性** | 接触防护 ±4kV，空气防护 ±8kV（单板） | 整机形态下接触防护提升至 ±6kV，空气 ±12kV |"
+      "content": "# K3 Pico-ITX 迷你 AI 计算机物理规格参数\n\n> [!TIP]\n> **💡 工程师导读与排坑焦点**：存放 K3 Pico-ITX 迷你主板处理器、存储、光口与外设物理规格。\n> **目标读者**：`硬件工程师 / 产品架构师` | **技术领域**：`chip_product_specs`\n\n本文件汇总了 K3 Pico-ITX 迷你计算机的硬件规格数据，可用于系统集成与硬件开发设计参考。\n\n| 规格维度 | 详细参数规格 | 说明 / 调试设计 |\n| :--- | :--- | :--- |\n| **主控处理器** | SpacemiT K3 8核（8计算核 + 8智算核） | 融合 60 TOPS AI 算力，符合 RVA23 标准，支持 IME 向量扩展与完整虚拟化 |\n| **内存 (DRAM)** | 双通道 2 × 32-bit LPDDR5，6400 MT/s | 可选 16GB / 32GB 容量，计算核与智算核统一内存架构，支持 30B MoE 稀疏大模型推理 |\n| **本地存储** | 板载 UFS 2.2 闪存 | 可选 128GB / 256GB 容量，读取速率比普通 eMMC 提升 3.4 倍 |\n| **存储扩展** | M.2 M-Key (2280) 连接器 | 支持 PCIe Gen3 x4 链路，可挂载 NVMe SSD（注：B-Key 插入设备时降为 Gen3 x2） |\n| **高速扩展** | M.2 B-Key (2242/3042) 连接器 | 提供 PCIe Gen3 x2 及 USB 信号，可扩展 SSD 或 4G 模组 |\n| **实时运动控制** | FPC 柔性连接器 | 由实时核 **RT24** 直出，支持 EtherCAT、5路 CAN-FD、SPI、I2C、UART，满足微秒级控制 |\n| **有线网络** | 1 × 千兆网口 (RJ45) | 支持 1000M / 100M 自适应 |\n| **光纤网络** | 1 × 万兆光口 (SFP+) | 支持 10G BASE-R / 10G BASE-X，支持 QinQ、MSI-X 及 WOL |\n| **无线网络** | 板载 PCIe Wi-Fi 6 + 蓝牙 5.2 模组 | 支持 802.11a/b/g/n/ac/ax 标准，双天线设计 |\n| **显示接口** | 1 × DP (Type-C)<br>1 × eDP (40-Pin FPC) | DP 最高支持 4K @ 60Hz 刷新率<br>eDP 最高支持 2.5K 2560×1600 @ 90Hz 刷新率 |\n| **USB 接口** | 2 × USB 3.2 Gen1 Type-C<br>4 × USB 2.0 Type-A Host | Type-C 一路为全功能（支持 DP/供电），一路为 OTG 烧录口 |\n| **电源输入** | USB-PD 3.0 (Type-C) 或 2-Pin ATX | Type-C 口额定输入 65W 功率；ATX 端子支持 12V @ 7A 供电 |\n| **管理系统** | 板载 EC (Embedded Controller) | 负责电源管理、智能风扇散热策略、RTC 时钟管理及状态监控 |\n| **机械尺寸** | 100 mm × 86 mm | 2.5寸 Pico-ITX Plus 紧凑规格 |\n| **可靠性** | 接触防护 ±4kV，空气防护 ±8kV（单板） | 整机形态下接触防护提升至 ±6kV，空气 ±12kV |"
     },
     "k3_strap_pins_config": {
       "id": "k3_strap_pins_config",
@@ -1335,6 +1358,30 @@
       "summary": "# SpacemiT Power Stone P1S PMIC 核心规格  > [!TIP] > **💡 工程师导读与排坑焦点**：存放 P1S PMIC 精简引脚定义、各电源轨参数及远端反馈走线。 > **目标读者**：`电源工程师 / 硬件电路工程师` | **技术领域**：`hardware_schematic_design`  SpacemiT® Power Stone™ P1S 是一款多通道电源管理芯片（PMIC），是 P1 芯片的精简版本。它旨在为客户提供更紧凑和高性价比的完整电源管理方案。  ## 1. 输入与环境参数 *   **输入供电电压 (VIN/VSYS)**: 2.6",
       "content": "# SpacemiT Power Stone P1S PMIC 核心规格\n\n> [!TIP]\n> **💡 工程师导读与排坑焦点**：存放 P1S PMIC 精简引脚定义、各电源轨参数及远端反馈走线。\n> **目标读者**：`电源工程师 / 硬件电路工程师` | **技术领域**：`hardware_schematic_design`\n\nSpacemiT® Power Stone™ P1S 是一款多通道电源管理芯片（PMIC），是 P1 芯片的精简版本。它旨在为客户提供更紧凑和高性价比的完整电源管理方案。\n\n## 1. 输入与环境参数\n*   **输入供电电压 (VIN/VSYS)**: 2.6 V ～ 5.5 V (推荐工作范围: 2.7 V ～ 5.5 V)\n*   **芯片最大功耗 (P_DIS)**: 2 W\n*   **芯片结温范围 (T_J)**: -40 °C 至 125 °C (环境工作温度 Ta: -40 °C 至 85 °C)\n*   **芯片封装**: QFN-60 (7 mm × 7 mm, 0.4 mm 间距)\n\n## 2. 6 路高效降压转换器 (Buck 1～6)\n所有 Buck 均采用恒定导通时间 (COT) 控制模式，支持快速负载瞬态响应。默认切换频率为 1.5 MHz。\n\n*   **输出电压范围**:\n    *   低压档：0.5 V ～ 1.35 V (5 mV / step)\n    *   高压档：1.375 V ～ 3.4 V (25 mV / step)\n*   **各路输出电流能力**:\n    *   **Buck 1 / 2**: 单路最大 4 A。**支持双相多相操作**。\n    *   **Buck 3 / 4**: 单路最大 2.5 A。支持双相操作。\n    *   **Buck 5 / 6**: 单路最大 2.5 A。可通过专用 `VSET5` / `VSET6` 引脚的硬件状态（GND / VSYS / 悬空）选择默认输出电压。\n\n## 3. 5 路可编程线性稳压器 (LDO)\n相较于 P1，P1S 精简了部分 LDO 资源，共有 5 路 LDO（其余 LDO 管脚为 NC 状态）：\n\n*   **常开 LDO (AONLDO)**: 1 路（引脚 59）。输出电流最大 0.2 A，用于 PMIC 内部及 GPIO 唤醒控制。\n*   **低噪声模拟 LDO (ALDO 1～4)**: 4 路（引脚 3, 4, 1, 60）。输出电压 0.5 V ～ 3.4 V，最大输出电流 0.3 A。\n*   *注：P1S 无 DLDO 1～7 资源（对应管脚均设计为 NC）。*\n\n## 4. 辅助功能参数\n*   **负载开关 (Load Switch)**: 无 (对应管脚为 NC)。\n*   **实时时钟 (RTC)**: 无 (对应管脚为 NC，不支持纽扣电池和外部 32.768kHz 晶振)。\n*   **系统监视器与看门狗**: 看门狗超时时间可配置为 1 s ～ 16 s。\n*   **模拟转换器 (ADC)**: 12 位分辨率，8 通道输入，支持配置报警阈值。\n*   **控制接口**: I²C 接口 + MTP（支持预设各电轨默认电压和开关机时序）。\n*   **GPIO**: 6 个多功能复用 GPIO，支持配置为中断、使能信号及 ADC 输入通道。"
     },
+    "p3_pmic_specs": {
+      "id": "p3_pmic_specs",
+      "title": "SpacemiT Power Stone P3 PMIC 核心规格与电气参数",
+      "type": "evidence",
+      "domain": "hardware_schematic_design",
+      "status": "needs_review",
+      "aliases": [
+        "P3规格参数",
+        "P3数据手册",
+        "p3_pmic_specs",
+        "Power Stone P3"
+      ],
+      "target_audience": [
+        "电源工程师",
+        "硬件电路工程师",
+        "系统架构师"
+      ],
+      "outlinks": [],
+      "backlinks": [
+        "SpacemiT_P3_PMIC电源芯片专题档案"
+      ],
+      "summary": "# SpacemiT Power Stone P3 PMIC 核心规格与电气参数  > [!TIP] > **💡 工程师导读与排坑焦点**：存放 P3 高性能四相 Buck PMIC 电气限制、32A 大电流相位组合、COT 瞬态响应、80-ball WLCSP 封装与通信控制规范。 > **目标读者**：`电源工程师 / 硬件电路工程师 / 系统架构师` | **技术领域**：`hardware_schematic_design`  SpacemiT® Power Stone™ P3 是一款高性能四相降压（Buck）电源管理芯片，具备高达 32 A（峰值 40 A）的最大输出电流、91% 峰",
+      "content": "# SpacemiT Power Stone P3 PMIC 核心规格与电气参数\n\n> [!TIP]\n> **💡 工程师导读与排坑焦点**：存放 P3 高性能四相 Buck PMIC 电气限制、32A 大电流相位组合、COT 瞬态响应、80-ball WLCSP 封装与通信控制规范。\n> **目标读者**：`电源工程师 / 硬件电路工程师 / 系统架构师` | **技术领域**：`hardware_schematic_design`\n\nSpacemiT® Power Stone™ P3 是一款高性能四相降压（Buck）电源管理芯片，具备高达 32 A（峰值 40 A）的最大输出电流、91% 峰值效率、WLCSP 超小晶圆级封装以及 MTP 多次可编程开关机时序，专为边缘计算、AI 盒子、紧凑型无人机及大电流嵌入式场景打造。\n\n## 1. 核心电气与物理极限参数\n\n*   **输入供电电压 (VIN)**: 2.5 V ～ 5.5 V\n*   **输出电压调节范围**:\n    *   低压档：0.25 V ～ 1.20 V（步进 5 mV / step）\n    *   高压档：1.20 V ～ 1.83 V（步进 10 mV / step）\n*   **最大输出电流能力**:\n    *   **持续输出**: 四相并联最高 32 A\n    *   **峰值输出**: 瞬态最高 40 A\n*   **电源转换效率**: 峰值效率高达 91%（测试工况：VIN = 3.6 V, VOUT = 0.85 V）\n*   **工作结温 (T_J)**: -40 °C 至 125 °C\n*   **物理封装**: 80 焊球（Ball）、0.4 mm 间距的晶圆级封装（WLCSP）\n\n## 2. 5 种输出相位拓扑模式\n\nP3 内部包含 4 个独立的 Buck 功率级，支持通过 MTP 或寄存器配置为 5 种灵活的输出相位组合：\n\n| 相位配置模式 | 输出路数 | 各路额定电流分配 | 典型应用目标 |\n| :--- | :--- | :--- | :--- |\n| **4 + 0** | 1 路输出 | 单路最大 32 A (峰值 40 A) | 高性能 SoC 核心 Core 轨极高算力供电 |\n| **3 + 1** | 2 路输出 | 24 A (3相) + 8 A (1相) | SoC Core + NPU / GPU 供电 |\n| **2 + 2** | 2 路输出 | 16 A (2相) + 16 A (2相) | 双大功率电源轨对称供电 |\n| **2 + 1 + 1** | 3 路输出 | 16 A (2相) + 8 A + 8 A | CPU Core + GPU + 内存/总线供电 |\n| **1 + 1 + 1 + 1** | 4 路输出 | 8 A + 8 A + 8 A + 8 A | 多路独立中高功率外设供电 |\n\n## 3. 控制架构与动态特性\n\n*   **调制架构**: 恒定导通时间（COT, Constant On-Time）控制模式，具备极快负载瞬态响应速度，有效抑制大算力突发时的电压跌落（Droop）。\n*   **运行模式**: 支持 PFM（轻载脉冲跳跃省电）与 PWM（重载固定频率高效）模式自动平滑切换，亦可硬件/软件强制进入全 PWM 模式以规避特定频段纹波干扰。\n*   **斜率管理**: 各路 Buck 输出电压的上升（Ramp-up）和下降（Ramp-down）斜率均独立可调，避免突加冲击电流触发上级供电过流保护。\n*   **时序可编程性 (MTP)**: 内部集成多次可编程非易失性存储器（MTP），支持用户灵活烧录定制开关机延迟、上电次序（Sequence）与复位逻辑。\n\n## 4. 控制总线、遥测与扩展接口\n\n*   **高速控制接口**:\n    *   支持高达 3.4 MHz 的高速 I²C 总线通信。\n    *   支持高达 30 MHz 的标准 SPI 接口，满足微秒级快速动态调压（DVFS）。\n*   **模拟遥测 (ADC)**: 集成 8 通道 12 位（12-bit）高精度 ADC，实时监控各相输入/输出电压、电流与芯片自身结温。\n*   **GPIO 扩展**: 提供 4 路可配置 GPIO，支持外部中断指示、使能唤醒信号输入或外设电源使能输出。\n*   **安全与硬件保护**:\n    *   欠压锁定保护 (UVLO)\n    *   多级过流与输出短路保护 (OCP/SCP)\n    *   过温警告与过温关断保护 (OTP，典型 140°C / 160°C 双级阈值)"
+    },
     "robot_hardware_specs": {
       "id": "robot_hardware_specs",
       "title": "SpacemiT 机器人硬件与具身 AI 模型参数规格",
@@ -1356,7 +1403,7 @@
         "SpacemiT_ROS2_机器人与具身智能专题档案"
       ],
       "summary": "# SpacemiT 机器人硬件与具身 AI 模型参数规格  > [!TIP] > **💡 工程师导读与排坑焦点**：存放 Reachy Mini、LeRobot SO101 机械臂、Linksee 移动车与 ACT/SmolVLA 参数。 > **目标读者**：`具身智能工程师 / 机器人工程师` | **技术领域**：`edge_ai_robotics`  本文档记录基于 SpacemiT K1/K3 平台适配的具身智能机器人硬件（Reachy Mini、LeRobot SO101 机械臂、Linksee 导航车）参数及端侧 AI 模型规格。  ---  ## 1. 具身机器人硬件物理参数",
-      "content": "# SpacemiT 机器人硬件与具身 AI 模型参数规格\n\n> [!TIP]\n> **💡 工程师导读与排坑焦点**：存放 Reachy Mini、LeRobot SO101 机械臂、Linksee 移动车与 ACT/SmolVLA 参数。\n> **目标读者**：`具身智能工程师 / 机器人工程师` | **技术领域**：`edge_ai_robotics`\n\n本文档记录基于 SpacemiT K1/K3 平台适配的具身智能机器人硬件（Reachy Mini、LeRobot SO101 机械臂、Linksee 导航车）参数及端侧 AI 模型规格。\n\n---\n\n## 1. 具身机器人硬件物理参数矩阵\n\n| 机器人产品名称 | 硬件类型 / 自由度 | 控制主板 | 传感器与执行器配置 | 应用场景 |\n| :--- | :--- | :--- | :--- | :--- |\n| **Reachy Mini** | 桌面人形/头胸组件 | Muse Pi / K1 | 双目 CSI 摄像头、双耳麦克风阵列、头部 3-DoF 舵机 | 桌面语音交互、视线跟踪、人机协同 |\n| **LeRobot SO101** | 6-DoF 机械臂 | Muse Pi / K3 Pico | 6x 串行总线舵机、夹爪、USB/CSI 视角摄像头 | 模仿学习抓取、教研实验、工件分拣 |\n| **Linksee 移动车** | 轮式差速/全向底盘 | K3 Pico / Muse Pi | 激光雷达 (LiDAR)、差速电机编码器、IMU 惯导 | 室内 2D/3D SLAM 建图与自主导航 |\n\n---\n\n## 2. 端侧具身 AI 模型与推理性能规格\n\n| 模型名称 | 模型类型 / 架构 | 控制任务 | 运行平台 | 算力与推理帧率 |\n| :--- | :--- | :--- | :--- | :--- |\n| **ACT (Action Chunking)** | Transformer 模仿学习 | 机械臂轨迹与抓取预测 | K1 (2.0 TOPS NPU/Vector) | 25 FPS 实时轨迹输出 |\n| **SmolVLA** | 视觉-语言-动作多模态 | 自然语言指令驱动机械臂 | K3 (算力拓展) | 端侧 8 FPS 闭环控制 |\n| **RL Policy (MuJoCo)**| 深度强化学习策略 | 双足/四足步态与平稳控制 | K1/K3 Vector 算力 | 100 Hz 控制频次 |\n| **SpaceLLM 1B** | 端侧大语言模型 | 机器人语音对话与指令理解 | K1 (3W TDP 超低功耗) | 15.4 tokens/s 首包响应 |"
+      "content": "# SpacemiT 机器人硬件与具身 AI 模型参数规格\n\n> [!TIP]\n> **💡 工程师导读与排坑焦点**：存放 Reachy Mini、LeRobot SO101 机械臂、Linksee 移动车与 ACT/SmolVLA 参数。\n> **目标读者**：`具身智能工程师 / 机器人工程师` | **技术领域**：`edge_ai_robotics`\n\n本文档记录基于 SpacemiT K1/K3 平台适配的具身智能机器人硬件（Reachy Mini、LeRobot SO101 机械臂、Linksee 导航车）参数及端侧 AI 模型规格。\n\n---\n\n## 1. 具身机器人硬件物理参数矩阵\n\n| 机器人产品名称 | 硬件类型 / 自由度 | 控制主板 | 传感器与执行器配置 | 应用场景 |\n| :--- | :--- | :--- | :--- | :--- |\n| **Reachy Mini** | 桌面人形/头胸组件 | Muse Pi / K1 | 双目 CSI 摄像头、双耳麦克风阵列、头部 3-DoF 舵机 | 桌面语音交互、视线跟踪、人机协同 |\n| **LeRobot SO101** | 6-DoF 机械臂 | Muse Pi / K3 Pico | 6x 串行总线舵机、夹爪、USB/CSI 视角摄像头 | 模仿学习抓取、教研实验、工件分拣 |\n| **Linksee 移动车** | 轮式差速/全向底盘 | K3 Pico / Muse Pi | 激光雷达 (LiDAR)、差速电机编码器、IMU 惯导 | 室内 2D/3D SLAM 建图与自主导航 |\n\n---\n\n## 2. 端侧具身 AI 模型与推理性能规格\n\n| 模型名称 | 模型类型 / 架构 | 控制任务 | 运行平台 | 算力与推理帧率 |\n| :--- | :--- | :--- | :--- | :--- |\n| **ACT (Action Chunking)** | Transformer 模仿学习 | 机械臂轨迹与抓取预测 | K1 (Muse Pi / 2.0 TOPS) | 25 FPS 实时轨迹输出 |\n| **SmolVLA** | 视觉-语言-动作多模态 (ONNX 4子图拆解) | 自然语言指令驱动机械臂 | K3 (K3 Pico / 60 TOPS) | 端侧 8 FPS 闭环控制 |\n| **RL Policy (MuJoCo)**| 深度强化学习策略 (ONNX) | 双足/四足步态与平稳控制 | K1 / K3 (RVV 数学加速) | 100 Hz 控制频次 |\n| **SpaceLLM 1B** | 端侧大语言模型 | 机器人语音对话与指令理解 | K1 (Muse Pi / 3W TDP) | 15.4 tokens/s 首包响应 |"
     },
     "ros2_platform_specs": {
       "id": "ros2_platform_specs",
@@ -1578,6 +1625,9 @@
     "k3 com260板级核心参数": "k3_com260_specs",
     "k3 com260 board hardware specs": "k3_com260_specs",
     "k3_com260_specs": "k3_com260_specs",
+    "k3关键器件avl": "k3_material_avl_specs",
+    "k3物料清单": "k3_material_avl_specs",
+    "k3_material_avl_specs": "k3_material_avl_specs",
     "k3 pico板级核心参数": "k3_pico_specs",
     "k3 pico board hardware specs": "k3_pico_specs",
     "k3_pico_specs": "k3_pico_specs",
@@ -1594,6 +1644,10 @@
     "p1数据手册": "p1_pmic_specs",
     "p1s规格参数": "p1s_pmic_specs",
     "p1s数据手册": "p1s_pmic_specs",
+    "p3规格参数": "p3_pmic_specs",
+    "p3数据手册": "p3_pmic_specs",
+    "p3_pmic_specs": "p3_pmic_specs",
+    "power stone p3": "p3_pmic_specs",
     "robot_hardware_specs": "robot_hardware_specs",
     "spacemit robot hardware": "robot_hardware_specs",
     "lerobot so101 specs": "robot_hardware_specs",
@@ -1703,7 +1757,7 @@
         "系统要求",
         "安装步骤"
       ],
-      "summary": "sidebar_position: 10",
+      "summary": "sidebar_position: 8",
       "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/main/zh/solutions/aicomputer_solution/ailab.md"
     },
     {
@@ -1750,6 +1804,47 @@
     },
     {
       "submodule": "docs-ai",
+      "file_name": "ds_harness.md",
+      "rel_path": "docs-ai/zh/solutions/aicomputer_solution/ds_harness.md",
+      "repo_path": "zh/solutions/aicomputer_solution/ds_harness.md",
+      "title": "DeepSeek Harness",
+      "headers": [
+        "简介",
+        "平台支持",
+        "1. 安装",
+        "1.1 安装依赖",
+        "1.2 安装 DeepSeek Harness",
+        "1.3 运行",
+        "2. 将 K3 本地AI模型能力配置为 DSH 的插件",
+        "附录",
+        "创建`dsh` 命令"
+      ],
+      "summary": "sidebar_position: 11",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/main/zh/solutions/aicomputer_solution/ds_harness.md"
+    },
+    {
+      "submodule": "docs-ai",
+      "file_name": "file2md.md",
+      "rel_path": "docs-ai/zh/solutions/aicomputer_solution/file2md.md",
+      "repo_path": "zh/solutions/aicomputer_solution/file2md.md",
+      "title": "File2MD",
+      "headers": [
+        "核心能力",
+        "平台支持",
+        "技术架构",
+        "应用技术栈",
+        "系统架构图",
+        "处理流程",
+        "安装",
+        "快速开始",
+        "1. 启动应用",
+        "2. 添加文件或网页"
+      ],
+      "summary": "sidebar_position: 4",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/main/zh/solutions/aicomputer_solution/file2md.md"
+    },
+    {
+      "submodule": "docs-ai",
       "file_name": "hermes.md",
       "rel_path": "docs-ai/zh/solutions/aicomputer_solution/hermes.md",
       "repo_path": "zh/solutions/aicomputer_solution/hermes.md",
@@ -1779,6 +1874,7 @@
         "AI NAS",
         "知了(Zenow)",
         "与会(Yumeet)",
+        "File2MD",
         "见智(Seewise)",
         "点将(Agentforce)",
         "SpacemiT AI Lab",
@@ -1788,6 +1884,48 @@
       ],
       "summary": "* Copyright 2022-2023 SPACEMIT. All rights reserved.",
       "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/main/zh/solutions/aicomputer_solution/index.md"
+    },
+    {
+      "submodule": "docs-ai",
+      "file_name": "multi_stream_asr.md",
+      "rel_path": "docs-ai/zh/solutions/aicomputer_solution/multi_stream_asr.md",
+      "repo_path": "zh/solutions/aicomputer_solution/multi_stream_asr.md",
+      "title": "多路语音识别（Multi-Stream ASR）",
+      "headers": [
+        "产品特点",
+        "平台支持",
+        "技术架构",
+        "核心技术栈",
+        "主要框架",
+        "系统架构图",
+        "工作流程",
+        "进程与线程模型",
+        "安装",
+        "方式一：安装 Bianbu DEB（推荐）"
+      ],
+      "summary": "sidebar_position: 13",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/main/zh/solutions/aicomputer_solution/multi_stream_asr.md"
+    },
+    {
+      "submodule": "docs-ai",
+      "file_name": "multi_stream_vision.md",
+      "rel_path": "docs-ai/zh/solutions/aicomputer_solution/multi_stream_vision.md",
+      "repo_path": "zh/solutions/aicomputer_solution/multi_stream_vision.md",
+      "title": "多路视频分析（YOLO Demo）",
+      "headers": [
+        "产品特点",
+        "平台支持",
+        "技术架构",
+        "核心技术栈",
+        "系统架构图",
+        "工作流程",
+        "性能数据",
+        "安装",
+        "方式一：apt 安装（推荐）",
+        "方式二：源码安装（开发者）"
+      ],
+      "summary": "sidebar_position: 12",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/main/zh/solutions/aicomputer_solution/multi_stream_vision.md"
     },
     {
       "submodule": "docs-ai",
@@ -1807,7 +1945,7 @@
         "开发者用户 构建安装、二次开发 openclaw",
         "代码仓库"
       ],
-      "summary": "sidebar_position: 8",
+      "summary": "sidebar_position: 9",
       "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/main/zh/solutions/aicomputer_solution/openclaw.md"
     },
     {
@@ -2400,7 +2538,7 @@
         "Configuration",
         "Environment Variables"
       ],
-      "summary": "sidebar_position: 5",
+      "summary": "sidebar_position: 6",
       "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/main/en/solutions/aicomputer_solution/agentforce.md"
     },
     {
@@ -2421,7 +2559,7 @@
         "System Requirements",
         "Installation"
       ],
-      "summary": "sidebar_position: 10",
+      "summary": "sidebar_position: 8",
       "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/main/en/solutions/aicomputer_solution/ailab.md"
     },
     {
@@ -2468,6 +2606,47 @@
     },
     {
       "submodule": "docs-ai",
+      "file_name": "ds_harness.md",
+      "rel_path": "docs-ai/en/solutions/aicomputer_solution/ds_harness.md",
+      "repo_path": "en/solutions/aicomputer_solution/ds_harness.md",
+      "title": "DeepSeek Harness",
+      "headers": [
+        "Overview",
+        "Platform Support",
+        "1. Installation",
+        "1.1 Install Dependencies",
+        "1.2 Install DeepSeek Harness",
+        "1.3 Run DeepSeek Harness",
+        "2. Configure a K3 Local AI Model as a DSH Plugin",
+        "Appendix",
+        "Create the `dsh` Command"
+      ],
+      "summary": "sidebar_position: 11",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/main/en/solutions/aicomputer_solution/ds_harness.md"
+    },
+    {
+      "submodule": "docs-ai",
+      "file_name": "file2md.md",
+      "rel_path": "docs-ai/en/solutions/aicomputer_solution/file2md.md",
+      "repo_path": "en/solutions/aicomputer_solution/file2md.md",
+      "title": "File2MD",
+      "headers": [
+        "Key Capabilities",
+        "Platform Support",
+        "Technical Architecture",
+        "Technology Stack",
+        "System Architecture",
+        "Processing Pipeline",
+        "Installation",
+        "Quick Start",
+        "1. Launch the Application",
+        "2. Add Files or a Web Page"
+      ],
+      "summary": "sidebar_position: 4",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/main/en/solutions/aicomputer_solution/file2md.md"
+    },
+    {
+      "submodule": "docs-ai",
       "file_name": "hermes.md",
       "rel_path": "docs-ai/en/solutions/aicomputer_solution/hermes.md",
       "repo_path": "en/solutions/aicomputer_solution/hermes.md",
@@ -2484,7 +2663,7 @@
         "Supported LLM Providers",
         "Unavailable Features"
       ],
-      "summary": "sidebar_position: 9",
+      "summary": "sidebar_position: 10",
       "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/main/en/solutions/aicomputer_solution/hermes.md"
     },
     {
@@ -2497,6 +2676,7 @@
         "AI NAS",
         "Zenow",
         "Yumeet",
+        "File2MD",
         "Seewise",
         "Agentforce",
         "Claude Code",
@@ -2506,6 +2686,48 @@
       ],
       "summary": "sidebar_position: 2",
       "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/main/en/solutions/aicomputer_solution/index.md"
+    },
+    {
+      "submodule": "docs-ai",
+      "file_name": "multi_stream_asr.md",
+      "rel_path": "docs-ai/en/solutions/aicomputer_solution/multi_stream_asr.md",
+      "repo_path": "en/solutions/aicomputer_solution/multi_stream_asr.md",
+      "title": "Multi-Stream ASR",
+      "headers": [
+        "Key Features",
+        "Platform Support",
+        "Technical Architecture",
+        "Core Technology Stack",
+        "Main Frameworks",
+        "System Architecture Diagram",
+        "Workflow",
+        "Process and Thread Model",
+        "Installation",
+        "Method 1: Install the Bianbu DEB (Recommended)"
+      ],
+      "summary": "sidebar_position: 13",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/main/en/solutions/aicomputer_solution/multi_stream_asr.md"
+    },
+    {
+      "submodule": "docs-ai",
+      "file_name": "multi_stream_vision.md",
+      "rel_path": "docs-ai/en/solutions/aicomputer_solution/multi_stream_vision.md",
+      "repo_path": "en/solutions/aicomputer_solution/multi_stream_vision.md",
+      "title": "Multi-Stream Video Analysis (YOLO Demo)",
+      "headers": [
+        "Key Features",
+        "Platform Support",
+        "Technical Architecture",
+        "Core Technology Stack",
+        "System Architecture Diagram",
+        "Workflow",
+        "Performance Data",
+        "Installation",
+        "Method 1: Install with apt (Recommended)",
+        "Method 2: Build from Source (Developers)"
+      ],
+      "summary": "sidebar_position: 12",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/main/en/solutions/aicomputer_solution/multi_stream_vision.md"
     },
     {
       "submodule": "docs-ai",
@@ -2525,7 +2747,7 @@
         "Build, Install, and Redevelop OpenClaw for Developers",
         "Code Repository"
       ],
-      "summary": "sidebar_position: 8",
+      "summary": "sidebar_position: 9",
       "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/main/en/solutions/aicomputer_solution/openclaw.md"
     },
     {
@@ -2546,7 +2768,7 @@
         "Download Models",
         "Configure Parameters"
       ],
-      "summary": "sidebar_position: 4",
+      "summary": "sidebar_position: 5",
       "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/main/en/solutions/aicomputer_solution/seewise.md"
     },
     {
@@ -3085,7 +3307,7 @@
         "组件",
         "制作一个Linux发行版需要集成哪些组件？"
       ],
-      "summary": "sidebar_position: 10",
+      "summary": "sidebar_position: 99",
       "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-buildroot/main/zh/k3_buildroot/faqs.md"
     },
     {
@@ -3154,13 +3376,16 @@
       "repo_path": "zh/k3_buildroot/release_notes/bl-v1.0.y.md",
       "title": "Buildroot 1.0",
       "headers": [
+        "v1.0.9 更新说明",
+        "主要更新",
+        "v1.0.8 更新说明",
+        "主要更新",
+        "v1.0.7 更新说明",
+        "主要更新",
         "v1.0.5 更新说明",
         "主要更新",
         "v1.0.2 更新说明",
-        "主要更新",
-        "v1.0.0 更新说明",
-        "特性",
-        "已知问题"
+        "主要更新"
       ],
       "summary": "sidebar_position: 1",
       "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-buildroot/main/zh/k3_buildroot/release_notes/bl-v1.0.y.md"
@@ -3879,9 +4104,9 @@
         "功能介绍",
         "源码结构介绍",
         "关键特性",
-        "SDIO 接口相关特性",
-        "性能参数",
-        "SDIO 接口模组配置介绍",
+        "平台接口特性",
+        "模组性能参数",
+        "配置介绍",
         "CONFIG 配置",
         "DTS 配置",
         "接口介绍"
@@ -4134,6 +4359,37 @@
       ],
       "summary": "sidebar_position: 5",
       "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-buildroot/main/zh/k3_buildroot/graphics/panel_porting_guide.md"
+    },
+    {
+      "submodule": "docs-buildroot",
+      "file_name": "index.md",
+      "rel_path": "docs-buildroot/zh/k3_buildroot/dpdk/index.md",
+      "repo_path": "zh/k3_buildroot/dpdk/index.md",
+      "title": "DPDK开发",
+      "headers": [],
+      "summary": "sidebar_position: 9",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-buildroot/main/zh/k3_buildroot/dpdk/index.md"
+    },
+    {
+      "submodule": "docs-buildroot",
+      "file_name": "k3_GMAC_DPDK_user_guide.md",
+      "rel_path": "docs-buildroot/zh/k3_buildroot/dpdk/k3_GMAC_DPDK_user_guide.md",
+      "repo_path": "zh/k3_buildroot/dpdk/k3_GMAC_DPDK_user_guide.md",
+      "title": "K3 GMAC DPDK 用户使用指南",
+      "headers": [
+        "DPDK 介绍",
+        "DPDK框架",
+        "DPDK 组件说明",
+        "DPDK核心原理",
+        "Kernel配置",
+        "Kernel config",
+        "dts配置",
+        "性能优化",
+        "CPU隔离（isolcpus）",
+        "无滴答内核 (nohz_full)"
+      ],
+      "summary": "sidebar_position: 2",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-buildroot/main/zh/k3_buildroot/dpdk/k3_GMAC_DPDK_user_guide.md"
     },
     {
       "submodule": "docs-buildroot",
@@ -4446,7 +4702,7 @@
       "repo_path": "zh/k3_buildroot/kernel_debug/index.md",
       "title": "系统排查",
       "headers": [],
-      "summary": "sidebar_position: 9",
+      "summary": "sidebar_position: 10",
       "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-buildroot/main/zh/k3_buildroot/kernel_debug/index.md"
     },
     {
@@ -4696,6 +4952,8 @@
       "repo_path": "zh/k1_buildroot/release_notes/bl-v2.2.y.md",
       "title": "Buildroot 2.2 更新说明",
       "headers": [
+        "v2.2.11 更新说明",
+        "主要更新",
         "v2.2.10 更新说明",
         "主要更新",
         "v2.2.9 更新说明",
@@ -4703,9 +4961,7 @@
         "v2.2.7 更新说明",
         "主要更新",
         "构建更新",
-        "v2.2.6 更新说明",
-        "主要更新",
-        "v2.2.4 更新说明"
+        "v2.2.6 更新说明"
       ],
       "summary": "sidebar_position: 1",
       "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-buildroot/main/zh/k1_buildroot/release_notes/bl-v2.2.y.md"
@@ -4874,7 +5130,7 @@
         "固件布局",
         "刷机流程和配置",
         "启动配置",
-        "安全启动"
+        "U-Boot 功能与配置"
       ],
       "summary": "sidebar_position: 3",
       "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-buildroot/main/zh/k1_buildroot/device/boot.md"
@@ -6028,7 +6284,7 @@
         "Components",
         "What components are needed to create a Linux distribution?"
       ],
-      "summary": "sidebar_position: 10",
+      "summary": "sidebar_position: 99",
       "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-buildroot/main/en/k3_buildroot/faqs.md"
     },
     {
@@ -6097,6 +6353,8 @@
       "repo_path": "en/k3_buildroot/release_notes/bl-v1.0.y.md",
       "title": "Buildroot 1.0",
       "headers": [
+        "v1.0.7 Release Notes",
+        "Major Updates",
         "v1.0.5 Release Notes",
         "Major Updates",
         "V1.0.0 Release Notes",
@@ -6733,17 +6991,17 @@
       "title": "BT",
       "headers": [
         "Overview",
-        "Feature Overview",
+        "Features",
         "Source Code Structure",
         "Key Features",
         "Platform UART Interface Features",
+        "Platform USB Interface Features",
         "Module Performance Specifications",
         "Configuration",
         "Kconfig Configuration",
-        "DTS Configuration",
-        "Interface"
+        "DTS Configuration"
       ],
-      "summary": "This document introduces the K3 platform Bluetooth porting and notes.",
+      "summary": "This document describes common methods and considerations for porting Bluetooth modules to the K3 platform.",
       "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-buildroot/main/en/k3_buildroot/device/peripheral_driver/BT.md"
     },
     {
@@ -6820,10 +7078,10 @@
         "Functional Overview",
         "Source Tree Overview",
         "Key Features",
-        "SDIO Interface Features",
-        "Performance Data",
-        "SDIO Module Configuration",
-        "CONFIG Options",
+        "Platform Interface Features",
+        "Module Performance",
+        "Configuration",
+        "Kernel Configuration",
         "DTS Configuration",
         "Interface"
       ],
@@ -7064,6 +7322,37 @@
       "headers": [],
       "summary": "sidebar_position: 5",
       "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-buildroot/main/en/k3_buildroot/graphics/panel_porting_guide.md"
+    },
+    {
+      "submodule": "docs-buildroot",
+      "file_name": "index.md",
+      "rel_path": "docs-buildroot/en/k3_buildroot/dpdk/index.md",
+      "repo_path": "en/k3_buildroot/dpdk/index.md",
+      "title": "DPDK Development",
+      "headers": [],
+      "summary": "sidebar_position: 9",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-buildroot/main/en/k3_buildroot/dpdk/index.md"
+    },
+    {
+      "submodule": "docs-buildroot",
+      "file_name": "k3_GMAC_DPDK_user_guide.md",
+      "rel_path": "docs-buildroot/en/k3_buildroot/dpdk/k3_GMAC_DPDK_user_guide.md",
+      "repo_path": "en/k3_buildroot/dpdk/k3_GMAC_DPDK_user_guide.md",
+      "title": "K3 GMAC DPDK User Guide",
+      "headers": [
+        "DPDK Overview",
+        "DPDK Framework",
+        "DPDK Components",
+        "DPDK Core Principles",
+        "Kernel Configuration",
+        "Kernel Configuration",
+        "DTS Configuration",
+        "Performance Tuning",
+        "CPU Isolation (isolcpus)",
+        "Tickless Kernel (nohz_full)"
+      ],
+      "summary": "sidebar_position: 2",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-buildroot/main/en/k3_buildroot/dpdk/k3_GMAC_DPDK_user_guide.md"
     },
     {
       "submodule": "docs-buildroot",
@@ -7376,7 +7665,7 @@
       "repo_path": "en/k3_buildroot/kernel_debug/index.md",
       "title": "Kernel Debug",
       "headers": [],
-      "summary": "sidebar_position: 9",
+      "summary": "sidebar_position: 10",
       "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-buildroot/main/en/k3_buildroot/kernel_debug/index.md"
     },
     {
@@ -7626,6 +7915,8 @@
       "repo_path": "en/k1_buildroot/release_notes/bl-v2.2.y.md",
       "title": "Buildroot 2.2 Release Notes",
       "headers": [
+        "v2.2.11 Release Notes",
+        "Major Updates",
         "v2.2.9 release note",
         "Major Updates",
         "v2.2.7 release note",
@@ -7633,9 +7924,7 @@
         "Build updates",
         "v2.2.6 release note",
         "Major Updates",
-        "v2.2.4 release note",
-        "Major Updates",
-        "v2.2.2 release note"
+        "v2.2.4 release note"
       ],
       "summary": "sidebar_position: 1",
       "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-buildroot/main/en/k1_buildroot/release_notes/bl-v2.2.y.md"
@@ -7804,7 +8093,7 @@
         "Firmware Layout",
         "Firmware Flashing Process and Configuration",
         "Boot Configuration",
-        "Secure Boot"
+        "U-Boot Features and Configuration"
       ],
       "summary": "﻿---",
       "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-buildroot/main/en/k1_buildroot/device/boot.md"
@@ -9040,6 +9329,16 @@
     },
     {
       "submodule": "docs-chip",
+      "file_name": "k3_hw_avl.md",
+      "rel_path": "docs-chip/zh/key_stone/k3/k3_hw/k3_hw_avl.md",
+      "repo_path": "zh/key_stone/k3/k3_hw/k3_hw_avl.md",
+      "title": "K3 硬件 AVL",
+      "headers": [],
+      "summary": "sidebar_position: 3",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/main/zh/key_stone/k3/k3_hw/k3_hw_avl.md"
+    },
+    {
+      "submodule": "docs-chip",
       "file_name": "k3_hw_design_guide.md",
       "rel_path": "docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md",
       "repo_path": "zh/key_stone/k3/k3_hw/k3_hw_design_guide.md",
@@ -9077,7 +9376,7 @@
         "网络系统",
         "外设及接口"
       ],
-      "summary": "sidebar_position: 4",
+      "summary": "sidebar_position: 99",
       "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/main/zh/key_stone/k3/k3_hw/k3_hw_faq.md"
     },
     {
@@ -9085,7 +9384,7 @@
       "file_name": "k3_hw_resources.md",
       "rel_path": "docs-chip/zh/key_stone/k3/k3_hw/k3_hw_resources.md",
       "repo_path": "zh/key_stone/k3/k3_hw/k3_hw_resources.md",
-      "title": "K3 硬件资源",
+      "title": "K3 硬件设计资源",
       "headers": [
         "管脚配置",
         "管脚列表与复用（Pin List & Pinmux）",
@@ -9204,7 +9503,7 @@
       "file_name": "k1_hw_avl.md",
       "rel_path": "docs-chip/zh/key_stone/k1/k1_hw/k1_hw_avl.md",
       "repo_path": "zh/key_stone/k1/k1_hw/k1_hw_avl.md",
-      "title": "K1 硬件物料清单（BOM / AVL）",
+      "title": "K1 硬件 AVL",
       "headers": [],
       "summary": "sidebar_position: 3",
       "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/main/zh/key_stone/k1/k1_hw/k1_hw_avl.md"
@@ -9258,8 +9557,16 @@
       "repo_path": "zh/key_stone/k1/k1_hw/k1_hw_resources.md",
       "title": "K1 硬件设计资源",
       "headers": [
-        "原理图与 PCB 文件",
-        "封装、引脚与电气资源"
+        "管脚配置",
+        "管脚列表与复用（Pin List & Pinmux）",
+        "管脚映射（Pin Map）",
+        "时序配置",
+        "管脚延时（Pin Delay）",
+        "封装信息",
+        "POD（封装外形图 / Package Outline Drawing）",
+        "最小系统参考设计",
+        "PCB 参考设计",
+        "原理图"
       ],
       "summary": "sidebar_position: 2",
       "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/main/zh/key_stone/k1/k1_hw/k1_hw_resources.md"
@@ -9348,6 +9655,27 @@
       "headers": [],
       "summary": "sidebar_position: 1",
       "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/main/zh/power_stone/p3/p3_docs/index.md"
+    },
+    {
+      "submodule": "docs-chip",
+      "file_name": "p3_ds.md",
+      "rel_path": "docs-chip/zh/power_stone/p3/p3_docs/p3_ds.md",
+      "repo_path": "zh/power_stone/p3/p3_docs/p3_ds.md",
+      "title": "P3 数据手册",
+      "headers": [
+        "PDF 版本下载",
+        "修订记录",
+        "1. 概述",
+        "特性",
+        "2. 模块框图",
+        "3. 引脚封装",
+        "3.1 引脚封装图",
+        "3.2 引脚描述",
+        "4. 电气特性",
+        "4.1 绝对最大额定值"
+      ],
+      "summary": "sidebar_position: 2",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/main/zh/power_stone/p3/p3_docs/p3_ds.md"
     },
     {
       "submodule": "docs-chip",
@@ -10320,6 +10648,16 @@
     },
     {
       "submodule": "docs-chip",
+      "file_name": "k3_hw_avl.md",
+      "rel_path": "docs-chip/en/key_stone/k3/k3_hw/k3_hw_avl.md",
+      "repo_path": "en/key_stone/k3/k3_hw/k3_hw_avl.md",
+      "title": "K3 Hardware AVL",
+      "headers": [],
+      "summary": "sidebar_position: 3",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/main/en/key_stone/k3/k3_hw/k3_hw_avl.md"
+    },
+    {
+      "submodule": "docs-chip",
       "file_name": "k3_hw_design_guide.md",
       "rel_path": "docs-chip/en/key_stone/k3/k3_hw/k3_hw_design_guide.md",
       "repo_path": "en/key_stone/k3/k3_hw/k3_hw_design_guide.md",
@@ -10357,7 +10695,7 @@
         "Networking System",
         "Peripherals and Interfaces"
       ],
-      "summary": "sidebar_position: 4",
+      "summary": "sidebar_position: 99",
       "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/main/en/key_stone/k3/k3_hw/k3_hw_faq.md"
     },
     {
@@ -10365,7 +10703,7 @@
       "file_name": "k3_hw_resources.md",
       "rel_path": "docs-chip/en/key_stone/k3/k3_hw/k3_hw_resources.md",
       "repo_path": "en/key_stone/k3/k3_hw/k3_hw_resources.md",
-      "title": "K3 Hardware Resources",
+      "title": "K3 Hardware Design Resources",
       "headers": [
         "Pin Configuration",
         "Pin List and Pin Multiplexing",
@@ -10484,7 +10822,7 @@
       "file_name": "k1_hw_avl.md",
       "rel_path": "docs-chip/en/key_stone/k1/k1_hw/k1_hw_avl.md",
       "repo_path": "en/key_stone/k1/k1_hw/k1_hw_avl.md",
-      "title": "K1 Hardware Design BOM / AVL",
+      "title": "K1 Hardware AVL",
       "headers": [],
       "summary": "sidebar_position: 3",
       "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/main/en/key_stone/k1/k1_hw/k1_hw_avl.md"
@@ -10538,8 +10876,16 @@
       "repo_path": "en/key_stone/k1/k1_hw/k1_hw_resources.md",
       "title": "K1 Hardware Design Resources",
       "headers": [
-        "Schematics & PCB Files",
-        "Package, Pinout, and Electrical Resources"
+        "Pin Configuration",
+        "Pin List and Pin Multiplexing",
+        "Pin Map",
+        "Timing Configuration",
+        "Pin Delay",
+        "Package Information",
+        "POD (Package Outline Drawing)",
+        "Minimum System Reference Design",
+        "PCB Reference Design",
+        "Schematic"
       ],
       "summary": "sidebar_position: 2",
       "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/main/en/key_stone/k1/k1_hw/k1_hw_resources.md"
@@ -10875,7 +11221,7 @@
         "8.3.1 Introduction",
         "8.3.2 Features"
       ],
-      "summary": "sidebar_position: 8",
+      "summary": "sidebar_position: 9",
       "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/main/en/key_stone/k1/k1_docs/k1_usermanual/8.CPU_System.md"
     },
     {
@@ -10941,6 +11287,27 @@
       "headers": [],
       "summary": "sidebar_position: 1",
       "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/main/en/power_stone/p3/p3_docs/index.md"
+    },
+    {
+      "submodule": "docs-chip",
+      "file_name": "p3_ds.md",
+      "rel_path": "docs-chip/en/power_stone/p3/p3_docs/p3_ds.md",
+      "repo_path": "en/power_stone/p3/p3_docs/p3_ds.md",
+      "title": "P3 Datasheet",
+      "headers": [
+        "PDF Version",
+        "Revision History",
+        "1. Overview",
+        "Features",
+        "2. Blockdiagram",
+        "3. Pin Package",
+        "3.1 Pin Package Diagram",
+        "3.2 Pin Description",
+        "4. Electrical Characteristics",
+        "4.1 Absolute Maximum Ratings"
+      ],
+      "summary": "sidebar_position: 2",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/main/en/power_stone/p3/p3_docs/p3_ds.md"
     },
     {
       "submodule": "docs-chip",
@@ -11242,6 +11609,33 @@
     {
       "submodule": "docs-product",
       "file_name": "index.md",
+      "rel_path": "docs-product/zh/hw_accessories/index.md",
+      "repo_path": "zh/hw_accessories/index.md",
+      "title": "硬件配件",
+      "headers": [],
+      "summary": "sidebar_position: 99",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/main/zh/hw_accessories/index.md"
+    },
+    {
+      "submodule": "docs-product",
+      "file_name": "tf_card_debug_board.md",
+      "rel_path": "docs-product/zh/hw_accessories/tf_card_debug_board.md",
+      "repo_path": "zh/hw_accessories/tf_card_debug_board.md",
+      "title": "TF 卡扩展调试子板使用说明",
+      "headers": [
+        "产品简介",
+        "硬件描述",
+        "使用方法",
+        "K1 系列产品",
+        "K3 系列产品",
+        "常见问题"
+      ],
+      "summary": "sidebar_position: 1",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/main/zh/hw_accessories/tf_card_debug_board.md"
+    },
+    {
+      "submodule": "docs-product",
+      "file_name": "index.md",
       "rel_path": "docs-product/zh/k3_rv2768/index.md",
       "repo_path": "zh/k3_rv2768/index.md",
       "title": "Cluster Server RV2768",
@@ -11439,7 +11833,7 @@
       "file_name": "book_hw.md",
       "rel_path": "docs-product/zh/k1_muse_book/book_hw.md",
       "repo_path": "zh/k1_muse_book/book_hw.md",
-      "title": "K1 MUSE BOOK 硬件设计资源",
+      "title": "K1 MUSE Book 硬件设计资源",
       "headers": [],
       "summary": "sidebar_position: 3",
       "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/main/zh/k1_muse_book/book_hw.md"
@@ -11449,7 +11843,7 @@
       "file_name": "book_user_guide.md",
       "rel_path": "docs-product/zh/k1_muse_book/book_user_guide.md",
       "repo_path": "zh/k1_muse_book/book_user_guide.md",
-      "title": "K1 MUSE BOOK 用户使用指南",
+      "title": "K1 MUSE Book 用户使用指南",
       "headers": [
         "产品简介",
         "产品规格",
@@ -11470,7 +11864,7 @@
       "file_name": "index.md",
       "rel_path": "docs-product/zh/k1_muse_book/index.md",
       "repo_path": "zh/k1_muse_book/index.md",
-      "title": "K1 MUSE BOOK",
+      "title": "K1 MUSE Book",
       "headers": [],
       "summary": "sidebar_position: 6",
       "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/main/zh/k1_muse_book/index.md"
@@ -11568,18 +11962,18 @@
       "file_name": "box_user_guide.md",
       "rel_path": "docs-product/zh/k1_muse_box/box_user_guide.md",
       "repo_path": "zh/k1_muse_box/box_user_guide.md",
-      "title": "K1 MUSE BOX 用户使用指南",
+      "title": "K1 MUSE Box 用户使用指南",
       "headers": [
         "产品简介",
         "产品规格",
+        "硬件优势",
         "初次设置",
         "使用前准备",
         "开始启动",
         "首次启动时配置您的 MUSE Box",
         "刷入固件",
         "进入刷机模式",
-        "固件下载和安装",
-        "串口调试"
+        "固件下载和安装"
       ],
       "summary": "sidebar_position: 2",
       "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/main/zh/k1_muse_box/box_user_guide.md"
@@ -11589,7 +11983,7 @@
       "file_name": "index.md",
       "rel_path": "docs-product/zh/k1_muse_box/index.md",
       "repo_path": "zh/k1_muse_box/index.md",
-      "title": "K1 MUSE BOX",
+      "title": "K1 MUSE Box",
       "headers": [],
       "summary": "sidebar_position: 99",
       "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/main/zh/k1_muse_box/index.md"
@@ -11599,7 +11993,7 @@
       "file_name": "root_overview.md",
       "rel_path": "docs-product/zh/k1_muse_box/root_overview.md",
       "repo_path": "zh/k1_muse_box/root_overview.md",
-      "title": "K1 MUSE BOX 简介",
+      "title": "K1 MUSE Box 简介",
       "headers": [
         "产品规格",
         "合作与采购咨询"
@@ -11970,6 +12364,33 @@
     {
       "submodule": "docs-product",
       "file_name": "index.md",
+      "rel_path": "docs-product/en/hw_accessories/index.md",
+      "repo_path": "en/hw_accessories/index.md",
+      "title": "Hardware Accessories",
+      "headers": [],
+      "summary": "sidebar_position: 99",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/main/en/hw_accessories/index.md"
+    },
+    {
+      "submodule": "docs-product",
+      "file_name": "tf_card_debug_board.md",
+      "rel_path": "docs-product/en/hw_accessories/tf_card_debug_board.md",
+      "repo_path": "en/hw_accessories/tf_card_debug_board.md",
+      "title": "TF Card Debug Expansion Board User Guide",
+      "headers": [
+        "Overview",
+        "Hardware Description",
+        "Usage Instructions",
+        "K1 Series Products",
+        "K3 Series Products",
+        "FAQ"
+      ],
+      "summary": "sidebar_position: 1",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/main/en/hw_accessories/tf_card_debug_board.md"
+    },
+    {
+      "submodule": "docs-product",
+      "file_name": "index.md",
       "rel_path": "docs-product/en/k3_rv2768/index.md",
       "repo_path": "en/k3_rv2768/index.md",
       "title": "Cluster Server RV2768",
@@ -12177,7 +12598,7 @@
       "file_name": "book_user_guide.md",
       "rel_path": "docs-product/en/k1_muse_book/book_user_guide.md",
       "repo_path": "en/k1_muse_book/book_user_guide.md",
-      "title": "K1 MUSE BOOK User Guide",
+      "title": "K1 MUSE Book User Guide",
       "headers": [
         "Introduction",
         "Specifications",
@@ -12198,7 +12619,7 @@
       "file_name": "index.md",
       "rel_path": "docs-product/en/k1_muse_book/index.md",
       "repo_path": "en/k1_muse_book/index.md",
-      "title": "K1 MUSE BOOK",
+      "title": "K1 MUSE Book",
       "headers": [],
       "summary": "sidebar_position: 6",
       "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/main/en/k1_muse_book/index.md"
@@ -12208,7 +12629,7 @@
       "file_name": "root_overview.md",
       "rel_path": "docs-product/en/k1_muse_book/root_overview.md",
       "repo_path": "en/k1_muse_book/root_overview.md",
-      "title": "K1 MUSE BOOK Brief",
+      "title": "K1 MUSE Book Brief",
       "headers": [
         "Specifications",
         "Business Cooperation & Purchase"
@@ -12298,16 +12719,16 @@
       "repo_path": "en/k1_muse_box/box_user_guide.md",
       "title": "K1 MUSE Box User Guide",
       "headers": [
-        "产品简介",
-        "产品规格",
-        "初次设置",
-        "使用前准备",
-        "开始启动",
-        "首次启动时配置您的 MUSE Box",
-        "刷入固件",
-        "进入刷机模式",
-        "固件下载和安装",
-        "串口调试"
+        "Product Overview",
+        "Specifications",
+        "Hardware Advantages",
+        "Initial Setup",
+        "Before You Begin",
+        "Powering On",
+        "First-Boot Setup",
+        "Flashing Firmware",
+        "Entering Flash Mode",
+        "Firmware Download and Installation"
       ],
       "summary": "sidebar_position: 2",
       "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/main/en/k1_muse_box/box_user_guide.md"
@@ -12317,7 +12738,7 @@
       "file_name": "index.md",
       "rel_path": "docs-product/en/k1_muse_box/index.md",
       "repo_path": "en/k1_muse_box/index.md",
-      "title": "K1 MUSE BOX",
+      "title": "K1 MUSE Box",
       "headers": [],
       "summary": "sidebar_position: 99",
       "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/main/en/k1_muse_box/index.md"
@@ -12327,7 +12748,7 @@
       "file_name": "root_overview.md",
       "rel_path": "docs-product/en/k1_muse_box/root_overview.md",
       "repo_path": "en/k1_muse_box/root_overview.md",
-      "title": "K1 MUSE BOX Brief",
+      "title": "K1 MUSE Box Brief",
       "headers": [
         "Specifications",
         "Business Cooperation & Purchase"
@@ -12460,16 +12881,16 @@
       "repo_path": "en/k1_muse_card/card_user_guide.md",
       "title": "K1 MUSE Card User Guide",
       "headers": [
-        "产品简介",
-        "前言",
-        "概述",
-        "缩略词",
-        "产品规格",
-        "系统概述",
-        "M1 芯片概述",
-        "M1 芯片框图",
-        "M1 MUSE Card 参考方案框图",
-        "硬件介绍"
+        "Product Overview",
+        "Preface",
+        "Overview",
+        "Abbreviations",
+        "Specifications",
+        "System Overview",
+        "M1 Chip Overview",
+        "M1 Chip Block Diagram",
+        "M1 MUSE Card Reference Design Block Diagram",
+        "Hardware Description"
       ],
       "summary": "sidebar_position: 2",
       "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/main/en/k1_muse_card/card_user_guide.md"
@@ -12494,7 +12915,7 @@
         "Specifications",
         "Business Cooperation & Purchase"
       ],
-      "summary": "﻿---",
+      "summary": "sidebar_position: 1",
       "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/main/en/k1_muse_card/root_overview.md"
     },
     {
@@ -12532,18 +12953,18 @@
       "file_name": "paper_user_guide.md",
       "rel_path": "docs-product/en/k1_muse_paper/paper_user_guide.md",
       "repo_path": "en/k1_muse_paper/paper_user_guide.md",
-      "title": "K1 MUSE Paper 用户使用指南",
+      "title": "K1 MUSE Paper User Guide",
       "headers": [
-        "重要提醒",
-        "产品简介",
-        "前言",
-        "适用对象",
-        "缩略词",
-        "产品规格",
-        "系统概述",
-        "1. K1芯片概述",
-        "2. K1 芯片框图",
-        "3. MUSE Paper参考方案框图"
+        "Important Notice",
+        "Product Overview",
+        "Preface",
+        "Intended Audience",
+        "Abbreviations",
+        "Specifications",
+        "System Overview",
+        "1. K1 Chip Overview",
+        "2. K1 Chip Block Diagram",
+        "3. MUSE Paper Reference Design Block Diagram"
       ],
       "summary": "sidebar_position: 2",
       "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/main/en/k1_muse_paper/paper_user_guide.md"
@@ -12759,7 +13180,7 @@
       "file_name": "6.3.3-audio.md",
       "rel_path": "docs-ros/zh/k3/06-系统与平台/6.3-多媒体/6.3.3-audio.md",
       "repo_path": "zh/k3/06-系统与平台/6.3-多媒体/6.3.3-audio.md",
-      "title": "多媒体 · audio",
+      "title": "6.3.3 audio",
       "headers": [
         "1. 模块概述",
         "2. 环境准备",
@@ -13162,27 +13583,6 @@
     },
     {
       "submodule": "docs-ros",
-      "file_name": "6.1.4-ota.md",
-      "rel_path": "docs-ros/zh/k3/06-系统与平台/6.1-系统服务/6.1.4-ota.md",
-      "repo_path": "zh/k3/06-系统与平台/6.1-系统服务/6.1.4-ota.md",
-      "title": "系统服务 · ota",
-      "headers": [
-        "1. 模块概述",
-        "2. 环境准备",
-        "前置条件",
-        "构建编译",
-        "3. 示例使用（从 0 跑通）",
-        "3.1 【示例一：名称】",
-        "3.2 【示例二：名称】",
-        "4. 应用开发",
-        "5. 调试指南",
-        "6. 常见问题"
-      ],
-      "summary": "sidebar_position: 4",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/zh/k3/06-系统与平台/6.1-系统服务/6.1.4-ota.md"
-    },
-    {
-      "submodule": "docs-ros",
       "file_name": "index.md",
       "rel_path": "docs-ros/zh/k3/06-系统与平台/6.1-系统服务/index.md",
       "repo_path": "zh/k3/06-系统与平台/6.1-系统服务/index.md",
@@ -13206,11 +13606,25 @@
         "加载 ROS2 环境变量",
         "发布/订阅示例",
         "rviz2 使用说明",
-        "DDS 的说明",
-        "realsense 说明"
+        "DDS 的说明"
       ],
       "summary": "sidebar_position: 1",
       "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/zh/k3/06-系统与平台/6.6-ROS2/6.6.1-ROS2-INSTALL.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "6.6.2-ROS2-Camera-Usage.md",
+      "rel_path": "docs-ros/zh/k3/06-系统与平台/6.6-ROS2/6.6.2-ROS2-Camera-Usage.md",
+      "repo_path": "zh/k3/06-系统与平台/6.6-ROS2/6.6.2-ROS2-Camera-Usage.md",
+      "title": "ROS2 相机传感器使用",
+      "headers": [
+        "realsense 说明",
+        "安装必要依赖",
+        "humble",
+        "jazzy"
+      ],
+      "summary": "sidebar_position: 2",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/zh/k3/06-系统与平台/6.6-ROS2/6.6.2-ROS2-Camera-Usage.md"
     },
     {
       "submodule": "docs-ros",
@@ -13930,27 +14344,6 @@
     },
     {
       "submodule": "docs-ros",
-      "file_name": "5.6.1-Camera.md",
-      "rel_path": "docs-ros/zh/k3/05-机器人开发/5.6-基础传感器/5.6.1-Camera.md",
-      "repo_path": "zh/k3/05-机器人开发/5.6-基础传感器/5.6.1-Camera.md",
-      "title": "基础传感器 · Camera",
-      "headers": [
-        "1. 模块概述",
-        "2. 环境准备",
-        "前置条件",
-        "构建编译",
-        "3. 示例使用（从 0 跑通）",
-        "3.1 【示例一：名称】",
-        "3.2 【示例二：名称】",
-        "4. 应用开发",
-        "5. 调试指南",
-        "6. 常见问题"
-      ],
-      "summary": "sidebar_position: 1",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/zh/k3/05-机器人开发/5.6-基础传感器/5.6.1-Camera.md"
-    },
-    {
-      "submodule": "docs-ros",
       "file_name": "5.6.11-NFC.md",
       "rel_path": "docs-ros/zh/k3/05-机器人开发/5.6-基础传感器/5.6.11-NFC.md",
       "repo_path": "zh/k3/05-机器人开发/5.6-基础传感器/5.6.11-NFC.md",
@@ -14256,24 +14649,22 @@
     },
     {
       "submodule": "docs-ros",
-      "file_name": "5.3.4-orb_slam.md",
-      "rel_path": "docs-ros/zh/k3/05-机器人开发/5.3-定位导航/5.3.4-orb_slam.md",
-      "repo_path": "zh/k3/05-机器人开发/5.3-定位导航/5.3.4-orb_slam.md",
-      "title": "定位导航 · orb_slam",
+      "file_name": "5.3.4-orbslam3.md",
+      "rel_path": "docs-ros/zh/k3/05-机器人开发/5.3-定位导航/5.3.4-orbslam3.md",
+      "repo_path": "zh/k3/05-机器人开发/5.3-定位导航/5.3.4-orbslam3.md",
+      "title": "定位导航 · ORB-SLAM3",
       "headers": [
         "1. 模块概述",
         "2. 环境准备",
-        "前置条件",
-        "构建编译",
-        "3. 示例使用（从 0 跑通）",
-        "3.1 【示例一：名称】",
-        "3.2 【示例二：名称】",
+        "2.1 前置条件",
+        "2.2 构建编译",
+        "3. 示例使用",
         "4. 应用开发",
         "5. 调试指南",
         "6. 常见问题"
       ],
       "summary": "sidebar_position: 4",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/zh/k3/05-机器人开发/5.3-定位导航/5.3.4-orb_slam.md"
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/zh/k3/05-机器人开发/5.3-定位导航/5.3.4-orbslam3.md"
     },
     {
       "submodule": "docs-ros",
@@ -14303,29 +14694,8 @@
         "3.1 使用摄像头实时检测",
         "4. 应用开发"
       ],
-      "summary": "本模块提供基于 YOLOv8 的通用目标检测能力，可以实时识别图像中的 80 类常见物体（人、车辆、动物、日常用品等）。",
+      "summary": "sidebar_position: 1",
       "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/zh/k3/05-机器人开发/5.1-机器感知/5.1.1-目标检测.md"
-    },
-    {
-      "submodule": "docs-ros",
-      "file_name": "5.1.10-双目深度.md",
-      "rel_path": "docs-ros/zh/k3/05-机器人开发/5.1-机器感知/5.1.10-双目深度.md",
-      "repo_path": "zh/k3/05-机器人开发/5.1-机器感知/5.1.10-双目深度.md",
-      "title": "机器感知 · 双目深度",
-      "headers": [
-        "1. 模块概述",
-        "待完善内容",
-        "2. 环境准备",
-        "前置条件",
-        "相机标定",
-        "构建编译",
-        "3. 快速上手",
-        "3.1 示例一：实时深度估计",
-        "3.2 示例二：深度图可视化",
-        "4. 应用开发"
-      ],
-      "summary": "**注意**：本模块文档尚未完善，以下为文档模板。如果您需要使用双目深度估计功能，请联系开发团队获取最新信息。",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/zh/k3/05-机器人开发/5.1-机器感知/5.1.10-双目深度.md"
     },
     {
       "submodule": "docs-ros",
@@ -14345,7 +14715,7 @@
         "3.1 使用摄像头实时检测人脸",
         "4. 应用开发"
       ],
-      "summary": "本模块提供基于深度学习的人脸检测能力，可以实时检测图像中的人脸位置，支持多人脸同时检测。",
+      "summary": "sidebar_position: 2",
       "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/zh/k3/05-机器人开发/5.1-机器感知/5.1.2-人脸检测.md"
     },
     {
@@ -14366,7 +14736,7 @@
         "3.1 使用摄像头实时检测人体",
         "4. 应用开发"
       ],
-      "summary": "本模块提供基于 YOLOv8 的人体检测能力，专门检测图像中的\"人\"（person），过滤掉其他类别，适用于人流统计、人员跟踪等场景。",
+      "summary": "sidebar_position: 3",
       "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/zh/k3/05-机器人开发/5.1-机器感知/5.1.3-人型检测.md"
     },
     {
@@ -14387,7 +14757,7 @@
         "3.1 使用摄像头实时姿态估计",
         "4. 应用开发"
       ],
-      "summary": "本模块提供基于 YOLOv8-Pose 的人体姿态估计能力，可以检测图像中的人体并输出 17 个关键点（COCO 格式），包括头部、躯干、四肢等关键部位，适用于动作识别、姿态分析、健身指导等场景。",
+      "summary": "sidebar_position: 4",
       "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/zh/k3/05-机器人开发/5.1-机器感知/5.1.4-人体姿态.md"
     },
     {
@@ -14408,7 +14778,7 @@
         "3.1 使用摄像头实时识别手势",
         "4. 应用开发"
       ],
-      "summary": "本模块提供基于 YOLOv5 的手势识别能力，可以检测图像中的手势并识别手势类型，适用于人机交互、手势控制、手语识别等场景。",
+      "summary": "sidebar_position: 5",
       "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/zh/k3/05-机器人开发/5.1-机器感知/5.1.5-手势识别.md"
     },
     {
@@ -14429,7 +14799,7 @@
         "3.1 使用摄像头实时分割",
         "3.2 订阅外部图像话题"
       ],
-      "summary": "本模块提供基于 YOLOv8-Seg 的实例分割能力，可对图像中的每个目标实例输出分割掩码与检测框，适用于目标抠图、精确轮廓感知、场景交互等场景。",
+      "summary": "sidebar_position: 6",
       "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/zh/k3/05-机器人开发/5.1-机器感知/5.1.6-实例分割.md"
     },
     {
@@ -14450,7 +14820,7 @@
         "3.1 使用摄像头实时分割",
         "3.2 订阅外部图像话题"
       ],
-      "summary": "本模块提供基于 PP-LiteSeg 的语义分割能力，对图像中每个像素分配语义类别，适用于场景理解、可行驶区域分析、环境语义建模等场景。",
+      "summary": "sidebar_position: 7",
       "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/zh/k3/05-机器人开发/5.1-机器感知/5.1.7-语义分割.md"
     },
     {
@@ -14471,7 +14841,7 @@
         "3.1 使用摄像头实时跟踪",
         "3.2 切换到 OC-SORT 跟踪器"
       ],
-      "summary": "本模块提供基于 YOLOv8 检测 + ByteTrack/OC-SORT 跟踪算法的目标跟踪能力，可以对视频序列中的目标进行持续跟踪，为每个目标分配唯一 ID，适用于人流统计、轨迹分析、行为监控等场景。",
+      "summary": "sidebar_position: 8",
       "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/zh/k3/05-机器人开发/5.1-机器感知/5.1.8-目标跟踪.md"
     },
     {
@@ -14492,7 +14862,7 @@
         "3.1 完整动作识别流程",
         "4. 应用开发"
       ],
-      "summary": "本模块提供基于 STGCN（时空图卷积网络）的动作识别能力，订阅人体骨架序列数据，识别 7 类动作（包括摔倒检测），适用于跌倒报警、行为分析、安全监控等场景。",
+      "summary": "sidebar_position: 9",
       "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/zh/k3/05-机器人开发/5.1-机器感知/5.1.9-动作识别.md"
     },
     {
@@ -16955,23 +17325,2021 @@
     },
     {
       "submodule": "docs-ros",
+      "file_name": "01-平台概览.md",
+      "rel_path": "docs-ros/en/k3/01-平台概览.md",
+      "repo_path": "en/k3/01-平台概览.md",
+      "title": "Overview",
+      "headers": [
+        "1. What You Get",
+        "2. Get Started in 30 Seconds",
+        "3. Architecture and Layers",
+        "4. Versions and Changes",
+        "5. Community and Feedback"
+      ],
+      "summary": "sidebar_position: 1",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/01-平台概览.md"
+    },
+    {
+      "submodule": "docs-ros",
       "file_name": "index.md",
       "rel_path": "docs-ros/en/k3/index.md",
       "repo_path": "en/k3/index.md",
       "title": "K3",
       "headers": [],
-      "summary": "sidebar_position: 3",
+      "summary": "sidebar_position: 2",
       "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/index.md"
     },
     {
       "submodule": "docs-ros",
-      "file_name": "intro.md",
-      "rel_path": "docs-ros/en/k3/intro.md",
-      "repo_path": "en/k3/intro.md",
-      "title": "Introduction",
+      "file_name": "index.md",
+      "rel_path": "docs-ros/en/k3/06-系统与平台/index.md",
+      "repo_path": "en/k3/06-系统与平台/index.md",
+      "title": "6. System and Platform",
+      "headers": [],
+      "summary": "sidebar_position: 6",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/06-系统与平台/index.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "6.5.1-OpenCV-RVV.md",
+      "rel_path": "docs-ros/en/k3/06-系统与平台/6.5-高性能计算/6.5.1-OpenCV-RVV.md",
+      "repo_path": "en/k3/06-系统与平台/6.5-高性能计算/6.5.1-OpenCV-RVV.md",
+      "title": "OpenCV RVV",
+      "headers": [
+        "What Is OpenCV?",
+        "C++ Usage",
+        "Install Required Dependencies",
+        "Install opencv-spacemit",
+        "Download the Test Image",
+        "Project Structure",
+        "Build and Test with RVV",
+        "Build and Test without RVV",
+        "Python Usage",
+        "Install Required Dependencies"
+      ],
+      "summary": "sidebar_position: 1",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/06-系统与平台/6.5-高性能计算/6.5.1-OpenCV-RVV.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "6.5.2-Eigen-RVV.md",
+      "rel_path": "docs-ros/en/k3/06-系统与平台/6.5-高性能计算/6.5.2-Eigen-RVV.md",
+      "repo_path": "en/k3/06-系统与平台/6.5-高性能计算/6.5.2-Eigen-RVV.md",
+      "title": "Eigen RVV",
+      "headers": [
+        "Eigen Overview",
+        "RVV Acceleration",
+        "Usage Example",
+        "Using openblas-spacemit as Backend",
+        "More Performance Test Data",
+        "eigen-spacemit VS libeigen3-dev",
+        "**Single-Core Comparison**",
+        "**Four-Core Comparison**",
+        "Eight-Core Comparison",
+        "eigen-spacemit USE BLAS VS Without BLAS"
+      ],
+      "summary": "sidebar_position: 2",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/06-系统与平台/6.5-高性能计算/6.5.2-Eigen-RVV.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "6.5.3-OpenBLAS-RVV.md",
+      "rel_path": "docs-ros/en/k3/06-系统与平台/6.5-高性能计算/6.5.3-OpenBLAS-RVV.md",
+      "repo_path": "en/k3/06-系统与平台/6.5-高性能计算/6.5.3-OpenBLAS-RVV.md",
+      "title": "OpenBLAS RVV",
+      "headers": [
+        "OpenBLAS Overview",
+        "RVV Acceleration",
+        "Usage Example",
+        "Hardware and Software Environment",
+        "**Install Required Dependencies**",
+        "Test Code",
+        "Build",
+        "Test Comparison",
+        "More Performance Test Data",
+        "Test Results Summary"
+      ],
+      "summary": "sidebar_position: 3",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/06-系统与平台/6.5-高性能计算/6.5.3-OpenBLAS-RVV.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "6.5.4-OpenVML-RVV.md",
+      "rel_path": "docs-ros/en/k3/06-系统与平台/6.5-高性能计算/6.5.4-OpenVML-RVV.md",
+      "repo_path": "en/k3/06-系统与平台/6.5-高性能计算/6.5.4-OpenVML-RVV.md",
+      "title": "OpenVML RVV",
+      "headers": [
+        "OpenVML Overview",
+        "RVV Acceleration",
+        "Usage Example",
+        "Hardware and Software Environment",
+        "Install Required Dependencies",
+        "Test Code",
+        "Build and Run",
+        "More Performance Test Data",
+        "Test Results Summary",
+        "Single-Core Binding Test Results"
+      ],
+      "summary": "sidebar_position: 4",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/06-系统与平台/6.5-高性能计算/6.5.4-OpenVML-RVV.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "index.md",
+      "rel_path": "docs-ros/en/k3/06-系统与平台/6.5-高性能计算/index.md",
+      "repo_path": "en/k3/06-系统与平台/6.5-高性能计算/index.md",
+      "title": "6.5  High-Performance Computing Library",
+      "headers": [],
+      "summary": "sidebar_position: 5",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/06-系统与平台/6.5-高性能计算/index.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "6.3.1-mpp.md",
+      "rel_path": "docs-ros/en/k3/06-系统与平台/6.3-多媒体/6.3.1-mpp.md",
+      "repo_path": "en/k3/06-系统与平台/6.3-多媒体/6.3.1-mpp.md",
+      "title": "Multimedia · MPP",
+      "headers": [
+        "1. Overview",
+        "2. Environment Setup",
+        "Prerequisites",
+        "Build",
+        "3. Example Usage (From Scratch)",
+        "3.1 USB Camera Capture and Decoding",
+        "3.2 Video Encoding Example (File to File)",
+        "3.3 Video Decoding Example (File to File)",
+        "4. Application Development",
+        "5. Debugging Guide"
+      ],
+      "summary": "sidebar_position: 1",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/06-系统与平台/6.3-多媒体/6.3.1-mpp.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "6.3.3-audio.md",
+      "rel_path": "docs-ros/en/k3/06-系统与平台/6.3-多媒体/6.3.3-audio.md",
+      "repo_path": "en/k3/06-系统与平台/6.3-多媒体/6.3.3-audio.md",
+      "title": "6.3.3 Audio",
+      "headers": [
+        "1. Overview",
+        "2. Environment Setup",
+        "Prerequisites",
+        "Build",
+        "3. Example Usage",
+        "3.1 List Devices",
+        "3.2 Recording",
+        "3.3 Playback",
+        "3.4 Python Example",
+        "4. Application Development"
+      ],
+      "summary": "﻿---",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/06-系统与平台/6.3-多媒体/6.3.3-audio.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "6.3.4-音频算法.md",
+      "rel_path": "docs-ros/en/k3/06-系统与平台/6.3-多媒体/6.3.4-音频算法.md",
+      "repo_path": "en/k3/06-系统与平台/6.3-多媒体/6.3.4-音频算法.md",
+      "title": "Multimedia · audio_process",
+      "headers": [
+        "1. Overview",
+        "2. Environment Setup",
+        "Prerequisites",
+        "Build",
+        "3. Example Usage",
+        "3.1 Synthetic Signal Accuracy Test",
+        "3.2 WAV File Test",
+        "3.3 Live Capture",
+        "4. Application Development",
+        "4.1 API Reference"
+      ],
+      "summary": "sidebar_position: 3",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/06-系统与平台/6.3-多媒体/6.3.4-音频算法.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "index.md",
+      "rel_path": "docs-ros/en/k3/06-系统与平台/6.3-多媒体/index.md",
+      "repo_path": "en/k3/06-系统与平台/6.3-多媒体/index.md",
+      "title": "6.3 Multimedia",
+      "headers": [],
+      "summary": "sidebar_position: 3",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/06-系统与平台/6.3-多媒体/index.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "6.4.1-实时Linux.md",
+      "rel_path": "docs-ros/en/k3/06-系统与平台/6.4-实时系统/6.4.1-实时Linux.md",
+      "repo_path": "en/k3/06-系统与平台/6.4-实时系统/6.4.1-实时Linux.md",
+      "title": "Real-Time Linux",
       "headers": [],
       "summary": "sidebar_position: 1",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/intro.md"
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/06-系统与平台/6.4-实时系统/6.4.1-实时Linux.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "6.4.2-实时RTOS.md",
+      "rel_path": "docs-ros/en/k3/06-系统与平台/6.4-实时系统/6.4.2-实时RTOS.md",
+      "repo_path": "en/k3/06-系统与平台/6.4-实时系统/6.4.2-实时RTOS.md",
+      "title": "Real-Time RTOS",
+      "headers": [],
+      "summary": "sidebar_position: 2",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/06-系统与平台/6.4-实时系统/6.4.2-实时RTOS.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "6.4.3-异构通信.md",
+      "rel_path": "docs-ros/en/k3/06-系统与平台/6.4-实时系统/6.4.3-异构通信.md",
+      "repo_path": "en/k3/06-系统与平台/6.4-实时系统/6.4.3-异构通信.md",
+      "title": "Heterogeneous Communication",
+      "headers": [],
+      "summary": "sidebar_position: 3",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/06-系统与平台/6.4-实时系统/6.4.3-异构通信.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "index.md",
+      "rel_path": "docs-ros/en/k3/06-系统与平台/6.4-实时系统/index.md",
+      "repo_path": "en/k3/06-系统与平台/6.4-实时系统/index.md",
+      "title": "6.4 Real-Time System",
+      "headers": [],
+      "summary": "sidebar_position: 4",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/06-系统与平台/6.4-实时系统/index.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "6.2.1-电机.md",
+      "rel_path": "docs-ros/en/k3/06-系统与平台/6.2-外设与驱动/6.2.1-电机.md",
+      "repo_path": "en/k3/06-系统与平台/6.2-外设与驱动/6.2.1-电机.md",
+      "title": "Peripherals and Drivers · Motor",
+      "headers": [
+        "1. Overview",
+        "2. Environment Setup",
+        "Prerequisites",
+        "Build",
+        "3. Example Usage (From Scratch)",
+        "3.1 PWM Motor Test",
+        "3.2 CAN Motor Test",
+        "3.3 UART Servo/Motor Test",
+        "3.4 EtherCAT Servo Motor Test",
+        "3.5 CANOpen Servo Motor Test"
+      ],
+      "summary": "sidebar_position: 1",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/06-系统与平台/6.2-外设与驱动/6.2.1-电机.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "6.2.10-5G.md",
+      "rel_path": "docs-ros/en/k3/06-系统与平台/6.2-外设与驱动/6.2.10-5G.md",
+      "repo_path": "en/k3/06-系统与平台/6.2-外设与驱动/6.2.10-5G.md",
+      "title": "Peripherals and Drivers · 5G",
+      "headers": [],
+      "summary": "sidebar_position: 10",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/06-系统与平台/6.2-外设与驱动/6.2.10-5G.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "6.2.11-pm.md",
+      "rel_path": "docs-ros/en/k3/06-系统与平台/6.2-外设与驱动/6.2.11-pm.md",
+      "repo_path": "en/k3/06-系统与平台/6.2-外设与驱动/6.2.11-pm.md",
+      "title": "Peripherals and Drivers · PM",
+      "headers": [
+        "1. Overview",
+        "2. Environment Setup",
+        "Prerequisites",
+        "Build",
+        "3. Example Usage (From Scratch)",
+        "3.1 Run the built-in `test_pm_generic` demo program",
+        "4. Application Development",
+        "4.1 Minimal Usage Flow",
+        "4.2 Main API Reference",
+        "4.3 Core Data Structures"
+      ],
+      "summary": "sidebar_position: 11",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/06-系统与平台/6.2-外设与驱动/6.2.11-pm.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "6.2.12-gimbal.md",
+      "rel_path": "docs-ros/en/k3/06-系统与平台/6.2-外设与驱动/6.2.12-gimbal.md",
+      "repo_path": "en/k3/06-系统与平台/6.2-外设与驱动/6.2.12-gimbal.md",
+      "title": "Peripherals and Drivers · Gimbal",
+      "headers": [
+        "1. Overview",
+        "2. Environment Setup",
+        "Prerequisites",
+        "Build",
+        "3. Example Usage (From Scratch)",
+        "3.1 Run the C12 UDP gimbal test",
+        "3.2 Run the TZ0xxx UDP gimbal test",
+        "3.3 Call the low-level API from a custom program",
+        "4. Application Development",
+        "4.1 Main API Reference"
+      ],
+      "summary": "sidebar_position: 12",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/06-系统与平台/6.2-外设与驱动/6.2.12-gimbal.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "6.2.2-雷达.md",
+      "rel_path": "docs-ros/en/k3/06-系统与平台/6.2-外设与驱动/6.2.2-雷达.md",
+      "repo_path": "en/k3/06-系统与平台/6.2-外设与驱动/6.2.2-雷达.md",
+      "title": "Peripherals and Drivers · Lidar",
+      "headers": [
+        "1. Overview",
+        "2. Environment Setup",
+        "Prerequisites",
+        "Build",
+        "3. Example Usage (From Scratch)",
+        "3.1 Example 1: Verify `YDLIDAR` directly using SDK artifacts",
+        "3.2 Example 2: Switch to `RPLIDAR` for minimal verification",
+        "4. Application Development",
+        "5. Debugging Guide",
+        "6. FAQ"
+      ],
+      "summary": "sidebar_position: 2",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/06-系统与平台/6.2-外设与驱动/6.2.2-雷达.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "6.2.3-IMU.md",
+      "rel_path": "docs-ros/en/k3/06-系统与平台/6.2-外设与驱动/6.2.3-IMU.md",
+      "repo_path": "en/k3/06-系统与平台/6.2-外设与驱动/6.2.3-IMU.md",
+      "title": "Peripherals and Drivers · IMU",
+      "headers": [
+        "1. Overview",
+        "2. Environment Setup",
+        "Prerequisites",
+        "Build",
+        "3. Example Usage (From Scratch)",
+        "3.1 Example 1: Minimal `CMP10A` serial read verification",
+        "3.2 Example 2: Calling the low-level IMU API from a custom program",
+        "4. Application Development",
+        "5. Debugging Guide",
+        "6. FAQ"
+      ],
+      "summary": "sidebar_position: 3",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/06-系统与平台/6.2-外设与驱动/6.2.3-IMU.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "6.2.4-按键.md",
+      "rel_path": "docs-ros/en/k3/06-系统与平台/6.2-外设与驱动/6.2.4-按键.md",
+      "repo_path": "en/k3/06-系统与平台/6.2-外设与驱动/6.2.4-按键.md",
+      "title": "Peripherals and Drivers · Key",
+      "headers": [
+        "1. Overview",
+        "2. Environment Setup",
+        "Prerequisites",
+        "Build",
+        "3. Example Usage (From Scratch)",
+        "3.1 Run the built-in `test_key` demo program",
+        "4. Application Development",
+        "4.1 Minimal Usage Flow",
+        "4.2 Main API Reference",
+        "4.3 Core Data Structures"
+      ],
+      "summary": "sidebar_position: 4",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/06-系统与平台/6.2-外设与驱动/6.2.4-按键.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "6.2.5-光感.md",
+      "rel_path": "docs-ros/en/k3/06-系统与平台/6.2-外设与驱动/6.2.5-光感.md",
+      "repo_path": "en/k3/06-系统与平台/6.2-外设与驱动/6.2.5-光感.md",
+      "title": "Peripherals and Drivers · Light Sensor",
+      "headers": [
+        "1. Overview",
+        "2. Environment Setup",
+        "Prerequisites",
+        "Build",
+        "3. Example Usage (From Scratch)",
+        "3.1 Run the built-in W1160 test program",
+        "4. Application Development",
+        "4.1 Minimal Usage Flow",
+        "4.2 Main API Reference",
+        "4.3 Core Data Structures"
+      ],
+      "summary": "sidebar_position: 5",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/06-系统与平台/6.2-外设与驱动/6.2.5-光感.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "6.2.6-IO.md",
+      "rel_path": "docs-ros/en/k3/06-系统与平台/6.2-外设与驱动/6.2.6-IO.md",
+      "repo_path": "en/k3/06-系统与平台/6.2-外设与驱动/6.2.6-IO.md",
+      "title": "Peripherals and Drivers · misc_io",
+      "headers": [
+        "1. Overview",
+        "2. Environment Setup",
+        "Prerequisites",
+        "Build",
+        "3. Example Usage (From Scratch)",
+        "3.1 Run the input trigger callback test",
+        "4. Application Development",
+        "4.1 Minimal Usage Flow",
+        "4.2 Main API Reference",
+        "4.3 Core Data Structures"
+      ],
+      "summary": "sidebar_position: 6",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/06-系统与平台/6.2-外设与驱动/6.2.6-IO.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "6.2.7-NFC.md",
+      "rel_path": "docs-ros/en/k3/06-系统与平台/6.2-外设与驱动/6.2.7-NFC.md",
+      "repo_path": "en/k3/06-系统与平台/6.2-外设与驱动/6.2.7-NFC.md",
+      "title": "Peripherals and Drivers · NFC",
+      "headers": [
+        "1. Overview",
+        "2. Environment Setup",
+        "Prerequisites",
+        "Build",
+        "3. Example Usage (From Scratch)",
+        "3.1 Run the SI512 I2C card-reading test",
+        "4. Application Development",
+        "4.1 Minimal Usage Flow",
+        "4.2 Main API Reference",
+        "4.3 Core Data Structures"
+      ],
+      "summary": "sidebar_position: 7",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/06-系统与平台/6.2-外设与驱动/6.2.7-NFC.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "6.2.8-WiFi.md",
+      "rel_path": "docs-ros/en/k3/06-系统与平台/6.2-外设与驱动/6.2.8-WiFi.md",
+      "repo_path": "en/k3/06-系统与平台/6.2-外设与驱动/6.2.8-WiFi.md",
+      "title": "Peripherals and Drivers · WiFi",
+      "headers": [
+        "1. Overview",
+        "2. Environment Setup",
+        "Prerequisites",
+        "Build",
+        "3. Example Usage (From Scratch)",
+        "3.1 Scan and connect to WiFi",
+        "3.2 Start an AP and use SoftAP provisioning",
+        "4. Application Development",
+        "4.1 Minimal Usage Flow",
+        "4.2 Main API Reference"
+      ],
+      "summary": "sidebar_position: 8",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/06-系统与平台/6.2-外设与驱动/6.2.8-WiFi.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "6.2.9-LED.md",
+      "rel_path": "docs-ros/en/k3/06-系统与平台/6.2-外设与驱动/6.2.9-LED.md",
+      "repo_path": "en/k3/06-系统与平台/6.2-外设与驱动/6.2.9-LED.md",
+      "title": "Peripherals and Drivers · LED",
+      "headers": [
+        "1. Overview",
+        "2. Environment Setup",
+        "Prerequisites",
+        "Build",
+        "3. Example Usage (From Scratch)",
+        "3.1 Control a WS2812 SPI light strip",
+        "4. Application Development",
+        "4.1 Minimal Usage Flow",
+        "4.2 Main API Reference",
+        "4.3 Core Data Structures"
+      ],
+      "summary": "sidebar_position: 9",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/06-系统与平台/6.2-外设与驱动/6.2.9-LED.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "index.md",
+      "rel_path": "docs-ros/en/k3/06-系统与平台/6.2-外设与驱动/index.md",
+      "repo_path": "en/k3/06-系统与平台/6.2-外设与驱动/index.md",
+      "title": "6.2 Peripherals and Drivers",
+      "headers": [],
+      "summary": "sidebar_position: 2",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/06-系统与平台/6.2-外设与驱动/index.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "6.1.1-dma.md",
+      "rel_path": "docs-ros/en/k3/06-系统与平台/6.1-系统服务/6.1.1-dma.md",
+      "repo_path": "en/k3/06-系统与平台/6.1-系统服务/6.1.1-dma.md",
+      "title": "System Services · DMA",
+      "headers": [
+        "1. Overview",
+        "2. Environment Setup",
+        "Prerequisites",
+        "Build",
+        "3. Example Usage (From Scratch)",
+        "3.1 Basic DMA Copy Test",
+        "3.2 Asynchronous DMA Transfer Example",
+        "4. Application Development",
+        "5. Debugging Guide",
+        "6. FAQ"
+      ],
+      "summary": "sidebar_position: 1",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/06-系统与平台/6.1-系统服务/6.1.1-dma.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "6.1.2-shm.md",
+      "rel_path": "docs-ros/en/k3/06-系统与平台/6.1-系统服务/6.1.2-shm.md",
+      "repo_path": "en/k3/06-系统与平台/6.1-系统服务/6.1.2-shm.md",
+      "title": "System Services · Shared Memory",
+      "headers": [
+        "1. Overview",
+        "2. Environment Setup",
+        "Prerequisites",
+        "Build",
+        "3. Example Usage (From Scratch)",
+        "3.1 Cross-Process Shared-Memory Transfer",
+        "3.2 Shared-Memory Allocation and Cache Sync",
+        "4. Application Development",
+        "5. Debugging Guide",
+        "6. FAQ"
+      ],
+      "summary": "sidebar_position: 2",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/06-系统与平台/6.1-系统服务/6.1.2-shm.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "6.1.3-sys.md",
+      "rel_path": "docs-ros/en/k3/06-系统与平台/6.1-系统服务/6.1.3-sys.md",
+      "repo_path": "en/k3/06-系统与平台/6.1-系统服务/6.1.3-sys.md",
+      "title": "System Services · System Control",
+      "headers": [
+        "1. Overview",
+        "2. Environment Setup",
+        "Prerequisites",
+        "Build",
+        "3. Example Usage (From Scratch)",
+        "3.1 System Mode Switching and Hook Functions",
+        "3.2 Watchdog Feeding Test",
+        "4. Application Development",
+        "5. Debugging Guide",
+        "6. FAQ"
+      ],
+      "summary": "sidebar_position: 3",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/06-系统与平台/6.1-系统服务/6.1.3-sys.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "index.md",
+      "rel_path": "docs-ros/en/k3/06-系统与平台/6.1-系统服务/index.md",
+      "repo_path": "en/k3/06-系统与平台/6.1-系统服务/index.md",
+      "title": "6.1 System Services",
+      "headers": [],
+      "summary": "sidebar_position: 1",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/06-系统与平台/6.1-系统服务/index.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "6.6.1-ROS2-INSTALL.md",
+      "rel_path": "docs-ros/en/k3/06-系统与平台/6.6-ROS2/6.6.1-ROS2-INSTALL.md",
+      "repo_path": "en/k3/06-系统与平台/6.6-ROS2/6.6.1-ROS2-INSTALL.md",
+      "title": "ROS2 Installation",
+      "headers": [
+        "Platform Requirements",
+        "About Software Sources",
+        "Installation",
+        "Install Development Tools (Recommended)",
+        "Install ROS-Base",
+        "Load ROS2 Environment Variables",
+        "Publish/Subscribe Example",
+        "rviz2 Usage Notes",
+        "DDS Notes",
+        "RealSense Notes"
+      ],
+      "summary": "sidebar_position: 1",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/06-系统与平台/6.6-ROS2/6.6.1-ROS2-INSTALL.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "index.md",
+      "rel_path": "docs-ros/en/k3/06-系统与平台/6.6-ROS2/index.md",
+      "repo_path": "en/k3/06-系统与平台/6.6-ROS2/index.md",
+      "title": "6.6  ROS2",
+      "headers": [],
+      "summary": "sidebar_position: 6",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/06-系统与平台/6.6-ROS2/index.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "4.3-强化学习.md",
+      "rel_path": "docs-ros/en/k3/04-AI与算法/4.3-强化学习.md",
+      "repo_path": "en/k3/04-AI与算法/4.3-强化学习.md",
+      "title": "Reinforcement Learning",
+      "headers": [
+        "1. Overview",
+        "2. Environment Setup",
+        "Prerequisites",
+        "Build",
+        "3. Example Usage (From Scratch)",
+        "3.1 End-to-End Policy Inference Test",
+        "3.2 Standalone ONNX Backend Test",
+        "3.3 Performance Benchmarking",
+        "4. Application Development",
+        "Public Interface"
+      ],
+      "summary": "sidebar_position: 3",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/04-AI与算法/4.3-强化学习.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "4.4-LLM.md",
+      "rel_path": "docs-ros/en/k3/04-AI与算法/4.4-LLM.md",
+      "repo_path": "en/k3/04-AI与算法/4.4-LLM.md",
+      "title": "LLM",
+      "headers": [
+        "1. Overview",
+        "2. Environment Setup",
+        "2.1 Get the Source Code",
+        "2.2 One-Step Build",
+        "2.3 Download Model (GGUF)",
+        "3. Example Usage",
+        "3.1 Verify Model and Run Basic Conversation",
+        "3.2 Use Application `llm_chat`",
+        "4. Application Development",
+        "4.1 API Reference"
+      ],
+      "summary": "sidebar_position: 4",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/04-AI与算法/4.4-LLM.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "4.5-Agent.md",
+      "rel_path": "docs-ros/en/k3/04-AI与算法/4.5-Agent.md",
+      "repo_path": "en/k3/04-AI与算法/4.5-Agent.md",
+      "title": "Agent",
+      "headers": [
+        "1. Overview",
+        "1.1 Overall Architecture",
+        "1.2 Voice Conversation Pipeline",
+        "1.3 Main Component Dependencies",
+        "2. Build",
+        "3. Quick Start",
+        "4. Commands",
+        "5. Configuration Files",
+        "5.1 voice_chat.json",
+        "5.2 llm.json"
+      ],
+      "summary": "sidebar_position: 5",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/04-AI与算法/4.5-Agent.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "4.6-VLM.md",
+      "rel_path": "docs-ros/en/k3/04-AI与算法/4.6-VLM.md",
+      "repo_path": "en/k3/04-AI与算法/4.6-VLM.md",
+      "title": "VLM",
+      "headers": [],
+      "summary": "sidebar_position: 6",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/04-AI与算法/4.6-VLM.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "4.7-语音控制.md",
+      "rel_path": "docs-ros/en/k3/04-AI与算法/4.7-语音控制.md",
+      "repo_path": "en/k3/04-AI与算法/4.7-语音控制.md",
+      "title": "Voice Control",
+      "headers": [
+        "1. Overview",
+        "2. Environment Setup",
+        "2.1 Get the Source Code",
+        "2.2 Build",
+        "2.3 Set Up the mlink Gateway Environment",
+        "2.4 Prepare an LLM and Voice Agent",
+        "3. Example Usage",
+        "3.1 Minimal mlink Integration",
+        "3.2 Connecting omni_agent",
+        "3.3 Connecting Hermes"
+      ],
+      "summary": "sidebar_position: 7",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/04-AI与算法/4.7-语音控制.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "index.md",
+      "rel_path": "docs-ros/en/k3/04-AI与算法/index.md",
+      "repo_path": "en/k3/04-AI与算法/index.md",
+      "title": "4. AI and Algorithms",
+      "headers": [],
+      "summary": "sidebar_position: 4",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/04-AI与算法/index.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "4.2.1-目标检测.md",
+      "rel_path": "docs-ros/en/k3/04-AI与算法/4.2-视觉/4.2.1-目标检测.md",
+      "repo_path": "en/k3/04-AI与算法/4.2-视觉/4.2.1-目标检测.md",
+      "title": "Vision · Object Detection",
+      "headers": [
+        "1. Overview",
+        "2. Environment Setup",
+        "Prerequisites",
+        "Build",
+        "3. Example Usage (From Scratch)",
+        "3.1 YOLOv8 Object Detection (Python)",
+        "3.2 YOLOv8 Object Detection (C++)",
+        "3.3 YOLOv5 Object Detection",
+        "3.4 YOLOv11 Object Detection",
+        "3.5 YOLO12 Object Detection"
+      ],
+      "summary": "sidebar_position: 1",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/04-AI与算法/4.2-视觉/4.2.1-目标检测.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "4.2.10-人脸识别.md",
+      "rel_path": "docs-ros/en/k3/04-AI与算法/4.2-视觉/4.2.10-人脸识别.md",
+      "repo_path": "en/k3/04-AI与算法/4.2-视觉/4.2.10-人脸识别.md",
+      "title": "Vision · Face Recognition",
+      "headers": [
+        "1. Overview",
+        "2. Environment Setup",
+        "Prerequisites",
+        "Build",
+        "3. Example Usage (From Scratch)",
+        "3.1 ArcFace Face Recognition (Python)",
+        "3.2 ArcFace Face Recognition (C++)",
+        "3.3 Sample Output",
+        "4. Application Development",
+        "4.1 Interface Overview"
+      ],
+      "summary": "sidebar_position: 10",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/04-AI与算法/4.2-视觉/4.2.10-人脸识别.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "4.2.2-实例分割.md",
+      "rel_path": "docs-ros/en/k3/04-AI与算法/4.2-视觉/4.2.2-实例分割.md",
+      "repo_path": "en/k3/04-AI与算法/4.2-视觉/4.2.2-实例分割.md",
+      "title": "Vision · Instance Segmentation",
+      "headers": [
+        "1. Overview",
+        "2. Environment Setup",
+        "Prerequisites",
+        "Build",
+        "3. Example Usage (From Scratch)",
+        "3.1 YOLOv8-Seg Instance Segmentation (Python)",
+        "3.2 YOLOv8-Seg Instance Segmentation (C++)",
+        "3.3 Sample Output",
+        "4. Application Development",
+        "4.1 Interface Overview"
+      ],
+      "summary": "sidebar_position: 2",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/04-AI与算法/4.2-视觉/4.2.2-实例分割.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "4.2.3-人体姿态.md",
+      "rel_path": "docs-ros/en/k3/04-AI与算法/4.2-视觉/4.2.3-人体姿态.md",
+      "repo_path": "en/k3/04-AI与算法/4.2-视觉/4.2.3-人体姿态.md",
+      "title": "Vision · Human Pose Estimation",
+      "headers": [
+        "1. Overview",
+        "2. Environment Setup",
+        "Prerequisites",
+        "Build",
+        "3. Example Usage (From Scratch)",
+        "3.1 YOLOv8-Pose Estimation (Python)",
+        "3.2 YOLOv8-Pose Estimation (C++)",
+        "3.3 Sample Output",
+        "4. Application Development",
+        "4.1 Interface Overview"
+      ],
+      "summary": "sidebar_position: 3",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/04-AI与算法/4.2-视觉/4.2.3-人体姿态.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "4.2.4-人脸检测.md",
+      "rel_path": "docs-ros/en/k3/04-AI与算法/4.2-视觉/4.2.4-人脸检测.md",
+      "repo_path": "en/k3/04-AI与算法/4.2-视觉/4.2.4-人脸检测.md",
+      "title": "Vision · Face Detection",
+      "headers": [
+        "1. Overview",
+        "2. Environment Setup",
+        "Prerequisites",
+        "Build",
+        "3. Example Usage (From Scratch)",
+        "3.1 YOLOv5-Face Face Detection (Python)",
+        "3.2 YOLOv5-Face Face Detection (C++)",
+        "3.3 Sample Output",
+        "4. Application Development",
+        "4.1 Interface Overview"
+      ],
+      "summary": "sidebar_position: 4",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/04-AI与算法/4.2-视觉/4.2.4-人脸检测.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "4.2.5-手势识别.md",
+      "rel_path": "docs-ros/en/k3/04-AI与算法/4.2-视觉/4.2.5-手势识别.md",
+      "repo_path": "en/k3/04-AI与算法/4.2-视觉/4.2.5-手势识别.md",
+      "title": "Vision · Gesture Recognition",
+      "headers": [
+        "1. Overview",
+        "2. Environment Setup",
+        "Prerequisites",
+        "Build",
+        "3. Example Usage (From Scratch)",
+        "3.1 Gesture Recognition (Python)",
+        "3.2 Gesture Recognition (C++)",
+        "3.3 Sample Output",
+        "4. Application Development",
+        "4.1 Interface Overview"
+      ],
+      "summary": "sidebar_position: 5",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/04-AI与算法/4.2-视觉/4.2.5-手势识别.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "4.2.6-图像分类.md",
+      "rel_path": "docs-ros/en/k3/04-AI与算法/4.2-视觉/4.2.6-图像分类.md",
+      "repo_path": "en/k3/04-AI与算法/4.2-视觉/4.2.6-图像分类.md",
+      "title": "Vision · Image Classification",
+      "headers": [
+        "1. Overview",
+        "2. Environment Setup",
+        "Prerequisites",
+        "Build",
+        "3. Example Usage (From Scratch)",
+        "3.1 ResNet50 Image Classification (Python)",
+        "3.2 ResNet50 Image Classification (C++)",
+        "3.3 Example Output",
+        "4. Application Development",
+        "4.1 Interface Reference"
+      ],
+      "summary": "sidebar_position: 6",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/04-AI与算法/4.2-视觉/4.2.6-图像分类.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "4.2.7-表情与情绪识别.md",
+      "rel_path": "docs-ros/en/k3/04-AI与算法/4.2-视觉/4.2.7-表情与情绪识别.md",
+      "repo_path": "en/k3/04-AI与算法/4.2-视觉/4.2.7-表情与情绪识别.md",
+      "title": "Vision · Expression and Emotion Recognition",
+      "headers": [
+        "1. Overview",
+        "2. Environment Setup",
+        "Prerequisites",
+        "Build",
+        "3. Example Usage (From Scratch)",
+        "3.1 Expression Recognition (Python)",
+        "3.2 Expression Recognition (C++)",
+        "3.3 Sample Output",
+        "4. Application Development",
+        "4.1 Interface Overview"
+      ],
+      "summary": "sidebar_position: 7",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/04-AI与算法/4.2-视觉/4.2.7-表情与情绪识别.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "4.2.8-行为识别.md",
+      "rel_path": "docs-ros/en/k3/04-AI与算法/4.2-视觉/4.2.8-行为识别.md",
+      "repo_path": "en/k3/04-AI与算法/4.2-视觉/4.2.8-行为识别.md",
+      "title": "Vision · Action Recognition",
+      "headers": [
+        "1. Overview",
+        "2. Environment Setup",
+        "Prerequisites",
+        "Build",
+        "3. Example Usage (From Scratch)",
+        "3.1 Fall-Detection Application (Python)",
+        "3.2 Fall-Detection Application (C++)",
+        "3.3 Sample Output",
+        "4. Application Development",
+        "4.1 Interface Overview"
+      ],
+      "summary": "sidebar_position: 8",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/04-AI与算法/4.2-视觉/4.2.8-行为识别.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "4.2.9-多目标跟踪.md",
+      "rel_path": "docs-ros/en/k3/04-AI与算法/4.2-视觉/4.2.9-多目标跟踪.md",
+      "repo_path": "en/k3/04-AI与算法/4.2-视觉/4.2.9-多目标跟踪.md",
+      "title": "Vision · Multi-Object Tracking",
+      "headers": [
+        "1. Overview",
+        "2. Environment Setup",
+        "Prerequisites",
+        "Build",
+        "3. Example Usage (From Scratch)",
+        "3.1 ByteTrack Multi-Object Tracking (Python)",
+        "3.2 OC-SORT Multi-Object Tracking (Python)",
+        "3.3 ByteTrack / OC-SORT (C++)",
+        "3.4 Sample Output",
+        "4. Application Development"
+      ],
+      "summary": "sidebar_position: 9",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/04-AI与算法/4.2-视觉/4.2.9-多目标跟踪.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "index.md",
+      "rel_path": "docs-ros/en/k3/04-AI与算法/4.2-视觉/index.md",
+      "repo_path": "en/k3/04-AI与算法/4.2-视觉/index.md",
+      "title": "4.2 Vision",
+      "headers": [],
+      "summary": "sidebar_position: 2",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/04-AI与算法/4.2-视觉/index.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "4.1.1-ASR.md",
+      "rel_path": "docs-ros/en/k3/04-AI与算法/4.1-语音/4.1.1-ASR.md",
+      "repo_path": "en/k3/04-AI与算法/4.1-语音/4.1.1-ASR.md",
+      "title": "4.1.1 ASR",
+      "headers": [
+        "1. Overview",
+        "Demo Video",
+        "2. Environment Setup",
+        "Prerequisites",
+        "Build",
+        "3. Examples",
+        "3.1 Record Audio and Recognize a File",
+        "3.2 Python File-Based Recognition",
+        "3.3 Zipformer File-Based Recognition",
+        "3.4 C++ Streaming Recognition"
+      ],
+      "summary": "sidebar_position: 1",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/04-AI与算法/4.1-语音/4.1.1-ASR.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "4.1.2-TTS.md",
+      "rel_path": "docs-ros/en/k3/04-AI与算法/4.1-语音/4.1.2-TTS.md",
+      "repo_path": "en/k3/04-AI与算法/4.1-语音/4.1.2-TTS.md",
+      "title": "4.1.2 TTS",
+      "headers": [
+        "1. Overview",
+        "Demo Video",
+        "2. Environment Setup",
+        "Prerequisites",
+        "Build",
+        "3. Examples",
+        "3.1 File Synthesis",
+        "3.2 Custom Pronunciation Lexicon",
+        "3.3 C++ Streaming Synthesis",
+        "3.4 Python Multi-Engine Demo"
+      ],
+      "summary": "sidebar_position: 2",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/04-AI与算法/4.1-语音/4.1.2-TTS.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "4.1.3-VAD.md",
+      "rel_path": "docs-ros/en/k3/04-AI与算法/4.1-语音/4.1.3-VAD.md",
+      "repo_path": "en/k3/04-AI与算法/4.1-语音/4.1.3-VAD.md",
+      "title": "4.1.3 VAD",
+      "headers": [
+        "1. Overview",
+        "Demo Video",
+        "2. Environment Setup",
+        "Prerequisites",
+        "Build",
+        "3. Examples",
+        "3.1 Basic C++ Example",
+        "3.2 Python File-Based Example",
+        "3.3 End-to-End Validation",
+        "4. Application Development"
+      ],
+      "summary": "sidebar_position: 3",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/04-AI与算法/4.1-语音/4.1.3-VAD.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "4.1.4-声纹.md",
+      "rel_path": "docs-ros/en/k3/04-AI与算法/4.1-语音/4.1.4-声纹.md",
+      "repo_path": "en/k3/04-AI与算法/4.1-语音/4.1.4-声纹.md",
+      "title": "4.1.4 Voiceprint",
+      "headers": [
+        "1. Overview",
+        "2. Environment Setup",
+        "Prerequisites",
+        "Build",
+        "3. Examples",
+        "3.1 Enroll a Speaker",
+        "3.2 Identify a Speaker",
+        "4. Application Development",
+        "4.1 API Reference",
+        "4.2 C++ Examples"
+      ],
+      "summary": "sidebar_position: 4",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/04-AI与算法/4.1-语音/4.1.4-声纹.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "index.md",
+      "rel_path": "docs-ros/en/k3/04-AI与算法/4.1-语音/index.md",
+      "repo_path": "en/k3/04-AI与算法/4.1-语音/index.md",
+      "title": "4.1 Speech",
+      "headers": [
+        "1. Scope",
+        "2. Related Documents",
+        "3. Reading Guide"
+      ],
+      "summary": "sidebar_position: 1",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/04-AI与算法/4.1-语音/index.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "7.1-V20260330.md",
+      "rel_path": "docs-ros/en/k3/07-版本说明/7.1-V20260330.md",
+      "repo_path": "en/k3/07-版本说明/7.1-V20260330.md",
+      "title": "V20260330",
+      "headers": [
+        "Overview",
+        "Release Version",
+        "Updates",
+        "Resource Links",
+        "Next Month Preview"
+      ],
+      "summary": "sidebar_position: 1",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/07-版本说明/7.1-V20260330.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "7.2-V20260430.md",
+      "rel_path": "docs-ros/en/k3/07-版本说明/7.2-V20260430.md",
+      "repo_path": "en/k3/07-版本说明/7.2-V20260430.md",
+      "title": "V20260430",
+      "headers": [
+        "Overview",
+        "Release Version",
+        "Updates",
+        "Resource Links"
+      ],
+      "summary": "sidebar_position: 2",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/07-版本说明/7.2-V20260430.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "7.3-V20260530.md",
+      "rel_path": "docs-ros/en/k3/07-版本说明/7.3-V20260530.md",
+      "repo_path": "en/k3/07-版本说明/7.3-V20260530.md",
+      "title": "V20260530",
+      "headers": [
+        "Overview",
+        "Release Version",
+        "Updates",
+        "Resource Links"
+      ],
+      "summary": "sidebar_position: 3",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/07-版本说明/7.3-V20260530.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "index.md",
+      "rel_path": "docs-ros/en/k3/07-版本说明/index.md",
+      "repo_path": "en/k3/07-版本说明/index.md",
+      "title": "7. Release Notes",
+      "headers": [],
+      "summary": "sidebar_position: 7",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/07-版本说明/index.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "3.1-桌面机器人Reachy-mini.md",
+      "rel_path": "docs-ros/en/k3/03-参考方案/3.1-桌面机器人Reachy-mini.md",
+      "repo_path": "en/k3/03-参考方案/3.1-桌面机器人Reachy-mini.md",
+      "title": "Reachy Mini Desktop Robot",
+      "headers": [
+        "1. Solution Overview",
+        "2. Hardware List",
+        "3. Environment Setup",
+        "3.1 Hardware Connections",
+        "3.2 Obtaining the Source Code",
+        "3.3 External Dependencies",
+        "3.4 Build",
+        "4. Integrated Scenario: Full Voice-Controlled Interaction (Recommended)",
+        "4.1 Prerequisites",
+        "4.2 Starting the Application"
+      ],
+      "summary": "sidebar_position: 1",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/03-参考方案/3.1-桌面机器人Reachy-mini.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "3.2-轮式机器人Linksee.md",
+      "rel_path": "docs-ros/en/k3/03-参考方案/3.2-轮式机器人Linksee.md",
+      "repo_path": "en/k3/03-参考方案/3.2-轮式机器人Linksee.md",
+      "title": "Linksee Wheeled Robot",
+      "headers": [
+        "1. Overview",
+        "2. Hardware",
+        "2.1 Appearance",
+        "2.2 Bill of Materials",
+        "2.3 Detailed Views",
+        "3. Environment Setup",
+        "3.1 Hardware Connections",
+        "3.2 Software Environment: Auxiliary Core",
+        "3.3 Linksee Software Environment Setup",
+        "3.4 PC Host Environment Setup"
+      ],
+      "summary": "sidebar_position: 2",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/03-参考方案/3.2-轮式机器人Linksee.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "3.4-人形机器人Humanoid.md",
+      "rel_path": "docs-ros/en/k3/03-参考方案/3.4-人形机器人Humanoid.md",
+      "repo_path": "en/k3/03-参考方案/3.4-人形机器人Humanoid.md",
+      "title": "Humanoid Robot",
+      "headers": [
+        "1. Overview",
+        "2. Hardware Requirements",
+        "3. Environment Setup",
+        "3.1 x86_64 PC Dependencies",
+        "3.2 K3 Board Dependencies",
+        "3.3 Get the Code and Build",
+        "4. Cross-Machine FSM Full-Chain Simulation Test",
+        "4.1 Start the Simulation Engine on the PC",
+        "4.2 Start Control and HMI on the K3 Board",
+        "4.3 Results"
+      ],
+      "summary": "sidebar_position: 4",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/03-参考方案/3.4-人形机器人Humanoid.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "3.5-智能视频分析Rivision.md",
+      "rel_path": "docs-ros/en/k3/03-参考方案/3.5-智能视频分析Rivision.md",
+      "repo_path": "en/k3/03-参考方案/3.5-智能视频分析Rivision.md",
+      "title": "RiVision - Edge AI Video Analytics Platform",
+      "headers": [
+        "1. Overview",
+        "Application Scenarios",
+        "Core Capabilities",
+        "2. System Architecture",
+        "3. Module Details",
+        "3.1 rivision_cli - Orchestration Center",
+        "3.2 rivision_gateway - Inference Gateway",
+        "3.3 rivision_owl - NVR Video Management",
+        "3.4 rivision_node - Edge Computing Node",
+        "3.5 rivision_embed - Vector Embedding Service"
+      ],
+      "summary": "sidebar_position: 5",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/03-参考方案/3.5-智能视频分析Rivision.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "index.md",
+      "rel_path": "docs-ros/en/k3/03-参考方案/index.md",
+      "repo_path": "en/k3/03-参考方案/index.md",
+      "title": "3. Reference Solutions",
+      "headers": [],
+      "summary": "sidebar_position: 3",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/03-参考方案/index.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "3.3.1-真机训练推理.md",
+      "rel_path": "docs-ros/en/k3/03-参考方案/3.3-机械臂/3.3.1-真机训练推理.md",
+      "repo_path": "en/k3/03-参考方案/3.3-机械臂/3.3.1-真机训练推理.md",
+      "title": "Real-World Training and Inference",
+      "headers": [
+        "1. Overview",
+        "2. Hardware Requirements",
+        "3. Set Up the Environment",
+        "3.1 Download the Source Code",
+        "3.2 Install System Dependencies",
+        "3.3 Install and Use uv",
+        "3.4 Configure Python Package Indexes",
+        "3.5 Install Python Dependencies",
+        "4. Scenario 1: From ACT/SmolVLA Training to Inference",
+        "4.1 Reproduction Steps"
+      ],
+      "summary": "﻿---",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/03-参考方案/3.3-机械臂/3.3.1-真机训练推理.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "3.3.2-仿真训练推理.md",
+      "rel_path": "docs-ros/en/k3/03-参考方案/3.3-机械臂/3.3.2-仿真训练推理.md",
+      "repo_path": "en/k3/03-参考方案/3.3-机械臂/3.3.2-仿真训练推理.md",
+      "title": "Simulation Training and Inference",
+      "headers": [
+        "1. Overview",
+        "2. Hardware Requirements",
+        "3. Set Up the Environment",
+        "3.1 Simulator/Server Environment",
+        "3.2 Inference Engine/Local Environment",
+        "4. Scenario 1: End-to-End Simulation Inference and Evaluation",
+        "4.1 Reproduction Steps",
+        "4.2 Results",
+        "5. Troubleshooting"
+      ],
+      "summary": "sidebar_position: 2",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/03-参考方案/3.3-机械臂/3.3.2-仿真训练推理.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "3.3.3-ONNX部署指南.md",
+      "rel_path": "docs-ros/en/k3/03-参考方案/3.3-机械臂/3.3.3-ONNX部署指南.md",
+      "repo_path": "en/k3/03-参考方案/3.3-机械臂/3.3.3-ONNX部署指南.md",
+      "title": "ONNX Deployment Guide",
+      "headers": [
+        "1. Overview",
+        "2. Hardware Requirements",
+        "3. Scenario 1: ACT Deployment",
+        "3.1 Set Up the Environment",
+        "3.2 Prerequisites",
+        "3.3 Deploy for Inference",
+        "3.4 Results",
+        "4. Scenario 2: SmolVLA Deployment",
+        "4.1 Set Up the Environment",
+        "4.2 Prerequisites"
+      ],
+      "summary": "sidebar_position: 3",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/03-参考方案/3.3-机械臂/3.3.3-ONNX部署指南.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "index.md",
+      "rel_path": "docs-ros/en/k3/03-参考方案/3.3-机械臂/index.md",
+      "repo_path": "en/k3/03-参考方案/3.3-机械臂/index.md",
+      "title": "3.3 Robotic Arm (LeRobot)",
+      "headers": [],
+      "summary": "sidebar_position: 3",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/03-参考方案/3.3-机械臂/index.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "index.md",
+      "rel_path": "docs-ros/en/k3/05-机器人开发/index.md",
+      "repo_path": "en/k3/05-机器人开发/index.md",
+      "title": "5. Robot Development",
+      "headers": [],
+      "summary": "sidebar_position: 5",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/05-机器人开发/index.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "5.5.1-编码.md",
+      "rel_path": "docs-ros/en/k3/05-机器人开发/5.5-媒体传输/5.5.1-编码.md",
+      "repo_path": "en/k3/05-机器人开发/5.5-媒体传输/5.5.1-编码.md",
+      "title": "Media Transmission · Encoding",
+      "headers": [
+        "1. Overview",
+        "2. Environment Setup",
+        "Prerequisites",
+        "Build",
+        "3. Example Usage (From Scratch)",
+        "3.1 Command-Line Encoding Test (File to File)",
+        "3.2 H.264 Encoding API Example",
+        "4. Application Development",
+        "5. Debugging Guide",
+        "6. Common Issues"
+      ],
+      "summary": "sidebar_position: 1",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/05-机器人开发/5.5-媒体传输/5.5.1-编码.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "5.5.2-解码.md",
+      "rel_path": "docs-ros/en/k3/05-机器人开发/5.5-媒体传输/5.5.2-解码.md",
+      "repo_path": "en/k3/05-机器人开发/5.5-媒体传输/5.5.2-解码.md",
+      "title": "Media Transmission · Decoding",
+      "headers": [
+        "1. Overview",
+        "2. Environment Setup",
+        "Prerequisites",
+        "Build",
+        "3. Example Usage (From Scratch)",
+        "3.1 Command-Line Decoding Test (File to File)",
+        "3.2 H.264 Decoding API Example",
+        "4. Application Development",
+        "5. Debugging Guide",
+        "6. Common Issues"
+      ],
+      "summary": "sidebar_position: 2",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/05-机器人开发/5.5-媒体传输/5.5.2-解码.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "index.md",
+      "rel_path": "docs-ros/en/k3/05-机器人开发/5.5-媒体传输/index.md",
+      "repo_path": "en/k3/05-机器人开发/5.5-媒体传输/index.md",
+      "title": "5.5 Media Transmission",
+      "headers": [],
+      "summary": "sidebar_position: 5",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/05-机器人开发/5.5-媒体传输/index.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "5.6.11-NFC.md",
+      "rel_path": "docs-ros/en/k3/05-机器人开发/5.6-基础传感器/5.6.11-NFC.md",
+      "repo_path": "en/k3/05-机器人开发/5.6-基础传感器/5.6.11-NFC.md",
+      "title": "Basic Sensors · NFC",
+      "headers": [
+        "1. Overview",
+        "2. Environment Setup",
+        "Prerequisites",
+        "Build",
+        "3. Example Usage (From Scratch)",
+        "3.1 Example 1: Start the ROS 2 NFC Node and Observe the Tag Detection Topic",
+        "3.2 Example 2: Call the poll/read/write Services",
+        "4. Application Development",
+        "5. Debugging Guide",
+        "6. FAQ"
+      ],
+      "summary": "sidebar_position: 11",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/05-机器人开发/5.6-基础传感器/5.6.11-NFC.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "5.6.12-光感.md",
+      "rel_path": "docs-ros/en/k3/05-机器人开发/5.6-基础传感器/5.6.12-光感.md",
+      "repo_path": "en/k3/05-机器人开发/5.6-基础传感器/5.6.12-光感.md",
+      "title": "Basic Sensors · Light Sensor",
+      "headers": [
+        "1. Overview",
+        "2. Environment Setup",
+        "Prerequisites",
+        "Build",
+        "3. Example Usage (From Scratch)",
+        "3.1 Example 1: Start the ROS 2 Light Sensor Node and Observe the Illuminance Topic",
+        "4. Application Development",
+        "5. Debugging Guide",
+        "6. FAQ"
+      ],
+      "summary": "sidebar_position: 12",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/05-机器人开发/5.6-基础传感器/5.6.12-光感.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "5.6.2-IMU.md",
+      "rel_path": "docs-ros/en/k3/05-机器人开发/5.6-基础传感器/5.6.2-IMU.md",
+      "repo_path": "en/k3/05-机器人开发/5.6-基础传感器/5.6.2-IMU.md",
+      "title": "Basic Sensors · IMU",
+      "headers": [
+        "1. Overview",
+        "2. Environment Setup",
+        "2.1 Prerequisites",
+        "Build",
+        "3. Example Usage",
+        "Parameter Description",
+        "4. Application Development",
+        "5. Debugging Guide",
+        "6. Common Issues"
+      ],
+      "summary": "sidebar_position: 2",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/05-机器人开发/5.6-基础传感器/5.6.2-IMU.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "5.6.3-电机.md",
+      "rel_path": "docs-ros/en/k3/05-机器人开发/5.6-基础传感器/5.6.3-电机.md",
+      "repo_path": "en/k3/05-机器人开发/5.6-基础传感器/5.6.3-电机.md",
+      "title": "Basic Sensors · Motor",
+      "headers": [
+        "1. Overview",
+        "2. Environment Setup",
+        "Prerequisites",
+        "Build",
+        "Configuration File Notes",
+        "3. Example Usage (From Scratch)",
+        "3.1 EtherCAT Motor Control (JMC IHSS42-EC, CSP Mode)",
+        "3.2 CAN Motor Control (Damiao, Velocity Mode)",
+        "3.3 UART Motor Control (Feetech, Position Mode)",
+        "4. Application Development"
+      ],
+      "summary": "sidebar_position: 3",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/05-机器人开发/5.6-基础传感器/5.6.3-电机.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "5.6.4-雷达.md",
+      "rel_path": "docs-ros/en/k3/05-机器人开发/5.6-基础传感器/5.6.4-雷达.md",
+      "repo_path": "en/k3/05-机器人开发/5.6-基础传感器/5.6.4-雷达.md",
+      "title": "Basic Sensors · Lidar",
+      "headers": [
+        "1. Overview",
+        "2. Environment Setup",
+        "Prerequisites",
+        "Build",
+        "3. Example Usage",
+        "3.1  `YDLIDAR X3 Pro`",
+        "3.2  `RPLIDAR` C1 Verification",
+        "4. Application Development",
+        "5. Debugging Guide",
+        "6. FAQ"
+      ],
+      "summary": "sidebar_position: 4",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/05-机器人开发/5.6-基础传感器/5.6.4-雷达.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "5.6.5-按键.md",
+      "rel_path": "docs-ros/en/k3/05-机器人开发/5.6-基础传感器/5.6.5-按键.md",
+      "repo_path": "en/k3/05-机器人开发/5.6-基础传感器/5.6.5-按键.md",
+      "title": "Basic Sensors · Button / Key",
+      "headers": [
+        "1. Overview",
+        "2. Environment Setup",
+        "Prerequisites",
+        "Build",
+        "3. Example Usage (From Scratch)",
+        "3.1 Example 1: Start the ROS 2 Button Node and Observe Events",
+        "3.2 Example 2: Configure Multiple Buttons and Verify Broadcast Subscription",
+        "4. Application Development",
+        "5. Debugging Guide",
+        "6. FAQ"
+      ],
+      "summary": "sidebar_position: 5",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/05-机器人开发/5.6-基础传感器/5.6.5-按键.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "5.6.6-电源.md",
+      "rel_path": "docs-ros/en/k3/05-机器人开发/5.6-基础传感器/5.6.6-电源.md",
+      "repo_path": "en/k3/05-机器人开发/5.6-基础传感器/5.6.6-电源.md",
+      "title": "Basic Sensors · Power",
+      "headers": [
+        "1. Overview",
+        "2. Environment Setup",
+        "Prerequisites",
+        "Build",
+        "3. Example Usage (From Scratch)",
+        "3.1 Example 1: Start the Power Node and Observe the Status Topic",
+        "4. Application Development",
+        "5. Debugging Guide",
+        "6. FAQ"
+      ],
+      "summary": "sidebar_position: 6",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/05-机器人开发/5.6-基础传感器/5.6.6-电源.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "5.6.7-LED.md",
+      "rel_path": "docs-ros/en/k3/05-机器人开发/5.6-基础传感器/5.6.7-LED.md",
+      "repo_path": "en/k3/05-机器人开发/5.6-基础传感器/5.6.7-LED.md",
+      "title": "Basic Sensors · LED",
+      "headers": [
+        "1. Overview",
+        "2. Environment Setup",
+        "Prerequisites",
+        "Build",
+        "3. Example Usage (From Scratch)",
+        "3.1 Example 1: Start the LED Node and Control an SPI Strip",
+        "3.2 Example 2: Blink and Breathing Effects",
+        "4. Application Development",
+        "5. Debugging Guide",
+        "6. FAQ"
+      ],
+      "summary": "sidebar_position: 7",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/05-机器人开发/5.6-基础传感器/5.6.7-LED.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "5.6.8-IO.md",
+      "rel_path": "docs-ros/en/k3/05-机器人开发/5.6-基础传感器/5.6.8-IO.md",
+      "repo_path": "en/k3/05-机器人开发/5.6-基础传感器/5.6.8-IO.md",
+      "title": "Basic Sensors · IO",
+      "headers": [
+        "1. Overview",
+        "2. Environment Setup",
+        "Prerequisites",
+        "Build",
+        "3. Example Usage (From Scratch)",
+        "3.1 Example 1: Start the IO Node and Observe State and Events",
+        "3.2 Example 2: Control Output IO via Command Topic",
+        "4. Application Development",
+        "5. Debugging Guide",
+        "6. FAQ"
+      ],
+      "summary": "sidebar_position: 8",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/05-机器人开发/5.6-基础传感器/5.6.8-IO.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "5.6.9-WiFi.md",
+      "rel_path": "docs-ros/en/k3/05-机器人开发/5.6-基础传感器/5.6.9-WiFi.md",
+      "repo_path": "en/k3/05-机器人开发/5.6-基础传感器/5.6.9-WiFi.md",
+      "title": "Basic Sensors · WiFi",
+      "headers": [
+        "1. Overview",
+        "2. Environment Setup",
+        "Prerequisites",
+        "Build",
+        "3. Example Usage (From Scratch)",
+        "3.1 Example 1: Start the WiFi Node and Observe State and Scan Results",
+        "3.2 Example 2: Connect to and Disconnect from a Specific WiFi Network",
+        "4. Application Development",
+        "5. Debugging Guide",
+        "6. FAQ"
+      ],
+      "summary": "sidebar_position: 9",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/05-机器人开发/5.6-基础传感器/5.6.9-WiFi.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "index.md",
+      "rel_path": "docs-ros/en/k3/05-机器人开发/5.6-基础传感器/index.md",
+      "repo_path": "en/k3/05-机器人开发/5.6-基础传感器/index.md",
+      "title": "5.6 Basic Sensors",
+      "headers": [],
+      "summary": "sidebar_position: 6",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/05-机器人开发/5.6-基础传感器/index.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "5.4-nav2.md",
+      "rel_path": "docs-ros/en/k3/05-机器人开发/5.4-路径规划/5.4-nav2.md",
+      "repo_path": "en/k3/05-机器人开发/5.4-路径规划/5.4-nav2.md",
+      "title": "Path Planning · nav2",
+      "headers": [
+        "1. Overview",
+        "2. Environment Setup",
+        "2.1 Prerequisites",
+        "2.2 Building",
+        "3. Example Usage",
+        "3.1 2D Laser Map Navigation",
+        "3.2 RGB-D Navigation with RTAB-Map",
+        "4. Application Development",
+        "5. Debugging Guide",
+        "6. Troubleshooting"
+      ],
+      "summary": "sidebar_position: 1",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/05-机器人开发/5.4-路径规划/5.4-nav2.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "index.md",
+      "rel_path": "docs-ros/en/k3/05-机器人开发/5.4-路径规划/index.md",
+      "repo_path": "en/k3/05-机器人开发/5.4-路径规划/index.md",
+      "title": "5.4 Path Planning",
+      "headers": [],
+      "summary": "sidebar_position: 4",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/05-机器人开发/5.4-路径规划/index.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "5.3.1-cartographer.md",
+      "rel_path": "docs-ros/en/k3/05-机器人开发/5.3-定位导航/5.3.1-cartographer.md",
+      "repo_path": "en/k3/05-机器人开发/5.3-定位导航/5.3.1-cartographer.md",
+      "title": "Localization and Navigation · Cartographer",
+      "headers": [
+        "1. Overview",
+        "2. Environment Setup",
+        "2.1 Prerequisites",
+        "2.2 Building",
+        "3. Example Usage",
+        "4. Application Development",
+        "5. Debugging Guide",
+        "6. Troubleshooting"
+      ],
+      "summary": "sidebar_position: 1",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/05-机器人开发/5.3-定位导航/5.3.1-cartographer.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "5.3.2-slam_toolbox.md",
+      "rel_path": "docs-ros/en/k3/05-机器人开发/5.3-定位导航/5.3.2-slam_toolbox.md",
+      "repo_path": "en/k3/05-机器人开发/5.3-定位导航/5.3.2-slam_toolbox.md",
+      "title": "Localization and Navigation · slam_toolbox",
+      "headers": [
+        "1. Overview",
+        "2. Environment Setup",
+        "2.1 Prerequisites",
+        "2.2 Building",
+        "3. Example Usage",
+        "4. Application Development",
+        "5. Debugging Guide",
+        "6. Troubleshooting"
+      ],
+      "summary": "sidebar_position: 2",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/05-机器人开发/5.3-定位导航/5.3.2-slam_toolbox.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "5.3.3-rtabmap.md",
+      "rel_path": "docs-ros/en/k3/05-机器人开发/5.3-定位导航/5.3.3-rtabmap.md",
+      "repo_path": "en/k3/05-机器人开发/5.3-定位导航/5.3.3-rtabmap.md",
+      "title": "Localization and Navigation · rtabmap",
+      "headers": [
+        "1. Overview",
+        "2. Environment Setup",
+        "2.1 Prerequisites",
+        "2.2 Building",
+        "3. Example Usage",
+        "4. Application Development",
+        "5. Debugging Guide",
+        "6. Troubleshooting"
+      ],
+      "summary": "sidebar_position: 3",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/05-机器人开发/5.3-定位导航/5.3.3-rtabmap.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "5.3.4-orbslam3.md",
+      "rel_path": "docs-ros/en/k3/05-机器人开发/5.3-定位导航/5.3.4-orbslam3.md",
+      "repo_path": "en/k3/05-机器人开发/5.3-定位导航/5.3.4-orbslam3.md",
+      "title": "Localization and Navigation · ORB-SLAM3",
+      "headers": [
+        "1. Overview",
+        "2. Environment Setup",
+        "2.1 Prerequisites",
+        "2.2 Building",
+        "3. Example Usage",
+        "4. Application Development",
+        "5. Debugging Guide",
+        "6. Troubleshooting"
+      ],
+      "summary": "sidebar_position: 4",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/05-机器人开发/5.3-定位导航/5.3.4-orbslam3.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "index.md",
+      "rel_path": "docs-ros/en/k3/05-机器人开发/5.3-定位导航/index.md",
+      "repo_path": "en/k3/05-机器人开发/5.3-定位导航/index.md",
+      "title": "5.3 Localization and Navigation",
+      "headers": [],
+      "summary": "sidebar_position: 3",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/05-机器人开发/5.3-定位导航/index.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "5.1.1-目标检测.md",
+      "rel_path": "docs-ros/en/k3/05-机器人开发/5.1-机器感知/5.1.1-目标检测.md",
+      "repo_path": "en/k3/05-机器人开发/5.1-机器感知/5.1.1-目标检测.md",
+      "title": "Perception · Object Detection",
+      "headers": [
+        "1. Overview",
+        "Features",
+        "Software Architecture",
+        "Directory Structure",
+        "2. Environment Setup",
+        "Prerequisites",
+        "Build",
+        "3. Quick Start",
+        "3.1 Real-Time Detection with Camera",
+        "4. Application Development"
+      ],
+      "summary": "sidebar_position: 1",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/05-机器人开发/5.1-机器感知/5.1.1-目标检测.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "5.1.2-人脸检测.md",
+      "rel_path": "docs-ros/en/k3/05-机器人开发/5.1-机器感知/5.1.2-人脸检测.md",
+      "repo_path": "en/k3/05-机器人开发/5.1-机器感知/5.1.2-人脸检测.md",
+      "title": "Perception · Face Detection",
+      "headers": [
+        "1. Overview",
+        "Features",
+        "Software Architecture",
+        "Directory Structure",
+        "2. Environment Setup",
+        "Prerequisites",
+        "Build",
+        "3. Quick Start",
+        "3.1 Real-Time Face Detection with Camera",
+        "4. Application Development"
+      ],
+      "summary": "sidebar_position: 2",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/05-机器人开发/5.1-机器感知/5.1.2-人脸检测.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "5.1.3-人型检测.md",
+      "rel_path": "docs-ros/en/k3/05-机器人开发/5.1-机器感知/5.1.3-人型检测.md",
+      "repo_path": "en/k3/05-机器人开发/5.1-机器感知/5.1.3-人型检测.md",
+      "title": "Perception · Person Detection",
+      "headers": [
+        "1. Overview",
+        "Features",
+        "Software Architecture",
+        "Directory Structure",
+        "2. Environment Setup",
+        "Prerequisites",
+        "Build",
+        "3. Quick Start",
+        "3.1 Real-Time Person Detection with Camera",
+        "4. Application Development"
+      ],
+      "summary": "sidebar_position: 3",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/05-机器人开发/5.1-机器感知/5.1.3-人型检测.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "5.1.4-人体姿态.md",
+      "rel_path": "docs-ros/en/k3/05-机器人开发/5.1-机器感知/5.1.4-人体姿态.md",
+      "repo_path": "en/k3/05-机器人开发/5.1-机器感知/5.1.4-人体姿态.md",
+      "title": "Perception · Body Pose Estimation",
+      "headers": [
+        "1. Overview",
+        "Features",
+        "Software Architecture",
+        "Directory Structure",
+        "2. Environment Setup",
+        "Prerequisites",
+        "Build",
+        "3. Quick Start",
+        "3.1 Real-Time Pose Estimation with Camera",
+        "4. Application Development"
+      ],
+      "summary": "sidebar_position: 4",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/05-机器人开发/5.1-机器感知/5.1.4-人体姿态.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "5.1.5-手势识别.md",
+      "rel_path": "docs-ros/en/k3/05-机器人开发/5.1-机器感知/5.1.5-手势识别.md",
+      "repo_path": "en/k3/05-机器人开发/5.1-机器感知/5.1.5-手势识别.md",
+      "title": "Perception · Gesture Recognition",
+      "headers": [
+        "1. Overview",
+        "Features",
+        "Software Architecture",
+        "Directory Structure",
+        "2. Environment Setup",
+        "Prerequisites",
+        "Build",
+        "3. Quick Start",
+        "3.1 Real-Time Gesture Recognition with Camera",
+        "4. Application Development"
+      ],
+      "summary": "sidebar_position: 5",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/05-机器人开发/5.1-机器感知/5.1.5-手势识别.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "5.1.6-实例分割.md",
+      "rel_path": "docs-ros/en/k3/05-机器人开发/5.1-机器感知/5.1.6-实例分割.md",
+      "repo_path": "en/k3/05-机器人开发/5.1-机器感知/5.1.6-实例分割.md",
+      "title": "Perception · Instance Segmentation",
+      "headers": [
+        "1. Overview",
+        "Features",
+        "Software Architecture",
+        "Directory Structure",
+        "2. Environment Setup",
+        "Prerequisites",
+        "Build",
+        "3. Quick Start",
+        "3.1 Real-Time Segmentation with Camera",
+        "3.2 Subscribe to External Image Topic"
+      ],
+      "summary": "sidebar_position: 6",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/05-机器人开发/5.1-机器感知/5.1.6-实例分割.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "5.1.7-语义分割.md",
+      "rel_path": "docs-ros/en/k3/05-机器人开发/5.1-机器感知/5.1.7-语义分割.md",
+      "repo_path": "en/k3/05-机器人开发/5.1-机器感知/5.1.7-语义分割.md",
+      "title": "Perception · Semantic Segmentation",
+      "headers": [
+        "1. Overview",
+        "Features",
+        "Software Architecture",
+        "Directory Structure",
+        "2. Environment Setup",
+        "Prerequisites",
+        "Build",
+        "3. Quick Start",
+        "3.1 Real-Time Segmentation with Camera",
+        "3.2 Subscribe to External Image Topic"
+      ],
+      "summary": "sidebar_position: 7",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/05-机器人开发/5.1-机器感知/5.1.7-语义分割.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "5.1.8-目标跟踪.md",
+      "rel_path": "docs-ros/en/k3/05-机器人开发/5.1-机器感知/5.1.8-目标跟踪.md",
+      "repo_path": "en/k3/05-机器人开发/5.1-机器感知/5.1.8-目标跟踪.md",
+      "title": "Perception · Object Tracking",
+      "headers": [
+        "1. Overview",
+        "Features",
+        "Software Architecture",
+        "Directory Structure",
+        "2. Environment Setup",
+        "Prerequisites",
+        "Build",
+        "3. Quick Start",
+        "3.1 Real-Time Tracking with Camera",
+        "3.2 Switch to OC-SORT Tracker"
+      ],
+      "summary": "sidebar_position: 8",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/05-机器人开发/5.1-机器感知/5.1.8-目标跟踪.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "5.1.9-动作识别.md",
+      "rel_path": "docs-ros/en/k3/05-机器人开发/5.1-机器感知/5.1.9-动作识别.md",
+      "repo_path": "en/k3/05-机器人开发/5.1-机器感知/5.1.9-动作识别.md",
+      "title": "Perception · Action Recognition",
+      "headers": [
+        "1. Overview",
+        "Features",
+        "Software Architecture",
+        "Directory Structure",
+        "2. Environment Setup",
+        "Prerequisites",
+        "Build",
+        "3. Quick Start",
+        "3.1 Complete Action Recognition Pipeline",
+        "4. Application Development"
+      ],
+      "summary": "sidebar_position: 9",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/05-机器人开发/5.1-机器感知/5.1.9-动作识别.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "index.md",
+      "rel_path": "docs-ros/en/k3/05-机器人开发/5.1-机器感知/index.md",
+      "repo_path": "en/k3/05-机器人开发/5.1-机器感知/index.md",
+      "title": "5.1 Perception",
+      "headers": [],
+      "summary": "sidebar_position: 1",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/05-机器人开发/5.1-机器感知/index.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "5.2.1-底盘控制.md",
+      "rel_path": "docs-ros/en/k3/05-机器人开发/5.2-运动控制/5.2.1-底盘控制.md",
+      "repo_path": "en/k3/05-机器人开发/5.2-运动控制/5.2.1-底盘控制.md",
+      "title": "Motion Control · Chassis Control",
+      "headers": [
+        "1. Overview",
+        "2. Environment Setup",
+        "Hardware Connections",
+        "Prerequisites",
+        "Build",
+        "3. ROS 2 Usage Example",
+        "Quick Start",
+        "Available Parameter Descriptions",
+        "4. Low-Level Interface Control Example",
+        "Direct Build Example"
+      ],
+      "summary": "sidebar_position: 1",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/05-机器人开发/5.2-运动控制/5.2.1-底盘控制.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "5.2.2-云台控制.md",
+      "rel_path": "docs-ros/en/k3/05-机器人开发/5.2-运动控制/5.2.2-云台控制.md",
+      "repo_path": "en/k3/05-机器人开发/5.2-运动控制/5.2.2-云台控制.md",
+      "title": "Motion Control · Gimbal Control",
+      "headers": [
+        "1. Overview",
+        "2. Environment Setup",
+        "Prerequisites",
+        "Build",
+        "3. Example Usage (Getting Started From Scratch)",
+        "3.1 Example 1: Launch Default TZ0xxx Gimbal Node and Observe State",
+        "3.2 Example 2: Control Gimbal via ROS 2 Services",
+        "3.3 Example 3: Launch C12 Gimbal Node",
+        "4. Application Development",
+        "5. Debugging Guide"
+      ],
+      "summary": "sidebar_position: 2",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/05-机器人开发/5.2-运动控制/5.2.2-云台控制.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "5.2.3-夹爪控制.md",
+      "rel_path": "docs-ros/en/k3/05-机器人开发/5.2-运动控制/5.2.3-夹爪控制.md",
+      "repo_path": "en/k3/05-机器人开发/5.2-运动控制/5.2.3-夹爪控制.md",
+      "title": "Motion Control · Gripper Control",
+      "headers": [
+        "1. Overview",
+        "Features",
+        "Code Structure",
+        "2. Environment Setup",
+        "Prerequisites",
+        "Build",
+        "3. Example Usage",
+        "3.1 Example 1: Basic Framework and Dummy Driver Verification",
+        "3.2 Example 2: SO-101 Gripper Hardware Control Verification",
+        "4. Application Development"
+      ],
+      "summary": "sidebar_position: 3",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/05-机器人开发/5.2-运动控制/5.2.3-夹爪控制.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "5.2.4-机械臂控制.md",
+      "rel_path": "docs-ros/en/k3/05-机器人开发/5.2-运动控制/5.2.4-机械臂控制.md",
+      "repo_path": "en/k3/05-机器人开发/5.2-运动控制/5.2.4-机械臂控制.md",
+      "title": "Motion Control · Robot Arm Control",
+      "headers": [
+        "1. Overview",
+        "Features",
+        "Code Structure",
+        "2. Environment Setup",
+        "Prerequisites",
+        "Build",
+        "3. Example Usage",
+        "3.1 Example 1: Basic Framework and Kinematics Verification",
+        "3.2 Example 2: SO-101 Hardware Control Verification",
+        "4. Application Development"
+      ],
+      "summary": "sidebar_position: 4",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/05-机器人开发/5.2-运动控制/5.2.4-机械臂控制.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "index.md",
+      "rel_path": "docs-ros/en/k3/05-机器人开发/5.2-运动控制/index.md",
+      "repo_path": "en/k3/05-机器人开发/5.2-运动控制/index.md",
+      "title": "5.2 Motion Control",
+      "headers": [],
+      "summary": "sidebar_position: 2",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/05-机器人开发/5.2-运动控制/index.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "2.1-上电开机.md",
+      "rel_path": "docs-ros/en/k3/02-快速入门/2.1-上电开机.md",
+      "repo_path": "en/k3/02-快速入门/2.1-上电开机.md",
+      "title": "Power-On and Boot",
+      "headers": [
+        "1. Required Items",
+        "2. SpacemiT Studio",
+        "3. Wiring Sequence",
+        "4. Operation Procedure",
+        "4.1 Initial Boot",
+        "4.2 Login",
+        "4.3 Network Connection",
+        "5. Serial Port Connection",
+        "6. Remote Login",
+        "6.1 SSH"
+      ],
+      "summary": "sidebar_position: 1",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/02-快速入门/2.1-上电开机.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "2.2-镜像烧录.md",
+      "rel_path": "docs-ros/en/k3/02-快速入门/2.2-镜像烧录.md",
+      "repo_path": "en/k3/02-快速入门/2.2-镜像烧录.md",
+      "title": "Flashing",
+      "headers": [
+        "1. Required Items",
+        "2. Procedure",
+        "2.1 Entering Flash Mode",
+        "2.2 Flashing the Image",
+        "3. Verification and Self-Check",
+        "4. Common Issues"
+      ],
+      "summary": "sidebar_position: 2",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/02-快速入门/2.2-镜像烧录.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "2.3-构建编译.md",
+      "rel_path": "docs-ros/en/k3/02-快速入门/2.3-构建编译.md",
+      "repo_path": "en/k3/02-快速入门/2.3-构建编译.md",
+      "title": "Building and Compilation",
+      "headers": [
+        "1. Prerequisites",
+        "1.1 Optional: Use Robot Skills to Assist with Environment Setup",
+        "1.2 How to Use Subsequent Sections",
+        "1.3 Optional: Install ROS 2 and Basic Dependencies Without the SDK",
+        "2. Obtaining the Source Code",
+        "3. One-Command Build",
+        "3.1 Full Build",
+        "3.2 Single-Component Build",
+        "3.3 Selecting a Build Mode",
+        "3.4 Docker Build"
+      ],
+      "summary": "﻿---",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/02-快速入门/2.3-构建编译.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "2.4-示例运行.md",
+      "rel_path": "docs-ros/en/k3/02-快速入门/2.4-示例运行.md",
+      "repo_path": "en/k3/02-快速入门/2.4-示例运行.md",
+      "title": "Running Examples",
+      "headers": [
+        "1. Prerequisites",
+        "2. Model Examples",
+        "2.1 One-Command Build",
+        "2.2 Quick Start",
+        "3. Voice Interaction",
+        "3.1 One-Command Build",
+        "3.2 Quick Start"
+      ],
+      "summary": "sidebar_position: 4",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/02-快速入门/2.4-示例运行.md"
+    },
+    {
+      "submodule": "docs-ros",
+      "file_name": "index.md",
+      "rel_path": "docs-ros/en/k3/02-快速入门/index.md",
+      "repo_path": "en/k3/02-快速入门/index.md",
+      "title": "2. Quick Start",
+      "headers": [],
+      "summary": "sidebar_position: 2",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/main/en/k3/02-快速入门/index.md"
     },
     {
       "submodule": "docs-ros",

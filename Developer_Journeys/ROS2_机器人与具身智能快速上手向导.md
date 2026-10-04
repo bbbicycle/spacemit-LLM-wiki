@@ -59,14 +59,14 @@ ros2 run micro_ros_agent micro_ros_agent serial --dev /dev/ttyS1 -b 115200
 
 ## 步骤 3：部署 LeRobot 机械臂或 Reachy Mini 应用
 
-### 3.1 运行 SO101 机械臂 ACT 模仿学习推理
+### 3.1 运行 SO101 机械臂模仿学习推理 (K1 / K3)
 
-使用已安装的 LeRobot 库，在 K1/K3 端侧直接运行 ACT 轨迹预测模型驱动 SO101 6-DoF 机械臂：
-
-```bash
-# 运行端侧抓取推理闭环
-python3 -m lerobot.scripts.control_robot --robot-type so101 --policy-type act --eval
-```
+使用已安装的 LeRobot 库与模型：
+* 在 **K1 (Muse Pi)** 平台上直接运行 **ACT** 轨迹预测模型驱动 SO101 6-DoF 机械臂（端侧实测 25 FPS）：
+  ```bash
+  python3 -m lerobot.scripts.control_robot --robot-type so101 --policy-type act --eval
+  ```
+* 在 **K3 (K3 Pico)** 平台上可通过 Robot SDK 运行 **SmolVLA** 多模态策略模型的 4 子图 ONNX 推理，实现端侧视觉-语言-动作闭环。
 
 ### 3.2 运行 Reachy Mini 视线追踪与交互
 

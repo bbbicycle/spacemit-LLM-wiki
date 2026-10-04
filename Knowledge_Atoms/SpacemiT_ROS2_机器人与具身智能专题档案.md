@@ -85,21 +85,26 @@ ros2 run micro_ros_agent micro_ros_agent serial --dev /dev/ttyS1 -b 115200
 
 ## 4. 具身智能 (Embodied AI) 模仿学习与端侧部署
 
-### 4.1 SO101 机械臂与 LeRobot 框架
+SpacemiT 提供了从轻量级端侧抓取到多模态具身大模型的多层级端侧部署支持：
 
-SpacemiT 芯片集成了 RISC-V Vector 指令扩展与 2.0 TOPS AI 算力，支持直接在端侧运行 Transformer 架构的模仿学习算法 **ACT (Action Chunking with Transformers)** 与 **SmolVLA**：
+### 4.1 SO101 机械臂与 LeRobot 模仿学习 (K1 / K3 分级方案)
 
-* **动作预测速率**：在 K1 平台上 ACT 模型达到 25 FPS 实时轨迹输出。
-* **命令行运行**：
-  ```bash
-  python3 -m lerobot.scripts.control_robot --robot-type so101 --policy-type act --eval
-  ```
+* **K1 平台（2.0 TOPS AI / 8 核 X60 算力）**：
+  * 支持轻量级 **ACT (Action Chunking with Transformers)** 模仿学习抓取策略。
+  * 实测在 K1 (Muse Pi) 平台上可达到 **25 FPS** 实时轨迹动作输出。
+  * 命令行运行：
+    ```bash
+    python3 -m lerobot.scripts.control_robot --robot-type so101 --policy-type act --eval
+    ```
+* **K3 平台（60 TOPS AI / 8 核 A100 智算核）**：
+  * 支持参数量更大的 **SmolVLA (Vision-Language-Action)** 多模态具身策略模型。
+  * **工具链适配方案**：官方 Robot SDK 将 SmolVLA 拆解为 4 个 ONNX 子图（Vision Encoder、Text Embed、Action Head 等），通过 `spacemit-onnxruntime` 调用 A100 核进行前向推理，结合 Python/C++ 运行时管理 KV Cache 与 Action 反归一化，实现端侧 8 FPS 闭环控制。
 
-### 4.2 Reachy Mini 桌面机器人
+### 4.2 Reachy Mini 桌面机器人 (K1)
 
 通过 ROS 2 节点驱动 Reachy Mini 头部 3 自由度舵机与双目摄像头，串联本地端侧 1B 大语言模型（SpaceLLM）实现全双工语音与视线互动。
 
-### 4.3 Linksee 移动机器人 SLAM 导航
+### 4.3 Linksee 移动机器人 SLAM 导航 (K3 Pico / Muse Pi)
 
 通过硬解码 (MPP) 处理 CSI 摄像头视频流，结合激光雷达点云，在 K3 Pico 上跑通 Cartographer 2D SLAM 建图与 Nav2 路径规划。
 

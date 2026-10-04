@@ -36,6 +36,9 @@ jobs:
       - name: Run Vault Linker Lint
         run: python3 vault_linker_lint.py
 
+      - name: Run Content Integrity & Anti-Hallucination Lint
+        run: python3 scripts/lint_wiki_integrity.py
+
       - name: Commit and push changes if updated
         run: |
           if [ -n "$(git status --porcelain)" ]; then

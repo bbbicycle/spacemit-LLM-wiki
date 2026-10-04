@@ -3,7 +3,7 @@ type: knowledge_atom
 title: "SpacemiT P3 PMIC 电源管理芯片专题档案"
 status: needs_review
 created: 2026-08-12
-updated: 2026-08-12
+updated: 2026-10-04
 aliases: ["SpacemiT P3 PMIC 专题", "SpacemiT P3 PMIC Topic", "spacemit_p3_pmic"]
 domain: hardware_schematic_design
 target_audience: [电源电路工程师, PCB Layout]
@@ -15,7 +15,7 @@ target_audience: [电源电路工程师, PCB Layout]
 > **目标读者**：`电源电路工程师 / PCB Layout` | **技术领域**：`hardware_schematic_design`
 
 > [!IMPORTANT]
-> **🆕 2026-08 新增知识原子**：本文档基于 Spacemit 官方 `docs-chip` 仓库新增的 `power_stone/p3/` 官方文档构建。
+> **🆕 2026-10 架构升级**：本专题档案已与官方最新发布的 P3 数据手册（V1.0）及物理规格点 [[Evidence/p3_pmic_specs|P3 PMIC 核心规格]] 完成对齐绑定。
 
 本专题档案汇总了 SpacemiT Power Stone 系列高性能伴随电源管理芯片 **P3 PMIC** 的核心物理参数、相位配置模式、降压电路拓扑与接口控制规范。
 
@@ -34,6 +34,8 @@ P3 是一款专为大电流、紧凑型场景（如边缘计算主板、无人�
 
 ## 2. 核心物理与电气规格
 
+完整硬数据与电气限制请查阅数据事实点：[[Evidence/p3_pmic_specs|P3 PMIC 核心规格与电气参数]]。
+
 | 规格项目 | 参数值 / 说明 |
 | :--- | :--- |
 | **输入电压 (VIN)** | 2.5 V 至 5.5 V |
@@ -44,7 +46,7 @@ P3 是一款专为大电流、紧凑型场景（如边缘计算主板、无人�
 | **内置 ADC** | 8 通道 12 位可配置监控 ADC |
 | **扩展 GPIO** | 4 路多功能 GPIO 口 |
 | **保护机制** | 欠压锁定 (UVLO)、输出短路保护 (SCP) 与过热保护 (OTP) |
-| **工作温度** | -40 °C 至 85 °C |
+| **工作结温 (T_J)** | -40 °C 至 125 °C |
 
 ---
 
@@ -60,8 +62,10 @@ P3 支持 5 种不同的相位分配组合，以适应不同的处理器 Core + 
 
 ---
 
-## 4. 关联原始参考文档
+## 4. 关联原始参考文档与双链
 
+*   物理参数直通：[[Evidence/p3_pmic_specs|P3 PMIC 核心电气规格数据表]]
+*   [P3 数据手册（官方原始文档）](../Sources/docs-chip/zh/power_stone/p3/p3_docs/p3_ds.md)
 *   [P3 简介（官方原始文档）](../Sources/docs-chip/zh/power_stone/p3/p3_docs/root_overview.md)
 *   [P3 PDF 产品简介](https://cdn-resource.spacemit.com/file/chip/P3/P3_brief_zh.pdf)
 *   生态 PMIC 配合专题：[[Knowledge_Atoms/SpacemiT生态板卡与PMIC电源配合专题档案|SpacemiT 生态板卡与 PMIC 电源配合专题]]

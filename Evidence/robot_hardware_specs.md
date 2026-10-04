@@ -33,7 +33,7 @@ target_audience: [具身智能工程师, 机器人工程师]
 
 | 模型名称 | 模型类型 / 架构 | 控制任务 | 运行平台 | 算力与推理帧率 |
 | :--- | :--- | :--- | :--- | :--- |
-| **ACT (Action Chunking)** | Transformer 模仿学习 | 机械臂轨迹与抓取预测 | K1 (2.0 TOPS NPU/Vector) | 25 FPS 实时轨迹输出 |
-| **SmolVLA** | 视觉-语言-动作多模态 | 自然语言指令驱动机械臂 | K3 (算力拓展) | 端侧 8 FPS 闭环控制 |
-| **RL Policy (MuJoCo)**| 深度强化学习策略 | 双足/四足步态与平稳控制 | K1/K3 Vector 算力 | 100 Hz 控制频次 |
-| **SpaceLLM 1B** | 端侧大语言模型 | 机器人语音对话与指令理解 | K1 (3W TDP 超低功耗) | 15.4 tokens/s 首包响应 |
+| **ACT (Action Chunking)** | Transformer 模仿学习 | 机械臂轨迹与抓取预测 | K1 (Muse Pi / 2.0 TOPS) | 25 FPS 实时轨迹输出 |
+| **SmolVLA** | 视觉-语言-动作多模态 (ONNX 4子图拆解) | 自然语言指令驱动机械臂 | K3 (K3 Pico / 60 TOPS) | 端侧 8 FPS 闭环控制 |
+| **RL Policy (MuJoCo)**| 深度强化学习策略 (ONNX) | 双足/四足步态与平稳控制 | K1 / K3 (RVV 数学加速) | 100 Hz 控制频次 |
+| **SpaceLLM 1B** | 端侧大语言模型 | 机器人语音对话与指令理解 | K1 (Muse Pi / 3W TDP) | 15.4 tokens/s 首包响应 |

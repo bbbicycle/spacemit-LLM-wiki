@@ -291,5 +291,29 @@ updated: 2026-08-25
     *   索引挂载：[[index]] 模块 2 正式注册 P3 知识节点与 P3 原始文件链接。
 *   **自检状态**：运行 `vault_linker_lint.py` 100% 通过，63 篇物理文档，0 破损链接，0 孤立节点。
 
+---
+
+## [2026-10-04] ingest | 同步 Spacemit 官方五大仓库重大更新 (P3 数据手册、K3 AVL、DPDK、TF调试板、AI Computer方案)
+
+*   **触发场景**：响应用户指令“检查一下spacemit官方github 文档是否有更新，如有更新请我帮我更新知识库相关内容”，触发 `Agent.md` [工作流四] 自动化同步流程。
+*   **拉取成果（官方上游五大仓库均有实质性更新）**：
+    *   `docs-chip` (`99fc067`): 🆕 新增 **P3 PMIC 数据手册 (V1.0)**（`p3_ds.md` 包含电气参数表与 20+ 图表）、🆕 新增 **K3 关键器件 AVL 列表**（`k3_hw_avl.md`，支持 LPDDR5/UFS/eMMC）。
+    *   `docs-buildroot` (`9e710b8`): 🆕 新增 **K3 GMAC DPDK 用户使用指南**（`k3_GMAC_DPDK_user_guide.md`，包含用户态轮询模式驱动与架构图）。
+    *   `docs-product` (`3490797`): 🆕 新增 **TF 卡扩展调试子板使用说明**（`tf_card_debug_board.md`，包含 K1/K3 MicroSD 槽复用 JTAG/UART 规范）。
+    *   `docs-ai` (`9c9fe87`): 🆕 新增 **AI Computer 解决方案全景与桌面级应用**（File2MD、与会 Yumeet、知了 Zenow、见智 Seewise、点将 Agentforce、SpacemiT AI Lab 在线评估）。
+    *   `docs-ros` (`c6f6630`): 更新 K3 具身感知、ORB-SLAM3、激光雷达与 Nav2 路径规划文档。
+*   **知识库自动解构与重构落地**：
+    *   **新建事实证据 (Evidence)**：
+        *   [[Evidence/p3_pmic_specs]] —— Power Stone P3 PMIC 四相 32A/40A 大电流输出、5 种相位模式、COT 瞬态架构与 WLCSP 封装电气数据点。
+        *   [[Evidence/k3_material_avl_specs]] —— K3 芯片经官方验证的 LPDDR5、UFS 与 eMMC 厂商物料清单规格。
+    *   **更新知识专题 (Knowledge Atoms)**：
+        *   [[Knowledge_Atoms/SpacemiT_P3_PMIC电源芯片专题档案]] —— 挂载 `Evidence/p3_pmic_specs`，与最新数据手册对齐。
+        *   [[Knowledge_Atoms/K1硬件外设接口与物理调试专题档案]] —— 补充官方 TF 卡调试子板使用方案，明确标出 **K1 与 K3 JTAG TDI/TMS 线序相反** 的关键硬件排坑红线。
+        *   [[Knowledge_Atoms/K1_K3网络通信与千兆网口专题档案]] —— 沉淀 K3 GMAC DPDK 用户态旁路网络加速技术方案。
+        *   [[Knowledge_Atoms/SpaceAI_端侧大模型量化与部署专题档案]] —— 补充 AI Computer 端侧解决方案全景（File2MD、Yumeet、Zenow、Seewise、Agentforce、AI Lab）。
+    *   **全局索引与指引挂载**：
+        *   [[index]] 模块 1、模块 2 及末尾 Sources 清单完成新节点与原始文档的注册挂载。
+*   **自检状态**：全库运行双重 Linter（`vault_linker_lint.py` + `lint_wiki_integrity.py`），0 死链、0 孤立节点、0 事实混淆，100% 绿色通过。
+
 
 

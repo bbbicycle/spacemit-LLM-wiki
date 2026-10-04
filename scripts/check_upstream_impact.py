@@ -26,7 +26,7 @@ from datetime import datetime
 # 配置
 # ==============================================================================
 
-VAULT_ROOT = os.path.dirname(os.path.abspath(__file__))
+VAULT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SUBMODULES = [
     "Sources/docs-chip",
