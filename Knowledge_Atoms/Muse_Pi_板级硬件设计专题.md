@@ -3,18 +3,37 @@ type: knowledge_atom
 title: "MUSE Pi / Pro 板级硬件设计与调试专题档案"
 status: needs_review
 created: 2026-06-30
-updated: 2026-08-10
-aliases: ["Muse Pi 板级硬件设计专题", "Muse Pi Board Hardware Design Topic", "muse_pi_hw_design"]
+updated: 2026-10-07
+aliases: ["Muse Pi 板级硬件设计专题", "Muse Pi Board Hardware Design Topic", "muse_pi_hw_design", "Muse Pi产品特点", "Muse Pi Pro", "muse_pi_profile", "MusePi选型"]
 domain: hardware_schematic_design
-target_audience: [硬件电路工程师, 嵌入式工程师]
+target_audience: [硬件电路工程师, 嵌入式工程师, 产品经理]
 ---
-# MUSE Pi / Pro 板级硬件设计与调试专题档案
+# MUSE Pi / Pro 板级硬件设计与产品特点专题档案
 
 > [!TIP]
-> **💡 工程师导读与排坑焦点**：详解 Muse Pi/Pro 12V PD 供电电路、Strap 拨码与 UART 调试复用设计。
-> **目标读者**：`硬件电路工程师 / 嵌入式工程师` | **技术领域**：`hardware_schematic_design`
+> **💡 工程师与产品选型导读**：
+> 本文系统汇总了基于 SpacemiT K1 八核处理器的开源单板计算机 **MUSE Pi** 与 **MUSE Pi Pro** 的产品定位差异、选型决策、12V PD 供电规范、Strap 拨码启动以及调试引脚复用设计。
+> 快速掌握选型区别请阅读第 0 节，深入硬件布线请阅读第 1~4 节。
 
-本专题档案汇总了基于 SpacemiT K1 芯片的生态旗舰开发板 MUSE Pi 与 MUSE Pi Pro 的板级硬件设计、供电规范、启动选择（Strap Pin）以及调试复用设计。
+---
+
+## 0. 产品定位与 MUSE Pi vs Pro 差异化选型 (Product Profile)
+
+### 0.1 一句话产品定位
+* **MUSE Pi (标准版)**：面向全球 RISC-V 创客、嵌入式学习者打造的**经典开源单板计算机 (SBC)**。名片大小，超低 3~5W 功耗，具备 2.0 TOPS AI 算力与 1080P 双屏异显能力。
+* **MUSE Pi Pro (增强版)**：面向**工业物联网与商业显示**打造的高阶单板计算机。保持紧凑尺寸的同时，全面兼容 **40-Pin 树莓派标准扩展插针**，并板载音频硬件功放与更多工业扩展总线。
+
+### 0.2 标准版 (Muse Pi) 与增强版 (Muse Pi Pro) 核心差异速查
+
+| 核心维度 | MUSE Pi (标准版) | MUSE Pi Pro (增强版) | 选型建议 / 场景决策 |
+| :--- | :--- | :--- | :--- |
+| **扩展插针规格** | **26-Pin** 双排插针 (2.54mm) | **40-Pin** 树莓派兼容彩色排针 | 需要接入成熟树莓派 HAT 扩展板或更多 GPIO 选 **Pro 版** |
+| **音频输出能力** | 仅支持 3.5mm 耳麦接口输出 | 3.5mm 耳麦口 + **板载 3W 喇叭功放 (PA)** | 需做智能音箱、交互商显、自动播报选 **Pro 版** (免外挂功放) |
+| **管脚映射定义** | [[Knowledge_Atoms/MUSE_Pi_26Pin_IOMAP管脚映射专题|26-Pin 引脚定义]] | [[Knowledge_Atoms/MUSE_Pi_Pro_40Pin_IOMAP管脚映射专题|40-Pin 引脚定义]] | Pro 版提供独立的 CAN、SPI 及更多 PWM/I2C 通道 |
+| **显示与相机** | 1×HDMI + 1×MIPI DSI, 2路 CSI | 1×HDMI + 1×MIPI DSI, 2路 CSI | 均支持 1080P 双屏独立异显，支持双摄并发采集 |
+| **典型适用客群** | 嵌入式教学、个人极客开源实验 | 工业数据采集网关、智能交互终端、商显设备 | 两者软件栈 100% 同源 (Bianbu OS / Linux 6.6) |
+
+> 💡 *详细物理规格与物料尺寸对比表参阅：[[Evidence/muse_pi_vs_pi_pro_specs|Muse Pi 与 Muse Pi Pro 规格比对表]]*
 
 ---
 

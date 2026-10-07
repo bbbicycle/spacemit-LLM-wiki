@@ -62,7 +62,7 @@ user-invocable: false
 | **引脚定义 / 电气参数 / Strap / 寄存器** | `get_evidence_fact` | `spec_name`: 事实证据名（如 `k1_strap_pins_config`, `p1_pmic_specs`），返回 100% 结构化数据表 |
 | **关键词探索 / 不确定具体专题名** | `search_wiki` | `query`: 搜索词；可附加 `domain` 过滤分类，**仅返回标题与 150 字卡片摘要** |
 | **探寻依赖关系 / 上下游软硬件绑定** | `get_graph_relations` | `node_name`: 节点名称，获取出链（底层依赖）与入链（被哪些动线引用） |
-| **精炼知识库未收录的冷门细节** | `search_raw_sources` | 检索 1052 篇官方芯片/BSP/产品手册大纲与文件路径（仅限 L4 级排坑） |
+| **精炼知识库未收录的冷门细节** | `search_raw_sources` | 检索 1180 篇官方芯片/BSP/产品手册大纲与文件路径（仅限 L4 级排坑） |
 | **阅读官方原始芯片手册 / 源码** | `read_raw_source_file` | 按文件路径拉取原始 Markdown 章节，支持 `start_line` / `end_line` 切片（仅限 L4 级排坑） |
 
 ---

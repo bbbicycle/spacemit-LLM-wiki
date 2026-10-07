@@ -3,18 +3,38 @@ type: knowledge_atom
 title: "K3 Pico-ITX 板级硬件设计与调试专题档案"
 status: needs_review
 created: 2026-06-30
-updated: 2026-08-10
-aliases: ["K3 Pico 板级硬件设计专题", "K3 Pico Board Hardware Design Topic", "k3_pico_hw_design"]
+updated: 2026-10-07
+aliases: ["K3 Pico 板级硬件设计专题", "K3 Pico Board Hardware Design Topic", "k3_pico_hw_design", "K3 Pico产品特点", "K3 Pico单板计算机", "k3_pico_profile"]
 domain: hardware_schematic_design
-target_audience: [硬件电路工程师, 系统工程师]
+target_audience: [硬件电路工程师, 系统工程师, 产品经理]
 ---
-# K3 Pico-ITX 板级硬件设计与调试专题档案
+# K3 Pico-ITX 板级硬件设计与产品特点专题档案
 
 > [!TIP]
-> **💡 工程师导读与排坑焦点**：详解 K3 Pico 双电源输入优先级、M.2 动态带宽复用与 RT24 直出。
-> **目标读者**：`硬件电路工程师 / 系统工程师` | **技术领域**：`hardware_schematic_design`
+> **💡 工程师与产品架构师导读**：
+> 本文系统汇总了旗舰级 2.5 寸单板 AI 计算机 **K3 Pico-ITX** 的产品定位、核心差异化卖点、板级供电优先级、高速 PCIe 带宽仲裁机制及实时控制接口设计。
+> 快速掌握产品全貌请阅读第 0 节，深入硬件布线请阅读第 1~4 节。
 
-本专题档案汇总了基于 SpacemiT K3 芯片的旗舰级迷你计算机 K3 Pico-ITX 的板级硬件设计规范、电源优先级、高速 PCIe 带宽复用机制、实时控制直出设计及显示输出逻辑。
+---
+
+## 0. 产品定位与四大核心卖点 (Product Profile)
+
+### 0.1 一句话产品定位
+> **K3 Pico-ITX** 是一款专为**具身机器人与边缘工业智算**打造的旗舰级迷你 AI 单板计算机（SBC），在 2.5 寸硬盘大小内融合了 60 TOPS AI 算力、统一内存架构与万兆光纤网络，支持全功能 Type-C 单线点亮。
+
+### 0.2 四大杀手级核心特点
+1. **全功能 Type-C 单线点亮 (Single-Cable Deployment)**：
+   * 仅需一根全功能 Type-C 线缆连接支持反向供电的显示器，即可同时完成 **65W PD 高功率供电** 与 **4K@60Hz DP 高清视频输出**，展会与实机部署一插即亮，告别繁杂线束。
+2. **60 TOPS 统一内存大模型推理 (Unified Memory for Edge LLM)**：
+   * 基于 K3 芯片计算核与智算核同构融合架构，板载双通道 64-bit LPDDR5 (6400 MT/s) 与高速 UFS 2.2 本地存储（读取速率比同类 eMMC 提升 3.4 倍），本地可直接部署 **30B MoE 稀疏大模型**（如 Qwen3-30B-A3B，激活约 3B）或 8B 稠密大模型，无显存搬运损耗。
+3. **板载万兆光纤直连 (10G SFP+ Optical Port)**：
+   * 突破传统嵌入式单板仅配千兆网的瓶颈，板载 1 路万兆 SFP+ 光口（支持 10G BASE-R / BASE-X），为机器视觉高速图传、低延迟工业以太网及多板阵列组网提供超大带宽。
+4. **RT24 微秒级实时运动控制直出 (Real-Time Motion Control)**：
+   * 专设 FPC 柔性连接器，由芯片内部独立的实时微控制器 **RT24** 物理引脚直出，原生支持 **EtherCAT、5 路 CAN-FD、SPI、UART**，无需外挂从控 MCU，单板同时跑通“多模态大模型大脑 + 微秒级机械臂控制小脑”。
+
+### 0.3 选型定位：K3 Pico vs K3 CoM260
+* **选 K3 Pico 的场景**：需要标准化单板形态、追求开箱即用、机壳紧凑（2.5寸）、需万兆光网直连或快速样机验证（如送检样机、极客桌面工作站、机器人整机）。
+* **选 K3 CoM260 的场景**：终端客户需要客制化外形、需要量产底板定制、需引出更多特殊工业总线或对接口位置有严苛物理约束的场景（详见 [[Knowledge_Atoms/K3_COM260_板级硬件设计专题|K3 CoM260 专题]]）。
 
 ---
 

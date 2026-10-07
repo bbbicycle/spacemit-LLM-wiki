@@ -55,7 +55,7 @@ Then copy [`SKILL.md`](./SKILL.md) to your workspace's skill directory (or appen
 1. **Intent Leveling & Depth Ceiling**: Routes developer inquiries directly to the optimal tool layer and strictly caps search depth for conceptual/architectural queries.
 2. **Sufficiency Stop**: Terminates further queries immediately once core claims and evidence are validated.
 3. **Context Reuse**: Reuses loaded topic archives across follow-up questions to save tokens.
-4. **Deep Fallback**: Drills down into 1,052 official datasheet chapters (`search_raw_sources` ➔ `read_raw_source_file`) only for L4-level error debugging.
+4. **Deep Fallback**: Drills down into 1,180 official datasheet chapters (`search_raw_sources` ➔ `read_raw_source_file`) only for L4-level error debugging.
 5. **Hourglass Output**: Leads with clear conclusions and practical analogies, backed by exact facts, with on-demand drill-down invitations.
 
 ---

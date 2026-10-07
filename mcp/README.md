@@ -14,7 +14,7 @@
 | **精炼知识层** | **`read_knowledge_atom`** | 整篇无损获取驱动/外设/硬件设计专题档案（面） | 内存原子 |
 | **精炼事实层** | **`get_evidence_fact`** | 直出结构化引脚复用表、Strap 配置、电气参数（点） | 内存原子 |
 | **图谱拓扑层** | **`get_graph_relations`** | 顺着双链探索芯片与板卡的依赖出链和被引用入链 | 拓扑图谱 |
-| **原始资料层** | **`search_raw_sources`** | 在 1052 篇原始芯片与产品手册清单中检索文件与章节 | 原始清单 |
+| **原始资料层** | **`search_raw_sources`** | 在 1180 篇原始芯片与产品手册清单中检索文件与章节 | 原始清单 |
 | **原始资料层** | **`read_raw_source_file`** | 按需实时穿透拉取 GitHub 官方仓库的原始 Markdown/源码 | GitHub 动态拉取 |
 
 ---
@@ -30,7 +30,7 @@
 ```bash
 python3 scripts/build_mcp_index.py
 ```
-*(自动解析 60 篇精炼文档与 1052 篇 Sources 原始文档大纲，生成 `mcp-worker/src/data/wiki_graph.json`)*
+*(自动解析 65 个精炼语义原子与 1180 篇 Sources 原始文档大纲，生成 `mcp-worker/src/data/wiki_graph.json`)*
 
 ### 步骤 2：登录并部署 Worker
 ```bash

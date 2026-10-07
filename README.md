@@ -15,11 +15,11 @@
 
 ### 1. 项目简介 (Project Overview)
 
-**Spacemit LLM Wiki** 是专为 **进迭时空 (Spacemit)** RISC-V 芯片（K1 / K3）、生态开发板（MUSE Pi / K3 Pico-ITX / CoM260）及边缘侧软硬件生态（Buildroot BSP / Bianbu OS / SpaceAI 大模型推理 / ROS 2 具身智能）打造的**高密度、长效 LLM 知识库与外部记忆体**。
+**Spacemit LLM Wiki** 是专为 **进迭时空 (Spacemit)** RISC-V 芯片（K1 / K3）、全系 12 款官方硬件产品与生态终端（MUSE Pi / K3 Pico-ITX / CoM260 / MUSE Book 笔记本 / MUSE Box 迷你主机 / MUSE Paper 墨水屏 / MUSE Card / MUSE Shelf / RV2768 集群 / RISC-V Labkit 实验箱等）及边缘侧软硬件生态（Buildroot BSP / Bianbu OS / SpaceAI 大模型推理 / ROS 2 具身智能）打造的**高密度、长效 LLM 知识库与外部记忆体**。
 
-本知识库采用 **Obsidian 双链网络** 与 **线-面-点 (Journeys - Atoms - Evidence) 三层拓扑架构** 设计，具备双重优势：
-- **人类可读性**：工程师可通过关系图谱、模块化树状索引与工程师导读框精准浏览与定位排坑指南。
-- **AI 检索优化 (RAG-Friendly)**：严格规范 YAML Frontmatter 元数据、`domain` 领域划分与纯粹的物理引用逻辑，极大提升 LLM 语义切分、Graph RAG 关联寻路与 Context Window 召回准确率。
+本知识库采用 **Obsidian 双链网络** 与 **线-面-点三层架构 +“产品生态矩阵 (L0/L1) 与技术机理内核 (L2~L5)”正交双轨拓扑** 设计，具备双重优势：
+- **人类可读性**：工程师与商务团队可通过产品家族全景图谱、树状索引与工程师导读框精准浏览、选型与定位排坑指南。
+- **AI 检索优化 (RAG-Friendly)**：基于 `Agent.md` **AI 检索效能优先原则**，严格规范 YAML Frontmatter 元数据、`domain` 领域划分与代际隔离围栏，实现平均 1 跳直达、零切片无损上下文与 75% 的 Token 降噪节约。
 
 ---
 
@@ -55,10 +55,10 @@
 | :--- | :--- | :--- |
 | **精炼知识层** | `search_wiki` | 按关键词、别名或技术领域搜索精炼知识库 |
 | **精炼知识层** | `get_developer_journey` | 整篇获取开发板通关动线与步骤（线） |
-| **精炼知识层** | `read_knowledge_atom` | 整篇获取驱动/外设/电源等专题档案（面，零切片） |
+| **精炼知识层** | `read_knowledge_atom` | 整篇获取产品系统与驱动/外设等专题档案（面，零切片） |
 | **精炼事实层** | `get_evidence_fact` | 直出结构化引脚表、Strap 配置、电气参数（点，100% 精确） |
 | **图谱拓扑层** | `get_graph_relations` | 顺着双链探索依赖出链与被引用入链 |
-| **原始资料层** | `search_raw_sources` | 在 1052 篇 Sources 原始芯片/产品手册清单中检索 |
+| **原始资料层** | `search_raw_sources` | 在 1180 篇 Sources 原始芯片/产品手册清单中检索 |
 | **原始资料层** | `read_raw_source_file` | 按需实时穿透拉取 GitHub 官方仓库的原始 Markdown/源码 |
 
 ---
@@ -98,9 +98,9 @@
 
 ```text
 Spacemit LLM Wiki/
-├── Developer_Journeys/         # [线] 开发者上手向导 (7 篇)
-├── Knowledge_Atoms/            # [面] 核心技术专题档案 (30+ 篇)
-├── Evidence/                   # [点] 硬件与软件物理规格数据点 (25+ 篇)
+├── Developer_Journeys/         # [线] 开发者上手向导 (7 篇极简通关动线)
+├── Knowledge_Atoms/            # [面] 核心技术专题档案 (31 篇: 产品系统档案 + 跨品技术机理双轨)
+├── Evidence/                   # [点] 物理规格与硬件参数事实表 (27 篇 100% 结构化数据点)
 ├── Sources/                    # 进迭时空官方 Git 子模块源码与文档库
 │   ├── docs-chip/              # K1/K3 芯片手册 Submodule
 │   ├── docs-buildroot/         # Buildroot SDK 构建文档 Submodule
@@ -225,11 +225,11 @@ GitHub Actions 工作流位于 `.github/workflows/sync_sources.yml`。
 
 ### 1. Project Overview
 
-**Spacemit LLM Wiki** is a high-density, long-term external memory and knowledge vault tailored for **Spacemit** RISC-V SoCs (K1 / K3), ecosystem evaluation boards (MUSE Pi / K3 Pico-ITX / CoM260), and edge software/hardware stack (Buildroot BSP, Bianbu OS, SpaceAI LLM inference, and ROS 2 robotics).
+**Spacemit LLM Wiki** is a high-density, long-term external memory and knowledge vault tailored for **Spacemit** RISC-V SoCs (K1 / K3), full-spectrum 12 official hardware products & ecosystem terminals (MUSE Pi, K3 Pico-ITX, CoM260, MUSE Book laptop, MUSE Box mini PC, MUSE Paper e-ink tablet, MUSE Card, MUSE Shelf, RV2768 cluster, RISC-V Labkit, etc.), and edge software/hardware stack (Buildroot BSP, Bianbu OS, SpaceAI LLM inference, and ROS 2 robotics).
 
-Built upon **Obsidian Wikilinks** and a **Three-Tier Topology Architecture (Journeys - Atoms - Evidence)**, it provides:
-- **Human Readability**: Clear developer quick-start paths, modular topic archives, and inline tips for debugging.
-- **AI/RAG Optimization**: Strict YAML Frontmatter metadata, 6 domain taxonomy classifications, and clear line-surface-point referencing to ensure high precision in Graph RAG and semantic vector retrieval.
+Built upon **Obsidian Wikilinks**, a **Three-Tier Topology (Journeys - Atoms - Evidence)** and an **Orthogonal Dual-Track (Product Matrix L0/L1 + Technology Mechanism L2-L5)** architecture, it provides:
+- **Human Readability**: Ecosystem portfolio trees, clear developer quick-start paths, modular topic archives, and inline tips for debugging.
+- **AI/RAG Optimization**: Guided by the `Agent.md` **AI-First Retrieval & Accuracy Principle**, it enforces strict YAML Frontmatter metadata, 6 domain taxonomy classifications, and generational physical boundaries, achieving 1-hop precision and 75% token economy.
 
 ---
 

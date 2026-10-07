@@ -3,7 +3,7 @@ type: vault_index
 title: "Spacemit LLM Wiki · 6大前瞻技术领域全栈索引"
 status: approved
 created: 2026-06-29
-updated: 2026-10-04
+updated: 2026-10-07
 aliases: [index, index.md, 索引, 全局索引]
 ---
 
@@ -30,11 +30,14 @@ aliases: [index, index.md, 索引, 全局索引]
 *   [[Developer_Journeys/K3芯片开发快速上手向导]] —— 帮助开发者从了解规格、设计散热到跑通本地大模型的极简通关动线。
 
 ### 主题档案 (Knowledge Atoms)
+*   [[Knowledge_Atoms/Spacemit_产品矩阵与硬件生态全景档案]] —— 🗺️ **顶层总枢纽**：系统汇总 Spacemit 双代际底座与全系 12 款官方量产硬件/生态终端的家族图谱与选型矩阵。
+*   [[Knowledge_Atoms/Spacemit_K1生态终端与教学实验套件专题档案]] —— 汇总 Muse Book 笔记本、Muse Box 迷你主机、Muse Card 计算卡、Muse Paper 墨水屏、Muse Shelf 云算力架及高校实验箱。
 *   [[Knowledge_Atoms/K1热设计与功耗专题档案]] —— 汇总 K1 芯片 3W ~ 5W 超低 TDP 功耗、DVFS 调压与极简被动散热。
 *   [[Knowledge_Atoms/K3热设计与散热专题档案]] —— 汇总 K3 芯片热学特性、结温限制与硬件散热设计指南。⚠️ 官方已撤回 `k3_thermal_design.md`。
-*   [[Knowledge_Atoms/K3_RV2768_集群服务器专题档案]] —— �ᥰ 汇总基于 K3 处理器的 2U 768核 RISC-V 集群服务器架构、Redfish API 与计算节点管理。
+*   [[Knowledge_Atoms/K3_RV2768_集群服务器专题档案]] —— ᥰ 汇总基于 K3 处理器的 2U 768核 RISC-V 集群服务器架构、Redfish API 与计算节点管理。
 
 ### 事实证据与硬数据 (Evidence)
+*   [[Evidence/k1_terminal_products_specs]] —— K1 生态衍生终端全量参数规格表。
 *   [[Evidence/k1_thermal_specs]] —— K1 芯片工作温度与 3W ~ 5W TDP 参数。
 *   [[Evidence/k3_thermal_specs]] —— K3 芯片的热阻、最大功耗与极限结温参数。
 *   [[Evidence/k1_material_avl_specs]] —— K1 平台经官方验证可量产的 DDR、闪存及外设厂商物料清单 (AVL)。

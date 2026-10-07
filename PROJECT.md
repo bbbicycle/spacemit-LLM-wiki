@@ -2,10 +2,10 @@
 
 ## Architecture
 - Submodules: `Sources/docs-chip`, `Sources/docs-buildroot`, `Sources/docs-product`, `Sources/docs-ai`, `Sources/docs-ros` -> `https://github.com/spacemit-com/<repo>`
-- Knowledge base & Metadata: `Knowledge_Atoms/`, `Evidence/`
+- Knowledge base & Metadata: `Knowledge_Atoms/` (垂直产品系统轨 + 水平技术机理轨), `Evidence/`
 - Static Assets: `static/`
 - Scripts & Automation: `update_sources.sh`, `双击更新文档.command`, `.github/workflows/sync_sources.yml`
-- Verification Tool: `vault_linker_lint.py`
+- Verification Tool: `vault_linker_lint.py`, `scripts/lint_wiki_integrity.py`
 - MCP Server & Cloudflare Deployment: `mcp/`, `mcp-worker/`, `scripts/build_mcp_index.py`
 
 ## Milestones
@@ -18,6 +18,7 @@
 | 5 | M5: Documentation & Lint Script | Update `README.md`, enhance and run `vault_linker_lint.py` | M3, M4 | DONE |
 | 6 | M6: E2E Integration & Audit | E2E verification, Challenger test suite, Forensic Auditor integrity check | M5 | DONE |
 | 7 | M7: Dual-Layer MCP Server | Zero-chunking graph navigation + Sources dynamic fetch on Cloudflare Workers (`mcp.yao1302.xyz`) | M6 | DONE |
+| 8 | M8: Product Matrix & Ecosystem Dual-Track | Product Ecosystem Map (L0) + 12 Hardware Products Full Coverage (L1) + AI-First Retrieval & Accuracy Principle | M7 | DONE |
 
 ## Interface Contracts
 - Submodule Remote Command: `git submodule update --remote --merge`

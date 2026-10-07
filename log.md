@@ -315,5 +315,22 @@ updated: 2026-08-25
         *   [[index]] 模块 1、模块 2 及末尾 Sources 清单完成新节点与原始文档的注册挂载。
 *   **自检状态**：全库运行双重 Linter（`vault_linker_lint.py` + `lint_wiki_integrity.py`），0 死链、0 孤立节点、0 事实混淆，100% 绿色通过。
 
+---
 
+## [2026-10-07] architecture & product-matrix | 建立产品全景生态矩阵 (L0) 与产品特点档案体系 (L1)
 
+*   **重构背景与第一性原理**：
+    *   针对用户与 AI 在检索宏观产品谱系、单品特点与衍生硬件时遇到的多跳拼图与盲区痛点，基于 `Agent.md` **“AI 检索效能优先原则”** 实施全面升级，消除纯技术面拆解对产品实体的割裂。
+*   **知识库产品覆盖率重大突破**：
+    *   官方源头 `Sources/docs-product` 收录的 12 款硬件产品精炼覆盖率从原先的 41.7%（5/12）跃升至 **100% 全覆盖（12/12）**，彻底补齐了 7 款产品的生态盲区。
+*   **新建知识资产**：
+    *   **L0 顶层生态枢纽**：[[Knowledge_Atoms/Spacemit_产品矩阵与硬件生态全景档案]]（覆盖 K1 普惠家族 8 款产品与 K3 智算家族 4 款产品全景拓扑树、横向选型矩阵与代际物理隔离）。
+    *   **L1 衍生终端专题**：[[Knowledge_Atoms/Spacemit_K1生态终端与教学实验套件专题档案]]（系统解构 Muse Book 笔记本、Muse Box 迷你主机、Muse Card 计算卡、Muse Paper 鸿蒙平板、Muse Shelf 云算力架及 RISC-V Labkit 高校教学实验箱）。
+    *   **底层事实证据 (Evidence)**：[[Evidence/k1_terminal_products_specs]]（沉淀 6 款生态衍生终端的标准结构物理参数数据表）。
+*   **核心单板特点画像注入 (Product Profiles)**：
+    *   升级 [[Knowledge_Atoms/K3_Pico_板级硬件设计专题]]：开篇注入一句话定位、4 大杀手级特点（单线 Type-C 65W 点亮、60 TOPS 统一内存、万兆 SFP+、RT24 微秒控制）及 Pico vs CoM260 选型画像。
+    *   升级 [[Knowledge_Atoms/Muse_Pi_板级硬件设计专题]]：开篇注入 Muse Pi (标准版) 与 Muse Pi Pro (增强版) 差异化选型速查表（26Pin vs 40Pin、板载音频 PA）。
+    *   升级 [[Knowledge_Atoms/K3_COM260_板级硬件设计专题]]：开篇注入计算模组 (SoM) 与底板解耦设计、机器人全栈控制直出与多路 CSI 视觉复用特点。
+*   **索引与协同规范联动**：
+    *   在 [[Agent|Agent.md]] 确立并持久化 **0. 核心最高准则：AI 检索效能优先原则**，建立兼容软链接 `AGENTS.md`。
+    *   更新 [[index]] 全局索引网络，在模块 1 顶部挂载产品生态全景总枢纽与衍生终端档案。

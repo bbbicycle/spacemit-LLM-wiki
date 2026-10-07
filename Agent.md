@@ -3,13 +3,26 @@ type: vault_agent
 title: "Spacemit LLM Wiki 运行与协作规范 (Agent.md)"
 status: approved
 created: 2026-06-29
-updated: 2026-08-10
-aliases: [Agent, Agent.md, 运行与协作规范]
+updated: 2026-10-07
+aliases: [Agent, Agent.md, AGENTS, AGENTS.md, 运行与协作规范]
 ---
 
 # Spacemit LLM Wiki 运行与协作规范 (Agent.md)
 
 本规范定义了 **Spacemit 产品与技术知识库 (Spacemit LLM Wiki)** 的定位、结构、元数据格式以及 AI Agent 的协作流。所有在此知识库中工作的 Agent（包括您自己）都必须严格遵守本规范，以确保知识库对人类开发者易读、对 AI 检索 (RAG) 友好，且能实现知识的持续沉淀与自动演进。
+
+---
+
+## 0. 核心最高准则：AI 检索效能优先原则 (AI-First Retrieval & Accuracy Principle)
+
+> [!IMPORTANT]
+> **知识库建设的最高指导思想**：
+> 无论从什么视角组织知识，**首先必须把 Wiki 框架彻底梳理清楚，确保 AI Agent 在调用该框架时，能以最快速度（最少调用跳数、最低上下文冗余）、最高准确度（事实绝对确凿、零幻觉、代际隔离）获取到目标资料**。
+> 
+> **后续所有架构演进、专题归类、索引设计与思考，都必须以该原则作为第一衡量基准：**
+> 1. **最快速度 (Speed & Efficiency)**：降低检索路径复杂度，避免让 AI 在多个模糊专题间反复横跳猜谜；单次高频查询力求 1 跳（最多不超过 2 跳）精准命中。
+> 2. **最高准确度 (Accuracy & Zero Hallucination)**：实体边界与物理参数绝对确凿，杜绝跨代际混淆（如 K1 与 K3 混淆）；事实必须有清晰出处。
+> 3. **最小上下文噪音 (Token Economy)**：知识单元粒度适中，避免向 AI 返回充斥着无关底层细节或套话的“巨石文档”，让上下文窗口全部留给有效信息。
 
 ---
 
