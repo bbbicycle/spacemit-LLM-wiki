@@ -3,7 +3,7 @@ type: vault_agent
 title: "Spacemit LLM Wiki 运行与协作规范 (Agent.md)"
 status: approved
 created: 2026-06-29
-updated: 2026-10-07
+updated: 2026-10-08
 aliases: [Agent, Agent.md, AGENTS, AGENTS.md, 运行与协作规范]
 ---
 
@@ -188,3 +188,33 @@ sequenceDiagram
 3.  **不丢弃历史**：过时的技术方案应标记为 `deprecated` 并不在 `index.md` 主列表中展示，但绝不能物理删除文件，以防历史项目代码中引用的概念彻底断联。
 4.  **重大更新同步登记**：在对知识库进行任何重大更新（如并网新产品文档、重构关键专题、大范围修改路径或新增核心节点）时，Agent **必须**同步在 [[index]] 中挂载/注册新节点，并在 [[log]] 中追加详细的变更日志，严禁出现“只建文件、不登索引、不记日志”的遗漏。
 5.  **严禁创建平行双语文档**：严禁在 `Developer_Journeys/`、`Knowledge_Atoms/` 或 `Evidence/` 下为同一个技术主题或产品创建平行的中文和英文两套 Markdown 文件（例如同时存在 `K3热设计与散热专题档案.md` 与 `K3_Thermal_Design.md`）。必须合二为一，以中文为主体，通过 `aliases` 和中英对照表头来实现多语言检索与关联。
+6.  **商业与非开源信息必须强溯源**：录入或引用任何非官方 GitHub 的商业价格、商务交付、销售策略或未公开客户案例时，必须严格遵守第 7 节规约，明确标注来源与时效，严禁无来源录入与推测。
+
+---
+
+## 7. 非官方 GitHub 资料与商业信息管理规约 (Supplemental Sources & Commercial Data Policy)
+
+为了支持市场、产品培训与商业化场景（如产品定价、购买渠道、商务交期、展会问答），允许在知识库中引入非官方 GitHub 开源仓库的补充事实资料，但必须严格遵守以下准入与管理机制：
+
+### 7.1 资料来源分级 (Source Tiers)
+所有录入知识库的补充资料必须根据可信度明确分级：
+*   **Tier 1（代码级基线）**：官方 GitHub 开源仓库 (`Sources/docs-*`)，由自动化同步脚本拉取，属于只读、技术参数绝对确凿的底座。
+*   **Tier 2（内部官方审批）**：产品定价委员会定稿、飞书官方白皮书、市场部审核的 PR/培训讲稿、展会标准问答手册。**允许沉淀为正式知识原子与事实证据，但必须声明来源与版本**。
+*   **Tier 3（一线动态反馈）**：展会口头提问、销售微信群客户咨询、竞品传闻。**仅允许作为“待审核 (needs_review)”条目进入 QA 专题**，未获产品/市场确认前严禁作为正式技术或商业参数发布。
+
+### 7.2 商业与补充信息元数据规范 (Frontmatter 扩展)
+凡涉及价格、商务交付、市场培训等非开源 GitHub 来源的文档，YAML 头部必须扩展以下追溯字段：
+```yaml
+source_tier: tier_1_github_upstream | tier_2_internal_approved | tier_3_field_feedback
+source_origin: "资料出处（例如：飞书产品委员会《2026硬件生态指导价》/市场部《产品培训框架.md》）"
+effective_until: YYYY-MM-DD       # 商业/价格有效期（到期前需提示复核）
+price_nature: public_retail_msrp | enterprise_inquiry | nda_confidential # 公开零售价/大客户询价/NDA保密
+maintainer: "业务负责人姓名/岗位"
+```
+
+### 7.3 AI Agent 商业应答安全行为红线 (Agent Commercial Safety Rules)
+当 AI Agent 在检索并应答涉及“价格、购买渠道、国内流片节点、融资”等敏感非技术问题时，必须执行以下行为准则：
+1.  **时效性校验与免责声明**：若商业或价格条目已超过 `effective_until`（有效日期），AI 必须在回复中主动声明：“*以上为历史参考指导信息，最新批次报价与交付周期请以官方销售对接为准*”。
+2.  **严禁主观推测定价**：未录入公开建议零售价（MSRP）的产品，严禁 AI 根据竞品或芯片成本进行猜测，统一输出：“*该产品面向行业客户提供样片/样机定制，具体商务方案请联系官方商务 (sales@spacemit.com)*”。
+3.  **敏感商业与战略议题转介**：涉及未公开芯片代际（如 K5/K7 规划）、国内特定流片晶圆厂细节、股权融资估值等未官宣事项，AI 必须严格输出市场部/公司公关已备案的公开口径，绝不展开未经证实的细节推演。
+
