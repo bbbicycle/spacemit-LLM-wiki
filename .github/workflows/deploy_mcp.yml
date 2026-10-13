@@ -12,11 +12,25 @@ on:
       - 'scripts/**'
       - 'mcp-worker/**'
       - 'mcp/**'
+      - 'Agent.md'
+      - 'AGENTS.md'
+      - 'skill/**'
+      - 'docs/**'
       - '.github/workflows/deploy_mcp.yml'
   workflow_dispatch:
+  workflow_call:
+    inputs:
+      ref:
+        description: Exact repository commit produced by the source sync job
+        required: true
+        type: string
 
 permissions:
-  contents: write
+  contents: read
+
+concurrency:
+  group: spacemit-wiki-production-deploy
+  cancel-in-progress: false
 
 jobs:
   deploy-mcp:
@@ -29,30 +43,47 @@ jobs:
         with:
           submodules: recursive
           fetch-depth: 0
+          ref: ${{ inputs.ref || github.sha }}
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
-      - name: Rebuild MCP Dual-Layer Knowledge Index
+      - name: Validate documents and production index builder
+        run: |
+          python3 vault_linker_lint.py
+          python3 scripts/lint_wiki_integrity.py
+          python3 -B scripts/test_build_mcp_index.py
+          python3 -B -m unittest discover -s mcp -p 'test_server.py'
+
+      - name: Rebuild and validate MCP Dual-Layer Knowledge Index
         run: |
           python3 scripts/build_mcp_index.py
-
-      - name: Verify Index File Exists
-        run: |
-          test -f mcp-worker/src/data/wiki_graph.json || exit 1
-          echo "✅ 知识图谱索引文件准备就绪"
+          python3 scripts/build_mcp_index.py --check
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24'
+
+      - name: Install Worker dependencies
+        working-directory: mcp-worker
+        run: npm ci --no-audit --no-fund
+
+      - name: Check Worker types
+        working-directory: mcp-worker
+        run: npx tsc --noEmit
+
+      - name: Test production Worker runtime
+        run: |
+          node --disable-warning=ExperimentalWarning mcp-worker/test_runtime.cjs
+          node --disable-warning=ExperimentalWarning mcp-worker/test_index_runtime.cjs
 
       - name: Initialize D1 Database Schema
         working-directory: mcp-worker
         run: |
-          npx wrangler d1 execute spacemit-wiki-db --remote --file=schema.sql -y || echo "Schema execution finished"
+          npx wrangler d1 execute spacemit-wiki-db --remote --file=schema.sql -y
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
 

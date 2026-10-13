@@ -3,7 +3,7 @@ type: vault_log
 title: "SpacemiT K3 芯片文档重构日志"
 status: active
 created: 2026-06-29
-updated: 2026-08-25
+updated: 2026-10-13
 ---
 
 # SpacemiT K3 芯片文档重构日志 (log.md)
@@ -12,6 +12,17 @@ updated: 2026-08-25
 > 本文件用于记录 Spacemit LLM Wiki 知识库的重构、清理、验证与 MCP 服务演进日志。
 
 ---
+
+## [2026-10-13] 修复检索、事实溯源、索引同步与 Agent 规则
+
+- 修复 Python / Worker 生产搜索排序、空输入、类型约束与歧义候选，避免将动线当事实返回。工具输出保留核验、使用范围、冲突和来源定位信息。
+- 按 `docs-product@8c851807f2c54e8ba54d568b268100ca727d0777` 复核并修正 [[Evidence/k1_terminal_products_specs]] 的六产品表，MUSE Paper 改为 10.95 寸 LCD、8 / 16 GB、128 / 256 GB；Book / Card 的 M1、Book NVMe、Box eMMC/接口和 Labkit 双网口同时更正，并同步专题、矩阵与索引说明。
+- [[Evidence/k3_ai_performance_data]] 添加固定版本、测试条件及官方 Q4_0 基准；历史 0.9s / 15–18 token/s 等数据保留为待核验，不作为标准答案。其余 25 份 Evidence 补完整路径、commit、章节与定位范围，保持未核验状态；明确修正 UFS 2.2、USB Combo、Reachy K3-COM260 / 6DOF 与跨代固件说明。历史热阻/性能缺少条件的记录加警示。
+- 索引 v2.1 记录真实构建时间、内容哈希和五模块 SHA；raw URL 固定 SHA并编码中文路径。缺 Sources 时消费已发布索引；缺源或源有修改时禁止重建覆盖。明确标为内部/非公开的条目不进入公共索引。
+- 本地同步入口和 CI 同步后重建校验双端索引；CI显式调用部署工作流并传精确 commit，不依赖 token push 间接触发。部署前运行真实实现回归、索引、类型及文档检查。
+- 根 Agent 入口压缩为按意图检索与证据规则；维护细则迁到 [维护规范](docs/MAINTENANCE.md)。统一 Skill 和 MCP instructions，允许必要的缺失/冲突/过期核实。
+- 验证：17 项生产构建器测试、8 项 Python 服务测试、Worker 回归和 36 次真实索引跨端调用一致性全部通过；双端索引校验、两项文档 lint、Shell/Workflow 语法、TypeScript 与 Wrangler dry-run 通过。临时目录只保留 Python 服务和索引的无 Sources 公网读取成功，覆盖 MUSE Paper 与中文路径。
+- 本批为本地可审查修改，未发布。原始读取接口仍允许省略范围返回全文；硬预算/分页与完整模型对照评测不在本次选定范围。Lint与回归测试不等于整库事实认证。
 
 ## [2026-08-25] feature & deploy | 构建双层零切片 MCP Server 并部署上线至 Cloudflare Workers
 *   **背景与动机**：为了解决外部开发者消费知识库需克隆大仓库和配置本地环境的痛点，构建了专为 Spacemit 知识库定制的 **Model Context Protocol (MCP) Server**。

@@ -2,8 +2,19 @@
 type: evidence
 title: "SpacemiT Buildroot BSP SDK 软件栈与编译配置参数规格"
 status: needs_review
+verification_status: unverified
+external_use: false
+source_file: "Sources/docs-buildroot/zh/k1_buildroot/source.md"
+source_origin: "https://github.com/spacemit-com/docs-buildroot"
+source_commit: "6d4c2a65989f0b61819bebfbc85f77d72732745e"
+source_section: "版本分支；目录结构；交叉编译"
+source_resolution: partial
+source_checked_at: 2026-10-13
+source_note: "K1 SDK 目录与构建入口已定位；组件职责及完整版本矩阵尚未逐项核验。"
+source_related_file: "Sources/docs-buildroot/zh/k3_buildroot/source.md"
+source_related_commit: "6d4c2a65989f0b61819bebfbc85f77d72732745e"
 created: 2026-08-10
-updated: 2026-08-10
+updated: 2026-10-13
 aliases: [buildroot_bsp_specs, Buildroot SDK Specs, Buildroot Manifest Specs]
 domain: bsp_kernel_drivers
 target_audience: [BSP 工程师, 系统构建工程师]
@@ -26,7 +37,7 @@ target_audience: [BSP 工程师, 系统构建工程师]
 | **监管程序接口** | OpenSBI | `bsp-src/opensbi` | RISC-V M-Mode 机器模式固件，提供 SBI 服务接口 |
 | **引导加载程序** | U-Boot | `bsp-src/uboot-2022.10` | 负责硬件初始化、加密校验、设备树加载与内核引导 |
 | **Linux 内核** | Linux Kernel | `bsp-src/linux-6.6` (K1) / `bsp-src/linux-6.18` (K3) | 操作系统主内核，包含驱动程序与系统调用 |
-| **实时刻固件** | ESOS (RCPU Firmware) | `board/spacemit/k1/target_overlay/lib/firmware/esos.elf` | 实时 CPU 固件，负责底层硬件初始化及 HDMI Audio 中断转发 |
+| **实时固件** | ESOS (RCPU Firmware) | K1：`board/spacemit/k1/target_overlay/lib/firmware/esos.elf`；K3：`rt24_os0_rcpu.elf` / `rt24_os1_rcpu.elf` | 实时 CPU 固件，负责部分硬件初始化及 HDMI Audio 中断转发；两代均需安装到 initramfs `/lib/firmware/`，见 [[Evidence/esos_rcpu_firmware_specs|RCPU 固件启动依赖]] |
 | **GPU DDK** | PowerVR DDK | `package-src/img-gpu-powervr` & `mesa3d` | PowerVR GPU 硬件驱动与 OpenGL ES/Vulkan 图形库 |
 | **VPU/JPU 编解码** | VPU/JPU Firmware | `package-src/k1x-vpu-firmware` / `k3x-vpu-firmware` | 视频/JPEG 硬件编解码器 API 及固件 |
 | **多媒体平台** | MPP / FFmpeg / GStreamer | `package-src/mpp` | 硬件加速多媒体处理平台与硬解码中间件 |

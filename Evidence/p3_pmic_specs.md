@@ -2,8 +2,17 @@
 type: evidence
 title: "SpacemiT Power Stone P3 PMIC 核心规格与电气参数"
 status: needs_review
+verification_status: unverified
+external_use: false
+source_file: "Sources/docs-chip/zh/power_stone/p3/p3_docs/p3_ds.md"
+source_origin: "https://github.com/spacemit-com/docs-chip"
+source_commit: "1ea15a766287024a5bb7b548850826e3525a80dc"
+source_section: "1. 概述；4. 电气特性；4.5 BUCK"
+source_resolution: resolved
+source_checked_at: 2026-10-13
+source_note: "已定位对应数据手册；各参数的推荐条件、绝对最大额定值与测试条件尚未逐项核验。"
 created: 2026-10-04
-updated: 2026-10-04
+updated: 2026-10-13
 aliases: [P3规格参数, P3数据手册, p3_pmic_specs, Power Stone P3]
 domain: hardware_schematic_design
 target_audience: [电源工程师, 硬件电路工程师, 系统架构师]

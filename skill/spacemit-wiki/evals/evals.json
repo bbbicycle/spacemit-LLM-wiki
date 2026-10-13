@@ -5,12 +5,12 @@
     {
       "id": 1,
       "prompt": "我想在 SpacemiT K3 芯片上运行 30B 规模的大模型，硬件和性能上有什么要求和预期？",
-      "expected_output": "准确阐述 K3 芯片的算力规格，明确指出 30B 模型为 MoE 稀疏激活架构（单 Token 激活约 3B 参数），并给出首词延迟与推理速度实测指标。",
+      "expected_output": "明确 30B-A3B 是 MoE、激活约 3B；区分核验状态与测量环境，给出固定版本官方 llama-bench 数据及出处，不能把未核验延迟当保证。",
       "expectations": [
         "明确标注 30B 属于 MoE (Mixture of Experts) 架构，而非 30B Dense 全参数模型",
         "明确说明单 Token 实际激活参数约为 3B (Active 3B)",
         "提及 60 TOPS 融合 AI 算力与双通道 64-bit LPDDR5 统一内存架构",
-        "给出实测指标（如 Qwen3-30B-A3B 首词延迟约 0.9s，生成速度 15~18 Tokens/s）",
+        "若报告速度，给出模型量化、llama.cpp版本、OS、测试日期与测试项；固定来源Q4_0的TG128为12.32、TG1280为11.17 token/s。0.9s及15–18 token/s缺少同条件来源，应标为待核验而非标准答案。",
         "没有虚构或承诺在单芯片上流畅运行 30B Dense 全参数模型"
       ]
     },

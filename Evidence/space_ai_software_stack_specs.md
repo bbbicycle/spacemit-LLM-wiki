@@ -4,8 +4,19 @@ title: "SpacemiT SpaceAI 软件栈与模型量化组件规格"
 domain: edge_ai_robotics
 target_audience: [AI算法工程师, 软件开发工程师]
 status: needs_review
+verification_status: unverified
+external_use: false
+source_file: "Sources/docs-ai/zh/compute_stack/ai_compute_stack.md"
+source_origin: "https://github.com/spacemit-com/docs-ai"
+source_commit: "2b3894e983a295ed0278bc625867e0c132e0e259"
+source_section: "多层级交付；端到端模型推理"
+source_resolution: partial
+source_checked_at: 2026-10-13
+source_note: "已定位软件栈总览；API/CLI 示例和算子加速库细节尚未核验，总览的 AI 算子加速库仍为 TBD。"
+source_related_file: "Sources/docs-ai/zh/compute_stack/ai_compute_stack/onnxruntime.md"
+source_related_commit: "2b3894e983a295ed0278bc625867e0c132e0e259"
 created: 2026-08-10
-updated: 2026-08-10
+updated: 2026-10-13
 aliases: [space_ai_software_stack_specs, SpaceAI Stack Specs, XSlim Specs]
 ---
 

@@ -2,12 +2,20 @@
 type: evidence
 title: "SpacemiT 生态板卡 Muse Pi 与 Muse Pi Pro 物理规格对比"
 claim_type: "parameter"
-verification_status: unverified
 status: needs_review
+verification_status: unverified
 external_use: false
-source_file: "k1_hw_faq.md"
+source_file: "Sources/docs-product/zh/k1_series/k1_muse_pi/root_overview.md"
+source_origin: "https://github.com/spacemit-com/docs-product"
+source_commit: "8c851807f2c54e8ba54d568b268100ca727d0777"
+source_section: "产品规格"
+source_resolution: partial
+source_checked_at: 2026-10-13
+source_note: "已定位 Pi 与 Pi Pro 两个官方产品表；全文中的电源、模组和引脚差异尚未逐项核验。"
+source_related_file: "Sources/docs-product/zh/k1_series/k1_muse_pi_pro/root_overview.md"
+source_related_commit: "8c851807f2c54e8ba54d568b268100ca727d0777"
 created: 2026-06-29
-updated: 2026-06-29
+updated: 2026-10-13
 aliases: ["Muse Pi对Muse Pi Pro规格对比表", "Muse Pi vs Muse Pi Pro Specs", "muse_pi_vs_pi_pro_specs"]
 domain: chip_product_specs
 target_audience: [系统选型工程师, 硬件工程师]

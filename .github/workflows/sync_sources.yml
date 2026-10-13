@@ -9,10 +9,17 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: spacemit-wiki-source-sync
+  cancel-in-progress: false
+
 jobs:
   sync-and-validate:
     name: Sync Submodules & Run Linker Lint
     runs-on: ubuntu-latest
+    outputs:
+      commit: ${{ steps.commit.outputs.commit }}
+      changed: ${{ steps.commit.outputs.changed }}
 
     steps:
       - name: Checkout repository
@@ -21,6 +28,7 @@ jobs:
           submodules: recursive
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
+          ref: main
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -39,7 +47,16 @@ jobs:
       - name: Run Content Integrity & Anti-Hallucination Lint
         run: python3 scripts/lint_wiki_integrity.py
 
+      - name: Test production index builder
+        run: python3 -B scripts/test_build_mcp_index.py
+
+      - name: Rebuild and validate both MCP indexes after source sync
+        run: |
+          python3 scripts/build_mcp_index.py --if-changed
+          python3 scripts/build_mcp_index.py --check
+
       - name: Commit and push changes if updated
+        id: commit
         run: |
           if [ -n "$(git status --porcelain)" ]; then
             echo "检测到子模块更新或文档变更，正在自动提交并推送..."
@@ -48,6 +65,18 @@ jobs:
             git add .
             git commit -m "chore(auto-sync): 自动同步 Spacemit 官方文档子模块及校验拓扑 [skip ci]"
             git push origin HEAD
+            echo "changed=true" >> "$GITHUB_OUTPUT"
           else
+            echo "changed=false" >> "$GITHUB_OUTPUT"
             echo "未检测到任何文档变动，跳过 Commit & Push。"
           fi
+          echo "commit=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+  # GITHUB_TOKEN 的 push 不会触发另一个 push workflow，显式调用部署流程。
+  deploy-synced-mcp:
+    needs: sync-and-validate
+    if: needs.sync-and-validate.outputs.changed == 'true'
+    uses: ./.github/workflows/deploy_mcp.yml
+    with:
+      ref: ${{ needs.sync-and-validate.outputs.commit }}
+    secrets: inherit

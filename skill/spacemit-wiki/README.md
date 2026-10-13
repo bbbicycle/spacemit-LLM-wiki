@@ -29,7 +29,7 @@ Add the official MCP server to your editor (`.cursor/mcp.json` or `claude_deskto
 }
 ```
 
-Then copy [`SKILL.md`](./SKILL.md) to your workspace's skill directory (or append it to your `.cursorrules`).
+Copy the entire `spacemit-wiki/` directory into your assistant's skill directory, preserving `SKILL.md`, `mcp.md`, `rules/` and `evals/`. Copying only `SKILL.md` leaves its relative references unresolved.
 
 *(Detailed tool reference & multi-client config paths: [mcp.md](./mcp.md))*
 
@@ -37,26 +37,26 @@ Then copy [`SKILL.md`](./SKILL.md) to your workspace's skill directory (or appen
 
 ## What's Included
 
-* **Progressive Disclosure (线-面-点)**: Seamless navigation from boarding guides (`get_developer_journey`), unchunked topic archives (`read_knowledge_atom`), to exact hardware facts (`get_evidence_fact`).
+* **Direct Intent Routing**: Choose boarding guides (`get_developer_journey`), topic archives (`read_knowledge_atom`) or hardware facts (`get_evidence_fact`) directly, without reading every layer.
 * **Critical Engineering Guardrails**:
-  * Strict generational isolation between K1 (2.0 TOPS / X60) and K3 (60 TOPS / X100 + A100).
-  * Standardized Bianbu OS & Linux 6.1/6.6 BSP baseline (blocks incompatible Raspberry Pi commands).
-  * Mandatory MoE architecture disclosure for 30B-scale models (Active 3B tokens).
+  * Checks chip generation, board revision and source before applying specifications.
+  * Checks the installed OS, kernel, SDK and GPIO tool version before proposing commands.
+  * Distinguishes Dense/MoE, total parameters, active parameters and measured performance conditions.
   * Hardware safety rules for JTAG pinout reversal, Strap resistor isolation, and unpowered peripheral domains.
 * **Token-Efficient Context Reuse & Search Ceilings**:
   * Reuses evidence already present in conversation history, eliminating duplicate MCP round-trips.
-  * Strict L1~L4 search depth ceilings and sufficiency stop checks to prevent over-searching and token drain.
-  * Hourglass communication model: Bottom-Line-Up-Front (BLUF) + accessible analogies before dense registers.
+  * Defaults to refined knowledge and bounded reads; missing, conflicting or stale evidence can trigger targeted upstream verification.
+  * States conclusions, applicable conditions and sources, with analogies only where useful.
 
 ---
 
 ## How It Works
 
-1. **Intent Leveling & Depth Ceiling**: Routes developer inquiries directly to the optimal tool layer and strictly caps search depth for conceptual/architectural queries.
+1. **Intent Routing**: Routes inquiries directly to the tool that provides the needed evidence.
 2. **Sufficiency Stop**: Terminates further queries immediately once core claims and evidence are validated.
 3. **Context Reuse**: Reuses loaded topic archives across follow-up questions to save tokens.
-4. **Deep Fallback**: Drills down into 1,180 official datasheet chapters (`search_raw_sources` ➔ `read_raw_source_file`) only for L4-level error debugging.
-5. **Hourglass Output**: Leads with clear conclusions and practical analogies, backed by exact facts, with on-demand drill-down invitations.
+4. **Targeted Fallback**: Locates official source files (`search_raw_sources` ➔ `read_raw_source_file`) when refined evidence is missing, conflicting, stale or explicitly needs verification. Explicit line ranges of about 100–200 lines are recommended; the server does not enforce this as a hard budget.
+5. **Evidence-Based Output**: Gives conclusions and conditions with citations, preserving review, withdrawal and expiry notices.
 
 ---
 
@@ -68,4 +68,4 @@ Then copy [`SKILL.md`](./SKILL.md) to your workspace's skill directory (or appen
 * [rules/hardware-safety.md](./rules/hardware-safety.md) — Hardware wiring & debugging guardrails
 * [rules/generational.md](./rules/generational.md) — Generational isolation & model transparency
 * [rules/system-baseline.md](./rules/system-baseline.md) — Operating system & software stack baseline
-* [evals/evals.json](./evals/evals.json) — Automated regression test suite
+* [evals/evals.json](./evals/evals.json) — Example evaluation checklist; not a passed regression report

@@ -2,8 +2,17 @@
 type: evidence
 title: "SpacemiT Power Stone P1 PMIC 核心规格"
 status: needs_review
+verification_status: unverified
+external_use: false
+source_file: "Sources/docs-chip/zh/power_stone/p1/p1_docs/p1_ds.md"
+source_origin: "https://github.com/spacemit-com/docs-chip"
+source_commit: "1ea15a766287024a5bb7b548850826e3525a80dc"
+source_section: "4. 绝对最大额定值；5. 电气特性参数"
+source_resolution: resolved
+source_checked_at: 2026-10-13
+source_note: "已定位对应数据手册；各参数的推荐条件、绝对最大额定值与测试条件尚未逐项核验。"
 created: 2026-06-29
-updated: 2026-06-29
+updated: 2026-10-13
 aliases: [P1规格参数, P1数据手册]
 domain: hardware_schematic_design
 target_audience: [电源工程师, 硬件电路工程师]

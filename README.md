@@ -15,11 +15,11 @@
 
 ### 1. 项目简介 (Project Overview)
 
-**Spacemit LLM Wiki** 是专为 **进迭时空 (Spacemit)** RISC-V 芯片（K1 / K3）、全系 12 款官方硬件产品与生态终端（MUSE Pi / K3 Pico-ITX / CoM260 / MUSE Book 笔记本 / MUSE Box 迷你主机 / MUSE Paper 墨水屏 / MUSE Card / MUSE Shelf / RV2768 集群 / RISC-V Labkit 实验箱等）及边缘侧软硬件生态（Buildroot BSP / Bianbu OS / SpaceAI 大模型推理 / ROS 2 具身智能）打造的**高密度、长效 LLM 知识库与外部记忆体**。
+**Spacemit LLM Wiki** 是专为 **进迭时空 (Spacemit)** RISC-V 芯片（K1 / K3）、全系 12 款官方硬件产品与生态终端（MUSE Pi / K3 Pico-ITX / CoM260 / MUSE Book 笔记本 / MUSE Box 迷你主机 / MUSE Paper LCD 平板 / MUSE Card / MUSE Shelf / RV2768 集群 / RISC-V Labkit 实验箱等）及边缘侧软硬件生态（Buildroot BSP / Bianbu OS / SpaceAI 大模型推理 / ROS 2 具身智能）打造的**高密度、长效 LLM 知识库与外部记忆体**。
 
 本知识库采用 **Obsidian 双链网络** 与 **线-面-点三层架构 +“产品生态矩阵 (L0/L1) 与技术机理内核 (L2~L5)”正交双轨拓扑** 设计，具备双重优势：
 - **人类可读性**：工程师与商务团队可通过产品家族全景图谱、树状索引与工程师导读框精准浏览、选型与定位排坑指南。
-- **AI 检索优化 (RAG-Friendly)**：基于 `Agent.md` **AI 检索效能优先原则**，严格规范 YAML Frontmatter 元数据、`domain` 领域划分与代际隔离围栏，实现平均 1 跳直达、零切片无损上下文与 75% 的 Token 降噪节约。
+- **AI 检索优化 (RAG-Friendly)**：基于 `Agent.md` **AI 检索效能优先原则**，严格规范 YAML Frontmatter 元数据、`domain` 领域划分与代际隔离围栏，通过按意图直达与按需读取降低冗余；实际 token 节省和正确率需同题对照测量。
 
 ---
 
@@ -56,9 +56,9 @@
 | **精炼知识层** | `search_wiki` | 按关键词、别名或技术领域搜索精炼知识库 |
 | **精炼知识层** | `get_developer_journey` | 整篇获取开发板通关动线与步骤（线） |
 | **精炼知识层** | `read_knowledge_atom` | 整篇获取产品系统与驱动/外设等专题档案（面，零切片） |
-| **精炼事实层** | `get_evidence_fact` | 直出结构化引脚表、Strap 配置、电气参数（点，100% 精确） |
+| **精炼事实层** | `get_evidence_fact` | 直出结构化引脚表、Strap 配置、电气参数（点，附核验状态与出处） |
 | **图谱拓扑层** | `get_graph_relations` | 顺着双链探索依赖出链与被引用入链 |
-| **原始资料层** | `search_raw_sources` | 在 1180 篇 Sources 原始芯片/产品手册清单中检索 |
+| **原始资料层** | `search_raw_sources` | 在已发布的 Sources 原始芯片/产品手册清单中检索 |
 | **原始资料层** | `read_raw_source_file` | 按需实时穿透拉取 GitHub 官方仓库的原始 Markdown/源码 |
 
 ---
@@ -188,7 +188,7 @@ python3 vault_linker_lint.py
 
 #### 6.2 事实完整性与防拼凑质检 (`scripts/lint_wiki_integrity.py`)
 
-针对 LLM 知识库可能存在的代际混淆与概念虚构，提供高精度静态 AST 语义质检：
+针对 LLM 知识库可能存在的代际混淆与概念虚构，提供有限的文本规则质检（不替代官方来源逐项复核）：
 
 ```bash
 python3 scripts/lint_wiki_integrity.py
@@ -212,7 +212,7 @@ GitHub Actions 工作流位于 `.github/workflows/sync_sources.yml`。
 #### 7.2 CI/CD 执行步骤
 1. **Checkout Submodules**：使用 `actions/checkout@v4` 递归拉取最新 Repository 与 Submodules。
 2. **Execute Sync**：调用 `./update_sources.sh` 拉取并合并官方 upstream 分支变更。
-3. **Run Linker Lint**：运行 `python3 vault_linker_lint.py` 进行 100% 拓扑与 Domain 校验。
+3. **Run Linker Lint**：运行 `python3 vault_linker_lint.py` 检查拓扑与 Domain 规则。
 4. **Run Integrity Lint**：运行 `python3 scripts/lint_wiki_integrity.py` 进行技术事实防幻觉校验。
 5. **Auto Commit & Push**：若检测到源文件更新，使用 `github-actions[bot]` 自动提交改动并推送至主分支。
 
@@ -225,11 +225,11 @@ GitHub Actions 工作流位于 `.github/workflows/sync_sources.yml`。
 
 ### 1. Project Overview
 
-**Spacemit LLM Wiki** is a high-density, long-term external memory and knowledge vault tailored for **Spacemit** RISC-V SoCs (K1 / K3), full-spectrum 12 official hardware products & ecosystem terminals (MUSE Pi, K3 Pico-ITX, CoM260, MUSE Book laptop, MUSE Box mini PC, MUSE Paper e-ink tablet, MUSE Card, MUSE Shelf, RV2768 cluster, RISC-V Labkit, etc.), and edge software/hardware stack (Buildroot BSP, Bianbu OS, SpaceAI LLM inference, and ROS 2 robotics).
+**Spacemit LLM Wiki** is a high-density, long-term external memory and knowledge vault tailored for **Spacemit** RISC-V SoCs (K1 / K3), full-spectrum 12 official hardware products & ecosystem terminals (MUSE Pi, K3 Pico-ITX, CoM260, MUSE Book laptop, MUSE Box mini PC, MUSE Paper LCD tablet, MUSE Card, MUSE Shelf, RV2768 cluster, RISC-V Labkit, etc.), and edge software/hardware stack (Buildroot BSP, Bianbu OS, SpaceAI LLM inference, and ROS 2 robotics).
 
 Built upon **Obsidian Wikilinks**, a **Three-Tier Topology (Journeys - Atoms - Evidence)** and an **Orthogonal Dual-Track (Product Matrix L0/L1 + Technology Mechanism L2-L5)** architecture, it provides:
 - **Human Readability**: Ecosystem portfolio trees, clear developer quick-start paths, modular topic archives, and inline tips for debugging.
-- **AI/RAG Optimization**: Guided by the `Agent.md` **AI-First Retrieval & Accuracy Principle**, it enforces strict YAML Frontmatter metadata, 6 domain taxonomy classifications, and generational physical boundaries, achieving 1-hop precision and 75% token economy.
+- **AI/RAG Optimization**: Guided by the `Agent.md` **AI-First Retrieval & Accuracy Principle**, it enforces strict YAML Frontmatter metadata, 6 domain taxonomy classifications, and generational physical boundaries, using direct tool routing and selective reads to reduce redundant context; token savings and answer accuracy require controlled evaluation.
 
 ---
 

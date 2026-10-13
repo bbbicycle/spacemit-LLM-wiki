@@ -3,7 +3,7 @@ type: knowledge_atom
 title: "K3 大模型本地推理与 AI 算力专题档案"
 status: needs_review
 created: 2026-06-29
-updated: 2026-06-29
+updated: 2026-10-13
 aliases: ["K3大模型本地推理与AI算力专题", "K3 Local LLM Inference and AI Power Topic", "k3_llm_ai_power"]
 domain: edge_ai_robotics
 target_audience: [AI 算法工程师, 系统优化]
@@ -23,7 +23,7 @@ target_audience: [AI 算法工程师, 系统优化]
 K3 芯片作为高性能 RISC-V AI CPU，具备强大的端侧推理能力（底层数据参见 [[Evidence/k3_ai_performance_data]]）：
 *   **智算算力保障**：搭载 8 核高性能 A100 智算核，提供 **60 TOPS** 的通用 AI 算力，支持高达 **1024-bit** 的超宽并行向量计算。
 *   **计算大核与数学加速**：搭载 8 核高性能 X100 计算大核（最大主频 2.4 GHz，130 KDMIPS 算力），支持标准 256-bit RVV 1.0 指令集，为 OpenCV-RVV / Eigen-RVV 提供加速。
-*   **本地大模型支持 (MoE 架构)**：最高流畅支持 **300 亿 (30B) 参数级别的 MoE 稀疏大模型**（如 `Qwen3-30B-A3B`，单 Token 实际激活参数约 3B，端侧生成速度达 15~18 Tokens/s）。对于稠密（Dense）大模型，端侧推荐部署 0.5B ~ 8B 规模。
+*   **本地大模型支持 (MoE 架构)**：最高流畅支持 **300 亿 (30B) 参数级别的 MoE 稀疏大模型**（如 `Qwen3-30B-A3B`，单 Token 实际激活参数约 3B；固定版本 Q4_0 基准的 TG128 / TG1280 分别为 12.32 / 11.17 token/s，环境与待核验历史口径见事实表）。对于稠密（Dense）大模型，端侧推荐部署 0.5B ~ 8B 规模。
 *   **端侧多模态 (VLM) 支持**：支持通过优化版 llama.cpp 部署 **0.5B ~ 4B 级别的轻量级多模态视觉模型**（如 `fastvlm-0.5B`、`Qwen3.5-0.8B/2B/4B`）。
 *   **硬件首创**：全球首颗支持 **FP8 原生推理** 的 RISC-V 芯片，显著降低模型量化后的精度损失。
 

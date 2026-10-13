@@ -2,8 +2,20 @@
 type: evidence
 title: "SpacemiT ROS 2 平台支持与底层硬件接口规格"
 status: needs_review
+verification_status: unverified
+external_use: false
+source_file: "Sources/docs-ros/zh/k1/06_Robot_development/6.1_OS_Preparation/6.1.2_ROS2_Installation.md"
+source_origin: "https://github.com/spacemit-com/docs-ros"
+source_commit: "5b94e7e61e3be4bf00981fd74b7c9eba7595f4e1"
+source_section: "平台要求；小结"
+source_resolution: partial
+metric_source_resolution: unresolved
+source_checked_at: 2026-10-13
+source_note: "已定位 K1/K3 ROS2 安装文档与 Humble 说明；Jazzy、默认 DDS、micro-ROS 速率和 CPU/RAM/延迟实测出处尚未定位。"
+source_related_file: "Sources/docs-ros/zh/k3/06-系统与平台/6.6-ROS2/6.6.1-ROS2-INSTALL.md"
+source_related_commit: "5b94e7e61e3be4bf00981fd74b7c9eba7595f4e1"
 created: 2026-08-10
-updated: 2026-08-10
+updated: 2026-10-13
 aliases: [ros2_platform_specs, ROS 2 Platform Specs, SpacemiT ROS2 Specs]
 domain: edge_ai_robotics
 target_audience: [机器人工程师, ROS 2 开发者]
@@ -42,6 +54,9 @@ target_audience: [机器人工程师, ROS 2 开发者]
 ---
 
 ## 3. 典型 ROS 2 节点资源开销 (K1 实测)
+
+> [!WARNING]
+> 以下历史数值尚未找到测试记录，测试环境与测量方法不明（`metric_source_resolution: unresolved`），不作为已验证的 CPU、RAM 或延迟指标。
 
 | 节点类型 | CPU 占用率 (8-Core X60) | 内存 (RAM) 占用 | 帧率 / 延迟 |
 | :--- | :--- | :--- | :--- |

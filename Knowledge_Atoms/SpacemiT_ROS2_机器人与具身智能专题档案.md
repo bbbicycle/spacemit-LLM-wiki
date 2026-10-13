@@ -3,7 +3,7 @@ type: knowledge_atom
 title: "SpacemiT ROS 2 机器人与具身智能专题档案"
 status: needs_review
 created: 2026-08-10
-updated: 2026-08-10
+updated: 2026-10-13
 aliases: [SpacemiT_ROS2_机器人与具身智能专题档案, ROS 2 & Embodied AI Dossier, SpacemiT Robotics Guide]
 domain: edge_ai_robotics
 target_audience: [机器人工程师, 具身 AI 开发者]
@@ -26,7 +26,7 @@ SpacemiT 为端侧机器人开发提供了从底层 Linux 内核到上层机器�
 ```mermaid
 graph TD
     Hardware[K1 / K3 RISC-V SoC & 生态开发板] --> BSP[SpacemiT BSP & Linux Kernel 6.6/6.18]
-    BSP --> RCPU[RCPU ESOS 实时固件 - esos.elf]
+    BSP --> RCPU[RCPU 固件 - K1 esos.elf / K3 rt24_os0及os1]
     BSP --> ROS2[ROS 2 Humble / Jazzy 运行时]
 
     subgraph Middleware [中间件 & 通信总线]
@@ -91,18 +91,18 @@ SpacemiT 提供了从轻量级端侧抓取到多模态具身大模型的多层�
 
 * **K1 平台（2.0 TOPS AI / 8 核 X60 算力）**：
   * 支持轻量级 **ACT (Action Chunking with Transformers)** 模仿学习抓取策略。
-  * 实测在 K1 (Muse Pi) 平台上可达到 **25 FPS** 实时轨迹动作输出。
+  * 历史记录中的 **25 FPS** 尚未找到测试出处和条件，不作为已验证性能；见 [[Evidence/robot_hardware_specs|待复核机器人模型记录]]。
   * 命令行运行：
     ```bash
     python3 -m lerobot.scripts.control_robot --robot-type so101 --policy-type act --eval
     ```
 * **K3 平台（60 TOPS AI / 8 核 A100 智算核）**：
   * 支持参数量更大的 **SmolVLA (Vision-Language-Action)** 多模态具身策略模型。
-  * **工具链适配方案**：官方 Robot SDK 将 SmolVLA 拆解为 4 个 ONNX 子图（Vision Encoder、Text Embed、Action Head 等），通过 `spacemit-onnxruntime` 调用 A100 核进行前向推理，结合 Python/C++ 运行时管理 KV Cache 与 Action 反归一化，实现端侧 8 FPS 闭环控制。
+  * **待核验适配记录**：SmolVLA 的 4 子图拆解、执行后端及 **8 FPS** 闭环控制记录尚未完整定位官方出处，使用前需核对 SDK 版本、模型和测试条件。
 
-### 4.2 Reachy Mini 桌面机器人 (K1)
+### 4.2 Reachy Mini 桌面机器人 (K3-COM260)
 
-通过 ROS 2 节点驱动 Reachy Mini 头部 3 自由度舵机与双目摄像头，串联本地端侧 1B 大语言模型（SpaceLLM）实现全双工语音与视线互动。
+官方 Reachy Mini Lite 适配方案使用 **K3-COM260**，头部为 **6 自由度**，外设包括 Sony IMX708 摄像头、PDM MEMS 数字麦克风、扬声器和 XL330 舵机。方案集成视觉跟随与 VAD / ASR / LLM / TTS 语音交互，支持纯本地模型或云端模型；官方该章节没有限定为 SpaceLLM 1B。来源定位见 [[Evidence/robot_hardware_specs|Reachy Mini 硬件记录]]。
 
 ### 4.3 Linksee 移动机器人 SLAM 导航 (K3 Pico / Muse Pi)
 

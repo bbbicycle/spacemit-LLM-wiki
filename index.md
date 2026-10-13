@@ -3,7 +3,7 @@ type: vault_index
 title: "Spacemit LLM Wiki · 6大前瞻技术领域全栈索引"
 status: approved
 created: 2026-06-29
-updated: 2026-10-07
+updated: 2026-10-13
 aliases: [index, index.md, 索引, 全局索引]
 ---
 
@@ -31,7 +31,7 @@ aliases: [index, index.md, 索引, 全局索引]
 
 ### 主题档案 (Knowledge Atoms)
 *   [[Knowledge_Atoms/Spacemit_产品矩阵与硬件生态全景档案]] —— 🗺️ **顶层总枢纽**：系统汇总 Spacemit 双代际底座与全系 12 款官方量产硬件/生态终端的家族图谱与选型矩阵。
-*   [[Knowledge_Atoms/Spacemit_K1生态终端与教学实验套件专题档案]] —— 汇总 Muse Book 笔记本、Muse Box 迷你主机、Muse Card 计算卡、Muse Paper 墨水屏、Muse Shelf 云算力架及高校实验箱。
+*   [[Knowledge_Atoms/Spacemit_K1生态终端与教学实验套件专题档案]] —— 汇总 Muse Book 笔记本、Muse Box 迷你主机、Muse Card 计算卡、Muse Paper LCD 平板、Muse Shelf 云算力架及高校实验箱。
 *   [[Knowledge_Atoms/K1热设计与功耗专题档案]] —— 汇总 K1 芯片 3W ~ 5W 超低 TDP 功耗、DVFS 调压与极简被动散热。
 *   [[Knowledge_Atoms/K3热设计与散热专题档案]] —— 汇总 K3 芯片热学特性、结温限制与硬件散热设计指南。⚠️ 官方已撤回 `k3_thermal_design.md`。
 *   [[Knowledge_Atoms/K3_RV2768_集群服务器专题档案]] —— ᥰ 汇总基于 K3 处理器的 2U 768核 RISC-V 集群服务器架构、Redfish API 与计算节点管理。
@@ -158,8 +158,8 @@ aliases: [index, index.md, 索引, 全局索引]
 
 ### ROS 2 机器人与具身智能套件 (docs-ros)
 *   [SpacemiT ROS 2 & 具身智能机器人套件简介（原始文件）](Sources/docs-ros/zh/root_overview.md)
-*   [ROS 2 环境搭建与底层接口配置指南（原始文件）](Sources/docs-ros/zh/ros2_bsp.md)
-*   [具身智能与机器人示例应用指南（原始文件）](Sources/docs-ros/zh/robot_applications.md)
+*   [ROS 2 环境搭建与底层接口配置指南（原始文件）](Sources/docs-ros/zh/k3/06-系统与平台/6.6-ROS2/6.6.1-ROS2-INSTALL.md)
+*   [具身智能与机器人示例应用指南（原始文件）](Sources/docs-ros/zh/k3/03-参考方案/3.1-桌面机器人Reachy-mini.md)
 
 ### Buildroot SDK 嵌入式构建 (docs-buildroot)
 *   [Buildroot SDK 概述（原始文件）](Sources/docs-buildroot/zh/root_overview.md)
@@ -200,19 +200,19 @@ aliases: [index, index.md, 索引, 全局索引]
 *   [P3 数据手册（原始文件）](Sources/docs-chip/zh/power_stone/p3/p3_docs/p3_ds.md)
 
 ### 生态产品与终端系列 (docs-product)
-*   **MUSE Pi 开发板**：[产品简介](Sources/docs-product/zh/k1_muse_pi/root_overview.md) · [用户使用指南](Sources/docs-product/zh/k1_muse_pi/pi_user_guide.md) · [硬件设计资源](Sources/docs-product/zh/k1_muse_pi/pi_hw.md)
-*   **MUSE Pi Pro 开发板**：[产品简介](Sources/docs-product/zh/k1_muse_pi_pro/root_overview.md) · [用户使用指南](Sources/docs-product/zh/k1_muse_pi_pro/pi_pro_user_guide.md) · [硬件设计资源](Sources/docs-product/zh/k1_muse_pi_pro/pi_pro_hw.md)
-*   **K3 Pico 迷你计算机**：[产品简介](Sources/docs-product/zh/k3_pico/root_overview.md) · [用户使用指南](Sources/docs-product/zh/k3_pico/pico_user_guide.md) · [硬件设计资源](Sources/docs-product/zh/k3_pico/pico_hw_resources.md)
-*   **K3 CoM260 开发套件**：[产品简介](Sources/docs-product/zh/k3_com260/root_overview.md) · [用户使用指南](Sources/docs-product/zh/k3_com260/com260_user_guide.md) · [硬件设计资源](Sources/docs-product/zh/k3_com260/com260_hw_resources.md) · [核心板数据手册](Sources/docs-product/zh/k3_com260/com260_ds.md)
+*   **MUSE Pi 开发板**：[产品简介](Sources/docs-product/zh/k1_series/k1_muse_pi/root_overview.md) · [用户使用指南](Sources/docs-product/zh/k1_series/k1_muse_pi/pi_user_guide.md) · [硬件设计资源](Sources/docs-product/zh/k1_series/k1_muse_pi/pi_hw.md)
+*   **MUSE Pi Pro 开发板**：[产品简介](Sources/docs-product/zh/k1_series/k1_muse_pi_pro/root_overview.md) · [用户使用指南](Sources/docs-product/zh/k1_series/k1_muse_pi_pro/pi_pro_user_guide.md) · [硬件设计资源](Sources/docs-product/zh/k1_series/k1_muse_pi_pro/pi_pro_hw.md)
+*   **K3 Pico 迷你计算机**：[产品简介](Sources/docs-product/zh/k3_series/k3_pico/root_overview.md) · [用户使用指南](Sources/docs-product/zh/k3_series/k3_pico/pico_user_guide.md) · [硬件设计资源](Sources/docs-product/zh/k3_series/k3_pico/pico_hw_resources.md)
+*   **K3 CoM260 开发套件**：[产品简介](Sources/docs-product/zh/k3_series/k3_com260/root_overview.md) · [用户使用指南](Sources/docs-product/zh/k3_series/k3_com260/com260_user_guide.md) · [硬件设计资源](Sources/docs-product/zh/k3_series/k3_com260/com260_hw_resources.md) · [核心板数据手册](Sources/docs-product/zh/k3_series/k3_com260/com260_ds.md)
 *   **硬件配件系列**：[TF 卡扩展调试子板使用说明](Sources/docs-product/zh/hw_accessories/tf_card_debug_board.md)
-*   **MUSE Card 计算卡**：[产品简介](Sources/docs-product/zh/k1_muse_card/root_overview.md) · [用户使用指南](Sources/docs-product/zh/k1_muse_card/card_user_guide.md) · [硬件设计资源](Sources/docs-product/zh/k1_muse_card/card_hw.md)
-*   **MUSE Book 笔记本**：[产品简介](Sources/docs-product/zh/k1_muse_book/root_overview.md) · [用户使用指南](Sources/docs-product/zh/k1_muse_book/book_user_guide.md) · [硬件设计资源](Sources/docs-product/zh/k1_muse_book/book_hw.md)
-*   **MUSE Paper 墨水屏**：[产品简介](Sources/docs-product/zh/k1_muse_paper/root_overview.md) · [用户使用指南](Sources/docs-product/zh/k1_muse_paper/paper_user_guide.md) · [硬件设计资源](Sources/docs-product/zh/k1_muse_paper/paper_hw.md)
-*   **MUSE Box 迷你主机**：[产品简介](Sources/docs-product/zh/k1_muse_box/root_overview.md) · [用户使用指南](Sources/docs-product/zh/k1_muse_box/box_user_guide.md)
-*   **MUSE Shelf 实验架**：[产品简介](Sources/docs-product/zh/k1_muse_shelf/root_overview.md)
-*   **RISC-V Labkit 实验箱**：[产品简介](Sources/docs-product/zh/k1_riscv_labkit/root_overview.md)
-*   **K3 RV2768 集群服务器**：[产品简介](Sources/docs-product/zh/k3_rv2768/root_overview.md) · [技术白皮书](Sources/docs-product/zh/k3_rv2768/rv2768_white_paper.md) · [Redfish 接口说明](Sources/docs-product/zh/k3_rv2768/rv2768_redfish.md)
-*   **售后服务规范**：[售后服务说明](Sources/docs-product/zh/service.md)
+*   **MUSE Card 计算卡**：[产品简介](Sources/docs-product/zh/k1_series/k1_muse_card/root_overview.md) · [用户使用指南](Sources/docs-product/zh/k1_series/k1_muse_card/card_user_guide.md) · [硬件设计资源](Sources/docs-product/zh/k1_series/k1_muse_card/card_hw.md)
+*   **MUSE Book 笔记本**：[产品简介](Sources/docs-product/zh/k1_series/k1_muse_book/root_overview.md) · [用户使用指南](Sources/docs-product/zh/k1_series/k1_muse_book/book_user_guide.md) · [硬件设计资源](Sources/docs-product/zh/k1_series/k1_muse_book/book_hw.md)
+*   **MUSE Paper LCD 平板**：[产品简介](Sources/docs-product/zh/k1_series/k1_muse_paper/root_overview.md) · [用户使用指南](Sources/docs-product/zh/k1_series/k1_muse_paper/paper_user_guide.md) · [硬件设计资源](Sources/docs-product/zh/k1_series/k1_muse_paper/paper_hw.md)
+*   **MUSE Box 迷你主机**：[产品简介](Sources/docs-product/zh/k1_series/k1_muse_box/root_overview.md) · [用户使用指南](Sources/docs-product/zh/k1_series/k1_muse_box/box_user_guide.md)
+*   **MUSE Shelf 实验架**：[产品简介](Sources/docs-product/zh/k1_series/k1_muse_shelf/root_overview.md)
+*   **RISC-V Labkit 实验箱**：[产品简介](Sources/docs-product/zh/k1_series/k1_riscv_labkit/root_overview.md)
+*   **K3 RV2768 集群服务器**：[产品简介](Sources/docs-product/zh/k3_series/k3_rv2768/root_overview.md) · [技术白皮书](Sources/docs-product/zh/k3_series/k3_rv2768/rv2768_white_paper.md) · [Redfish 接口说明](Sources/docs-product/zh/k3_series/k3_rv2768/rv2768_redfish.md)
+*   **售后服务规范**：[售后服务说明](Sources/docs-product/zh/support_service/after_sales_service.md)
 
 ---
 

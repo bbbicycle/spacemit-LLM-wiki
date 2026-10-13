@@ -2,12 +2,18 @@
 type: evidence
 title: "K1 芯片硬件调试与物理设计参数"
 claim_type: "parameter"
-verification_status: unverified
 status: needs_review
+verification_status: unverified
 external_use: false
-source_file: "k1_hw_faq.md"
+source_file: "Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_faq.md"
+source_origin: "https://github.com/spacemit-com/docs-chip"
+source_commit: "1ea15a766287024a5bb7b548850826e3525a80dc"
+source_section: "电源系统；其他；开发调试"
+source_resolution: partial
+source_checked_at: 2026-10-13
+source_note: "休眠功耗、RTC、ALDO 和部分阻抗参数已定位；调试电平与高速损耗未逐项核验。"
 created: 2026-06-29
-updated: 2026-06-29
+updated: 2026-10-13
 aliases: ["K1硬件物理调试与休眠功耗参数", "K1 Hardware Debugging and Sleep Power Specs", "k1_hardware_debug_parameters"]
 domain: toolchain_debug_tools
 target_audience: [硬件调试工程师, 测试工程师]

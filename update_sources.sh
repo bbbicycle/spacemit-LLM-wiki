@@ -99,3 +99,10 @@ if [ -f "$IMPACT_SCRIPT" ]; then
     echo -e "\n${BLUE}${BOLD}[自动检查] 正在运行上游变更影响分析...${NC}"
     python3 "$IMPACT_SCRIPT" --cached 2>/dev/null || echo -e "${YELLOW}[提示] 影响分析工具未生成报告（可能是首次运行或无缓存指针）${NC}"
 fi
+
+# 同步的本地入口也必须更新消费索引，避免双击更新后仍搜索旧路径。
+echo -e "\n${BLUE}${BOLD}[索引校验] 正在重建并验证 MCP 双端索引...${NC}"
+python3 scripts/build_mcp_index.py --if-changed
+python3 scripts/build_mcp_index.py --check
+python3 vault_linker_lint.py
+python3 scripts/lint_wiki_integrity.py

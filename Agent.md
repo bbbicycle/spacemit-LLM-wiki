@@ -1,220 +1,31 @@
 ---
 type: vault_agent
-title: "Spacemit LLM Wiki 运行与协作规范 (Agent.md)"
-status: approved
+title: "Spacemit LLM Wiki Agent 入口"
+status: needs_review
 created: 2026-06-29
-updated: 2026-10-08
+updated: 2026-10-13
 aliases: [Agent, Agent.md, AGENTS, AGENTS.md, 运行与协作规范]
 ---
 
-# Spacemit LLM Wiki 运行与协作规范 (Agent.md)
+# Agent 入口
 
-本规范定义了 **Spacemit 产品与技术知识库 (Spacemit LLM Wiki)** 的定位、结构、元数据格式以及 AI Agent 的协作流。所有在此知识库中工作的 Agent（包括您自己）都必须严格遵守本规范，以确保知识库对人类开发者易读、对 AI 检索 (RAG) 友好，且能实现知识的持续沉淀与自动演进。
+`AGENTS.md` 链接到本文件。目标是用足够证据回答问题，减少无关读取。
 
----
+## 查询
 
-## 0. 核心最高准则：AI 检索效能优先原则 (AI-First Retrieval & Accuracy Principle)
+1. 复用会话中已有且仍适用的证据。先明确芯片代际、板型和版本；参数不可跨产品套用。
+2. 按意图直接选工具：步骤用 `get_developer_journey`，专题用 `read_knowledge_atom`，参数用 `get_evidence_fact`；名称不明时先 `search_wiki`。无需逐层遍历图谱。
+3. 摘要只用于定位；具体结论应有正文证据。证据缺失、冲突、过期或用户要求核实上游时，允许 `search_raw_sources` 后定向读取原文，不要求先有报错日志。
+4. 原文建议显式指定 `start_line`、`end_line`，每次约 100～200 行，按需续读；目前没有服务端硬预算。本地大专题按章节读取，MCP 按实际参数调用。不得一次读取全部 `Sources/`、整个 JSON 索引或递归输出全库正文。
+5. 本地兜底先在 `Developer_Journeys/`、`Knowledge_Atoms/`、`Evidence/` 定向查找；先列文件、再限范围读取。Sources 只读，限定子模块和文件。联网兜底只用官方同源公开资料。
+6. 核心结论和关键参数得到支持即停止；普通问答以 1～3 次调用为目标，证据不足可继续必要核实。无记录时说明未知，不猜测。
 
-> [!IMPORTANT]
-> **知识库建设的最高指导思想**：
-> 无论从什么视角组织知识，**首先必须把 Wiki 框架彻底梳理清楚，确保 AI Agent 在调用该框架时，能以最快速度（最少调用跳数、最低上下文冗余）、最高准确度（事实绝对确凿、零幻觉、代际隔离）获取到目标资料**。
-> 
-> **后续所有架构演进、专题归类、索引设计与思考，都必须以该原则作为第一衡量基准：**
-> 1. **最快速度 (Speed & Efficiency)**：降低检索路径复杂度，避免让 AI 在多个模糊专题间反复横跳猜谜；单次高频查询力求 1 跳（最多不超过 2 跳）精准命中。
-> 2. **最高准确度 (Accuracy & Zero Hallucination)**：实体边界与物理参数绝对确凿，杜绝跨代际混淆（如 K1 与 K3 混淆）；事实必须有清晰出处。
-> 3. **最小上下文噪音 (Token Economy)**：知识单元粒度适中，避免向 AI 返回充斥着无关底层细节或套话的“巨石文档”，让上下文窗口全部留给有效信息。
+## 回答
 
----
+给出出处及适用条件。`needs_review` 不是已审核结论；说明冲突、撤回或过期状态。硬件接线和性能数字需核实来源。公开回答只引用可对外使用的资料，价格需检查有效期。
 
-## 1. 知识库定位与目标
+## 维护
 
-*   **定位**：**Spacemit LLM Wiki & 产品技术知识库**。它不仅是供开发者阅读的静态文档，更是专为 AI Agent 优化设计的“长效外部记忆体”。
-*   **核心目标**：
-    1.  **双向易读**：人类通过 Obsidian 的关系图谱、目录索引及清晰的动线进行阅读；AI Agent 可以高效进行语义检索、关系图谱遍历与精准 RAG。
-    2.  **知识累积而非碎片收集**：避免每次遇到问题都去检索零散的原始文档。新信息输入时，应主动合并、更新已有的知识节点，让知识库随时间“自我成长”。
-    3.  **人机协同**：AI 负责繁琐的文档归类、双链建立、格式整理与自检 (Lint)；人类作为“架构师”，负责定义规范、评估冲突并做最终决策。
+仅在编辑、录入、同步或审计时按需读取 [维护规范](docs/MAINTENANCE.md)。问答不自动写库、提交或推送；维护按用户授权执行。
 
----
-
-## 2. 知识分层与目录结构
-
-知识库采用**“线 - 面 - 点”三层隔离架构**。禁止混合不同层级的内容：
-
-```mermaid
-graph TD
-    Sources[Sources/ 原始资料层 - 只读] -->|AI 提炼与解构| Graph[知识图谱层]
-    subgraph Graph [知识图谱层]
-        Journeys[Developer_Journeys/ 开发者动线 - 线] -->|双链引用| Atoms[Knowledge_Atoms/ 知识原子 - 面]
-        Atoms -->|双链引用| Evidence[Evidence/ 数据证据 - 点]
-    end
-```
-
-| 目录名称 | 角色定位 | 读写权限 | 写作规范 |
-| :--- | :--- | :--- | :--- |
-| **`Sources/`** | **原始资料层**<br>(Raw Materials) | **只读 (Read-Only)** | 存放未经加工的原始芯片文档与产品文档。**包含 `zh/` 与 `en/` 双语版本，作为原始对照。AI 严禁修改此目录下的任何文件。** |
-| **`Developer_Journeys/`** | **开发者上手动线**<br>(The "Lines") | 读写 (Read-Write) | 串联具体任务的“极简通关动线”（如快速上手向导，以及 Muse Pi 等产品上手步骤）。**统一使用中文作为主体语言（关键术语保留英文），只写步骤，细节引用 `Knowledge_Atoms`。** |
-| **`Knowledge_Atoms/`** | **知识原子 / 专题档案**<br>(The "Planes") | 读写 (Read-Write) | 围绕特定技术专题或硬件产品的完整认知。**统一以中文为主体（关键术语保留英文），严禁创建平行的中英双套文档。把碎片信息提炼为主题档案，双链引用 `Evidence`。** |
-| **`Evidence/`** | **数据与事实证据**<br>(The "Points") | 读写 (Read-Write) | 存放高度原子化的可复用事实（如实测数据、芯片参数、寄存器配置）。**推荐使用中英双语对照表头，内容以符号和标准术语为主，使其天然适配双语引用。** |
-| **`static/`** | **静态资源** | 读写 (Read-Write) | 存放文档中引用的图片、图表等静态资源。 |
-
----
-
-## 3. 文档元数据 (Frontmatter) 规范
-
-每篇 Markdown 文档头部必须包含规范的 YAML 元数据。不同类型的文档对应的元数据要求如下：
-
-```yaml
----
-type: developer_journey | knowledge_atom | evidence | vault_index | vault_log
-title: "清晰的中文标题"
-domain: chip_product_specs | hardware_schematic_design | bsp_kernel_drivers | bianbu_os_distribution | toolchain_debug_tools | edge_ai_robotics
-target_audience: [目标工程师角色, 研发阶段]
-status: draft | needs_review | approved | deprecated
-created: YYYY-MM-DD
-updated: YYYY-MM-DD
-aliases: [中文别名, 英文别名, 英文简称] # 必须填入双语别名与常用英文术语，以便跨语言检索与双链绑定
-superseded_by: "[[新文档名称]]" # 仅在 status 为 deprecated 时必填
-update_note: "一句话说明为什么被替代" # 可选
----
-```
-
-### 状态 (Status) 流转说明：
-*   **`draft`**：草稿阶段，内容尚不完整。
-*   **`needs_review`**：**AI 自动生成或更新内容后的默认状态**，等待人类管理员审核。
-*   **`approved`**：人类管理员确认口径无误、可作为正式文档。**AI 无权将状态设为 `approved`。**
-*   **`deprecated`**：内容已过期或被新口径替代。**禁止直接删除废弃文档**，须保留并使用 `superseded_by` 指向新文档，以便追溯。
-
----
-
-## 4. 双向链接与引用规范
-
-为了构建健康的知识图谱并防止链接失效，AI Agent 必须遵循以下链接原则：
-
-1.  **禁止使用 URL 编码的链接**：
-    *   ❌ 错误：`[[Knowledge_Atoms/K3%E8%8A%AF%E7%89%87...]]`
-    *   ▲ 正确：`[[Knowledge_Atoms/K3热设计与散热专题档案]]`（Obsidian 会自动解析中文路径）。
-2.  **强类型引用拓扑与“产品-芯片”关联**：
-       *   `Developer_Journeys` 只能引用 `Knowledge_Atoms` 或 `Evidence`。
-       *   `Knowledge_Atoms` 只能引用 `Evidence`。
-       *   `Evidence` 尽量保持原子性，不应向上引用 `Knowledge_Atoms`，避免产生复杂的循环引用。
-       *   **产品与芯片双链绑定**：任何关于具体生态产品（如 Muse Pi、K3 Pico）的 `Developer_Journey` 或 `Knowledge_Atom`，**必须**通过双链指向它所基于的芯片级对应节点（例如产品板级设计需关联到芯片外设专题，产品上手动线需关联到芯片上手向导）。
-       *   **芯片专题向产品延伸**：芯片级的 `Knowledge_Atom` 在阐述完通用技术原理后，应当在合适位置或末尾建立“生态产品应用实例”的双链，指向具体产品的应用设计，完成从“芯片级底层”到“产品级应用”的知识闭环。
-3.  **引用的展示风格**：
-    *   在正文中引用其他文档时，使用 `[[路径/文件名|显示文本]]` 形式，使段落阅读更自然。例如：“具体热学指标请参考 [[Evidence/k3_thermal_specs|K3 热设计规格参数]]。”
-4.  **双语别名与无缝链接**：
-    *   在正文引用时，应当利用 YAML 中定义的 `aliases` 进行双链。对于专有名词，推荐使用 `[[中文文档名|英文术语]]` 或直接引用 `[[英文别名]]` 的形式，保证在中英双语语境下的阅读流畅性，同时确保图谱中节点的唯一性。
-
----
-
-## 5. AI Agent 三大核心工作流
-
-Agent 在该知识库中主要执行以下三类自动化任务：
-
-```mermaid
-sequenceDiagram
-    participant User as 人类管理员
-    participant Agent as AI Agent
-    participant Sources as Sources/
-    participant Graph as 知识图谱层 (Journeys/Atoms/Evidence)
-    participant Log as log.md & index.md
-
-    Note over Agent: 1. Ingest (知识录入)
-    Sources->>Agent: 新增原始文档
-    Agent->>Graph: 提取数据写入 Evidence / 提炼成 Atoms
-    Agent->>Log: 更新索引，记录日志 (status: needs_review)
-
-    Note over Agent: 2. Talk/Extract (会话沉淀)
-    User->>Agent: 技术交流 / 调试解决问题
-    Agent->>Graph: 提取聊天中的技术结论，沉淀为知识原子
-    Agent->>Log: 更新索引与日志
-
-    Note over Agent: 3. Lint (自检优化)
-    Agent->>Graph: 定期扫描知识图谱
-    Agent-->>User: 报告孤立节点/破损链接/口径冲突
-```
-
-### 工作流一：Ingest (知识录入)
-*   **触发场景**：`Sources/docs-chip/` 或 `Sources/docs-product/` 目录中新增了原始参考资料。
-*   **Agent 行为**：
-    1.  阅读原始文档，提取其中的核心参数、性能数据、案例事实，写入或更新至 `Evidence/` 目录（若是产品文档，则提取板级规格、物理尺寸、引脚映射等）。
-    2.  **硬件管脚与 IOMAP 强制结构化**：若原始文档中包含板卡扩展排针（Header）、连接器（Connector）、管脚复用（Pin Mux / Pinout）信息，Agent **必须**将其从混杂的 HTML/图片形式解构提炼为规范的标准 Markdown 映射表格（包含物理 Pin 号、网络信号名、芯片 GPIO 编号、默认/复用功能、DTS 节点映射），并在 `Knowledge_Atoms/` 下创建或更新对应的 `*_IOMAP管脚映射专题` 知识原子。
-    3.  将原始文档中的方法论、设计逻辑提炼，并并入已有的 `Knowledge_Atoms/` 对应主题中（若是产品文档，提炼为产品板级设计专题；同时**自动检索并关联对应的芯片技术专题**，建立双链）。
-    4.  **双语交叉比对**：若同时存在中英文原始文档，在提取参数时必须进行交叉比对。若数据一致则提炼入库；若发现两版原始文档数据冲突，触发口径冲突处理流程。
-    5.  更新 `index.md` 中的索引，并在 `log.md` 中追加一条操作记录。
-
-### 工作流二：Talk & Extract (会话沉淀)
-*   **触发场景**：与人类完成了一次涉及深度技术细节的调试、方案设计或疑难解答会话。
-*   **Agent 行为**：
-    1.  从当前会话历史中提取出“具有复用价值”的技术结论。
-    2.  在 `Knowledge_Atoms/` 下新建或更新相关专题档案（例如记录某个 Bug 的排查步骤与最终修复方案）。
-    3.  使用双链将该新知识点与已有的 `Evidence` 或 `Developer_Journeys` 进行关联。
-    4.  在 `log.md` 记录：“从会话中提取并沉淀了 `[[专题名称]]`”。
-
-### 工作流三：Lint & Think (自检优化)
-*   **触发场景**：定期运行（或人类管理员手动触发）。
-*   **Agent 行为**：
-    1.  **链接检查**：扫描所有 Markdown 文件，找出所有指向不存在文件的破损链接 (Broken Links)。
-    2.  **孤立节点检查**：找出没有任何其他文档引用的独立文档 (Orphan Nodes) 并报告。
-    3.  **概念与双语冲突检查**：比对不同文档（**包括 `Sources/zh/` 与 `Sources/en/` 原始文档之间**）对同一技术参数或口径的描述。如果发现冲突（例如中文版与英文版中关于 K3 算力或热阻的描述不一致），在 `log.md` 中进行高亮警告，由人类管理员介入裁决。
-    4.  **产品-芯片对齐检查**：扫描所有生态产品文档，确保它们在相关的芯片级专题档案中已被双链引用。如果发现遗漏（如某款产品未在对应的芯片外设或功耗专题中提及），应自动提示并在 `needs_review` 状态下在芯片专题中添加引用。
-    5.  **收敛建议**：如果发现多个文档中反复提到了同一个未被定义为双链的关键词，建议将其提炼为新的 `Evidence` 或 `Knowledge_Atom`。
-
-### 工作流四：Upstream Sync & Refactoring (官方 GitHub 上游自动同步与重构)
-*   **触发场景**：用户对 Agent 发出“检查更新”、“同步 Spacemit GitHub”、“拉取最新文档”等指令，或子模块检测到 remote upstream 存在新提交。
-*   **Agent 核心闭环 SOP**：
-    1.  **上游检测与拉取**：Agent 首先检查 `Sources/` 5 大 Git Submodules 的 remote upstream 提交状态（或调用 `update_sources.sh`）。
-    2.  **影响范围精准分析**：运行项目工具 `python3 scripts/check_upstream_impact.py`，自动获取：
-        - 变更文件清单（`docs-chip`, `docs-buildroot`, `docs-product` 等中的 A/M/D 记录）。
-        - **已受影响的现有知识原子**（Knowledge_Atoms）映射关系。
-        - **未被覆盖的新增/重大文件**（潜在盲区文档）。
-    3.  **知识提炼与档案重构**：
-        - **更新现有知识原子**：对受影响的知识档案进行语义级比对，将上游的勘误、新配图、版本参数更新写入对应的 `Knowledge_Atoms/`，并标注 `updated: YYYY-MM-DD`。
-        - **新建知识原子**：对于全新的技术领域或产品（如新的 PMIC 芯片、服务器架构或安全机制），在 `Knowledge_Atoms/` 下创建新的主题档案。
-        - **官方撤文处理**：若上游删除了某篇文档（如撤回热设计指南），不得直接删除对应的知识原子，而应在原知识档案开头添加 `> [!CAUTION]` 撤文警告，并指向替代参考源。
-    4.  **索引与日志同步挂载**：
-        - 在 `index.md` 的对应技术领域板块挂载新建/更新的知识原子节点。
-        - 在 `log.md` 中记录本次同步批次（commit hash、影响的文件清单、同步状态）。
-    5.  **自动化 Lint 双重校验与提交**：
-        - 运行 `python3 vault_linker_lint.py`，确保死链为 0、孤立节点为 0。
-        - 运行 `python3 scripts/lint_wiki_integrity.py`，确保事实完整性、无伪概念与代际混淆。
-        - 完成全自动 `git commit & push` 到 GitHub 主仓库。
-
----
-
-## 6. 知识库协作红线
-
-1.  **严禁编造**：AI 在提炼 and 整理知识时，必须完全基于 `Sources/` 或真实会话内容，严禁进行“合理推测”并将其作为事实写入 `Evidence`。
-2.  **保留冲突**：当遇到相互矛盾的原始数据（包括中英文档口径不一致）时，AI 不得擅自选择或修改，必须同时保留两份口径，并标记为 `needs_review`，交由人类决定。
-3.  **不丢弃历史**：过时的技术方案应标记为 `deprecated` 并不在 `index.md` 主列表中展示，但绝不能物理删除文件，以防历史项目代码中引用的概念彻底断联。
-4.  **重大更新同步登记**：在对知识库进行任何重大更新（如并网新产品文档、重构关键专题、大范围修改路径或新增核心节点）时，Agent **必须**同步在 [[index]] 中挂载/注册新节点，并在 [[log]] 中追加详细的变更日志，严禁出现“只建文件、不登索引、不记日志”的遗漏。
-5.  **严禁创建平行双语文档**：严禁在 `Developer_Journeys/`、`Knowledge_Atoms/` 或 `Evidence/` 下为同一个技术主题或产品创建平行的中文和英文两套 Markdown 文件（例如同时存在 `K3热设计与散热专题档案.md` 与 `K3_Thermal_Design.md`）。必须合二为一，以中文为主体，通过 `aliases` 和中英对照表头来实现多语言检索与关联。
-6.  **商业与非开源信息必须强溯源**：录入或引用任何非官方 GitHub 的商业价格、商务交付、销售策略或未公开客户案例时，必须严格遵守第 7 节规约，明确标注来源与时效，严禁无来源录入与推测。
-
----
-
-## 7. 非官方 GitHub 资料与商业信息管理规约 (Supplemental Sources & Commercial Data Policy)
-
-为了支持市场、产品培训与商业化场景（如产品定价、购买渠道、商务交期、展会问答），允许在知识库中引入非官方 GitHub 开源仓库的补充事实资料，但必须严格遵守以下准入与管理机制：
-
-### 7.1 资料来源分级 (Source Tiers)
-所有录入知识库的补充资料必须根据可信度明确分级：
-*   **Tier 1（代码级基线）**：官方 GitHub 开源仓库 (`Sources/docs-*`)，由自动化同步脚本拉取，属于只读、技术参数绝对确凿的底座。
-*   **Tier 2（内部官方审批）**：产品定价委员会定稿、飞书官方白皮书、市场部审核的 PR/培训讲稿、展会标准问答手册。**允许沉淀为正式知识原子与事实证据，但必须声明来源与版本**。
-*   **Tier 3（一线动态反馈）**：展会口头提问、销售微信群客户咨询、竞品传闻。**仅允许作为“待审核 (needs_review)”条目进入 QA 专题**，未获产品/市场确认前严禁作为正式技术或商业参数发布。
-
-### 7.2 商业与补充信息元数据规范 (Frontmatter 扩展)
-凡涉及价格、商务交付、市场培训等非开源 GitHub 来源的文档，YAML 头部必须扩展以下追溯字段：
-```yaml
-source_tier: tier_1_github_upstream | tier_2_internal_approved | tier_3_field_feedback
-source_origin: "资料出处（例如：飞书产品委员会《2026硬件生态指导价》/市场部《产品培训框架.md》）"
-effective_until: YYYY-MM-DD       # 商业/价格有效期（到期前需提示复核）
-price_nature: public_retail_msrp | enterprise_inquiry | nda_confidential # 公开零售价/大客户询价/NDA保密
-maintainer: "业务负责人姓名/岗位"
-```
-
-### 7.3 AI Agent 商业应答安全行为红线 (Agent Commercial Safety Rules)
-当 AI Agent 在检索并应答涉及“价格、购买渠道、国内流片节点、融资”等敏感非技术问题时，必须执行以下行为准则：
-1.  **时效性校验与免责声明**：若商业或价格条目已超过 `effective_until`（有效日期），AI 必须在回复中主动声明：“*以上为历史参考指导信息，最新批次报价与交付周期请以官方销售对接为准*”。
-2.  **严禁主观推测定价**：未录入公开建议零售价（MSRP）的产品，严禁 AI 根据竞品或芯片成本进行猜测，统一输出：“*该产品面向行业客户提供样片/样机定制，具体商务方案请联系官方商务 (sales@spacemit.com)*”。
-3.  **敏感商业与战略议题转介**：涉及未公开芯片代际（如 K5/K7 规划）、国内特定流片晶圆厂细节、股权融资估值等未官宣事项，AI 必须严格输出市场部/公司公关已备案的公开口径，绝不展开未经证实的细节推演。
-
+知识正文以中文为主，新增或修改后标记 `needs_review`。链接方向：Journey → Atom/Evidence；Atom → Atom/Evidence；Evidence 不向上引用，普通知识节点不引用 Journey。重大更新同步索引和日志，并执行相关检查。

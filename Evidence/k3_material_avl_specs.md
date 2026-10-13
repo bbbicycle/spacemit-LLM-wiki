@@ -2,8 +2,17 @@
 type: evidence
 title: "K3 关键器件经认证厂商列表 (AVL) 规格"
 status: needs_review
+verification_status: unverified
+external_use: false
+source_file: "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_avl.md"
+source_origin: "https://github.com/spacemit-com/docs-chip"
+source_commit: "1ea15a766287024a5bb7b548850826e3525a80dc"
+source_section: "K3 硬件 AVL"
+source_resolution: resolved
+source_checked_at: 2026-10-13
+source_note: "已定位官方 AVL 下载入口；表格内全部器件与下载附件内容尚未逐项核验。"
 created: 2026-10-04
-updated: 2026-10-04
+updated: 2026-10-13
 aliases: [K3关键器件AVL, K3物料清单, k3_material_avl_specs]
 domain: chip_product_specs
 target_audience: [硬件采购, 硬件电路工程师, 系统架构师]

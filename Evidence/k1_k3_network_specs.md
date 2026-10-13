@@ -2,12 +2,18 @@
 type: evidence
 title: "K1/K3 网络通信与网口物理规格"
 claim_type: "parameter"
-verification_status: unverified
 status: needs_review
+verification_status: unverified
 external_use: false
-source_file: "k1_hw_faq.md"
+source_file: "Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_faq.md"
+source_origin: "https://github.com/spacemit-com/docs-chip"
+source_commit: "1ea15a766287024a5bb7b548850826e3525a80dc"
+source_section: "网络系统"
+source_resolution: partial
+source_checked_at: 2026-10-13
+source_note: "已定位 K1 百兆 PHY 限制；K3 PHY、无线和网络加速结论尚未定位验证。"
 created: 2026-06-29
-updated: 2026-06-29
+updated: 2026-10-13
 aliases: ["K1/K3以太网与无线网络参数", "K1 K3 Network and Ethernet Specs", "k1_k3_network_specs"]
 domain: chip_product_specs
 target_audience: [网络驱动工程师, 硬件工程师]

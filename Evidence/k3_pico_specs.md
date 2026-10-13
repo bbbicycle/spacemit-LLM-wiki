@@ -2,12 +2,18 @@
 type: evidence
 title: "K3 Pico-ITX 迷你 AI 计算机物理规格参数"
 claim_type: "parameter"
-verification_status: unverified
 status: needs_review
+verification_status: unverified
 external_use: false
-source_file: "Sources/docs-product/zh/k3_pico/root_overview.md"
+source_file: "Sources/docs-product/zh/k3_series/k3_pico/root_overview.md"
+source_origin: "https://github.com/spacemit-com/docs-product"
+source_commit: "8c851807f2c54e8ba54d568b268100ca727d0777"
+source_section: "产品规格"
+source_resolution: resolved
+source_checked_at: 2026-10-13
+source_note: "已定位正确的官方产品目录；具体配置和接口复用仍需逐项复核。"
 created: 2026-06-30
-updated: 2026-06-30
+updated: 2026-10-13
 aliases: ["K3 Pico板级核心参数", "K3 Pico Board Hardware Specs", "k3_pico_specs"]
 domain: chip_product_specs
 target_audience: [硬件工程师, 产品架构师]

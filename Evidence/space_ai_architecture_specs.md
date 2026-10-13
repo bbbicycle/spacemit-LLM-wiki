@@ -4,8 +4,17 @@ title: "SpacemiT AI CPU (A60) 智算核架构与 IME 指令算力规格"
 domain: edge_ai_robotics
 target_audience: [AI算法工程师, 芯片架构师, 嵌入式开发]
 status: needs_review
+verification_status: unverified
+external_use: false
+source_file: "Sources/docs-ai/zh/architecture/concept.md"
+source_origin: "https://github.com/spacemit-com/docs-ai"
+source_commit: "2b3894e983a295ed0278bc625867e0c132e0e259"
+source_section: "4.1.2 架构实践"
+source_resolution: partial
+source_checked_at: 2026-10-13
+source_note: "本来源描述 K1 A60 和 cpufp 数据；本文架构参数限定 K1，TCM、主频和全部指令细节尚未逐项核验。"
 created: 2026-08-10
-updated: 2026-08-10
+updated: 2026-10-13
 aliases: [space_ai_architecture_specs, A60 AI CPU Specs, IME Instruction Specs]
 ---
 
@@ -15,7 +24,7 @@ aliases: [space_ai_architecture_specs, A60 AI CPU Specs, IME Instruction Specs]
 > **💡 工程师导读与排坑焦点**：记录 SpacemiT A60 智算核“同构融合”架构参数、IME 矩阵扩展单元规格及 `cpufp` 实测算力指标。
 > **目标读者**：`AI算法工程师 / 芯片架构师 / 嵌入式开发` | **技术领域**：`edge_ai_robotics`
 
-本文档记录 SpacemiT K1 / K3 芯片中 **AI CPU（A60 智算核）** 的同构融合硬件架构、IME (Integrated Matrix Extension) 矩阵扩展指令形状及实测峰值算力参数。
+本文档记录 **K1 的 AI CPU（A60 智算核）** 架构与 `cpufp` 数据，来源为官方 AI 设计理念文档。该来源将 K1 描述为 4 个 X60 通用核与 4 个 A60 智算核；K1 产品简介使用 8 个 X60 的产品口径，不能据此将 A60 或下表的 512 KB TCM 参数套用于 K3。
 
 ---
 

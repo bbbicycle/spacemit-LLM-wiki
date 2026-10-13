@@ -2,12 +2,20 @@
 type: evidence
 title: "K1/K3 显示系统与多媒体输出物理规格"
 claim_type: "parameter"
-verification_status: unverified
 status: needs_review
+verification_status: unverified
 external_use: false
-source_file: "root_overview.md"
+source_file: "Sources/docs-chip/zh/key_stone/k1/k1_docs/root_overview.md"
+source_origin: "https://github.com/spacemit-com/docs-chip"
+source_commit: "1ea15a766287024a5bb7b548850826e3525a80dc"
+source_section: "特性"
+source_resolution: partial
+source_checked_at: 2026-10-13
+source_note: "已定位两代产品简介；接口细节、引脚互斥和编解码能力需分别核对设计指南。"
+source_related_file: "Sources/docs-chip/zh/key_stone/k3/k3_docs/root_overview.md"
+source_related_commit: "1ea15a766287024a5bb7b548850826e3525a80dc"
 created: 2026-06-29
-updated: 2026-06-29
+updated: 2026-10-13
 aliases: ["K1/K3显示规格参数", "K1 K3 Display Resolution and Codec Specs", "k1_k3_display_specs"]
 domain: chip_product_specs
 target_audience: [显示驱动工程师, 硬件工程师]

@@ -2,12 +2,20 @@
 type: evidence
 title: "K1/K3 高速外设接口物理规格"
 claim_type: "parameter"
-verification_status: unverified
 status: needs_review
+verification_status: unverified
 external_use: false
-source_file: "root_overview.md"
+source_file: "Sources/docs-chip/zh/key_stone/k1/k1_docs/root_overview.md"
+source_origin: "https://github.com/spacemit-com/docs-chip"
+source_commit: "1ea15a766287024a5bb7b548850826e3525a80dc"
+source_section: "特性"
+source_resolution: partial
+source_checked_at: 2026-10-13
+source_note: "K3 UFS 2.2 与 PCIe/USB Combo 已据补充来源的 1.1.9 和 1.4.1 修正；其余扩展芯片兼容细节尚未逐项核验。"
+source_related_file: "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md"
+source_related_commit: "1ea15a766287024a5bb7b548850826e3525a80dc"
 created: 2026-06-29
-updated: 2026-06-29
+updated: 2026-10-13
 aliases: ["K1/K3 PCIe与USB规格参数", "K1 K3 PCIe and USB Specs", "k1_k3_pcie_usb_specs"]
 domain: chip_product_specs
 target_audience: [高速接口工程师, 硬件工程师]
@@ -35,6 +43,6 @@ target_audience: [高速接口工程师, 硬件工程师]
 *   **PCIe 接口升级**：
     *   支持高性能 **PCIe 3.0** 接口，物理通道带宽是 K1 (PCIe 2.1) 的两倍，支持高速固态硬盘（NVMe SSD）的极致读写。
 *   **USB 3.0 / USB 2.0**：
-    *   集成多路独立的 **USB 3.0 / USB 2.0** 控制器，无需与 PCIe 共享引脚，能够同时外接多个 USB 3.0 摄像头或高速存储器。
+    *   支持 **4 个 USB 3.0** 和 **5 个 USB 2.0** 接口，其中 **3 个 USB 3.0 与 PCIe Combo 复用**、**4 个 USB 2.0 与 USB 3.0 Combo 复用**；另有 1 个独立 USB 2.0 Host。具体可同时使用的组合须按 K3 硬件设计指南 1.4.1 核对。
 *   **UFS 与 eMMC 接口**：
-    *   除 eMMC 5.1 外，还支持新一代 **UFS 3.1** 高速闪存，大幅缩短端侧大模型从闪存加载至 LPDDR 内存的加载时间。
+    *   支持 **eMMC 5.1** 与 **UFS 2.2**；UFS 版本依据 K3 硬件设计指南 1.1.9，不应写为 UFS 3.1。

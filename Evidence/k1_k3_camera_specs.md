@@ -2,12 +2,20 @@
 type: evidence
 title: "K1/K3 摄像系统与图像输入物理规格"
 claim_type: "parameter"
-verification_status: unverified
 status: needs_review
+verification_status: unverified
 external_use: false
-source_file: "k1_hw_design_guide.md"
+source_file: "Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_design_guide.md"
+source_origin: "https://github.com/spacemit-com/docs-chip"
+source_commit: "1ea15a766287024a5bb7b548850826e3525a80dc"
+source_section: "1.3.3 MIPI CSI RX 配置接口设计"
+source_resolution: partial
+source_checked_at: 2026-10-13
+source_note: "已定位 K1 通道组合与 ISP 并发说明；K3 参数及全文残留占位符尚未核验。"
+source_related_file: "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md"
+source_related_commit: "1ea15a766287024a5bb7b548850826e3525a80dc"
 created: 2026-06-29
-updated: 2026-06-29
+updated: 2026-10-13
 aliases: ["K1/K3摄像与ISP规格参数", "K1 K3 Camera and ISP Specs", "k1_k3_camera_specs"]
 domain: chip_product_specs
 target_audience: [ISP图像工程师, 硬件工程师]

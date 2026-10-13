@@ -37,10 +37,10 @@ interface RawSourceItem {
   headers: string[];
   summary: string;
   raw_url: string;
+  source_commit?: string;
 }
 
 const nodes = wikiData.nodes as Record<string, WikiNode>;
-const aliases = wikiData.aliases as Record<string, string>;
 const rawSources = (wikiData.raw_sources || []) as RawSourceItem[];
 
 const SYSTEM_INSTRUCTIONS = `
@@ -50,8 +50,11 @@ const SYSTEM_INSTRUCTIONS = `
    - 芯片外设驱动/技术专题 -> 调用 read_knowledge_atom (整篇无损上下文)
    - 引脚复用/寄存器/电气参数 -> 调用 get_evidence_fact (精准数据表)
    - 上下游依赖关系 -> 调用 get_graph_relations
-2. 严禁编造：若精炼原子库中未收录冷门细节，请调用 search_raw_sources 与 read_raw_source_file 穿透查询 1052 篇 Sources 原始手册。
-3. 错误与盲区反馈：若发现官方文档存在笔误、死链或严重缺失，可调用 report_wiki_issue 上报给维护者。
+2. 复用已加载且仍适用的证据；名称不明确时先 search_wiki，不强制逐层遍历。摘要仅供定位，具体结论需正文支持。
+3. 缺失、冲突、过期或用户要求复核时，可 search_raw_sources 后 read_raw_source_file，建议显式指定 start_line/end_line（约 100～200 行），按需续读；这是调用建议，不是服务端硬拦截。
+4. 普通问答以 1～3 次调用为目标；核心结论及关键参数已有支持即可停止，必要核实可继续。
+5. 区分芯片代际、板型和版本，引用来源并保留待审核/撤回/过期状态；verification_status 非 verified 时不得称为已核验；needs_review 表示尚未人工审核，deprecated 表示不作当前有效依据；来源已定位不等于事实已核验。external_use:false 的内容不得用于对外承诺。未知不猜测，歧义时使用候选的精确 ID。
+6. 问答不自动写库或上报反馈；反馈须由用户授权。
 `;
 
 const TOOLS = [
@@ -113,7 +116,7 @@ const TOOLS = [
   },
   {
     name: "search_raw_sources",
-    description: "【原始资料层】在 1052 篇 Sources 原始芯片手册、驱动文档和板级设计源码清单中搜索，返回匹配文件路径与章节大纲",
+    description: "【原始资料层】搜索 Sources 原始芯片手册、驱动文档和板级设计清单，返回匹配文件路径与章节大纲",
     inputSchema: {
       type: "object",
       properties: {
@@ -125,13 +128,13 @@ const TOOLS = [
   },
   {
     name: "read_raw_source_file",
-    description: "【原始资料穿透】从 GitHub 官方仓库按需实时拉取原始 Markdown/源码章节，支持行范围读取",
+    description: "【原始资料穿透】从 GitHub 读取已索引的原始资料，建议显式指定行范围；省略范围会返回全文",
     inputSchema: {
       type: "object",
       properties: {
         file_path_or_url: { type: "string", description: "原始文件相对路径（如 'docs-chip/zh/soc/uart.md'）或 raw_url" },
-        start_line: { type: "number", description: "可选的起始行号 (1-indexed)" },
-        end_line: { type: "number", description: "可选的结束行号" }
+        start_line: { type: "integer", minimum: 1, description: "起始行号，默认 1" },
+        end_line: { type: "integer", minimum: 1, description: "包含在内的结束行号，省略则读到文件末尾" }
       },
       required: ["file_path_or_url"]
     }
@@ -153,22 +156,56 @@ const TOOLS = [
 
 const activeSessions = new Map<string, (data: string) => void>();
 
-function resolveNodeId(nameOrAlias: string): string | null {
-  let q = nameOrAlias.trim().toLowerCase();
+function requiredText(value: unknown, label: string): string {
+  if (typeof value !== "string" || !value.trim()) throw new Error(`${label} 必须是非空字符串`);
+  return value.trim();
+}
+
+function resolveNodeId(nameOrAlias: string, expectedType?: string): string | null {
+  let q = requiredText(nameOrAlias, "节点名称").toLowerCase();
   if (q.endsWith(".md")) q = q.slice(0, -3);
+  requiredText(q, "节点名称");
+  const entries = Object.entries(nodes);
+  const exactIds = entries.filter(([id]) => id.toLowerCase() === q);
+  const exact = exactIds.length ? exactIds : entries.filter(([, node]) => node.title.toLowerCase() === q || (node.aliases || []).some(a => a.toLowerCase() === q));
+  let candidates = exact.length ? exact : entries.filter(([id, node]) => id.toLowerCase().includes(q) || node.title.toLowerCase().includes(q) || (node.aliases || []).some(a => a.toLowerCase().includes(q)));
+  if (exact.length && expectedType && !exact.some(([, node]) => node.type === expectedType)) {
+    throw new Error(`节点类型不匹配，需要 ${expectedType}；请使用对应工具读取 ${exact[0][0]}`);
+  }
+  candidates = candidates.filter(([, node]) => !expectedType || node.type === expectedType);
+  if (candidates.length > 1) {
+    const choices = candidates.slice(0, 8).map(([id, node]) => ({ id, title: node.title, type: node.type }));
+    throw new Error(`匹配多个节点，请确认芯片/产品并使用精确 ID：${JSON.stringify(choices)}`);
+  }
+  return candidates[0]?.[0] || null;
+}
 
-  for (const k of Object.keys(nodes)) {
-    if (k.toLowerCase() === q) return k;
+function resolveRawSource(target: string): RawSourceItem {
+  const cleanPath = target.replace(/^Sources\//, "");
+  let matches = rawSources.filter(item => item.rel_path === cleanPath || item.raw_url === target);
+  if (!matches.length && target.startsWith("https://")) {
+    const url = new URL(target);
+    if (url.host === "raw.githubusercontent.com" && !url.search && !url.hash) {
+      const path = decodeURIComponent(url.pathname);
+      matches = rawSources.filter(item => path === `/spacemit-com/${item.submodule}/main/${item.repo_path}` || path === decodeURIComponent(new URL(item.raw_url).pathname));
+    }
   }
-  if (aliases[q]) return aliases[q];
+  if (matches.length !== 1) throw new Error("源文件不在已索引清单中；请先 search_raw_sources 并使用返回的完整 file_path 或 raw_url");
+  return matches[0];
+}
 
-  for (const [k, v] of Object.entries(nodes)) {
-    if (k.toLowerCase().includes(q) || v.title.toLowerCase().includes(q)) return k;
+function rawReadOptions(args: any) {
+  for (const key of ["start_line", "end_line"]) {
+    if (key in args && (!Number.isSafeInteger(args[key]) || args[key] < 1)) throw new Error(`${key} 必须是正整数`);
   }
-  for (const [alias, nodeId] of Object.entries(aliases)) {
-    if (alias.includes(q)) return nodeId;
-  }
-  return null;
+  const options = { start_line: args.start_line ?? 1, end_line: args.end_line };
+  if (options.end_line !== undefined && options.end_line < options.start_line) throw new Error("end_line 不得小于 start_line");
+  return options;
+}
+
+function nodeMetadata(node: WikiNode) {
+  const fields = ["id", "type", "status", "verification_status", "external_use", "publication", "source_file", "source_commit", "source_section", "source_locator", "source_resolution", "source_note", "source_checked_at", "source_related_file", "source_related_commit", "metric_source_resolution", "thermal_source_resolution", "chip", "product", "verified_at", "conflicts", "source_origin", "source_tier", "effective_until", "superseded_by", "updated"];
+  return Object.fromEntries(fields.filter(field => field in node).map(field => [field, (node as any)[field]]));
 }
 
 // 自动识别问题技术分类
@@ -222,8 +259,9 @@ async function handleToolCall(name: string, args: any, env: Env, cfData?: any) {
   const category = categorizeQuery(name, queryStr);
 
   try {
+    if (!args || typeof args !== "object" || Array.isArray(args)) throw new Error("工具参数必须是对象");
     if (name === "search_wiki") {
-      const q = (args.query || "").toLowerCase();
+      const q = requiredText(args.query, "query").toLowerCase();
       const domain = args.domain;
       const results = [];
 
@@ -238,15 +276,18 @@ async function handleToolCall(name: string, args: any, env: Env, cfData?: any) {
 
         if (score > 0) {
           results.push({
+            ...nodeMetadata(node),
+            score,
             id: nodeId,
             title: node.title,
             type: node.type,
             domain: node.domain,
-            summary: node.summary.slice(0, 150) + "..."
+            summary: Array.from(node.summary).slice(0, 150).join("") + "..."
           });
         }
       }
 
+      results.sort((a, b) => b.score - a.score);
       if (results.length === 0) {
         status = "MISS_NO_RESULT"; // 标记为未命中盲区
       } else {
@@ -258,7 +299,7 @@ async function handleToolCall(name: string, args: any, env: Env, cfData?: any) {
     }
 
     if (name === "get_developer_journey") {
-      const nodeId = resolveNodeId(args.board_or_task || "");
+      const nodeId = resolveNodeId(args.board_or_task, "developer_journey");
       if (!nodeId || !nodes[nodeId]) {
         status = "MISS_NO_RESULT";
         logQueryToD1(env, { tool_name: name, query_text: args.board_or_task, category, status, error_message: "未找到动线", country: cfData?.country, city: cfData?.city });
@@ -271,6 +312,7 @@ async function handleToolCall(name: string, args: any, env: Env, cfData?: any) {
         content: [{
           type: "text",
           text: JSON.stringify({
+            ...nodeMetadata(node),
             title: node.title,
             type: node.type,
             target_audience: node.target_audience,
@@ -282,7 +324,7 @@ async function handleToolCall(name: string, args: any, env: Env, cfData?: any) {
     }
 
     if (name === "read_knowledge_atom") {
-      const nodeId = resolveNodeId(args.atom_name || "");
+      const nodeId = resolveNodeId(args.atom_name, "knowledge_atom");
       if (!nodeId || !nodes[nodeId]) {
         status = "MISS_NO_RESULT";
         logQueryToD1(env, { tool_name: name, query_text: args.atom_name, category, status, error_message: "未找到专题", country: cfData?.country, city: cfData?.city });
@@ -295,6 +337,7 @@ async function handleToolCall(name: string, args: any, env: Env, cfData?: any) {
         content: [{
           type: "text",
           text: JSON.stringify({
+            ...nodeMetadata(node),
             title: node.title,
             domain: node.domain,
             status: node.status,
@@ -306,7 +349,7 @@ async function handleToolCall(name: string, args: any, env: Env, cfData?: any) {
     }
 
     if (name === "get_evidence_fact") {
-      const nodeId = resolveNodeId(args.spec_name || "");
+      const nodeId = resolveNodeId(args.spec_name, "evidence");
       if (!nodeId || !nodes[nodeId]) {
         status = "MISS_NO_RESULT";
         logQueryToD1(env, { tool_name: name, query_text: args.spec_name, category, status, error_message: "未找到事实数据", country: cfData?.country, city: cfData?.city });
@@ -319,8 +362,9 @@ async function handleToolCall(name: string, args: any, env: Env, cfData?: any) {
         content: [{
           type: "text",
           text: JSON.stringify({
+            ...nodeMetadata(node),
             title: node.title,
-            type: "evidence",
+            type: node.type,
             full_table_content: node.content
           }, null, 2)
         }]
@@ -341,6 +385,7 @@ async function handleToolCall(name: string, args: any, env: Env, cfData?: any) {
         content: [{
           type: "text",
           text: JSON.stringify({
+            ...nodeMetadata(node),
             node_id: nodeId,
             title: node.title,
             type: node.type,
@@ -352,7 +397,7 @@ async function handleToolCall(name: string, args: any, env: Env, cfData?: any) {
     }
 
     if (name === "search_raw_sources") {
-      const q = (args.query || "").toLowerCase();
+      const q = requiredText(args.query, "query").toLowerCase();
       const sub = args.submodule;
       const matches = [];
 
@@ -368,15 +413,18 @@ async function handleToolCall(name: string, args: any, env: Env, cfData?: any) {
 
         if (score > 0) {
           matches.push({
+            score,
             submodule: item.submodule,
             file_path: item.rel_path,
             title: item.title,
             headers: item.headers,
+            source_commit: item.source_commit ?? null,
             raw_url: item.raw_url
           });
         }
       }
 
+      matches.sort((a, b) => b.score - a.score);
       if (matches.length === 0) status = "MISS_NO_RESULT";
       else matchedId = matches[0].file_path;
 
@@ -385,19 +433,10 @@ async function handleToolCall(name: string, args: any, env: Env, cfData?: any) {
     }
 
     if (name === "read_raw_source_file") {
-      let targetUrl = args.file_path_or_url || "";
-      if (!targetUrl.startsWith("http")) {
-        const cleanPath = targetUrl.replace(/^Sources\//, "");
-        const matched = rawSources.find(s => s.rel_path === cleanPath || s.rel_path.endsWith(cleanPath));
-        if (matched) {
-          targetUrl = matched.raw_url;
-        } else {
-          const parts = cleanPath.split("/");
-          const sub = parts[0];
-          const rest = parts.slice(1).join("/");
-          targetUrl = `https://raw.githubusercontent.com/spacemit-com/${sub}/main/${rest}`;
-        }
-      }
+      const target = requiredText(args.file_path_or_url, "file_path_or_url");
+      const options = rawReadOptions(args);
+      const item = resolveRawSource(target);
+      const targetUrl = new URL(item.raw_url).href;
 
       try {
         const resp = await fetch(targetUrl, {
@@ -410,20 +449,19 @@ async function handleToolCall(name: string, args: any, env: Env, cfData?: any) {
           return { isError: true, content: [{ type: "text", text: `无法从 GitHub 获取源文件 (${resp.status}): ${targetUrl}` }] };
         }
         const rawText = await resp.text();
-        let lines = rawText.split("\n");
-
-        if (args.start_line || args.end_line) {
-          const start = Math.max(1, args.start_line || 1) - 1;
-          const end = args.end_line ? Math.min(lines.length, args.end_line) : lines.length;
-          lines = lines.slice(start, end);
-        }
+        const lines = rawText.replace(/\r\n?/g, "\n").split("\n");
+        if (lines.length && lines[lines.length - 1] === "") lines.pop();
+        const start = options.start_line - 1;
+        const end = Math.min(lines.length, options.end_line ?? lines.length);
 
         matchedId = targetUrl;
         logQueryToD1(env, { tool_name: name, query_text: args.file_path_or_url, category, status, matched_id: matchedId, country: cfData?.country, city: cfData?.city });
         return {
           content: [{
             type: "text",
-            text: `[Source: ${targetUrl}]\n\n` + lines.join("\n")
+            text: JSON.stringify({ source: item.raw_url, source_commit: item.source_commit ?? null,
+              origin: "github", total_lines: lines.length, start_line: start + 1,
+              end_line: end, content: lines.slice(start, end).join("\n") }, null, 2)
           }]
         };
       } catch (e: any) {

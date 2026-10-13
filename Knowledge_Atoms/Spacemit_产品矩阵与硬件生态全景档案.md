@@ -5,7 +5,7 @@ domain: chip_product_specs
 target_audience: [系统架构师, 产品经理, 硬件工程师, 市场销售, 生态开发者]
 status: needs_review
 created: 2026-10-07
-updated: 2026-10-07
+updated: 2026-10-13
 aliases: [Spacemit产品全景, 进迭时空硬件矩阵, Spacemit硬件谱系, 产品生态全景, spacemit_product_matrix, 产品家族谱系]
 ---
 
@@ -14,7 +14,7 @@ aliases: [Spacemit产品全景, 进迭时空硬件矩阵, Spacemit硬件谱系, 
 > [!IMPORTANT]
 > **💡 AI Agent & 开发者核心导读**：
 > 本文是 Spacemit 全栈知识库的 **L0 级顶层总枢纽（Product Ecosystem Map）**。系统梳理了进迭时空两大计算底座（K1 普惠平台 vs K3 智算平台）衍生出的 **12 款官方量产/参考硬件产品与生态终端**。
-> 当用户询问“公司有哪些产品”、“围绕 K1/K3 有哪些板卡”、“产品之间怎么选型”时，**以此文档作为唯一顶层事实源**，向下穿透各专题档案。
+> 当用户询问“公司有哪些产品”、“围绕 K1/K3 有哪些板卡”、“产品之间怎么选型”时，**以此文档定位相关主题，并按事实状态与官方出处核实**，向下穿透各专题档案。
 
 ---
 
@@ -70,10 +70,10 @@ flowchart LR
     K1_Fam --> K1_Term["便携终端与整机"]
     K1_Term --> P4["Muse Book (14寸笔记本)"]
     K1_Term --> P5["Muse Box (Mini-ITX主机)"]
-    K1_Term --> P6["Muse Paper (鸿蒙墨水屏)"]
+    K1_Term --> P6["Muse Paper (OpenHarmony LCD平板)"]
 
     K1_Fam --> K1_Cluster["算力实验与教学"]
-    K1_Cluster --> P7["Muse Shelf (80核云算力架)"]
+    K1_Cluster --> P7["Muse Shelf (80节点云算力架)"]
     K1_Cluster --> P8["RISC-V Labkit (教学实验箱)"]
 
     K3_Fam --> K3_Edge["边缘计算与单板"]
@@ -96,10 +96,10 @@ flowchart LR
 | :-: | :--- | :--- | :--- | :--- | :--- |
 | 1 | **MUSE Pi** | K1 八核 | 信用卡单板 (85×56mm) | 2.0T AI 算力、双屏异显、低功耗、兼容 26-Pin 扩展 | 开源创客、嵌入式学习、轻量边缘节点 |
 | 2 | **MUSE Pi Pro** | K1 八核 | 紧凑单板 (85×56mm) | 升级 **40-Pin 树莓派兼容排针**、板载音频功放、工业扩展 | 工业物联网、商显设备、具身智能初阶原型 |
-| 3 | **MUSE Card** | K1 八核 | 紧凑计算卡 (85×56mm) | 板载 **双 M.2 2242 NVMe** 槽位、双路 4-lane MIPI CSI | 便携 NAS、轻量边缘存储、双摄视觉边缘端 |
-| 4 | **MUSE Book** | K1 八核 | 14.1 寸超薄笔记本 | **全球首款可量产 RISC-V 笔记本**、预装 Bianbu 桌面系统 | RISC-V 原生软件开发、高校极客、移动办公 |
-| 5 | **MUSE Box** | K1 八核 | Mini-ITX 迷你整机 | 超静音金属机箱、整机约 10W 超低功耗、丰富标准 I/O | 极客桌面日常主机、轻量自建服务器、边缘网关 |
-| 6 | **MUSE Paper** | K1 八核 | 护眼平板电脑 | **RISC-V 原生 OpenHarmony 鸿蒙平板**、深度 RVV 加速 | 全栈开源移动开发、政企行业定制、护眼阅读 |
+| 3 | **MUSE Card** | M1 八核 | 紧凑计算卡 (85×56mm) | 板载 **双 M.2 2242 NVMe** 槽位、双路 4-lane MIPI CSI | 便携 NAS、轻量边缘存储、双摄视觉边缘端 |
+| 4 | **MUSE Book** | M1 八核 | 14.1 寸超薄笔记本 | **全球首款可量产 RISC-V 笔记本**、预装 Bianbu 桌面系统 | RISC-V 原生软件开发、高校极客、移动办公 |
+| 5 | **MUSE Box** | K1 八核 | Mini-ITX 迷你整机 | 超静音金属机箱、无风扇设计、丰富标准 I/O | 极客桌面日常主机、轻量自建服务器、边缘网关 |
+| 6 | **MUSE Paper** | K1 八核 | LCD 平板电脑 | **RISC-V 原生 OpenHarmony 鸿蒙平板**、深度 RVV 加速 | 全栈开源移动开发、工业与行业定制 |
 | 7 | **MUSE Shelf** | 80 颗 K1 | 2U 机架式服务器 | 集成 **80 颗 K1 处理器**、刀片式云平台架构、支持远程桌面/刷机 | 进迭云算力农场、跨平台应用远程适配测试 |
 | 8 | **RISC-V Labkit** | SpacemiT M1 | 10.1 寸模块化实验箱 | 积木式外设拆卸、内嵌 10.1 寸 IPS 触摸屏、配百余教学实验手册 | 高校嵌入式教学、计算机体系结构实验、AI 实训 |
 | 9 | **K3 Pico** | K3 十六核 | 2.5 寸单板电脑 (100×86mm) | **单线 Type-C 65W 点亮**、60T 算力统一内存、**板载万兆光口** | 具身机器人大脑、边缘视觉检测、迷你 AI 工作站 |

@@ -5,9 +5,18 @@ claim_type: "parameter"
 verification_status: verified
 status: needs_review
 external_use: true
-source_file: "Sources/docs-product/zh"
+source_tier: tier_1_github_upstream
+source_origin: "https://github.com/spacemit-com/docs-product"
+source_commit: "8c851807f2c54e8ba54d568b268100ca727d0777"
+source_file: "Sources/docs-product/zh/k1_series/k1_muse_paper/root_overview.md"
+source_section: "产品规格；其他产品的逐列来源见正文"
+source_locator: "MUSE Paper 产品规格，行 39–54"
+source_resolution: resolved
+source_checked_at: 2026-10-13
+conflicts: "MUSE Box简介与规格表USB数量不同；MUSE Shelf特性2/4刀片与规格表4刀片有配置差异，见正文"
+verified_at: 2026-10-13
 created: 2026-10-07
-updated: 2026-10-07
+updated: 2026-10-13
 aliases: ["K1生态终端参数表", "K1 Terminal Products Specs", "k1_terminal_products_specs", "Muse终端规格"]
 domain: chip_product_specs
 target_audience: [产品架构师, 硬件工程师, 解决方案工程师]
@@ -15,40 +24,49 @@ target_audience: [产品架构师, 硬件工程师, 解决方案工程师]
 
 # Spacemit K1 生态衍生终端与实验套件物理规格参数
 
-> [!TIP]
-> **💡 数据事实与设计导读**：
-> 本文件汇集了基于 Spacemit K1 / M1 八核 RISC-V 处理器打造的 **6 大核心生态终端与实验套件**（Muse Book、Muse Box、Muse Card、Muse Paper、Muse Shelf、RISC-V Labkit）的标准化结构物理参数，供整机选型、教学采购与系统集成比对。
+本表逐项对照上述 commit 的官方产品规格，不把芯片通用能力推断成板卡配置。`verified` 表示本次来源比对完成，`needs_review` 表示仍待人工审核；此处描述固定版本，不保证最新批次配置。
 
----
+## 1. 便携终端与整机硬件规格
 
-## 1. 便携终端与整机硬件规格 (Book / Box / Paper)
-
-| 规格维度 | MUSE Book (笔记本电脑) | MUSE Box (Mini-ITX 迷你主机) | MUSE Paper (电子墨水屏平板) |
+| 规格维度 | MUSE Book | MUSE Box | MUSE Paper |
 | :--- | :--- | :--- | :--- |
-| **主控芯片** | SpacemiT K1 八核 X60 @ 1.6GHz | SpacemiT K1 八核 X60 @ 1.6GHz | SpacemiT K1 八核 X60 @ 1.6GHz |
-| **AI 算力** | 2.0 TOPS 通用 AI 算力 | 2.0 TOPS 通用 AI 算力 | 2.0 TOPS 通用 AI 算力 (RVV 加速) |
-| **伴随 PMIC** | Power Stone P1 | Power Stone P1 | Power Stone P1 |
-| **内存 (DRAM)** | 8GB / 16GB LPDDR4X @ 2400MT/s | 8GB / 16GB LPDDR4X @ 2400MT/s | 4GB / 8GB LPDDR4X @ 2400MT/s |
-| **板载存储** | eMMC 5.1 (64GB / 128GB) | eMMC 5.1 (64GB / 128GB) | 64GB eMMC 闪存 |
-| **存储扩展** | 1 × M.2 2280 NVMe SSD + MicroSD | 1 × M.2 2280 NVMe SSD + MicroSD | MicroSD (TF) 卡插槽 |
-| **显示屏幕/输出**| 14.1 英寸 IPS (1920×1080 FHD) | 1 × HDMI 2.0 + 1 × DP (支持双屏异显) | 10.3 英寸电子墨水屏 (护眼防眩光) |
-| **网络通讯** | Wi-Fi 6 + 蓝牙 5.2 | 2 × 千兆网口 (RJ45) + Wi-Fi 6/BT | Wi-Fi 6 + 蓝牙 5.2 |
-| **外部标准 I/O** | 2×USB 3.0, 1×Type-C (充放电/数据), 3.5mm音频 | 4×USB 3.0, 2×USB 2.0, RS232串口端子 | 1 × Type-C OTG / 充电 |
-| **电源与电池** | 5000 mAh 锂聚合物电池, Type-C PD 供电 | 12V DC 适配器供电 (整机功耗约 10W) | 内置高密度锂电池, 超长待机 |
-| **支持操作系统**| Bianbu Desktop / Ubuntu / OpenKylin | Bianbu Desktop / Bianbu NAS / OpenKylin | **OpenHarmony 5.0 (原生鸿蒙)** / Bianbu |
+| 主控 | M1，8 核 64 位 RISC-V | K1，8 核 64 位 RISC-V | K1，8 核 64 位 RISC-V |
+| 融合 AI 算力 | 2 TOPS | 2 TOPS | 2 TOPS |
+| 内存 | 8 / 16 GB LPDDR4X，2400 MT/s | 8 / 16 GB LPDDR4X，2400 MT/s | 8 / 16 GB LPDDR4X，2400 MT/s |
+| 本地存储 | 128 / 256 / 512 GB NVMe SSD | 32 GB eMMC 5.1 | 128 / 256 GB eMMC |
+| 扩展存储 | TF，UHS-II | M.2 2280 M-Key NVMe + 1 个 SATA 硬盘 | TF，UHS-II |
+| 显示 | 14.1 寸 IPS，1080P@60Hz；DP Type-C，1080P@60Hz | HDMI Type-A，1080P@60Hz | 10.95 寸 LCD，1200 × 1920 |
+| 无线 | Wi-Fi 6 / BT 5.2 | M.2 E-Key Wi-Fi 6 / BT 5.2 | Wi-Fi 6 / BT 5.2 |
+| 有线网络 | 产品规格未列出 | 2 路 RJ45，1000M / 100M | 产品规格未列出 |
+| USB | 2 路 USB 3.0 Type-A；1 路 USB 3.0 Type-C 全功能；1 路 USB 3.0 Type-C OTG | 5 路 USB 2.0 Type-A；2 路 USB 3.0 Type-A（简介与规格表数量不同，采用规格表） | 1 路 USB 3.0 Type-C（含耳机音频）；1 路 USB 2.0 Type-C OTG（PD 快充） |
+| 供电 | 38 Wh / 7.6 V 电池，PD 3.0，附 65 W 适配器 | 12 V DC JACK，主板支持 4Pin ATX DC IN | 7000 mAh 电池，18 W 快充 |
+| 系统 | Bianbu / Ubuntu / OpenKylin / Deepin | Bianbu Desktop / Ubuntu / OpenKylin / Deepin | OpenHarmony；特性章节标注 OpenHarmony 5.0 与 Linux 6.6 |
 
----
+## 2. 计算卡、实验架与教学套件
 
-## 2. 算力卡、实验架与教学套件硬件规格 (Card / Shelf / Labkit)
-
-| 规格维度 | MUSE Card (微型计算卡) | MUSE Shelf (2U 云算力实验架) | RISC-V Labkit (教学实验箱) |
+| 规格维度 | MUSE Card | MUSE Shelf | RISC-V Labkit |
 | :--- | :--- | :--- | :--- |
-| **主控芯片/规模**| 1 × SpacemiT K1 八核 @ 1.6GHz | **80 × SpacemiT K1 八核处理器** | 1 × SpacemiT M1 八核 @ 1.6GHz |
-| **总算力规模** | 2.0 TOPS AI 算力 | **160 TOPS 总算力 (640 核并行)** | 2.0 TOPS AI 算力 (支持 0.5B~1B 大模型) |
-| **物理形态** | 85 mm × 56 mm 紧凑单板 | 2U 标准机架式 (2/4 模块化刀片设计) | 便携式工程实验箱 (集成 10.1寸触控屏) |
-| **内存与存储** | 8GB/16GB LPDDR4X, 64Mb SPI NOR | 80 个独立节点 (各节点配独立内存/存储) | 16GB LPDDR4X, 64GB eMMC 5.1 |
-| **存储扩展接口**| **2 × M.2 2242 M-Key NVMe SSD** | 集中式存储池与网络存储挂载 | 1 × M.2 2280 M-Key NVMe (最高支持 1TB) |
-| **扩展总线接口**| 40Pin GPIO, 2路 4-lane CSI, 1路 DSI | 内部高速以太网互联背板 | 积木式插拔外设接口 (传感器/电机/机械臂) |
-| **网络能力** | 1 × 千兆网口 (RJ45 1000M/100M) | 多路千兆上行汇聚 + 独立管理网口 | 1 × 千兆网口 + Wi-Fi 6 模块 |
-| **管理与运维** | 侧边按键 (复位/开关机/烧录) | 支持远程桌面、远程编译、一键批量刷机 | 预装嵌入式与 AI 百余教学实验 SOP |
-| **目标场景** | 双 NVMe 便携 NAS、机器视觉前置机 | 进迭云分布式开发云平台、CI/CD 编译农场 | 高校微机原理、操作系统、RISC-V 教学实训 |
+| 主控 | M1，8 核 64 位 RISC-V | 80 路 K1 SoM，每颗 8 核 | M1 |
+| AI 算力 | 2 TOPS | 每颗 K1 2 TOPS；不能把节点数相乘当作单一推理吞吐 | 2 TOPS |
+| 形态 | 85 × 56 mm 单板，可装亚克力外壳 | 2U；规格表为 4 刀片、每刀片 20 路 | 480 × 370 × 170 mm 手提箱，10.1 寸 IPS 触屏 |
+| 内存 | 8 / 16 GB LPDDR4X，2400 MT/s | 每 SoM 8 / 16 GB | 16 GB LPDDR4X，2400 MT/s |
+| 本地存储 | 64 Mb SPI NOR | 每 SoM 64 / 128 GB Flash | 64 GB eMMC 5.1 |
+| 存储扩展 | 2 个 M.2 2242 M-Key NVMe + TF UHS-II | 产品规格未列出 | M.2 2280 M-Key NVMe，单槽最高 1 TB；TF UHS-II |
+| 网络 | 1 路 RJ45，1000M / 100M | 每 SoM GbE；每刀片 2 × 25 Gb SFP28，各刀片网络独立 | 2 路 RJ45，1000M / 100M；Wi-Fi 6 / BT 5.2 |
+| 扩展与显示 | 40Pin GPIO，2 路 4-lane CSI，1 路 4-lane DSI，HDMI | GbE / USB Device / UART | 4 个 GPIO / SPI / UART / I2C 模块插槽，2 路 4-lane CSI；HDMI 1080P@60Hz 与 1920 × 1200 触屏 |
+| 供电 | USB PD 3.0；Type-C 接口支持 12 V / 3 A | 1200 W 白金电源，热插拔、1 + 1 冗余 | 12 V / 3 A 适配器 |
+
+## 3. 固定版本出处与复核范围
+
+六篇均来自 `spacemit-com/docs-product@8c851807f2c54e8ba54d568b268100ca727d0777`，表中每列对应下列文档的「产品规格」章节；MUSE Paper 的系统版本同时取自「特性」。
+
+| 产品列 | 官方文件 |
+| :--- | :--- |
+| MUSE Book | [产品简介](../Sources/docs-product/zh/k1_series/k1_muse_book/root_overview.md) |
+| MUSE Box | [产品简介](../Sources/docs-product/zh/k1_series/k1_muse_box/root_overview.md) |
+| MUSE Paper | [产品简介](../Sources/docs-product/zh/k1_series/k1_muse_paper/root_overview.md) |
+| MUSE Card | [产品简介](../Sources/docs-product/zh/k1_series/k1_muse_card/root_overview.md) |
+| MUSE Shelf | [产品简介](../Sources/docs-product/zh/k1_series/k1_muse_shelf/root_overview.md) |
+| RISC-V Labkit | [产品简介](../Sources/docs-product/zh/k1_series/k1_riscv_labkit/root_overview.md) |
+
+MUSE Box 简介写「USB2.06，USB3.04」，规格表写 USB 2.0 × 5、USB 3.0 × 2，保留差异并待人工/上游确认。MUSE Shelf 特性写 2 / 4 刀片，表格给出 4 刀片配置，不推断所有型号相同。未列出的能力不等于不支持，应定向核实硬件资料。

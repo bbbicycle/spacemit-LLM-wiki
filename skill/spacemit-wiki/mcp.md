@@ -1,24 +1,10 @@
-# Spacemit Wiki MCP Server
+# Spacemit Wiki MCP
 
-`spacemit-wiki` MCP 服务为 AI Agent 提供了访问进迭时空 (Spacemit) RISC-V 芯片、生态板卡及完整边缘 AI 软件栈的高密度知识库与 1000+ 篇官方原始手册的只读数据通道。
+通过 MCP 查询精炼知识与官方原始资料。仅接入 MCP 不会自动安装本 Skill；客户端也不会自动读取仓库的 `AGENTS.md`。完整规则需安装整个 Skill 目录。
 
----
+## 接入
 
-## Endpoint & Setup
-
-* **官方公共 SSE 服务端点**：`https://mcp.yao1302.xyz/sse`
-
-客户端配置文件路径速查：
-
-| 编辑器 / 客户端 | 配置文件路径 |
-| :--- | :--- |
-| **Cursor** | `.cursor/mcp.json` 或 `Settings -> Features -> MCP Servers` |
-| **Claude Desktop** | `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS) |
-| **VS Code** | `.vscode/mcp.json` |
-| **Antigravity** | `~/.gemini/antigravity/mcp/` |
-| **Windsurf** | `mcp_config.json` |
-
-### 标准 JSON 配置
+公共 SSE 地址：`https://mcp.yao1302.xyz/sse`。按客户端当前支持的远程 MCP 配置格式填写 URL，例如支持此格式的客户端可用：
 
 ```json
 {
@@ -30,54 +16,38 @@
 }
 ```
 
----
+配置格式及 SSE 支持取决于客户端版本；连接成功后以 `tools/list` 返回的实际参数为准。若客户端只支持本地 stdio，可运行仓库中的 `python3 mcp/server.py`。
 
-## Tools Reference
+## 查询工具
 
-> **Tip:** MCP 工具专为“零切片 (Zero-Chunking)”高密度上下文设计。`read_knowledge_atom` 与 `get_developer_journey` 会返回完整无截断的工程 Markdown，加载一次后请在多轮对话中复用上下文，避免重复调用。
+| 工具 | 必需参数 | 用途 |
+| :--- | :--- | :--- |
+| `search_wiki` | `query` | 定位精炼文档；`domain` 可选。搜索摘要不能替代正文证据。 |
+| `get_developer_journey` | `board_or_task` | 读取上手步骤。 |
+| `read_knowledge_atom` | `atom_name` | 读取专题正文；当前无章节切片参数。 |
+| `get_evidence_fact` | `spec_name` | 读取参数或事实表；仍需核对审核状态和适用条件。 |
+| `get_graph_relations` | `node_name` | 需要时查看相关文档，不必每次调用。 |
+| `search_raw_sources` | `query` | 定位官方原始文件；`submodule` 可选。 |
+| `read_raw_source_file` | `file_path_or_url` | 读取已定位的原文；`start_line`、`end_line` 为可选的 1 起始行号。 |
 
-### 1. `search_wiki`
-按关键词、别名或 6 大技术领域模糊搜索精炼知识库。
-* **Input**:
-  * `query` (string, required): 搜索关键词（如 `"Muse Pi"`, `"千兆网"`, `"K1 Strap"`, `"PMIC"`）。
-  * `domain` (string, optional): 领域过滤，可选值：`chip_product_specs`, `hardware_schematic_design`, `bsp_kernel_drivers`, `bianbu_os_distribution`, `toolchain_debug_tools`, `edge_ai_robotics`。
-* **Output**: 返回最相关的 5 个节点列表，仅包含标题、类型、Domain 及 150 字卡片摘要。
+Cloudflare 服务还可能提供 `report_wiki_issue`；这属于向维护者发送反馈，按用户授权调用，不是回答问题的必做步骤。
 
-### 2. `get_developer_journey`
-【动线/线】整篇获取特定硬件板卡或核心任务的极简上手动线。
-* **Input**:
-  * `board_or_task` (string, required): 板卡或任务标识（如 `"muse_pi"`, `"k3_pico"`, `"buildroot"`）。
-* **Output**: 完整上手步骤 Markdown，包含引用的专题档案双链与关键检查点。
+### 调用次序与范围
 
-### 3. `read_knowledge_atom`
-【专题/面】整篇获取特定技术专题档案（零切片无损上下文）。
-* **Input**:
-  * `atom_name` (string, required): 专题名称或别名（如 `"千兆网口"`, `"热设计"`, `"PMIC电源"`, `"IOMAP"`）。
-* **Output**: 完整技术专题 Markdown，包含原理、电路走线避坑、DTS 配置与调试排障指南。
+按问题直接取动线、专题或事实表，名称不明时先搜索。不要求逐层遍历。精炼证据缺失、冲突、过期或用户要求核实上游时可查询原文，不限于报错调试。
 
-### 4. `get_evidence_fact`
-【事实/点】获取 100% 结构化的底层物理数据与电气参数。
-* **Input**:
-  * `spec_name` (string, required): 事实数据表名（如 `"k1_strap_pins_config"`, `"p1_pmic_specs"`, `"k1_k3_network_specs"`）。
-* **Output**: 绝对准确的引脚映射表、Strap 电阻配置表、寄存器定义或热阻数据。
+原文建议显式给出行范围，每次约 100～200 行，再按需要继续。当前服务端没有强制读取预算，省略范围可能返回全文。专题/事实工具返回正文，重复查询之前先复用会话中仍适用的内容。
 
-### 5. `get_graph_relations`
-【图谱拓扑】顺着双链探索特定节点的上下游软硬件依赖关系。
-* **Input**:
-  * `node_name` (string, required): 节点名称或别名。
-* **Output**: 该节点的 `outlinks`（依赖的底层知识）与 `backlinks`（被哪些上层动线/专题引用）。
+### 缺少 Sources 的设备
 
-### 6. `search_raw_sources`
-【原始资料层】在 1052 篇官方芯片手册、驱动文档和板级设计源码清单中检索。
-* **Input**:
-  * `query` (string, required): 搜索关键词或函数符号（如 `"uart fifo"`, `"gmac dts"`, `"dwc3 pcie"`）。
-  * `submodule` (string, optional): 子模块过滤：`docs-chip`, `docs-product`, `docs-buildroot`, `docs-ai`, `docs-ros`。
-* **Output**: 匹配到的官方原始 Markdown 文件路径、章节大纲与 Raw GitHub 链接。
+- **远程 MCP 客户端**：不用克隆仓库或安装 Sources；精炼内容和原始目录索引由服务端提供，原文由服务端联网获取官方 GitHub 公开资源。
+- **本地 stdio 服务**：需要仓库自带的 `mcp/data/wiki_graph.json`。本地 Sources 文件与索引 commit 一致且未修改时读取本地文件；否则按索引的固定 commit URL 联网获取。
+- **只读文件清单**：原文请求仅支持索引收录的完整路径或 URL。已知文件的 `main` URL 会映射到索引固定 SHA，不任意读取其他 URL、路径或实时分支内容。
+- **索引维护**：缺少、未初始化或有已跟踪文件修改的 Sources 时，构建失败并保留现有索引。`--if-changed` 先完成源版本和文档解析校验，仅内容或来源版本变化、索引缺失或双端不一致时才写入；无变化时保留原构建时间。
+- 网络不可用、资源不可访问或仍无证据时说明限制，不补出不存在的内容。
 
-### 7. `read_raw_source_file`
-【原始资料穿透】从本地或 GitHub 官方仓库按需实时拉取原始 Markdown/源码章节。
-* **Input**:
-  * `file_path_or_url` (string, required): 原始文件相对路径（如 `"docs-chip/zh/soc/uart.md"`）或 raw_url。
-  * `start_line` (number, optional): 起始行号 (1-indexed)。
-  * `end_line` (number, optional): 结束行号。
-* **Output**: 指定范围的官方芯片手册原始文本。
+### 结果解释
+
+回答应给出文件/链接、适用代际和版本，保留返回中的审核状态、撤回、冲突、时效及使用范围。`needs_review` 表示待审核；既有知识结构和静态 lint 均不构成事实准确率保证。
+
+原文返回 JSON：`source` 为索引固定 URL，`source_commit` 为对应 SHA，`origin` 表示 `local` 或 `github`；`total_lines`、`start_line`、`end_line` 说明范围，`content` 为该范围正文。节点名称有歧义时根据候选使用精确 ID。

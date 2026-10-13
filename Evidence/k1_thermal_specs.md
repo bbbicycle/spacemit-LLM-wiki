@@ -2,12 +2,18 @@
 type: evidence
 title: "K1 芯片热学规格与功耗参数"
 claim_type: "parameter"
-verification_status: unverified
 status: needs_review
+verification_status: unverified
 external_use: false
-source_file: "root_overview.md"
+source_file: "Sources/docs-chip/zh/key_stone/k1/k1_docs/root_overview.md"
+source_origin: "https://github.com/spacemit-com/docs-chip"
+source_commit: "1ea15a766287024a5bb7b548850826e3525a80dc"
+source_section: "概述；特性"
+source_resolution: partial
+source_checked_at: 2026-10-13
+source_note: "TDP 3–5 W 与工业温度已定位；其余温度和功耗条件尚未逐项核验。"
 created: 2026-06-29
-updated: 2026-06-29
+updated: 2026-10-13
 aliases: ["K1工作温度与功耗参数", "K1 Thermal and Power Specs", "k1_thermal_specs"]
 domain: chip_product_specs
 target_audience: [硬件工程师, 热设计工程师]

@@ -3,7 +3,7 @@ type: knowledge_atom
 title: "Buildroot 嵌入式系统定制与内核编译专题档案"
 status: needs_review
 created: 2026-08-10
-updated: 2026-08-10
+updated: 2026-10-13
 aliases: [Buildroot_嵌入式系统定制与内核编译专题档案, Buildroot SDK 编译与内核定制专题, SpacemiT Buildroot Guide]
 domain: bsp_kernel_drivers
 target_audience: [BSP 工程师, 驱动工程师]
@@ -30,7 +30,7 @@ graph TD
     UBoot --> LinuxKernel[Linux Kernel 6.6 / 6.18 - 系统内核]
     
     subgraph CoreFirmware [硬性引导依赖]
-        RCPU[RCPU ESOS 实时固件 esos.elf] -->|中断转发/硬件初始化| LinuxKernel
+        RCPU[RCPU 固件 - K1 esos.elf / K3 rt24_os0及os1] -->|中断转发/硬件初始化| LinuxKernel
     end
 
     subgraph UserSpace [用户空间 & 硬件加速]
@@ -119,9 +119,9 @@ make envconfig
 ## 5. RCPU ESOS 实时固件与系统启动红线
 
 > [!WARNING]
-> 在基于 Buildroot 自定义裁剪 Rootfs 或构建第三方 Linux 系统（如 Debian/Ubuntu）时，**绝对不可遗漏 `esos.elf` 固件**。
+> 制作自定义系统时，需把对应代际的 RCPU 固件安装到 initramfs `/lib/firmware/`：**K1 为 `esos.elf`；K3 为 `rt24_os0_rcpu.elf` 和 `rt24_os1_rcpu.elf`**。
 
-RCPU 实时协处理器固件 `esos.elf` 负责板级硬件模块初始化及 HDMI Audio 中断转发。若缺省，内核引导将挂起死锁。
+官方 FAQ 说明 RCPU 固件负责部分硬件模块初始化及 HDMI Audio 中断转发，Linux 内核依赖它，缺失会无法启动；该 FAQ 没有给出具体死锁机制。
 硬件与启动红线规范细节请参考 [[Evidence/esos_rcpu_firmware_specs|SpacemiT RCPU (ESOS) 固件与启动依赖硬规范]] 以及 [[Knowledge_Atoms/K1系统启动与分区配置专题档案|K1 系统启动与分区配置专题]]。
 
 ---

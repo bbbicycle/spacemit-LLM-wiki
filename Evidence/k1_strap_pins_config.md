@@ -2,12 +2,18 @@
 type: evidence
 title: "K1 芯片 Strap Pins 启动与系统配置参数"
 claim_type: "parameter"
-verification_status: unverified
 status: needs_review
+verification_status: unverified
 external_use: false
-source_file: "k1_hw_design_guide.md"
+source_file: "Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_design_guide.md"
+source_origin: "https://github.com/spacemit-com/docs-chip"
+source_commit: "1ea15a766287024a5bb7b548850826e3525a80dc"
+source_section: "1.1.5 硬件初始化系统配置电路；1.2.3 IO 电源设计"
+source_resolution: resolved
+source_checked_at: 2026-10-13
+source_note: "已定位 Strap 功能表和 QSPI 电压说明；默认上下拉与实际板级设计仍需复核。"
 created: 2026-06-29
-updated: 2026-06-29
+updated: 2026-10-13
 aliases: ["K1 Strap管脚物理配置参数", "K1 Strap Pins Config Specs", "k1_strap_pins_config"]
 domain: hardware_schematic_design
 target_audience: [硬件电路工程师, 驱动工程师]
@@ -51,8 +57,8 @@ target_audience: [硬件电路工程师, 驱动工程师]
 
 | Strap 4 [默认下拉] | Flash 供电电压 | 说明与关联配置 |
 | :---: | :--- | :--- |
-| **0** | **1.8 V [默认]** | 芯片上拉到 1.8V GPIO 时，VCC1833_QSPI 必须工作在 3.3V 供电；下拉 GND 时工作在 1.8V 供电。 |
-| **1** | **3.3 V** | 适用于 3.3V Flash 供电。 |
+| **0** | **1.8 V [默认]** | GPIO_90 下拉到 GND，VCC1833_QSPI 使用 1.8V 供电。 |
+| **1** | **3.3 V** | GPIO_90 上拉到 1.8V 高电平，VCC1833_QSPI 使用 3.3V 供电；不要把 Strap 管脚高电平电压误当作 Flash 电源电压。 |
 
 ## 5. JTAG 与 CPU 路由配置
 *   **JTAG_SEL**：Sec JTAG 选择。`0`：其他功能（默认），`1`：SEC JTAG。

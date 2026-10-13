@@ -2,12 +2,18 @@
 type: evidence
 title: "K3 芯片 Strap Pins 启动与系统配置参数"
 claim_type: "parameter"
-verification_status: unverified
 status: needs_review
+verification_status: unverified
 external_use: false
-source_file: "k3_hw_design_guide.md"
+source_file: "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md"
+source_origin: "https://github.com/spacemit-com/docs-chip"
+source_commit: "1ea15a766287024a5bb7b548850826e3525a80dc"
+source_section: "1.1.5 硬件初始化系统配置电路"
+source_resolution: resolved
+source_checked_at: 2026-10-13
+source_note: "已定位 Strap 功能表；全部板级接线条件尚未逐项核验。"
 created: 2026-06-29
-updated: 2026-06-29
+updated: 2026-10-13
 aliases: ["K3 Strap管脚物理配置参数", "K3 Strap Pins Config Specs", "k3_strap_pins_config"]
 domain: hardware_schematic_design
 target_audience: [硬件电路工程师, 驱动工程师]
