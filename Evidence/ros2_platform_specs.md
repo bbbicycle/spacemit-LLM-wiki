@@ -3,7 +3,7 @@ type: evidence
 title: "SpacemiT ROS 2 平台支持与底层硬件接口规格"
 status: needs_review
 created: 2026-08-10
-updated: 2026-08-10
+updated: 2026-10-16
 aliases: [ros2_platform_specs, ROS 2 Platform Specs, SpacemiT ROS2 Specs]
 domain: edge_ai_robotics
 target_audience: [机器人工程师, ROS 2 开发者]
@@ -19,11 +19,23 @@ target_audience: [机器人工程师, ROS 2 开发者]
 
 ---
 
-## 1. ROS 2 版本与 DDS 中间件规格
+## 1. 官方 ROS 2 平台与操作系统支持矩阵
+
+根据 SpacemiT 官方最新发布规格（`Sources/docs-ros`）：
+
+| 芯片型号 | 当前支持的 ROS 2 版本 | 规划支持的 ROS 2 版本 | 当前推荐的操作系统 | 核心技术支持说明 |
+| :---: | :---: | :---: | :---: | :--- |
+| **K3** | **Humble、Jazzy** | **Lyrical**（计划支持） | **Bianbu 4.x**（4.0.1 起） | 高性能智算底座，支持 CycloneDDS 多网口加速与多机通信 |
+| **K1** | **Humble、Jazzy** | — | **Bianbu 2.3.x** | 普惠低功耗平台，默认适配常用开源传感器驱动与 SLAM 算法 |
+
+> [!NOTE]
+> **多机通信规范**：
+> 官方明确建议**板端与开发主机使用相同的 ROS 2 发行版**，并配置一致的 DDS 通信中间件与 `ROS_DOMAIN_ID`。ROS 2 上游官方并不保证不同发行版（如 Humble 与 Jazzy）之间的跨版本节点通信兼容性。
+
+### 1.1 DDS 中间件与底层规格
 
 | 属性名称 | 规格参数与选项 | 推荐应用场景 |
 | :--- | :--- | :--- |
-| **支持的 ROS 2 版本** | ROS 2 Humble LTS / ROS 2 Jazzy LTS | 工业机器人、教研科研、具身智能应用 |
 | **底层 Linux 发行版** | Bianbu Linux / Ubuntu 22.04 & 24.04 LTS | 容器化或原生二进制部署 |
 | **默认 RMW 实现** | `rmw_cyclonedds_cpp` / `rmw_fastrtps_cpp` | 多节点低延迟通信 |
 | **双 GMAC 网口优化** | 支持 DDS 多播组网与网口绑定 | 传输高分辨率摄像头点云与 RAW 图像数据 |

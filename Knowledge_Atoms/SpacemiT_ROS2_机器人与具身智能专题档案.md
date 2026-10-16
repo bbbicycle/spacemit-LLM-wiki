@@ -3,7 +3,7 @@ type: knowledge_atom
 title: "SpacemiT ROS 2 机器人与具身智能专题档案"
 status: needs_review
 created: 2026-08-10
-updated: 2026-08-10
+updated: 2026-10-16
 aliases: [SpacemiT_ROS2_机器人与具身智能专题档案, ROS 2 & Embodied AI Dossier, SpacemiT Robotics Guide]
 domain: edge_ai_robotics
 target_audience: [机器人工程师, 具身 AI 开发者]
@@ -43,7 +43,18 @@ graph TD
     end
 ```
 
-具体的 ROS 2 发行版与节点开销数据请查阅 [[Evidence/ros2_platform_specs|SpacemiT ROS 2 平台规格表]]。
+### 1.1 官方芯片与 ROS 2 平台支持基准
+
+根据官方规范（详见 [[Evidence/ros2_platform_specs|SpacemiT ROS 2 平台规格表]]）：
+
+| 芯片型号 | 当前支持的 ROS 2 版本 | 规划支持的 ROS 2 版本 | 当前推荐的操作系统 | 架构定位与应用特点 |
+| :---: | :---: | :---: | :---: | :--- |
+| **K3** | **Humble、Jazzy** | **Lyrical**（计划支持） | **Bianbu 4.x**（4.0.1 起） | 高性能具身智算中心，大模型多模态与多传感器融合 |
+| **K1** | **Humble、Jazzy** | — | **Bianbu 2.3.x** | 普惠低功耗端侧控制，激光 SLAM 与轻量机械臂推理 |
+
+> [!IMPORTANT]
+> **多机通信版本一致性红线**：
+> 在机器人分布式架构中，建议**机器人端与上位机/工控机必须安装相同版本的 ROS 2 发行版**（例如统一采用 Humble 或统一采用 Jazzy），并确保 `ROS_DOMAIN_ID` 相同。由于 ROS 2 上游不保证跨发行版节点通信（Cross-distribution communications）的二进制兼容性，跨版本混用极易导致 DDS 消息丢包或反序列化失败。
 
 ---
 

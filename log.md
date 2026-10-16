@@ -3,7 +3,7 @@ type: vault_log
 title: "SpacemiT K3 芯片文档重构日志"
 status: active
 created: 2026-06-29
-updated: 2026-08-25
+updated: 2026-10-16
 ---
 
 # SpacemiT K3 芯片文档重构日志 (log.md)
@@ -12,6 +12,16 @@ updated: 2026-08-25
 > 本文件用于记录 Spacemit LLM Wiki 知识库的重构、清理、验证与 MCP 服务演进日志。
 
 ---
+
+## [2026-10-16] upstream_sync & refactor | 同步官方 GitHub 最新子模块并完成 V100/EtherCAT/DRM/ROS2 知识提炼
+*   **同步背景**：拉取主仓库落后远端 `origin/main` 的 4 个 GitHub Actions 自动构建提交（`0c1dd56`），并将 `Sources/` 4 大文档子模块（`docs-chip`, `docs-product`, `docs-buildroot`, `docs-ros`）检出至最新指针。
+*   **知识图谱与专题重构成果**：
+    1.  **新建 Vital Stone 硬件专题**：创建 [[Knowledge_Atoms/SpacemiT_V100系列工业与边缘计算硬件专题档案]]，系统梳理官方最新释出的 V100 系列（C2201 紧凑边缘计算、S5236 工业智算主控、G5201 智能网关）家族拓扑与定位，并在 [[Knowledge_Atoms/Spacemit_产品矩阵与硬件生态全景档案]] 与 [[index]] 完成全矩阵挂载。
+    2.  **K3 硬件电源设计与 Buglist 勘误**：在 [[Knowledge_Atoms/SpacemiT生态板卡与PMIC电源配合专题档案]] 中补充 K3 16 核 CPU（X100 与 A100 双簇独立供电、A100 与 SYS 域共电）拓扑，高亮警示 DDR5/DDR4x 供电必须遵从官方《K3 硬件设计 Buglist》设计规范。
+    3.  **EtherCAT 工业总线与驱动热切换**：在 [[Knowledge_Atoms/K1_K3网络通信与千兆网口专题档案]] 中新增第 4 节，详解 IgH EtherCAT Master（支持 CoE/SoE、<1µs 分布式时钟、500µs DC 周期）、板级 DTS 极简使能、基于 sysfs `driver_override` 的 GMAC 驱动动态热切换机制，以及 Linux 6.18 PREEMPT_RT 实时内核支持。
+    4.  **Linux DRM/KMS 屏幕驱动移植**：在 [[Knowledge_Atoms/K1_K3显示系统与多媒体输出专题档案]] 中扩充 Linux 内核 DRM/KMS 显示流水线（Plane $\rightarrow$ CRTC $\rightarrow$ Encoder $\rightarrow$ Connector）、MIPI DSI 时序参数（`panel-timing`）配置与复位供电上下电排坑指南。
+    5.  **ROS 2 平台支持基准同步**：在 [[Evidence/ros2_platform_specs]] 与 [[Knowledge_Atoms/SpacemiT_ROS2_机器人与具身智能专题档案]] 中精确对齐官方平台支持矩阵（K3 支持 Humble/Jazzy/Lyrical，推荐 Bianbu 4.x；K1 支持 Humble/Jazzy，推荐 Bianbu 2.3.x）及多机通信版本一致性红线。
+*   **索引与元数据维护**：同步更新 `index.md` 顶层导航，关联原子 `status` 保持规范标记。
 
 ## [2026-08-25] feature & deploy | 构建双层零切片 MCP Server 并部署上线至 Cloudflare Workers
 *   **背景与动机**：为了解决外部开发者消费知识库需克隆大仓库和配置本地环境的痛点，构建了专为 Spacemit 知识库定制的 **Model Context Protocol (MCP) Server**。
