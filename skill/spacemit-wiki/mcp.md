@@ -4,7 +4,12 @@
 
 ## 接入
 
-公共 SSE 地址：`https://mcp.yao1302.xyz/sse`。按客户端当前支持的远程 MCP 配置格式填写 URL，例如支持此格式的客户端可用：
+安装统一遵循 [INSTALL.md](https://github.com/bbbicycle/spacemit-LLM-wiki/blob/main/INSTALL.md) 和 [文件清单](https://github.com/bbbicycle/spacemit-LLM-wiki/blob/main/install/manifest.json)，按同一提交下载所需文件，保留已有客户端配置。两种方式都安装完整 Skill：
+
+- **云端 `cloud`（默认）**：只安装 Skill 和远程 SSE 连接配置，不下载服务程序或索引。
+- **本地 `local`**：安装 Skill、`mcp/server.py` 与 `mcp/data/wiki_graph.json`，用 Python 3.9+ 通过 stdio 运行；无需第三方 Python 包或 Sources。精炼正文在本地，官方原文仍可能联网获取。
+
+公共 SSE 地址：`https://mcp.yao1302.xyz/sse`，不是 Streamable HTTP 端点。按客户端当前支持的远程 MCP 配置格式填写 URL，例如支持此格式的客户端可用：
 
 ```json
 {
@@ -16,7 +21,7 @@
 }
 ```
 
-配置格式及 SSE 支持取决于客户端版本；连接成功后以 `tools/list` 返回的实际参数为准。若客户端只支持本地 stdio，可运行仓库中的 `python3 mcp/server.py`。
+配置格式及 SSE 支持取决于客户端版本。若客户端只支持本地 stdio，可按安装指南选择本地模式，用 Python 和脚本的绝对路径配置启动。验收需完成握手、`tools/list` 和实际查询；还应确认客户端已发现 Skill，未加载时说明刷新或新会话操作。工具参数以实际 schema 为准。
 
 ## 查询工具
 

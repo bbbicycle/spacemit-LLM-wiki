@@ -15,23 +15,18 @@ For example, you can ask your AI assistant to:
 
 ## Install
 
-### Quick Setup
+Follow the shared [installation guide](https://github.com/bbbicycle/spacemit-LLM-wiki/blob/main/INSTALL.md), or ask an AI assistant with local file and configuration access to follow it for you. The [installation manifest](https://github.com/bbbicycle/spacemit-LLM-wiki/blob/main/install/manifest.json) lists the exact files; download them from one resolved commit without cloning the repository.
 
-Add the official MCP server to your editor (`.cursor/mcp.json` or `claude_desktop_config.json`):
+| Mode | Install | Requirements |
+| --- | --- | --- |
+| **Cloud (default)** | Complete Skill + remote MCP connection at `https://mcp.yao1302.xyz/sse` | Client supports Skill and remote SSE; network access |
+| **Local** | Complete Skill + `mcp/server.py` + `mcp/data/wiki_graph.json` | Client supports Skill and stdio; Python 3.9+ |
 
-```json
-{
-  "mcpServers": {
-    "spacemit-wiki": {
-      "url": "https://mcp.yao1302.xyz/sse"
-    }
-  }
-}
-```
+Copy the entire `spacemit-wiki/` directory into your assistant's recognized skill directory, preserving `SKILL.md`, `mcp.md`, `rules/` and `evals/`. Copying only `SKILL.md` leaves its relative references unresolved. Configure MCP using that client's supported format and merge existing settings. A remote MCP connection does not install the Skill automatically.
 
-Copy the entire `spacemit-wiki/` directory into your assistant's skill directory, preserving `SKILL.md`, `mcp.md`, `rules/` and `evals/`. Copying only `SKILL.md` leaves its relative references unresolved.
+Neither mode needs Sources, Worker code, or index rebuilding. Local refined knowledge is bundled; original source reads may still use GitHub. Verify both Skill discovery and a real MCP query; report any reload or manual setup still needed.
 
-*(Detailed tool reference & multi-client config paths: [mcp.md](./mcp.md))*
+Detailed tool reference: [mcp.md](./mcp.md).
 
 ---
 

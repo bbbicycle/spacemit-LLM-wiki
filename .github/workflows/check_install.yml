@@ -1,0 +1,41 @@
+name: Check Minimal Installation
+
+on:
+  pull_request:
+    paths:
+      - 'install/manifest.json'
+      - 'skill/spacemit-wiki/**'
+      - 'mcp/server.py'
+      - 'mcp/data/wiki_graph.json'
+      - 'scripts/test_minimal_install.py'
+      - '.github/workflows/check_install.yml'
+      - 'INSTALL.md'
+  push:
+    branches: [main]
+    paths:
+      - 'install/manifest.json'
+      - 'skill/spacemit-wiki/**'
+      - 'mcp/server.py'
+      - 'mcp/data/wiki_graph.json'
+      - 'scripts/test_minimal_install.py'
+      - '.github/workflows/check_install.yml'
+      - 'INSTALL.md'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check-install:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout without source submodules
+        uses: actions/checkout@v4
+        with:
+          submodules: false
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Verify cloud and local minimal installations
+        run: python3 -B scripts/test_minimal_install.py

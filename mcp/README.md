@@ -3,6 +3,8 @@
 本项目提供了专为 **Spacemit 芯片与产品知识库** 定制的 MCP Server。
 严格遵循 `Agent.md` 规范与 Anthropic MCP 协议，构建了 **“精炼知识图谱 + 原始资料源（Sources/）动态穿透”** 的双层知识服务架构。
 
+**用户安装请先读 [INSTALL.md](../INSTALL.md)**：云端版安装完整 Skill＋远程 SSE 配置；本地版安装完整 Skill＋本目录的服务脚本和发布索引。两种方式均无需全量克隆项目。下方 Cloudflare 部署步骤面向服务维护者。
+
 ---
 
 ## 🛠️ 包含的 7 大 MCP Tools
@@ -57,29 +59,19 @@ npx wrangler deploy
 
 ## 💻 外部开发者如何接入与使用？
 
-外部开发者**无需 clone 仓库、无需安装任何环境**，只需在他们的 AI 工具中配置这个 URL：
+按 [统一安装流程](../INSTALL.md) 与 [安装清单](../install/manifest.json) 选择一种方式，同时安装完整 Skill：
 
-### 1. Cursor IDE 配置
-在 Cursor 的 `Settings -> Features -> MCP Servers` 中点击 **Add New MCP Server**：
-* **Name**: `spacemit-wiki`
-* **Type**: `sse`
-* **URL**: `https://spacemit-wiki-mcp.<你的子域名>.workers.dev/sse`
+- **云端 `cloud`（推荐）**：配置 `https://mcp.yao1302.xyz/sse` 远程 SSE MCP；本地不安装服务程序、索引或 Python。
+- **本地 `local`**：用 Python 3.9+ 运行 `mcp/server.py`，保留相邻的 `data/wiki_graph.json`；配置 stdio MCP，不需要部署 Worker。
 
-### 2. Claude Desktop 配置
-在 `claude_desktop_config.json` 中添加：
-```json
-{
-  "mcpServers": {
-    "spacemit-wiki": {
-      "url": "https://spacemit-wiki-mcp.<你的子域名>.workers.dev/sse"
-    }
-  }
-}
-```
+客户端的 Skill 支持、SSE/stdio 支持及配置格式以其当前版本为准。安装后需验证真实 MCP 查询及客户端 Skill 加载，不把文件下载或 HTTP 200 当作接入成功。
 
-### 3. 本地免云端测试（Python）
-如果你想在本地直接运行测试：
+## 维护者测试
+
+最小安装测试不需要 Sources，其他回归按对应维护流程执行：
+
 ```bash
+python3 -B scripts/test_minimal_install.py
 python3 -B -m unittest discover -s mcp -p 'test_server.py'
 python3 -B scripts/test_build_mcp_index.py
 node --disable-warning=ExperimentalWarning mcp-worker/test_runtime.cjs
@@ -88,7 +80,7 @@ node --disable-warning=ExperimentalWarning mcp-worker/test_runtime.cjs
 
 ## 无 Sources 的消费模式与来源
 
-云端客户端不需要下载 Sources。运行本地 Python MCP 也只需 `mcp/server.py` 与随版本发布的 `mcp/data/wiki_graph.json`：
+云端客户端不需要下载 Sources。运行本地 Python MCP 需 Python 3.9+，运行文件仅 `mcp/server.py` 与同一提交发布的 `mcp/data/wiki_graph.json`；服务只依赖标准库：
 
 ```bash
 python3 mcp/server.py

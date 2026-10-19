@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "repository": "https://github.com/bbbicycle/spacemit-LLM-wiki",
+  "default_mode": "cloud",
+  "skill": {
+    "name": "spacemit-wiki",
+    "source_dir": "skill/spacemit-wiki",
+    "files": [
+      "SKILL.md",
+      "README.md",
+      "mcp.md",
+      "rules/search-efficiency.md",
+      "rules/hardware-safety.md",
+      "rules/generational.md",
+      "rules/system-baseline.md",
+      "evals/evals.json"
+    ]
+  },
+  "modes": {
+    "cloud": {
+      "transport": "sse",
+      "url": "https://mcp.yao1302.xyz/sse",
+      "runtime_files": []
+    },
+    "local": {
+      "transport": "stdio",
+      "python_min": "3.9",
+      "entrypoint": "mcp/server.py",
+      "runtime_files": [
+        "mcp/server.py",
+        "mcp/data/wiki_graph.json"
+      ]
+    }
+  },
+  "core_tools": [
+    "search_wiki",
+    "get_developer_journey",
+    "read_knowledge_atom",
+    "get_evidence_fact",
+    "get_graph_relations",
+    "search_raw_sources",
+    "read_raw_source_file"
+  ]
+}

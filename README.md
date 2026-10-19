@@ -2,11 +2,13 @@
 > **Spacemit LLM Wiki - Long-term LLM Knowledge Vault & Product Specification Knowledge Base for Spacemit RISC-V Ecosystem**
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
-[![Python 3.8+](https://img.shields.io/badge/Python-3.8%2B-green.svg)](https://www.python.org/)
+[![Local MCP: Python 3.9+](https://img.shields.io/badge/Local_MCP-Python_3.9%2B-green.svg)](https://www.python.org/)
 [![Lint & Topology](https://img.shields.io/badge/Lint-Vault%20Linker%20Pass-brightgreen.svg)](vault_linker_lint.py)
 [![CI/CD Pipeline](https://img.shields.io/badge/CI%2FCD-Auto%20Sync-orange.svg)](.github/workflows/sync_sources.yml)
 
 [中文文档](#中文文档) | [English Documentation](#english-documentation)
+
+**接入 AI：[安装指南（云端 / 本地两种方式）](INSTALL.md)** · [AI 按需下载清单](install/manifest.json)。两种方式都安装完整 Skill，无需全量克隆仓库。
 
 ---
 
@@ -23,31 +25,25 @@
 
 ---
 
-### 2. 🌐 Model Context Protocol (MCP) 云端服务接入
+### 2. 🌐 将知识库接入 AI
 
-外部开发者**无需克隆代码库、无需本地安装 Python/Obsidian**，即可在 **Cursor、Claude Desktop、Antigravity、Windsurf** 等现代 AI 开发环境中直接连接并消费本知识库！
+| 方式 | 用户获取的内容 | 本地环境 |
+| --- | --- | --- |
+| **云端 `cloud`（推荐）** | 完整 Skill＋远程 MCP 连接配置 | 无需 Python、Git 或 Obsidian；客户端需支持远程 SSE |
+| **本地 `local`** | 完整 Skill＋MCP 服务脚本＋发布索引 | Python 3.9+，客户端需支持 stdio |
 
-* **官方公共 MCP SSE 服务端点**：
-  👉 `https://mcp.yao1302.xyz/sse`
+两种方式均无需克隆项目或下载 Sources。客户端还需支持 Skill；具体配置方式以客户端当前版本为准。本地精炼知识可离线查询，官方原文仍可能需要联网。
 
-#### 2.1 客户端一键配置
+#### 2.1 复制给 AI 安装
 
-* **Cursor IDE 配置**：
-  在 Cursor 设置中进入 `Features -> MCP Servers -> Add New MCP Server`：
-  - **Name**: `spacemit`
-  - **Type**: `sse`
-  - **URL**: `https://mcp.yao1302.xyz/sse`
+将下面内容发给能操作本地文件与客户端配置的 AI 助手，需要本地模式时把 `cloud` 改为 `local`：
 
-* **Claude Desktop 配置** (`claude_desktop_config.json`)：
-  ```json
-  {
-    "mcpServers": {
-      "spacemit-wiki": {
-        "url": "https://mcp.yao1302.xyz/sse"
-      }
-    }
-  }
-  ```
+```text
+请帮我安装 SpacemiT 知识库，模式：cloud。
+请先读取 https://github.com/bbbicycle/spacemit-LLM-wiki/blob/main/INSTALL.md，按 install/manifest.json 仅获取完整 Skill 和所选模式需要的 MCP 文件或配置，合并已有配置，并验证实际查询。没有操作权限时请给出最少手动步骤。
+```
+
+完整步骤及验收标准见 [INSTALL.md](INSTALL.md)。云端 SSE 地址为 `https://mcp.yao1302.xyz/sse`；连接 MCP 不会自动安装 Skill。普通网页聊天可能只能指导配置。
 
 #### 2.2 核心 7 大零切片 MCP 工具
 
@@ -59,7 +55,7 @@
 | **精炼事实层** | `get_evidence_fact` | 直出结构化引脚表、Strap 配置、电气参数（点，附核验状态与出处） |
 | **图谱拓扑层** | `get_graph_relations` | 顺着双链探索依赖出链与被引用入链 |
 | **原始资料层** | `search_raw_sources` | 在已发布的 Sources 原始芯片/产品手册清单中检索 |
-| **原始资料层** | `read_raw_source_file` | 按需实时穿透拉取 GitHub 官方仓库的原始 Markdown/源码 |
+| **原始资料层** | `read_raw_source_file` | 按需读取索引固定 commit 的官方 Markdown/源码 |
 
 ---
 
@@ -126,14 +122,14 @@ Spacemit LLM Wiki/
 
 ---
 
-### 4. 🚀 快速开始 (Quick Start)
+### 4. 🛠️ 维护者：克隆与 Sources 初始化
 
-#### 3.1 仓库克隆与 Submodule 初始化
+#### 4.1 仓库克隆与 Submodule 初始化
 
-本知识库依赖进迭时空官方 5 大文档仓库作为 Sources 源。在克隆项目时，推荐使用 `--recursive` 参数一次性拉取全量子模块：
+仅在维护知识库、同步上游或重建索引时，获取进迭时空官方 5 大文档子模块。用户安装云端或本地 MCP 请使用上方 [安装指南](INSTALL.md)。维护者可递归克隆：
 
 ```bash
-# 推荐：递归克隆主仓库及所有官方 Sources 子模块
+# 维护者：递归克隆主仓库及所有官方 Sources 子模块
 git clone --recursive https://github.com/bbbicycle/spacemit-LLM-wiki.git
 cd spacemit-LLM-wiki
 ```
@@ -233,37 +229,17 @@ Built upon **Obsidian Wikilinks**, a **Three-Tier Topology (Journeys - Atoms - E
 
 ---
 
-### 2. 🌐 Model Context Protocol (MCP) Cloud Service
+### 2. 🌐 Connect your AI assistant
 
-External developers can directly consume this knowledge base in modern AI IDEs (**Cursor, Claude Desktop, Antigravity, Windsurf**) without cloning the repository or installing local environments:
+Choose **cloud** (recommended: complete Skill plus a remote SSE MCP connection) or **local** (complete Skill plus `mcp/server.py` and `mcp/data/wiki_graph.json`, Python 3.9+). Neither option requires cloning the repository or downloading Sources. Local refined knowledge is bundled; original upstream files may still require network access.
 
-* **Official Public MCP SSE Endpoint**:
-  👉 `https://mcp.yao1302.xyz/sse`
-
-#### Client Configuration
-
-* **Cursor IDE**:
-  `Settings -> Features -> MCP Servers -> Add New MCP Server`:
-  - **Name**: `spacemit`
-  - **Type**: `sse`
-  - **URL**: `https://mcp.yao1302.xyz/sse`
-
-* **Claude Desktop** (`claude_desktop_config.json`):
-  ```json
-  {
-    "mcpServers": {
-      "spacemit-wiki": {
-        "url": "https://mcp.yao1302.xyz/sse"
-      }
-    }
-  }
-  ```
+Follow [INSTALL.md](INSTALL.md), the shared user and AI installation guide, and [install/manifest.json](install/manifest.json) for the exact files. Install the complete Skill and use your client's supported configuration format. The cloud endpoint is `https://mcp.yao1302.xyz/sse`; Skill and SSE support depend on the client and version.
 
 ---
 
-### 2. Quick Start & Submodule Setup
+### 3. Maintainers: repository and submodule setup
 
-To clone the repository with all 5 Spacemit official source submodules:
+Only maintainers synchronizing sources or rebuilding the index need all 5 official source submodules. End users should follow [INSTALL.md](INSTALL.md). For maintenance:
 
 ```bash
 git clone --recursive https://github.com/bbbicycle/spacemit-LLM-wiki.git
@@ -278,7 +254,7 @@ git submodule update --init --recursive
 
 ---
 
-### 3. Synchronization & Automated Linting
+### 4. Synchronization & Automated Linting
 
 #### Source Update Scripts
 - **Linux / macOS Bash**: Run `./update_sources.sh` to pull the latest upstream source submodules.
@@ -306,6 +282,6 @@ The script validates:
 
 ---
 
-### 4. License & Contribution
+### 5. License & Contribution
 
 This project is licensed under the Apache 2.0 License. Contributions, domain expansions, and documentation updates are welcome via GitHub Pull Requests!
