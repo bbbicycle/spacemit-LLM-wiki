@@ -17,7 +17,7 @@
 
 ### 1. 项目简介 (Project Overview)
 
-**Spacemit LLM Wiki** 是专为 **进迭时空 (Spacemit)** RISC-V 芯片（K1 / K3）、全系 12 款官方硬件产品与生态终端（MUSE Pi / K3 Pico-ITX / CoM260 / MUSE Book 笔记本 / MUSE Box 迷你主机 / MUSE Paper LCD 平板 / MUSE Card / MUSE Shelf / RV2768 集群 / RISC-V Labkit 实验箱等）及边缘侧软硬件生态（Buildroot BSP / Bianbu OS / SpaceAI 大模型推理 / ROS 2 具身智能）打造的**高密度、长效 LLM 知识库与外部记忆体**。
+**Spacemit LLM Wiki** 是专为 **进迭时空 (Spacemit)** RISC-V 芯片、官方硬件产品与生态终端（MUSE Pi / K3 Pico-ITX / CoM260 / MUSE Book 笔记本 / MUSE Box 迷你主机 / MUSE Paper LCD 平板 / MUSE Card / MUSE Shelf / RV2768 集群 / RISC-V Labkit 实验箱，以及 V100 C2201 计算、S5236 存储和 G5201 智算服务器等）及软硬件生态（Buildroot BSP / Bianbu OS / SpaceAI 大模型推理 / ROS 2 具身智能）打造的**高密度、长效 LLM 知识库与外部记忆体**。
 
 本知识库采用 **Obsidian 双链网络** 与 **线-面-点三层架构 +“产品生态矩阵 (L0/L1) 与技术机理内核 (L2~L5)”正交双轨拓扑** 设计，具备双重优势：
 - **人类可读性**：工程师与商务团队可通过产品家族全景图谱、树状索引与工程师导读框精准浏览、选型与定位排坑指南。
@@ -95,7 +95,7 @@
 ```text
 Spacemit LLM Wiki/
 ├── Developer_Journeys/         # [线] 开发者上手向导 (7 篇极简通关动线)
-├── Knowledge_Atoms/            # [面] 核心技术专题档案 (31 篇: 产品系统档案 + 跨品技术机理双轨)
+├── Knowledge_Atoms/            # [面] 核心技术专题档案 (32 篇: 产品系统档案 + 跨品技术机理双轨)
 ├── Evidence/                   # [点] 物理规格与硬件参数事实表 (27 篇 100% 结构化数据点)
 ├── Sources/                    # 进迭时空官方 Git 子模块源码与文档库
 │   ├── docs-chip/              # K1/K3 芯片手册 Submodule
@@ -221,7 +221,7 @@ GitHub Actions 工作流位于 `.github/workflows/sync_sources.yml`。
 
 ### 1. Project Overview
 
-**Spacemit LLM Wiki** is a high-density, long-term external memory and knowledge vault tailored for **Spacemit** RISC-V SoCs (K1 / K3), full-spectrum 12 official hardware products & ecosystem terminals (MUSE Pi, K3 Pico-ITX, CoM260, MUSE Book laptop, MUSE Box mini PC, MUSE Paper LCD tablet, MUSE Card, MUSE Shelf, RV2768 cluster, RISC-V Labkit, etc.), and edge software/hardware stack (Buildroot BSP, Bianbu OS, SpaceAI LLM inference, and ROS 2 robotics).
+**Spacemit LLM Wiki** is a high-density, long-term external memory and knowledge vault tailored for **Spacemit** RISC-V chips, official hardware products and ecosystem terminals (MUSE Pi, K3 Pico-ITX, CoM260, MUSE Book laptop, MUSE Box mini PC, MUSE Paper LCD tablet, MUSE Card, MUSE Shelf, RV2768 cluster, RISC-V Labkit, and V100 C2201 compute, S5236 storage and G5201 AI servers), and the software/hardware stack (Buildroot BSP, Bianbu OS, SpaceAI LLM inference, and ROS 2 robotics).
 
 Built upon **Obsidian Wikilinks**, a **Three-Tier Topology (Journeys - Atoms - Evidence)** and an **Orthogonal Dual-Track (Product Matrix L0/L1 + Technology Mechanism L2-L5)** architecture, it provides:
 - **Human Readability**: Ecosystem portfolio trees, clear developer quick-start paths, modular topic archives, and inline tips for debugging.

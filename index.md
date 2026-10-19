@@ -1,16 +1,16 @@
 ---
 type: vault_index
 title: "Spacemit LLM Wiki · 6大前瞻技术领域全栈索引"
-status: approved
+status: needs_review
 created: 2026-06-29
-updated: 2026-10-13
+updated: 2026-10-19
 aliases: [index, index.md, 索引, 全局索引]
 ---
 
 # Spacemit LLM Wiki · 全栈索引网络
 
 > [!NOTE]
-> 本索引系统整理了 **SpacemiT K1 / K3 处理器、配套 PMIC 芯片及生态开发板** 的全栈软硬件技术资产，覆盖芯片选型、电路设计、BSP 内核、Bianbu OS、编译工具链及端侧 AI / 机器人应用。
+> 本索引系统整理了 **SpacemiT K1 / K3 处理器、配套 PMIC、生态开发板及 V100 系列服务器** 的全栈软硬件技术资产，覆盖芯片选型、电路设计、BSP 内核、Bianbu OS、编译工具链及端侧 AI / 机器人应用。
 > 
 > 知识库采用 **“线 - 面 - 点” 三层知识架构** 组织：
 > 1. **开发者旅程 (Developer Journeys - 线)**：任务驱动的极简通关上手向导。
@@ -30,7 +30,8 @@ aliases: [index, index.md, 索引, 全局索引]
 *   [[Developer_Journeys/K3芯片开发快速上手向导]] —— 帮助开发者从了解规格、设计散热到跑通本地大模型的极简通关动线。
 
 ### 主题档案 (Knowledge Atoms)
-*   [[Knowledge_Atoms/Spacemit_产品矩阵与硬件生态全景档案]] —— 🗺️ **顶层总枢纽**：系统汇总 Spacemit 双代际底座与全系 12 款官方量产硬件/生态终端的家族图谱与选型矩阵。
+*   [[Knowledge_Atoms/Spacemit_产品矩阵与硬件生态全景档案]] —— 🗺️ **顶层总枢纽**：汇总 Spacemit 芯片底座与官方硬件、生态终端和服务器的家族图谱与选型矩阵。
+*   [[Knowledge_Atoms/SpacemiT_V100系列工业与边缘计算硬件专题档案]] —— 汇总 Vital Stone V100 系列 C2201 计算服务器、S5236 存储服务器和 G5201 智算服务器；旧稿产品分类冲突见专题核验说明。
 *   [[Knowledge_Atoms/Spacemit_K1生态终端与教学实验套件专题档案]] —— 汇总 Muse Book 笔记本、Muse Box 迷你主机、Muse Card 计算卡、Muse Paper LCD 平板、Muse Shelf 云算力架及高校实验箱。
 *   [[Knowledge_Atoms/K1热设计与功耗专题档案]] —— 汇总 K1 芯片 3W ~ 5W 超低 TDP 功耗、DVFS 调压与极简被动散热。
 *   [[Knowledge_Atoms/K3热设计与散热专题档案]] —— 汇总 K3 芯片热学特性、结温限制与硬件散热设计指南。⚠️ 官方已撤回 `k3_thermal_design.md`。
@@ -64,9 +65,9 @@ aliases: [index, index.md, 索引, 全局索引]
 *   [[Knowledge_Atoms/K3启动模式与Strap管脚配置专题档案]] —— 汇总 K3 芯片 Strap 管脚配置、启动介质选择与硬件上下拉设计要求。
 *   [[Knowledge_Atoms/SpacemiT生态板卡与PMIC电源配合专题档案]] —— 汇总 K1/P1 与 K3/P1S/P3 电源轨配合、动态反馈调压以及 SW/FB PCB 布局走线。
 *   [[Knowledge_Atoms/SpacemiT_P3_PMIC电源芯片专题档案]] —— 🆕 汇总 P3 四相 32A 大电流 Buck PMIC、5 种相位组合与 WLCSP 超小封装。
-*   [[Knowledge_Atoms/K1_K3显示系统与多媒体输出专题档案]] —— 汇总 HDMI/DSI 接口设计、电平转换、防静电与多媒体硬件规范。
+*   [[Knowledge_Atoms/K1_K3显示系统与多媒体输出专题档案]] —— 汇总 HDMI/DSI 接口设计、电平转换、防静电、Linux DRM/KMS 显示流水线及屏幕驱动移植调试。
 *   [[Knowledge_Atoms/K1_K3摄像系统与图像处理专题档案]] —— 汇总 MIPI CSI 100Ω 差分走线等长、三摄/四摄并发与 DTS 通道绑定。
-*   [[Knowledge_Atoms/K1_K3网络通信与千兆网口专题档案]] —— 汇总双路 GMAC 以太网、百兆 PHY 兼容限值、Wi-Fi/BT 模组联调及 DPDK 用户态加速。
+*   [[Knowledge_Atoms/K1_K3网络通信与千兆网口专题档案]] —— 汇总双路 GMAC 以太网、百兆 PHY 兼容限值、Wi-Fi/BT 模组联调、DPDK 用户态加速及 EtherCAT 工业实时总线方案。
 *   [[Knowledge_Atoms/K1_K3高速外设接口专题档案]] —— 汇总 PCIe 2.1/3.0 通道拆分限制、USB 主从切换与外部 SATA 扩展。
 *   [[Knowledge_Atoms/Muse_Pi_板级硬件设计专题]] —— 汇总 MUSE Pi/Pro 开发板的 USB-PD 供电规范、Strap 拨码启动与 JTAG/UART 调试复用设计。
     *   [[Knowledge_Atoms/MUSE_Pi_26Pin_IOMAP管脚映射专题]] —— 汇总 MUSE Pi 26-Pin 扩展双排插针定义、JTAG/UART/CAN0/SPI3 引脚映射及 DTS 设备树路由表。

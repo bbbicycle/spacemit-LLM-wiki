@@ -32,7 +32,7 @@
 ```bash
 python3 scripts/build_mcp_index.py
 ```
-构建需完整初始化五个 Sources 子模块；当前快照为 65 个精炼节点、1201 个原始文件。索引同时写入 Python 和 Worker，记录真实构建时间、内容哈希与源 commit。缺少或存在未提交改动的 Sources 时构建失败，已有索引保留。
+构建需完整初始化五个 Sources 子模块；2026-10-19 合并快照为 66 个精炼节点、1231 个原始文件。索引同时写入 Python 和 Worker，记录真实构建时间、内容哈希与源 commit。缺少或存在未提交改动的 Sources 时构建失败，已有索引保留。
 
 ```bash
 git submodule update --init --recursive

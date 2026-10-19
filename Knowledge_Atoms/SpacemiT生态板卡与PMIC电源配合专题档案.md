@@ -3,15 +3,22 @@ type: knowledge_atom
 title: "SpacemiT 生态板卡与 PMIC 电源配合专题档案"
 status: needs_review
 created: 2026-06-29
-updated: 2026-08-12
+updated: 2026-10-19
 aliases: ["SpacemiT生态板卡与PMIC电源配合专题", "SpacemiT Board and PMIC Power Matching Topic", "spacemit_pmic_matching"]
 domain: hardware_schematic_design
 target_audience: [电源电路工程师, PCB Layout]
+source_file: Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md
+source_commit: 15254b1cfe339c1863d8edf8137a337681fb2780
+source_section: "1.2.5 CPU 电源设计；1.2.6 DDR 电源设计"
+source_resolution: partial
+verification_status: unverified
+source_checked_at: 2026-10-19
+conflicts: "旧同步稿称 X100/A100 独立供电，与官方 V1.1 合并供电修订冲突；保留勘误说明，待人工审核。"
 ---
 # SpacemiT 生态板卡与 PMIC 电源配合专题档案
 
 > [!TIP]
-> **💡 工程师导读与排坑焦点**：详解 K1/P1 与 K3/P1S 动态反馈 DVFS 调压、P3 高性能 32A Buck 拓扑、SW/FB 布线与闹钟开机避坑。
+> **💡 工程师导读与排坑焦点**：详解 K1/P1 与 K3/P1S 动态反馈 DVFS 调压、K3 16核多相供电拓扑、DDR 电源 Buglist 勘误、P3 高性能 32A Buck 拓扑、SW/FB 布线与闹钟开机避坑。
 > **目标读者**：`电源电路工程师 / PCB Layout` | **技术领域**：`hardware_schematic_design`
 
 本专题档案打破芯片与单板的边界，梳理了 K1 芯片与 PMIC P1、K3 芯片与 PMIC P1S/P3 的供电与上下电配合设计，并对比了生态开发板 Muse Pi 与 Muse Pi Pro 的硬件设计差异。
@@ -31,11 +38,21 @@ target_audience: [电源电路工程师, PCB Layout]
 针对高算力芯片 Core 或大电流计算场景，SpacemiT 推出全新的四相降压 PMIC **P3**：
 *   **32 A 大电流支持**：支持 4+0、3+1、2+2 等 5 种相位组合，详情参阅知识档案 [[Knowledge_Atoms/SpacemiT_P3_PMIC电源芯片专题档案|SpacemiT P3 PMIC 电源芯片专题档案]]。
 
-### 1.3 PMIC P1 调压避坑
+### 1.3 K3 十六核 CPU 与 DDR 电源设计与避坑
+根据最新官方硬件设计指南（`Sources/docs-chip`）：
+*   **16 核 CPU 供电修订（V1.1，2026-10-16）**：
+    *   K3 包含 8 个 X100 核与 8 个 A100 核。固定来源版本的 1.2.5 节要求 **X100 / A100 / VCC_SYS / VDD0V8_DDR 合并供电**；滤波电容数量、容值和 Layout 按对应版本参考电路设计。
+    *   **冲突保留，待审核**：2026-10-16 的旧知识稿将双簇描述为独立供电、仅 A100 与 SYS 共电，与上述官方修订不一致。该旧描述不作当前设计依据；电路实施前须结合官方 Buglist 核对适用版本。
+*   **DDR 供电与 Buglist 勘误红线**：
+    *   K3 支持双通道 LPDDR5 / LPDDR4x，不同类型颗粒的电压轨（如 VDD1/VDD2/VDDQ）不一致，务必核对电路设计图纸。
+    *   > [!WARNING]
+        > **设计避坑**：官方在 2026 年 10 月更新中明确指出：**DDR 供电部分的参考设计存在 Buglist 勘误修改**。工程师在进行单板原理图与 PCB 设计时，必须严格对照官方发布的《K3 硬件设计 Buglist》核对滤波电容容值及布线要求，严禁直接复制早期未经勘误的参考原理图。
+
+### 1.4 PMIC P1 调压避坑
 *   **RTC 定时开机**：P1 PMIC 具备 RTC 闹钟自动开机功能（精度参见 [[Evidence/k1_hardware_debug_parameters]]）。当系统处于关机且电池有电的状态时，若定时时间到达，P1 会自动拉高启动，无需外部中断信号。
 *   **开关管未开启导通问题**：P1 集成的 SW 开关在未开启时，会通过内置 MOS管的体二极管微弱导通。这属于设计已知特性，通流极弱。为确保外设稳定工作，**在软件中必须显式写入寄存器开启该 SW**。
 
-### 1.4 PMIC P1/P1S PCB 布局布线规范
+### 1.5 PMIC P1/P1S PCB 布局布线规范
 为了保障高电流 BUCK 轨的输出电压稳定、降低高频电磁干扰，在 PCB 设计中必须严格遵守以下 Layout 规范：
 *   **输入滤波电容 (Cin) 摆放**：
     *   **单面贴片**：Cin 必须与相应的 Vin 引脚**垂直放置**并尽量就近摆放，以使输入电流回路尽可能短。
@@ -48,7 +65,7 @@ target_audience: [电源电路工程师, PCB Layout]
 *   **远端反馈网络 (FB)**：反馈走线必须从**最外侧（靠近负载、远离芯片）**的 Cout 焊盘拉回至芯片引脚，严禁在电感下方或 SW 走线附近走反馈线，避免引入高频纹波干扰。
 *   **电源层设计**：PCB 第二层必须作为**完整地平面 (GND)**，不走任何信号线。第三层作为 VIN 输入层，Vin 铜箔应绕过芯片 EPAD 呈**环形铺铜**，为 Cin 提供完整的回流路径。EPAD 需打 7x7 的散热过孔。
 
-### 1.5 模拟供电磁珠隔离与测流电阻合并规则
+### 1.6 模拟供电磁珠隔离与测流电阻合并规则
 在设计芯片外围供电电路时，必须严格区分“功能滤波器（磁珠）”与“调试测流电阻”：
 *   **模拟与数字电源隔离**：原理图中为模拟 PHY（如 AVDD、PLL、Audio、CSI/DSI 等）与数字 IO 供电之间设计的**隔离磁珠（如 120Ω@100MHz）绝对不能省略或直接合并走线**。磁珠能阻断数字高频噪声耦合到敏感的模拟电路上。若省略，将直接导致外设性能下降甚至无法正常初始化。
 *   **测试测流电阻短接**：参考设计中为测量各路电源功耗而星形连接的多级测流电阻，在实际量产或无需测流的板卡设计中，**可以直接删除并进行短接合并**，直接连接到主电源层。

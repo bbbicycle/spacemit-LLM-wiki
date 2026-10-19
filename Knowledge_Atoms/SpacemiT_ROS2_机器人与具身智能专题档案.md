@@ -3,7 +3,7 @@ type: knowledge_atom
 title: "SpacemiT ROS 2 机器人与具身智能专题档案"
 status: needs_review
 created: 2026-08-10
-updated: 2026-10-13
+updated: 2026-10-19
 aliases: [SpacemiT_ROS2_机器人与具身智能专题档案, ROS 2 & Embodied AI Dossier, SpacemiT Robotics Guide]
 domain: edge_ai_robotics
 target_audience: [机器人工程师, 具身 AI 开发者]
@@ -43,7 +43,20 @@ graph TD
     end
 ```
 
-具体的 ROS 2 发行版与节点开销数据请查阅 [[Evidence/ros2_platform_specs|SpacemiT ROS 2 平台规格表]]。
+### 1.1 官方芯片与 ROS 2 平台支持基准
+
+根据 `docs-ros@808d02c1bd11cf0d4376555919bd61c90e38d853` 的平台支持列表（来源与适用条件见 [[Evidence/ros2_platform_specs|SpacemiT ROS 2 平台规格表]]）：
+
+| 芯片型号 | 当前支持的 ROS 2 版本 | 规划支持的 ROS 2 版本 | 当前推荐的操作系统 |
+| :---: | :---: | :---: | :---: |
+| **K3** | **Humble、Jazzy** | **Lyrical**（计划支持） | **Bianbu 4.x**（4.0.1 起） |
+| **K1** | **Humble、Jazzy** | — | **Bianbu 2.3.x** |
+
+Lyrical 是平台适配规划，尚未正式提供；各版本的软件包、驱动和功能支持范围以平台文档及发布说明为准，当前 SDK 示例主要基于 Humble。
+
+> [!IMPORTANT]
+> **多机通信版本一致性红线**：
+> 官方建议**机器人端与上位机/工控机使用相同的 ROS 2 发行版**（例如统一采用 Humble 或统一采用 Jazzy），并按对应示例配置通信中间件、网络和 `ROS_DOMAIN_ID`。ROS 2 上游不保证不同发行版之间的节点通信兼容。
 
 ---
 
@@ -51,7 +64,7 @@ graph TD
 
 ### 2.1 Bianbu OS 与 Docker 部署
 
-可以在 Bianbu OS (Debian-based) 或 Ubuntu 24.04 上直接通过 `apt` 安装 ROS 2 二进制包，也可直接启动官方预构建 Docker 镜像：
+按上表对应的 Bianbu 系统和平台配套软件源安装 ROS 2 RISC-V 软件包，具体步骤使用各平台安装指南。下面保留既有 Docker 示例，复现前需核对镜像可用性、版本与板型，不将其等同于任意 Ubuntu 系统均可直接安装：
 
 ```bash
 # 启动 ROS 2 镜像容器

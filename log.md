@@ -3,7 +3,7 @@ type: vault_log
 title: "SpacemiT K3 芯片文档重构日志"
 status: active
 created: 2026-06-29
-updated: 2026-10-13
+updated: 2026-10-19
 ---
 
 # SpacemiT K3 芯片文档重构日志 (log.md)
@@ -12,6 +12,27 @@ updated: 2026-10-13
 > 本文件用于记录 Spacemit LLM Wiki 知识库的重构、清理、验证与 MCP 服务演进日志。
 
 ---
+
+## [2026-10-19] merge | 合并远端知识更新与云端 / 本地最小安装入口
+
+- 整合本地 `c71daa6`（含架构改进 `e381a6f`）与已取得的远端 `bf40d43`：远端有 7 个 Sources 自动同步提交和 1 个 V100 / EtherCAT / DRM / ROS2 知识更新提交 `269531b`。
+- 解决 ROS2 事实表、ROS2 专题、产品矩阵、全局索引和日志的 5 处文本冲突。保留本地既有产品事实纠正、固定来源版本和待核验状态，同时保留远端新增专题、官方支持矩阵及原始同步历史。
+- V100 旧稿把 C2201 / S5236 / G5201 分别描述为紧凑边缘计算、工业主控、网关；对应官方 `docs-product@97026162fb37562a5e19fa4ca0ada6481e5ff455` 文档定位为计算、存储、智算服务器。保留旧分类冲突说明，当前入口按官方产品定位组织，待人工审核；不由 K 系列能力推导 V100 的 EtherCAT / ROS2 兼容保证。
+- ROS2 矩阵保留官方已支持与计划支持的区分，Lyrical 不提前标成可用。K3 电源旧稿称双簇独立供电，而当前官方硬件指南 V1.1 要求 X100 / A100 / VCC_SYS / VDD0V8_DDR 合并供电，专题按固定来源修订并保留冲突说明；显示移植按 U-Boot / Kernel 实际驱动配置，不将 `panel-timing` 或 `dsi-lanes` 宣称为统一接口。
+- 保留 [统一安装指南](INSTALL.md) 与 [最小下载清单](install/manifest.json)：云端获取完整 Skill 和 SSE 配置，本地额外获取 Python 服务及发布索引。消费设备不全量克隆、不拉取 Sources、不重建索引。
+- 按合并后的五个官方子模块固定版本重建双端索引：66 个精炼节点、1231 个原始资料文件，来源 SHA 与主仓库记录的子模块指针一致。17 项构建器、8 项 Python 服务、4 项最小安装检查通过；Worker 运行回归、36 次跨端一致性调用、TypeScript 检查及两项文档 lint 通过。上述验证不构成全库技术事实已人工审核的声明。
+
+## [2026-10-16] upstream_sync & refactor | 同步官方 GitHub 最新子模块并完成 V100/EtherCAT/DRM/ROS2 知识提炼
+*   **同步背景**：拉取主仓库落后远端 `origin/main` 的 4 个 GitHub Actions 自动构建提交（`0c1dd56`），并将 `Sources/` 4 大文档子模块（`docs-chip`, `docs-product`, `docs-buildroot`, `docs-ros`）检出至最新指针。
+*   **知识图谱与专题重构成果**：
+    1.  **新建 Vital Stone 硬件专题**：创建 [[Knowledge_Atoms/SpacemiT_V100系列工业与边缘计算硬件专题档案]]，系统梳理官方最新释出的 V100 系列（C2201 紧凑边缘计算、S5236 工业智算主控、G5201 智能网关）家族拓扑与定位，并在 [[Knowledge_Atoms/Spacemit_产品矩阵与硬件生态全景档案]] 与 [[index]] 完成全矩阵挂载。
+    2.  **K3 硬件电源设计与 Buglist 勘误**：在 [[Knowledge_Atoms/SpacemiT生态板卡与PMIC电源配合专题档案]] 中补充 K3 16 核 CPU（X100 与 A100 双簇独立供电、A100 与 SYS 域共电）拓扑，高亮警示 DDR5/DDR4x 供电必须遵从官方《K3 硬件设计 Buglist》设计规范。
+    3.  **EtherCAT 工业总线与驱动热切换**：在 [[Knowledge_Atoms/K1_K3网络通信与千兆网口专题档案]] 中新增第 4 节，详解 IgH EtherCAT Master（支持 CoE/SoE、<1µs 分布式时钟、500µs DC 周期）、板级 DTS 极简使能、基于 sysfs `driver_override` 的 GMAC 驱动动态热切换机制，以及 Linux 6.18 PREEMPT_RT 实时内核支持。
+    4.  **Linux DRM/KMS 屏幕驱动移植**：在 [[Knowledge_Atoms/K1_K3显示系统与多媒体输出专题档案]] 中扩充 Linux 内核 DRM/KMS 显示流水线（Plane $\rightarrow$ CRTC $\rightarrow$ Encoder $\rightarrow$ Connector）、MIPI DSI 时序参数（`panel-timing`）配置与复位供电上下电排坑指南。
+    5.  **ROS 2 平台支持基准同步**：在 [[Evidence/ros2_platform_specs]] 与 [[Knowledge_Atoms/SpacemiT_ROS2_机器人与具身智能专题档案]] 中精确对齐官方平台支持矩阵（K3 支持 Humble/Jazzy/Lyrical，推荐 Bianbu 4.x；K1 支持 Humble/Jazzy，推荐 Bianbu 2.3.x）及多机通信版本一致性红线。
+*   **索引与元数据维护**：同步更新 `index.md` 顶层导航，关联原子 `status` 保持规范标记。
+
+> 历史同步记录保留；其中 V100 产品分类、K3 CPU 供电和 ROS 2 Lyrical 支持状态的勘误见 2026-10-19 合并记录及对应专题。
 
 ## [2026-10-13] 修复检索、事实溯源、索引同步与 Agent 规则
 
