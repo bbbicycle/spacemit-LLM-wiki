@@ -1,12 +1,22 @@
 ---
 type: knowledge_atom
 title: "K1 大模型本地推理与 AI 算力专题档案"
-status: needs_review
+status: "needs_review"
 created: 2026-06-29
-updated: 2026-06-29
+updated: "2026-10-20"
 aliases: ["K1大模型本地推理与AI算力专题", "K1 Local LLM Inference and AI Power Topic", "k1_llm_ai_power"]
 domain: edge_ai_robotics
 target_audience: [AI 算法工程师, 应用开发]
+source_file: "Sources/docs-chip/zh/key_stone/k1/k1_docs/root_overview.md"
+source_commit: "1ea15a766287024a5bb7b548850826e3525a80dc"
+source_locator: "K1 产品简介；概述；特性；框图"
+source_resolution: "partial"
+verification_status: "unverified"
+source_checked_at: "2026-10-20"
+source_note: "本次仅定位已有引用对应的文件与章节，未对正文全部事实逐项复核；引用的 Evidence 保留各自历史版本与核验状态。"
+source_origin: "https://github.com/spacemit-com/docs-chip"
+source_related_file: ["Sources/docs-chip/zh/key_stone/k1/k1_sw/k1_sdk_user_guide.md", "Sources/docs-ai/zh/architecture/concept.md"]
+source_related_commit: ["15254b1cfe339c1863d8edf8137a337681fb2780", "2b3894e983a295ed0278bc625867e0c132e0e259"]
 ---
 # K1 大模型本地推理与 AI 算力专题档案
 

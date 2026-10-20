@@ -1,12 +1,20 @@
 ---
 type: knowledge_atom
 title: "K3 安全启动 (Secure Boot) 开发专题档案"
-status: needs_review
+status: "needs_review"
 created: 2026-08-10
-updated: 2026-08-10
+updated: "2026-10-20"
 aliases: ["K3 Secure Boot 专题", "K3 Secure Boot Development Topic", "k3_secure_boot"]
 domain: bsp_kernel_drivers
 target_audience: [BSP 工程师, 安全固件工程师]
+source_file: "Sources/docs-buildroot/zh/k3_buildroot/device/secureboot.md"
+source_commit: "163a8fccf8e7071f3177753d2e86e482e97970fe"
+source_locator: "安全启动开发指南；概述；编写目的；适用范围；相关人员"
+source_resolution: "partial"
+verification_status: "unverified"
+source_checked_at: "2026-10-20"
+source_note: "本次仅定位已有引用对应的文件与章节，未对正文全部事实逐项复核；引用的 Evidence 保留各自历史版本与核验状态。"
+source_origin: "https://github.com/spacemit-com/docs-buildroot"
 ---
 # K3 安全启动 (Secure Boot) 开发专题档案
 

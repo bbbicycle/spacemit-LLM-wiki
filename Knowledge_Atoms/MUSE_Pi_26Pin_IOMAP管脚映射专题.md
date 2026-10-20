@@ -1,19 +1,29 @@
 ---
 type: knowledge_atom
 title: "MUSE Pi 26-Pin IOMAP 与外设管脚复用专题档案"
-status: needs_review
+status: "needs_review"
 created: 2026-08-10
-updated: 2026-08-10
+updated: "2026-10-20"
 aliases: ["Muse Pi 26Pin IOMAP", "Muse Pi Pinout", "Muse Pi 管脚映射表", "muse_pi_26pin_iomap"]
 domain: hardware_schematic_design
 target_audience: [硬件调试工程师, 驱动开发工程师, AI-Agent]
+source_file: "Sources/docs-product/en/k1_series/k1_muse_pi/pi_user_guide.md"
+source_commit: "bc640755145625cc20745f49861f82588863fca3"
+source_locator: "26-Pin Interface，行 497 起"
+source_resolution: "partial"
+verification_status: "unverified"
+source_checked_at: "2026-10-20"
+source_note: "本次仅定位已有引用对应的文件与章节，未对正文全部事实逐项复核；引用的 Evidence 保留各自历史版本与核验状态。"
+source_origin: "https://github.com/spacemit-com/docs-product"
+source_related_file: ["Sources/docs-product/zh/k1_series/k1_muse_pi/root_overview.md", "Sources/docs-product/zh/k1_series/k1_muse_pi_pro/root_overview.md"]
+source_related_commit: ["8c851807f2c54e8ba54d568b268100ca727d0777", "8c851807f2c54e8ba54d568b268100ca727d0777"]
 ---
 
 # MUSE Pi 26-Pin IOMAP 与外设管脚复用专题档案
 
 > [!TIP]
 > **💡 工程师与 AI-Agent 导读**：本专题汇总了基于 SpacemiT K1 芯片的生态板卡 MUSE Pi / MUSE Pi Pro 的 26-Pin 扩展双排插针定义。
-> * **原始数据源**：[pi_user_guide.md:L495-L588](file:///Users/bicycle/Spacemit%20LLM%20Wiki/Sources/docs-product/en/k1_muse_pi/pi_user_guide.md#L495-L588)
+> * **原始数据源**：[pi_user_guide.md:L495-L588](../Sources/docs-product/en/k1_series/k1_muse_pi/pi_user_guide.md#L495-L588)
 > * **硬件芯片关联**：[[Knowledge_Atoms/K1硬件外设接口与物理调试专题档案|K1 硬件外设接口专题]] | [[Knowledge_Atoms/Muse_Pi_板级硬件设计专题|Muse Pi 板级设计专题]]
 
 ### 板卡物理排针位置图

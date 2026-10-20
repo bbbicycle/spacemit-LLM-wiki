@@ -3,7 +3,7 @@ type: maintenance_guide
 title: "Spacemit LLM Wiki 维护规范"
 status: needs_review
 created: 2026-06-29
-updated: 2026-10-13
+updated: 2026-10-20
 ---
 
 # 知识库维护规范
@@ -218,4 +218,6 @@ publication: false # 阻止条目进入公共 MCP；内部 tier 2/3、NDA 默认
 
 来源定位与事实认证分别记录：`source_resolution: resolved` 表示文件/章节已定位，`partial` 表示只覆盖部分结论，`unresolved` 表示出处未定位，均不自动等于 `verification_status: verified`。`source_checked_at` 是定位检查日期；仅完成实际事实复核时填写 `verified_at`。跨文件的补充出处可用 `source_related_file / source_related_commit`，无法核实的指标单独标注。
 
-构建器支持顶层标量和别名/读者列表；不支持的嵌套 YAML、块标量或重复字段会拒绝构建，不能静默绕过发布策略。完整字段透传不表示已自动认证其内容。
+构建器支持顶层标量、别名/读者列表和来源路径/commit 平行列表；不支持的嵌套 YAML、块标量或重复字段会拒绝构建，不能静默绕过发布策略。完整字段透传不表示已自动认证其内容。
+
+P1 的来源字段、JSON 报告、分页边界与 stale 复核命令见 [新鲜度与维护闭环](FRESHNESS_MAINTENANCE.md)。

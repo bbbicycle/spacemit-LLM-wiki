@@ -7,7 +7,7 @@ import json
 from pathlib import Path
 import subprocess
 import unittest
-from unittest.mock import patch
+from unittest.mock import patch, mock_open
 
 ROOT = Path(__file__).resolve().parents[1]
 SPEC = importlib.util.spec_from_file_location("wiki_server", ROOT / "mcp/server.py")
@@ -61,6 +61,8 @@ class RuntimeTests(unittest.TestCase):
                         source_resolution="partial", source_note="measurement conditions need review",
                         source_checked_at="2026-10-13", source_related_file="Sources/docs-chip/related.md",
                         source_related_commit="def",
+                        freshness="stale", stale_paths=["Sources/docs-chip/example.md"], unknown_paths=[],
+                        checked_against_commit={"docs-chip": "new"}, source_freshness=[{"freshness": "stale"}],
                         metric_source_resolution="unresolved", thermal_source_resolution="unresolved",
                         chip="K3", product="test board", verified_at="2026-10-01", conflicts=["needs review"],
                         source_origin="GitHub", source_tier="tier_1", effective_until="2026-12-01")
@@ -109,13 +111,50 @@ class RuntimeTests(unittest.TestCase):
             with patch.object(server.os.path, "isfile", return_value=True), patch.object(server.subprocess, "run", side_effect=results):
                 self.assertEqual(self.wiki.local_source_matches(item, "/fake/source"), expected)
 
-    def test_no_range_keeps_full_read_compatibility(self):
+    def test_default_page_and_continuation(self):
         item = self.raw_fixture()
-        body = ("line\n" * 300).encode()
+        body = "\n".join(str(i) for i in range(1, 451)).encode()
         with patch.object(self.wiki, "local_source_matches", return_value=False), \
-                patch.object(server.urllib.request, "urlopen", return_value=io.BytesIO(body)):
+                patch.object(server.urllib.request, "urlopen", side_effect=lambda *a, **k: io.BytesIO(body)):
             result = self.call("read_raw_source_file", {"file_path_or_url": item["rel_path"]})
-        self.assertEqual(len(result["content"].splitlines()), 300)
+            self.assertEqual(len(result["content"].splitlines()), 200)
+            self.assertEqual(result["end_line"], 200)
+            self.assertTrue(result["has_more"])
+            self.assertEqual(result["next_start_line"], 201)
+            second = self.call("read_raw_source_file", dict(file_path_or_url=item["rel_path"], start_line=result["next_start_line"]))
+            last = self.call("read_raw_source_file", dict(file_path_or_url=item["rel_path"], start_line=second["next_start_line"]))
+        self.assertEqual(second["content"].splitlines()[0], "201")
+        self.assertEqual(last["content"].splitlines(), [str(i) for i in range(401, 451)])
+        self.assertFalse(last["has_more"])
+        self.assertIsNone(last["next_start_line"])
+
+    def test_explicit_window_is_capped_at_500_on_local_reads(self):
+        item = self.raw_fixture()
+        with patch.object(self.wiki, "local_source_matches", return_value=True), \
+                patch("builtins.open", mock_open(read_data="line\n" * 1200)):
+            for options in ({"start_line": 10, "end_line": 1200}, {"end_line": 1200}):
+                result = self.call("read_raw_source_file", dict(file_path_or_url=item["rel_path"], **options))
+                self.assertEqual(len(result["content"].splitlines()), 500)
+                self.assertEqual(result["end_line"], options.get("start_line", 1) + 499)
+                self.assertEqual(result["next_start_line"], result["end_line"] + 1)
+                self.assertEqual(result["origin"], "local")
+
+    def test_page_boundaries_empty_eof_and_line_endings(self):
+        item = self.raw_fixture()
+        cases = [("", {}, 0, 0, False), ("one\r\ntwo\rthree\n", {}, 3, 3, False),
+                 ("line\n" * 200, {}, 200, 200, False),
+                 ("line\n" * 201, {}, 200, 200, True),
+                 ("one\ntwo\n", {"start_line": 3}, 0, 2, False),
+                 ("line\n" * 800, {"start_line": 2, "end_line": 2}, 1, 2, True)]
+        for body, options, count, end, has_more in cases:
+            with self.subTest(options=options, length=len(body)), \
+                    patch.object(self.wiki, "local_source_matches", return_value=False), \
+                    patch.object(server.urllib.request, "urlopen", return_value=io.BytesIO(body.encode())):
+                result = self.call("read_raw_source_file", dict(file_path_or_url=item["rel_path"], **options))
+                self.assertEqual(len(result["content"].splitlines()), count)
+                self.assertEqual(result["end_line"], end)
+                self.assertEqual(result["has_more"], has_more)
+                self.assertEqual(result["next_start_line"], end + 1 if has_more else None)
 
 
 if __name__ == "__main__":

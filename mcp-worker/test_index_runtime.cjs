@@ -17,6 +17,7 @@ const requests = [
   ['search_raw_sources', { query: 'MUSE Paper', submodule: 'docs-product' }],
   ['read_raw_source_file', { file_path_or_url: 'docs-product/zh/k1_series/k1_muse_paper/root_overview.md', start_line: 39, end_line: 54 }],
   ['read_raw_source_file', { file_path_or_url: 'docs-ros/zh/k3/01-平台概览.md', start_line: 1, end_line: 5 }],
+  ...[{}, { start_line: 201 }, { start_line: 1, end_line: 100000 }, { start_line: 999999 }].map(options => ['read_raw_source_file', { file_path_or_url: 'docs-chip/zh/key_stone/k1/k1_hw/k1_hw_design_guide.md', ...options }]),
   ...Object.values(data.nodes).filter(x => x.type === 'evidence').map(x => ['get_evidence_fact', { spec_name: x.id }]),
 ];
 const messages = requests.map(([name, args], i) => ({ jsonrpc: '2.0', id: i + 1, method: 'tools/call', params: { name, arguments: args } }));
@@ -40,6 +41,11 @@ vm.runInContext(stripTypeScriptTypes(source), sandbox);
     if (requests[i][0] === 'read_raw_source_file') { delete py.origin; delete cf.origin; }
     assert.deepEqual(cf, py, JSON.stringify(requests[i]));
   }
+  const listMessage = { jsonrpc: '2.0', id: 'schemas', method: 'tools/list', params: {} };
+  const pyTools = JSON.parse(execFileSync('python3', ['-B', path.join(root, 'mcp/server.py')], { input: JSON.stringify(listMessage) + '\n', encoding: 'utf8' })).result.tools;
+  const schemaResponse = await sandbox.worker.fetch(new Request('https://test.invalid/', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(listMessage) }), {});
+  const cfTools = (await schemaResponse.json()).result.tools;
+  for (const tool of pyTools) assert.deepEqual(cfTools.find(x => x.name === tool.name).inputSchema, tool.inputSchema, tool.name);
   const ranked = JSON.parse(python[0].content[0].text);
   assert.ok(ranked.slice(0, 3).every(x => /PMIC|pmic/.test(x.id)), 'PMIC topics must outrank incidental mentions');
   const paper = JSON.parse(python[4].content[0].text);

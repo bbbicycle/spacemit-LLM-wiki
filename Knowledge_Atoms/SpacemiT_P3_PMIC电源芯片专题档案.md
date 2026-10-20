@@ -1,12 +1,22 @@
 ---
 type: knowledge_atom
 title: "SpacemiT P3 PMIC 电源管理芯片专题档案"
-status: needs_review
+status: "needs_review"
 created: 2026-08-12
-updated: 2026-10-04
+updated: "2026-10-20"
 aliases: ["SpacemiT P3 PMIC 专题", "SpacemiT P3 PMIC Topic", "spacemit_p3_pmic"]
 domain: hardware_schematic_design
 target_audience: [电源电路工程师, PCB Layout]
+source_file: "Sources/docs-chip/zh/power_stone/p3/p3_docs/p3_ds.md"
+source_commit: "1ea15a766287024a5bb7b548850826e3525a80dc"
+source_locator: "P3 数据手册；PDF 版本下载；修订记录；1. 概述；特性"
+source_resolution: "partial"
+verification_status: "unverified"
+source_checked_at: "2026-10-20"
+source_note: "本次仅定位已有引用对应的文件与章节，未对正文全部事实逐项复核；引用的 Evidence 保留各自历史版本与核验状态。"
+source_origin: "https://github.com/spacemit-com/docs-chip"
+source_related_file: ["Sources/docs-chip/zh/power_stone/p3/p3_docs/root_overview.md"]
+source_related_commit: ["15254b1cfe339c1863d8edf8137a337681fb2780"]
 ---
 # SpacemiT P3 PMIC 电源管理芯片专题档案
 

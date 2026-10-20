@@ -3,7 +3,7 @@ type: vault_agent
 title: "Spacemit LLM Wiki Agent 入口"
 status: needs_review
 created: 2026-06-29
-updated: 2026-10-13
+updated: 2026-10-20
 aliases: [Agent, Agent.md, AGENTS, AGENTS.md, 运行与协作规范]
 ---
 
@@ -16,7 +16,7 @@ aliases: [Agent, Agent.md, AGENTS, AGENTS.md, 运行与协作规范]
 1. 复用会话中已有且仍适用的证据。先明确芯片代际、板型和版本；参数不可跨产品套用。
 2. 按意图直接选工具：步骤用 `get_developer_journey`，专题用 `read_knowledge_atom`，参数用 `get_evidence_fact`；名称不明时先 `search_wiki`。无需逐层遍历图谱。
 3. 摘要只用于定位；具体结论应有正文证据。证据缺失、冲突、过期或用户要求核实上游时，允许 `search_raw_sources` 后定向读取原文，不要求先有报错日志。
-4. 原文建议显式指定 `start_line`、`end_line`，每次约 100～200 行，按需续读；目前没有服务端硬预算。本地大专题按章节读取，MCP 按实际参数调用。不得一次读取全部 `Sources/`、整个 JSON 索引或递归输出全库正文。
+4. 原文默认返回 200 行，显式 `start_line`、`end_line` 范围最多 500 行；按 `has_more`、`next_start_line` 按需续读。本地大专题按章节读取，MCP 按实际参数调用。不得一次读取全部 `Sources/`、整个 JSON 索引或递归输出全库正文。
 5. 本地兜底先在 `Developer_Journeys/`、`Knowledge_Atoms/`、`Evidence/` 定向查找；先列文件、再限范围读取。Sources 只读，限定子模块和文件。联网兜底只用官方同源公开资料。
 6. 核心结论和关键参数得到支持即停止；普通问答以 1～3 次调用为目标，证据不足可继续必要核实。无记录时说明未知，不猜测。
 

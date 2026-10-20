@@ -3,7 +3,7 @@ type: evidence
 title: "Spacemit K1 生态衍生终端与实验套件物理规格参数"
 claim_type: "parameter"
 verification_status: verified
-status: needs_review
+status: "needs_review"
 external_use: true
 source_tier: tier_1_github_upstream
 source_origin: "https://github.com/spacemit-com/docs-product"
@@ -16,10 +16,12 @@ source_checked_at: 2026-10-13
 conflicts: "MUSE Box简介与规格表USB数量不同；MUSE Shelf特性2/4刀片与规格表4刀片有配置差异，见正文"
 verified_at: 2026-10-13
 created: 2026-10-07
-updated: 2026-10-13
+updated: "2026-10-20"
 aliases: ["K1生态终端参数表", "K1 Terminal Products Specs", "k1_terminal_products_specs", "Muse终端规格"]
 domain: chip_product_specs
 target_audience: [产品架构师, 硬件工程师, 解决方案工程师]
+source_related_file: ["Sources/docs-product/zh/k1_series/k1_muse_book/root_overview.md", "Sources/docs-product/zh/k1_series/k1_muse_box/root_overview.md", "Sources/docs-product/zh/k1_series/k1_muse_card/root_overview.md", "Sources/docs-product/zh/k1_series/k1_muse_shelf/root_overview.md", "Sources/docs-product/zh/k1_series/k1_riscv_labkit/root_overview.md"]
+source_related_commit: ["8c851807f2c54e8ba54d568b268100ca727d0777", "8c851807f2c54e8ba54d568b268100ca727d0777", "8c851807f2c54e8ba54d568b268100ca727d0777", "8c851807f2c54e8ba54d568b268100ca727d0777", "8c851807f2c54e8ba54d568b268100ca727d0777"]
 ---
 
 # Spacemit K1 生态衍生终端与实验套件物理规格参数

@@ -3,10 +3,20 @@ type: knowledge_atom
 title: "Spacemit 产品矩阵与硬件生态全景档案"
 domain: chip_product_specs
 target_audience: [系统架构师, 产品经理, 硬件工程师, 市场销售, 生态开发者]
-status: needs_review
+status: "needs_review"
 created: 2026-10-07
-updated: 2026-10-19
+updated: "2026-10-20"
 aliases: [Spacemit产品全景, 进迭时空硬件矩阵, Spacemit硬件谱系, 产品生态全景, spacemit_product_matrix, 产品家族谱系, Vital_Stone_V100]
+source_file: "Sources/docs-chip/zh/key_stone/k1/k1_docs/root_overview.md"
+source_commit: "15254b1cfe339c1863d8edf8137a337681fb2780"
+source_locator: "K1 产品简介；概述；特性；框图"
+source_resolution: "partial"
+verification_status: "unverified"
+source_checked_at: "2026-10-20"
+source_note: "本次仅定位已有引用对应的文件与章节，未对正文全部事实逐项复核；引用的 Evidence 保留各自历史版本与核验状态。"
+source_origin: "https://github.com/spacemit-com/docs-chip"
+source_related_file: ["Sources/docs-chip/zh/key_stone/k3/k3_docs/root_overview.md", "Sources/docs-product/zh/v100_series/index.md", "Sources/docs-chip/zh/power_stone/p1/p1_docs/p1_ds.md", "Sources/docs-chip/zh/power_stone/p1s/p1s_docs/p1s_ds.md", "Sources/docs-chip/zh/power_stone/p3/p3_docs/p3_ds.md", "Sources/docs-product/zh/k1_series/k1_muse_pi/root_overview.md", "Sources/docs-product/zh/k1_series/k1_muse_pi_pro/root_overview.md", "Sources/docs-product/zh/k3_series/k3_pico/root_overview.md", "Sources/docs-product/zh/k3_series/k3_com260/root_overview.md", "Sources/docs-product/zh/k1_series/k1_muse_paper/root_overview.md", "Sources/docs-product/zh/k1_series/k1_muse_book/root_overview.md", "Sources/docs-product/zh/k1_series/k1_muse_box/root_overview.md", "Sources/docs-product/zh/k1_series/k1_muse_card/root_overview.md", "Sources/docs-product/zh/k1_series/k1_muse_shelf/root_overview.md", "Sources/docs-product/zh/k1_series/k1_riscv_labkit/root_overview.md"]
+source_related_commit: ["15254b1cfe339c1863d8edf8137a337681fb2780", "bc640755145625cc20745f49861f82588863fca3", "1ea15a766287024a5bb7b548850826e3525a80dc", "1ea15a766287024a5bb7b548850826e3525a80dc", "1ea15a766287024a5bb7b548850826e3525a80dc", "8c851807f2c54e8ba54d568b268100ca727d0777", "8c851807f2c54e8ba54d568b268100ca727d0777", "8c851807f2c54e8ba54d568b268100ca727d0777", "8c851807f2c54e8ba54d568b268100ca727d0777", "8c851807f2c54e8ba54d568b268100ca727d0777", "8c851807f2c54e8ba54d568b268100ca727d0777", "8c851807f2c54e8ba54d568b268100ca727d0777", "8c851807f2c54e8ba54d568b268100ca727d0777", "8c851807f2c54e8ba54d568b268100ca727d0777", "8c851807f2c54e8ba54d568b268100ca727d0777"]
 ---
 
 # Spacemit 产品矩阵与硬件生态全景档案

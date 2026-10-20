@@ -1,7 +1,7 @@
 ---
 type: evidence
 title: "SpacemiT RCPU (ESOS) 实时固件与启动依赖硬规范"
-status: needs_review
+status: "needs_review"
 verification_status: unverified
 external_use: false
 source_file: "Sources/docs-buildroot/zh/k1_buildroot/faqs.md"
@@ -11,10 +11,10 @@ source_section: "组件；制作一个Linux发行版需要集成哪些组件？"
 source_resolution: partial
 source_checked_at: 2026-10-13
 source_note: "已核对 K1/K3 启动依赖和固件文件名；额外 GPIO/PWM 职责未定位。"
-source_related_file: "Sources/docs-buildroot/zh/k3_buildroot/faqs.md"
-source_related_commit: "6d4c2a65989f0b61819bebfbc85f77d72732745e"
+source_related_file: ["Sources/docs-buildroot/zh/k3_buildroot/faqs.md"]
+source_related_commit: ["6d4c2a65989f0b61819bebfbc85f77d72732745e"]
 created: 2026-08-10
-updated: 2026-10-13
+updated: "2026-10-20"
 aliases: [esos_rcpu_firmware_specs, ESOS Firmware Specs, RCPU esos.elf]
 domain: bsp_kernel_drivers
 target_audience: [实时固件工程师, BSP 驱动]

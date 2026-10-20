@@ -3,7 +3,7 @@ type: evidence
 title: "K3 芯片 AI 算力与大模型推理数据"
 claim_type: "metric"
 verification_status: unverified
-status: needs_review
+status: "needs_review"
 external_use: false
 source_tier: tier_1_github_upstream
 source_origin: "https://github.com/spacemit-com/docs-ai"
@@ -15,10 +15,13 @@ source_resolution: partial
 conflicts: "旧0.9s、15–18 token/s及FastVLM指标无可复核测试条件，不能作为性能保证"
 verified_at: 2026-10-13
 created: 2026-06-29
-updated: 2026-10-13
+updated: "2026-10-20"
 aliases: ["K3 AI算力与大模型性能数据", "K3 AI Performance and LLM Benchmarks", "k3_ai_performance_data"]
 domain: edge_ai_robotics
 target_audience: [AI 算法工程师, 系统架构师]
+source_related_file: ["Sources/docs-chip/zh/key_stone/k3/k3_docs/root_overview.md"]
+source_related_commit: ["1ea15a766287024a5bb7b548850826e3525a80dc"]
+source_checked_at: "2026-10-20"
 ---
 # K3 芯片 AI 算力与大模型推理数据
 

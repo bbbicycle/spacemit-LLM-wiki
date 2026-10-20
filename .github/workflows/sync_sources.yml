@@ -48,7 +48,18 @@ jobs:
         run: python3 scripts/lint_wiki_integrity.py
 
       - name: Test production index builder
-        run: python3 -B scripts/test_build_mcp_index.py
+        run: |
+          python3 -B scripts/test_build_mcp_index.py
+          python3 -B scripts/test_upstream_impact.py
+          python3 -B -m unittest discover -s mcp -p 'test_server.py'
+
+      - name: Preserve freshness and upstream impact reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: source-maintenance-reports
+          path: reports/*.json
+          if-no-files-found: warn
 
       - name: Rebuild and validate both MCP indexes after source sync
         run: |

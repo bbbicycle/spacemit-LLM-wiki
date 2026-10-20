@@ -1,12 +1,22 @@
 ---
 type: knowledge_atom
 title: "Buildroot 嵌入式系统定制与内核编译专题档案"
-status: needs_review
+status: "needs_review"
 created: 2026-08-10
-updated: 2026-10-13
+updated: "2026-10-20"
 aliases: [Buildroot_嵌入式系统定制与内核编译专题档案, Buildroot SDK 编译与内核定制专题, SpacemiT Buildroot Guide]
 domain: bsp_kernel_drivers
 target_audience: [BSP 工程师, 驱动工程师]
+source_file: "Sources/docs-buildroot/zh/k1_buildroot/source.md"
+source_commit: "6d4c2a65989f0b61819bebfbc85f77d72732745e"
+source_locator: "源码；开发环境；硬件配置；操作系统；安装依赖"
+source_resolution: "partial"
+verification_status: "unverified"
+source_checked_at: "2026-10-20"
+source_note: "本次仅定位已有引用对应的文件与章节，未对正文全部事实逐项复核；引用的 Evidence 保留各自历史版本与核验状态。"
+source_origin: "https://github.com/spacemit-com/docs-buildroot"
+source_related_file: ["Sources/docs-buildroot/zh/k3_buildroot/source.md", "Sources/docs-buildroot/zh/k1_buildroot/faqs.md", "Sources/docs-buildroot/zh/k3_buildroot/faqs.md"]
+source_related_commit: ["6d4c2a65989f0b61819bebfbc85f77d72732745e", "6d4c2a65989f0b61819bebfbc85f77d72732745e", "6d4c2a65989f0b61819bebfbc85f77d72732745e"]
 ---
 
 # Buildroot 嵌入式系统定制与内核编译专题档案

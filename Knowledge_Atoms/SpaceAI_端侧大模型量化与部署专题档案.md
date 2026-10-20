@@ -3,10 +3,20 @@ type: knowledge_atom
 title: "SpaceAI 端侧大模型量化与部署专题档案"
 domain: edge_ai_robotics
 target_audience: [AI算法工程师, 软件开发工程师]
-status: needs_review
+status: "needs_review"
 created: 2026-08-10
-updated: 2026-10-13
+updated: "2026-10-20"
 aliases: [SpaceAI_端侧大模型量化与部署专题档案, SpaceAI Deployment Dossier, SpaceAI SDK Guide]
+source_file: "Sources/docs-ai/zh/architecture/concept.md"
+source_commit: "2b3894e983a295ed0278bc625867e0c132e0e259"
+source_locator: "4.1 设计理念；4.1.1 概述；4.1.2 架构实践"
+source_resolution: "partial"
+verification_status: "unverified"
+source_checked_at: "2026-10-20"
+source_note: "本次仅定位已有引用对应的文件与章节，未对正文全部事实逐项复核；引用的 Evidence 保留各自历史版本与核验状态。"
+source_origin: "https://github.com/spacemit-com/docs-ai"
+source_related_file: ["Sources/docs-ai/zh/compute_stack/ai_compute_stack.md", "Sources/docs-ai/zh/compute_stack/ai_compute_stack/onnxruntime.md"]
+source_related_commit: ["2b3894e983a295ed0278bc625867e0c132e0e259", "2b3894e983a295ed0278bc625867e0c132e0e259"]
 ---
 
 # SpaceAI 端侧大模型量化与部署专题档案

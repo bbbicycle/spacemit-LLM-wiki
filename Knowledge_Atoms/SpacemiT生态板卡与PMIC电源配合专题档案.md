@@ -1,9 +1,9 @@
 ---
 type: knowledge_atom
 title: "SpacemiT 生态板卡与 PMIC 电源配合专题档案"
-status: needs_review
+status: "needs_review"
 created: 2026-06-29
-updated: 2026-10-19
+updated: "2026-10-20"
 aliases: ["SpacemiT生态板卡与PMIC电源配合专题", "SpacemiT Board and PMIC Power Matching Topic", "spacemit_pmic_matching"]
 domain: hardware_schematic_design
 target_audience: [电源电路工程师, PCB Layout]
@@ -14,6 +14,9 @@ source_resolution: partial
 verification_status: unverified
 source_checked_at: 2026-10-19
 conflicts: "旧同步稿称 X100/A100 独立供电，与官方 V1.1 合并供电修订冲突；保留勘误说明，待人工审核。"
+source_origin: "https://github.com/spacemit-com/docs-chip"
+source_related_file: ["Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_faq.md", "Sources/docs-chip/zh/power_stone/p1/p1_docs/root_overview.md", "Sources/docs-chip/zh/power_stone/p1/p1_hw/p1_pcb_guide.md", "Sources/docs-chip/zh/power_stone/p3/p3_docs/root_overview.md", "Sources/docs-product/zh/k1_series/k1_muse_pi/root_overview.md", "Sources/docs-product/zh/k1_series/k1_muse_pi_pro/root_overview.md", "Sources/docs-chip/zh/power_stone/p1/p1_docs/p1_ds.md", "Sources/docs-chip/zh/power_stone/p1s/p1s_docs/p1s_ds.md"]
+source_related_commit: ["1ea15a766287024a5bb7b548850826e3525a80dc", "15254b1cfe339c1863d8edf8137a337681fb2780", "15254b1cfe339c1863d8edf8137a337681fb2780", "15254b1cfe339c1863d8edf8137a337681fb2780", "8c851807f2c54e8ba54d568b268100ca727d0777", "8c851807f2c54e8ba54d568b268100ca727d0777", "1ea15a766287024a5bb7b548850826e3525a80dc", "1ea15a766287024a5bb7b548850826e3525a80dc"]
 ---
 # SpacemiT 生态板卡与 PMIC 电源配合专题档案
 

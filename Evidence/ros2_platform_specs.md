@@ -1,7 +1,7 @@
 ---
 type: evidence
 title: "SpacemiT ROS 2 平台支持与底层硬件接口规格"
-status: needs_review
+status: "needs_review"
 verification_status: unverified
 external_use: false
 source_file: "Sources/docs-ros/zh/root_overview.md"
@@ -12,10 +12,10 @@ source_resolution: partial
 metric_source_resolution: unresolved
 source_checked_at: 2026-10-19
 source_note: "已定位官方 K1/K3 Humble、Jazzy 支持矩阵与安装指南，Lyrical 仅为 K3 规划支持；默认 DDS、micro-ROS 速率和 CPU/RAM/延迟实测出处仍未定位。"
-source_related_file: "Sources/docs-ros/zh/k3/06-系统与平台/6.6-ROS2/6.6.1-ROS2-INSTALL.md"
-source_related_commit: "808d02c1bd11cf0d4376555919bd61c90e38d853"
+source_related_file: ["Sources/docs-ros/zh/k3/06-系统与平台/6.6-ROS2/6.6.1-ROS2-INSTALL.md", "Sources/docs-ros/zh/k1/06_Robot_development/6.1_OS_Preparation/6.1.2_ROS2_Installation.md"]
+source_related_commit: ["808d02c1bd11cf0d4376555919bd61c90e38d853", "808d02c1bd11cf0d4376555919bd61c90e38d853"]
 created: 2026-08-10
-updated: 2026-10-19
+updated: "2026-10-20"
 aliases: [ros2_platform_specs, ROS 2 Platform Specs, SpacemiT ROS2 Specs]
 domain: edge_ai_robotics
 target_audience: [机器人工程师, ROS 2 开发者]

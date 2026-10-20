@@ -1,12 +1,22 @@
 ---
 type: knowledge_atom
 title: "K3 启动模式与 Strap 管脚配置专题档案"
-status: needs_review
+status: "needs_review"
 created: 2026-06-29
-updated: 2026-08-10
+updated: "2026-10-20"
 aliases: ["K3启动模式与Strap配置专题", "K3 Boot Mode and Strap Config Topic", "k3_boot_strap_config"]
 domain: hardware_schematic_design
 target_audience: [硬件电路工程师, 嵌入式驱动]
+source_file: "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md"
+source_commit: "1ea15a766287024a5bb7b548850826e3525a80dc"
+source_locator: "K3 硬件设计指南和 Layout 指导手册；PDF 版本下载；版本；前言；1. 原理图设计"
+source_resolution: "partial"
+verification_status: "unverified"
+source_checked_at: "2026-10-20"
+source_note: "本次仅定位已有引用对应的文件与章节，未对正文全部事实逐项复核；引用的 Evidence 保留各自历史版本与核验状态。"
+source_origin: "https://github.com/spacemit-com/docs-chip"
+source_related_file: ["Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_faq.md", "Sources/docs-chip/zh/key_stone/k3/k3_sw/k3_sdk_user_guide.md"]
+source_related_commit: ["15254b1cfe339c1863d8edf8137a337681fb2780", "15254b1cfe339c1863d8edf8137a337681fb2780"]
 ---
 # K3 启动模式与 Strap 管脚配置专题档案
 

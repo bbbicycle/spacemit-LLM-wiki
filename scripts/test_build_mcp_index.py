@@ -247,6 +247,81 @@ class BuilderTests(unittest.TestCase):
         self.assertNotEqual(self.snapshot(), original)
         self.assertIn("Updated fact", self.snapshot()[0].decode("utf-8"))
 
+    def source_metadata(self, **extra):
+        return dict(source_file="Sources/docs-chip/hardware 中文.md",
+                    source_commit=self.commits["docs-chip"], verification_status="verified", **extra)
+
+    def change_source(self, name, content="changed", delete=False):
+        source = self.root / "Sources" / "docs-chip"
+        if delete:
+            git(source, "rm", name)
+        else:
+            (source / name).write_text(content, encoding="utf-8")
+            git(source, "add", name)
+        git(source, "commit", "-qm", "update")
+        return builder.source_versions(str(self.root))
+
+    def freshness(self, metadata, versions=None):
+        return builder.calculate_freshness(metadata, str(self.root), versions or self.commits)
+
+    def test_freshness_unchanged_file_at_new_module_commit_is_current(self):
+        versions = self.change_source("unrelated.md")
+        result = self.freshness(self.source_metadata(), versions)
+        self.assertEqual(result["freshness"], "current")
+        self.assertEqual(result["stale_paths"], [])
+        self.assertEqual(result["checked_against_commit"], {"docs-chip": versions["docs-chip"]})
+
+    def test_freshness_changed_file_is_stale_without_changing_verification(self):
+        metadata = self.source_metadata()
+        versions = self.change_source("hardware 中文.md")
+        self.write_document(self.root / "Evidence" / "evidence.md", extra="".join(f"{k}: {v}\n" for k, v in metadata.items()))
+        node = self.build()["nodes"]["evidence"]
+        self.assertEqual(node["freshness"], "stale")
+        self.assertEqual(node["stale_paths"], [metadata["source_file"]])
+        self.assertEqual(node["verification_status"], "verified")
+        self.assertEqual(node["source_commit"], self.commits["docs-chip"])
+
+    def test_freshness_deleted_file_is_stale(self):
+        versions = self.change_source("hardware 中文.md", delete=True)
+        self.assertEqual(self.freshness(self.source_metadata(), versions)["freshness"], "stale")
+
+    def test_freshness_unavailable_history_and_missing_baseline_are_unknown(self):
+        for value in ({}, dict(source_file="Sources/docs-chip/hardware 中文.md"),
+                      dict(source_file="Sources/docs-chip/hardware 中文.md", source_commit="f" * 40),
+                      dict(source_file="Sources/docs-chip/missing.md", source_commit=self.commits["docs-chip"]),
+                      dict(source_file="../private.md", source_commit=self.commits["docs-chip"])):
+            with self.subTest(metadata=value):
+                self.assertEqual(self.freshness(value)["freshness"], "unknown")
+
+    def test_freshness_related_sources_use_their_own_revisions(self):
+        related = "Sources/docs-chip/related.md"
+        versions = self.change_source("related.md", "initial")
+        metadata = self.source_metadata(source_related_file=[related], source_related_commit=[versions["docs-chip"]])
+        versions = self.change_source("related.md", "new fact")
+        result = self.freshness(metadata, versions)
+        self.assertEqual(result["freshness"], "stale")
+        self.assertEqual(result["stale_paths"], [related])
+        self.assertEqual(result["source_freshness"][0]["freshness"], "current")
+
+    def test_missing_related_revision_does_not_inherit_primary_revision(self):
+        metadata = self.source_metadata(source_related_file="Sources/docs-chip/hardware 中文.md")
+        result = self.freshness(metadata)
+        self.assertEqual(result["freshness"], "unknown")
+        self.assertEqual(result["unknown_paths"], [metadata["source_file"]])
+
+    def test_source_lists_are_parsed_and_report_contains_maintenance_queue(self):
+        self.write_document(self.root / "Evidence" / "evidence.md", extra=(
+            'source_file:\n  - "Sources/docs-chip/hardware 中文.md"\n'
+            f'source_commit: ["{self.commits["docs-chip"]}"]\n'
+            'source_related_file: ["Sources/docs-ai/hardware 中文.md"]\n'
+            f'source_related_commit: ["{self.commits["docs-ai"]}"]\n'
+        ))
+        self.change_source("hardware 中文.md")
+        payload = self.build()
+        report = builder.freshness_report(payload)
+        self.assertEqual(report["summary"], dict(current=0, stale=1, unknown=2))
+        self.assertEqual(report["nodes"][2]["id"], "evidence")
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -23,11 +23,14 @@ SYSTEM_INSTRUCTIONS = """
    - 引脚复用/寄存器/电气参数 -> 调用 get_evidence_fact (精准数据表)
    - 上下游依赖关系 -> 调用 get_graph_relations
 2. 复用已加载且仍适用的证据；名称不明确时先 search_wiki，不强制逐层遍历。摘要仅供定位，具体结论需正文支持。
-3. 缺失、冲突、过期或用户要求复核时，可 search_raw_sources 后 read_raw_source_file，建议显式指定 start_line/end_line（约 100～200 行），按需续读；这是调用建议，不是服务端硬拦截。
+3. 缺失、冲突、过期或用户要求复核时，可 search_raw_sources 后 read_raw_source_file，默认返回 200 行，显式范围最多 500 行；按 has_more / next_start_line 续读。
 4. 普通问答以 1～3 次调用为目标；核心结论及关键参数已有支持即可停止，必要核实可继续。
-5. 区分芯片代际、板型和版本，引用来源并保留待审核/撤回/过期状态；verification_status 非 verified 时不得称为已核验；needs_review 表示尚未人工审核，deprecated 表示不作当前有效依据；来源已定位不等于事实已核验。external_use:false 的内容不得用于对外承诺。未知不猜测，歧义时使用候选的精确 ID。
+5. 区分芯片代际、板型和版本，引用来源并保留待审核/撤回/过期状态；verification_status 非 verified 时不得称为已核验；needs_review 表示尚未人工审核，deprecated 表示不作当前有效依据；来源已定位不等于事实已核验。freshness:current 仅表示已声明文件未变化，stale 需要复核，unknown 表示无法判断。external_use:false 的内容不得用于对外承诺。未知不猜测，歧义时使用候选的精确 ID。
 6. 问答不自动写库或上报反馈；反馈须由用户授权。
 """
+
+DEFAULT_RAW_LINES = 200
+MAX_RAW_LINES = 500
 
 TOOLS = [
     {
@@ -100,13 +103,13 @@ TOOLS = [
     },
     {
         "name": "read_raw_source_file",
-        "description": "【原始资料穿透】从本地或 GitHub 读取已索引的原始资料，建议显式指定行范围；省略范围会返回全文",
+        "description": "【原始资料穿透】从本地或 GitHub 读取已索引的原始资料，默认读取 200 行，显式范围最多 500 行，返回续读位置",
         "inputSchema": {
             "type": "object",
             "properties": {
                 "file_path_or_url": {"type": "string", "description": "原始文件相对路径（如 'docs-chip/zh/soc/uart.md'）或 raw_url"},
                 "start_line": {"type": "integer", "minimum": 1, "description": "起始行号，默认 1"},
-                "end_line": {"type": "integer", "minimum": 1, "description": "包含在内的结束行号，省略则读到文件末尾"}
+                "end_line": {"type": "integer", "minimum": 1, "description": "包含在内的结束行号，省略则读取 200 行，单次最多 500 行"}
             },
             "required": ["file_path_or_url"]
         }
@@ -131,11 +134,13 @@ def raw_read_options(args):
     values.setdefault("start_line", 1)
     if values.get("end_line", values["start_line"]) < values["start_line"]:
         raise ValueError("end_line 不得小于 start_line")
+    values.setdefault("end_line", values["start_line"] + DEFAULT_RAW_LINES - 1)
+    values["end_line"] = min(values["end_line"], values["start_line"] + MAX_RAW_LINES - 1)
     return values
 
 
 def node_metadata(node):
-    fields = ("id", "type", "status", "verification_status", "external_use", "publication", "source_file", "source_commit", "source_section", "source_locator", "source_resolution", "source_note", "source_checked_at", "source_related_file", "source_related_commit", "metric_source_resolution", "thermal_source_resolution", "chip", "product", "verified_at", "conflicts", "source_origin", "source_tier", "effective_until", "superseded_by", "updated")
+    fields = ("id", "type", "status", "verification_status", "external_use", "publication", "source_file", "source_commit", "source_section", "source_locator", "source_resolution", "source_note", "source_checked_at", "source_related_file", "source_related_commit", "freshness", "stale_paths", "unknown_paths", "checked_against_commit", "source_freshness", "metric_source_resolution", "thermal_source_resolution", "chip", "product", "verified_at", "conflicts", "source_origin", "source_tier", "effective_until", "superseded_by", "updated")
     return {field: node[field] for field in fields if field in node}
 
 
@@ -339,10 +344,12 @@ class SpacemitMCPServer:
 
             lines = raw_text.splitlines()
             start = options["start_line"] - 1
-            end = min(len(lines), options.get("end_line", len(lines)))
+            end = min(len(lines), options["end_line"])
+            has_more = end < len(lines)
             excerpt = {"source": item["raw_url"], "source_commit": item.get("source_commit"),
                        "origin": origin, "total_lines": len(lines), "start_line": start + 1,
-                       "end_line": end, "content": "\n".join(lines[start:end])}
+                       "end_line": end, "has_more": has_more,
+                       "next_start_line": end + 1 if has_more else None, "content": "\n".join(lines[start:end])}
             return {"content": [{"type": "text", "text": json.dumps(excerpt, ensure_ascii=False, indent=2)}]}
 
         return {"isError": True, "content": [{"type": "text", "text": f"未知工具: {name}"}]}

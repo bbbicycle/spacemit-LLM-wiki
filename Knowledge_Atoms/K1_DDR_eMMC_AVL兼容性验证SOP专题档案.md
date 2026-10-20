@@ -1,12 +1,20 @@
 ---
 type: knowledge_atom
 title: "K1 DDR 与 eMMC 兼容性验证 SOP 专题档案"
-status: needs_review
+status: "needs_review"
 created: 2026-06-29
-updated: 2026-06-29
+updated: "2026-10-20"
 aliases: [K1兼容性验证SOP, DDR与eMMC测试]
 domain: bsp_kernel_drivers
 target_audience: [测试工程师, 系统稳定性]
+source_file: "Sources/docs-chip/zh/key_stone/k1/k1_hw/avl_veri_sop.md"
+source_commit: "15254b1cfe339c1863d8edf8137a337681fb2780"
+source_locator: "K1 AVL兼容性验证标准操作流程（SOP）；1. 简介；1.1 测试设备；1.2 测试环境；2. 测试准备"
+source_resolution: "partial"
+verification_status: "unverified"
+source_checked_at: "2026-10-20"
+source_note: "本次仅定位已有引用对应的文件与章节，未对正文全部事实逐项复核；引用的 Evidence 保留各自历史版本与核验状态。"
+source_origin: "https://github.com/spacemit-com/docs-chip"
 ---
 
 # K1 DDR 与 eMMC 兼容性验证 SOP 专题档案

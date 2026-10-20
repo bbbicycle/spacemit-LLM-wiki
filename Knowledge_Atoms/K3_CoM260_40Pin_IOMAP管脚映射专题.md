@@ -1,19 +1,29 @@
 ---
 type: knowledge_atom
 title: "K3 CoM260 40-Pin IOMAP 与扩展接口管脚映射专题档案"
-status: needs_review
+status: "needs_review"
 created: 2026-08-10
-updated: 2026-08-10
+updated: "2026-10-20"
 aliases: ["K3 CoM260 40Pin IOMAP", "K3 COM260 Pinout", "COM260 40Pin 管脚映射表", "k3_com260_40pin_iomap"]
 domain: hardware_schematic_design
 target_audience: [硬件调试工程师, 驱动开发工程师, AI-Agent]
+source_file: "Sources/docs-product/en/k3_series/k3_com260/com260_user_guide.md"
+source_commit: "bc640755145625cc20745f49861f82588863fca3"
+source_locator: "5.11 40 Pin Header，行 314 起"
+source_resolution: "partial"
+verification_status: "unverified"
+source_checked_at: "2026-10-20"
+source_note: "本次仅定位已有引用对应的文件与章节，未对正文全部事实逐项复核；引用的 Evidence 保留各自历史版本与核验状态。"
+source_origin: "https://github.com/spacemit-com/docs-product"
+source_related_file: ["Sources/docs-product/zh/k3_series/k3_com260/root_overview.md"]
+source_related_commit: ["8c851807f2c54e8ba54d568b268100ca727d0777"]
 ---
 
 # K3 CoM260 40-Pin IOMAP 与扩展接口管脚映射专题档案
 
 > [!TIP]
 > **💡 工程师与 AI-Agent 导读**：本专题汇总了基于 SpacemiT K3 芯片的核心板开发套件 **K3 CoM260** 的 40-Pin 标准扩展排针及外设接口定义。
-> * **原始数据源**：[com260_user_guide.md:L311-L340](file:///Users/bicycle/Spacemit%20LLM%20Wiki/Sources/docs-product/en/k3_com260/com260_user_guide.md#L311-L340)
+> * **原始数据源**：[com260_user_guide.md:L311-L340](../Sources/docs-product/en/k3_series/k3_com260/com260_user_guide.md#L311-L340)
 > * **板级设计关联**：[[Knowledge_Atoms/K3_COM260_板级硬件设计专题|K3 COM260 板级硬件设计专题]]
 
 ### 板卡物理排针位置图

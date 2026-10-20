@@ -44,7 +44,7 @@ async function call(name, args, expectError = false) {
   for (const item of Object.values(data.nodes)) item.aliases = ["shared"];
   await call("get_evidence_fact", { spec_name: "shared" }, true);
   for (const id of Object.keys(data.nodes)) delete data.nodes[id];
-  const metadata = { verification_status: "unverified", external_use: false, source_file: ["Sources/docs-chip/example.md"], source_commit: "abc", source_section: "voltage", source_locator: "example.md:10-20", source_resolution: "partial", source_note: "measurement conditions need review", source_checked_at: "2026-10-13", source_related_file: "Sources/docs-chip/related.md", source_related_commit: "def", metric_source_resolution: "unresolved", thermal_source_resolution: "unresolved", chip: "K3", product: "test board", verified_at: "2026-10-01", conflicts: ["needs review"], source_origin: "GitHub", source_tier: "tier_1", effective_until: "2026-12-01" };
+  const metadata = { verification_status: "unverified", external_use: false, source_file: ["Sources/docs-chip/example.md"], source_commit: "abc", source_section: "voltage", source_locator: "example.md:10-20", source_resolution: "partial", source_note: "measurement conditions need review", source_checked_at: "2026-10-13", source_related_file: "Sources/docs-chip/related.md", source_related_commit: "def", freshness: "stale", stale_paths: ["Sources/docs-chip/example.md"], unknown_paths: [], checked_against_commit: { "docs-chip": "new" }, source_freshness: [{ freshness: "stale" }], metric_source_resolution: "unresolved", thermal_source_resolution: "unresolved", chip: "K3", product: "test board", verified_at: "2026-10-01", conflicts: ["needs review"], source_origin: "GitHub", source_tier: "tier_1", effective_until: "2026-12-01" };
   data.nodes.fact = node("fact", "evidence", metadata);
   for (const result of [await call("get_evidence_fact", { spec_name: "fact" }), (await call("search_wiki", { query: "fact" }))[0]]) {
     for (const [key, value] of Object.entries({ ...metadata, status: "needs_review" })) assert.deepEqual(result[key], value);
@@ -66,8 +66,32 @@ async function call(name, args, expectError = false) {
   for (const start_line of [0, -1, 1.5, true, null, "1"]) await call("read_raw_source_file", { file_path_or_url: item.rel_path, start_line }, true);
   await call("read_raw_source_file", { file_path_or_url: item.rel_path, start_line: 3, end_line: 2 }, true);
   assert.equal(fetched.length, 0);
-  rawText = "line\n".repeat(300);
+  rawText = Array.from({ length: 1200 }, (_, i) => String(i + 1)).join("\n");
   result = await call("read_raw_source_file", { file_path_or_url: item.rel_path });
-  assert.equal(result.content.split("\n").length, 300);
-  console.log("Worker runtime regression checks passed: ranking, types, ambiguity, metadata, pinned sources, URL encoding, ranges, full-read compatibility.");
+  assert.equal(result.content.split("\n").length, 200);
+  assert.equal(result.has_more, true);
+  assert.equal(result.next_start_line, 201);
+  result = await call("read_raw_source_file", { file_path_or_url: item.rel_path, start_line: result.next_start_line });
+  assert.equal(result.content.split("\n")[0], "201");
+  assert.equal(result.end_line, 400);
+  for (const options of [{ start_line: 10, end_line: 1200 }, { end_line: 1200 }]) {
+    result = await call("read_raw_source_file", { file_path_or_url: item.rel_path, ...options });
+    assert.equal(result.content.split("\n").length, 500);
+    assert.equal(result.end_line, (options.start_line ?? 1) + 499);
+    assert.equal(result.next_start_line, result.end_line + 1);
+  }
+  for (const [body, options, count, end, more] of [
+    ["", {}, 0, 0, false], ["one\r\ntwo\rthree\n", {}, 3, 3, false],
+    ["line\n".repeat(200), {}, 200, 200, false], ["line\n".repeat(201), {}, 200, 200, true],
+    ["one\ntwo\n", { start_line: 3 }, 0, 2, false],
+    ["line\n".repeat(800), { start_line: 2, end_line: 2 }, 1, 2, true],
+  ]) {
+    rawText = body;
+    result = await call("read_raw_source_file", { file_path_or_url: item.rel_path, ...options });
+    assert.equal(result.content ? result.content.split("\n").length : 0, count);
+    assert.equal(result.end_line, end);
+    assert.equal(result.has_more, more);
+    assert.equal(result.next_start_line, more ? end + 1 : null);
+  }
+  console.log("Worker runtime regression checks passed: ranking, types, ambiguity, metadata, pinned sources, URL encoding, bounded pages, continuation and EOF boundaries.");
 })().catch(error => { console.error(error); process.exitCode = 1; });

@@ -55,12 +55,19 @@ jobs:
           python3 vault_linker_lint.py
           python3 scripts/lint_wiki_integrity.py
           python3 -B scripts/test_build_mcp_index.py
+          python3 -B scripts/test_upstream_impact.py
           python3 -B -m unittest discover -s mcp -p 'test_server.py'
 
       - name: Rebuild and validate MCP Dual-Layer Knowledge Index
         run: |
-          python3 scripts/build_mcp_index.py
+          python3 scripts/build_mcp_index.py --freshness-report reports/freshness.json
           python3 scripts/build_mcp_index.py --check
+
+      - name: Preserve freshness maintenance queue
+        uses: actions/upload-artifact@v4
+        with:
+          name: freshness-report
+          path: reports/freshness.json
 
       - name: Set up Node.js
         uses: actions/setup-node@v4

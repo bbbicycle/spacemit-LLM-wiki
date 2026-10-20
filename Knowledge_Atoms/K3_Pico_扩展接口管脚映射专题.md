@@ -1,19 +1,29 @@
 ---
 type: knowledge_atom
 title: "K3 Pico 26-Pin与36-Pin扩展接口管脚映射专题档案"
-status: needs_review
+status: "needs_review"
 created: 2026-08-10
-updated: 2026-08-10
+updated: "2026-10-20"
 aliases: ["K3 Pico 接口 Pinout", "K3 Pico FPC 扩展管脚映射", "K3 Pico Pinout", "k3_pico_fpc_iomap"]
 domain: hardware_schematic_design
 target_audience: [硬件调试工程师, 驱动开发工程师, AI-Agent]
+source_file: "Sources/docs-product/en/k3_series/k3_pico/pico_user_guide.md"
+source_commit: "bc640755145625cc20745f49861f82588863fca3"
+source_locator: "5. Appendix — Connector Pinout / 5.1 FPC Expansion Interface，行 441 起"
+source_resolution: "partial"
+verification_status: "unverified"
+source_checked_at: "2026-10-20"
+source_note: "本次仅定位已有引用对应的文件与章节，未对正文全部事实逐项复核；引用的 Evidence 保留各自历史版本与核验状态。"
+source_origin: "https://github.com/spacemit-com/docs-product"
+source_related_file: ["Sources/docs-product/zh/k3_series/k3_pico/root_overview.md"]
+source_related_commit: ["8c851807f2c54e8ba54d568b268100ca727d0777"]
 ---
 
 # K3 Pico 26-Pin与36-Pin扩展接口管脚映射专题档案
 
 > [!TIP]
 > **💡 工程师与 AI-Agent 导读**：本专题汇总了基于 SpacemiT K3 芯片的 Pico-ITX 工业单板计算机 **K3 Pico** 的 26-Pin 与 36-Pin FPC 扩展接口映射。
-> * **原始数据源**：[pico_user_guide.md:L438-L519](file:///Users/bicycle/Spacemit%20LLM%20Wiki/Sources/docs-product/en/k3_pico/pico_user_guide.md#L438-L519)
+> * **原始数据源**：[pico_user_guide.md:L438-L519](../Sources/docs-product/en/k3_series/k3_pico/pico_user_guide.md#L438-L519)
 > * **板级设计关联**：[[Knowledge_Atoms/K3_Pico_板级硬件设计专题|K3 Pico 板级硬件设计专题]]
 
 ### 板卡物理扩展接口位置图 (含 Pin 1 标记)

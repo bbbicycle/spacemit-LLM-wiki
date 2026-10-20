@@ -1,12 +1,22 @@
 ---
 type: knowledge_atom
 title: "K3 Pico-ITX 板级硬件设计与调试专题档案"
-status: needs_review
+status: "needs_review"
 created: 2026-06-30
-updated: 2026-10-07
+updated: "2026-10-20"
 aliases: ["K3 Pico 板级硬件设计专题", "K3 Pico Board Hardware Design Topic", "k3_pico_hw_design", "K3 Pico产品特点", "K3 Pico单板计算机", "k3_pico_profile"]
 domain: hardware_schematic_design
 target_audience: [硬件电路工程师, 系统工程师, 产品经理]
+source_file: "Sources/docs-chip/en/key_stone/k3/k3_hw/k3_hw_resources.md"
+source_commit: "15254b1cfe339c1863d8edf8137a337681fb2780"
+source_locator: "K3 Hardware Design Resources；Pin Configuration；Pin List and Pin Multiplexing；Pin Map；Timing Configuration"
+source_resolution: "partial"
+verification_status: "unverified"
+source_checked_at: "2026-10-20"
+source_note: "本次仅定位已有引用对应的文件与章节，未对正文全部事实逐项复核；引用的 Evidence 保留各自历史版本与核验状态。"
+source_origin: "https://github.com/spacemit-com/docs-chip"
+source_related_file: ["Sources/docs-product/zh/k3_series/k3_pico/pico_user_guide.md", "Sources/docs-product/zh/k3_series/k3_pico/root_overview.md", "Sources/docs-chip/zh/key_stone/k1/k1_docs/root_overview.md", "Sources/docs-chip/zh/key_stone/k3/k3_docs/root_overview.md"]
+source_related_commit: ["bc640755145625cc20745f49861f82588863fca3", "8c851807f2c54e8ba54d568b268100ca727d0777", "1ea15a766287024a5bb7b548850826e3525a80dc", "1ea15a766287024a5bb7b548850826e3525a80dc"]
 ---
 # K3 Pico-ITX 板级硬件设计与产品特点专题档案
 
@@ -101,4 +111,4 @@ K3 Pico-ITX 专为机器人和工业控制设计了外设扩展通道：
 * FPC扩展管脚映射：[[Knowledge_Atoms/K3_Pico_扩展接口管脚映射专题|K3 Pico 扩展接口管脚映射专题]]
 * 芯片级规格：[[Evidence/k1_k3_display_specs|K1/K3 显示与多媒体规格]]
 * 网络通道设计：[[Knowledge_Atoms/K1_K3网络通信与千兆网口专题档案|K1/K3 网络通信与千兆网口专题]]
-* 原始文档参考：[K3 Pico 用户指南](file:///Users/bicycle/Spacemit%20LLM%20Wiki/Sources/docs-product/zh/k3_pico/pico_user_guide.md)
+* 原始文档参考：[K3 Pico 用户指南](../Sources/docs-product/zh/k3_series/k3_pico/pico_user_guide.md)

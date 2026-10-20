@@ -3,7 +3,7 @@ type: vault_index
 title: "Spacemit LLM Wiki · 6大前瞻技术领域全栈索引"
 status: needs_review
 created: 2026-06-29
-updated: 2026-10-19
+updated: 2026-10-20
 aliases: [index, index.md, 索引, 全局索引]
 ---
 
@@ -220,3 +220,6 @@ aliases: [index, index.md, 索引, 全局索引]
 ## 5. 规则与日志
 *   [[Agent]] —— 知识库运行与 AI Agent 协作规范。
 *   [[log]] —— 重构与维护日志。
+
+*   [项目计划与阶段进度](docs/PROJECT_PLAN.md) —— 公司服务器与 RAG 演进计划。
+*   [新鲜度与维护闭环](docs/FRESHNESS_MAINTENANCE.md) —— P1 报告、来源字段、分页与 stale 复核流程。

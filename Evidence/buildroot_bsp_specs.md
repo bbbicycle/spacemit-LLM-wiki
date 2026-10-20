@@ -1,7 +1,7 @@
 ---
 type: evidence
 title: "SpacemiT Buildroot BSP SDK 软件栈与编译配置参数规格"
-status: needs_review
+status: "needs_review"
 verification_status: unverified
 external_use: false
 source_file: "Sources/docs-buildroot/zh/k1_buildroot/source.md"
@@ -11,10 +11,10 @@ source_section: "版本分支；目录结构；交叉编译"
 source_resolution: partial
 source_checked_at: 2026-10-13
 source_note: "K1 SDK 目录与构建入口已定位；组件职责及完整版本矩阵尚未逐项核验。"
-source_related_file: "Sources/docs-buildroot/zh/k3_buildroot/source.md"
-source_related_commit: "6d4c2a65989f0b61819bebfbc85f77d72732745e"
+source_related_file: ["Sources/docs-buildroot/zh/k3_buildroot/source.md"]
+source_related_commit: ["6d4c2a65989f0b61819bebfbc85f77d72732745e"]
 created: 2026-08-10
-updated: 2026-10-13
+updated: "2026-10-20"
 aliases: [buildroot_bsp_specs, Buildroot SDK Specs, Buildroot Manifest Specs]
 domain: bsp_kernel_drivers
 target_audience: [BSP 工程师, 系统构建工程师]

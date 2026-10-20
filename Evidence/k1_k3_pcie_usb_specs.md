@@ -2,7 +2,7 @@
 type: evidence
 title: "K1/K3 高速外设接口物理规格"
 claim_type: "parameter"
-status: needs_review
+status: "needs_review"
 verification_status: unverified
 external_use: false
 source_file: "Sources/docs-chip/zh/key_stone/k1/k1_docs/root_overview.md"
@@ -12,10 +12,10 @@ source_section: "特性"
 source_resolution: partial
 source_checked_at: 2026-10-13
 source_note: "K3 UFS 2.2 与 PCIe/USB Combo 已据补充来源的 1.1.9 和 1.4.1 修正；其余扩展芯片兼容细节尚未逐项核验。"
-source_related_file: "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md"
-source_related_commit: "1ea15a766287024a5bb7b548850826e3525a80dc"
+source_related_file: ["Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md"]
+source_related_commit: ["1ea15a766287024a5bb7b548850826e3525a80dc"]
 created: 2026-06-29
-updated: 2026-10-13
+updated: "2026-10-20"
 aliases: ["K1/K3 PCIe与USB规格参数", "K1 K3 PCIe and USB Specs", "k1_k3_pcie_usb_specs"]
 domain: chip_product_specs
 target_audience: [高速接口工程师, 硬件工程师]

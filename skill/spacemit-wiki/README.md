@@ -50,7 +50,7 @@ Detailed tool reference: [mcp.md](./mcp.md).
 1. **Intent Routing**: Routes inquiries directly to the tool that provides the needed evidence.
 2. **Sufficiency Stop**: Terminates further queries immediately once core claims and evidence are validated.
 3. **Context Reuse**: Reuses loaded topic archives across follow-up questions to save tokens.
-4. **Targeted Fallback**: Locates official source files (`search_raw_sources` ➔ `read_raw_source_file`) when refined evidence is missing, conflicting, stale or explicitly needs verification. Explicit line ranges of about 100–200 lines are recommended; the server does not enforce this as a hard budget.
+4. **Targeted Fallback**: Locates official source files (`search_raw_sources` ➔ `read_raw_source_file`) when refined evidence is missing, conflicting, stale or explicitly needs verification. The server defaults to 200 lines and caps explicit windows at 500 lines; continue using `has_more` and `next_start_line`.
 5. **Evidence-Based Output**: Gives conclusions and conditions with citations, preserving review, withdrawal and expiry notices.
 
 ---

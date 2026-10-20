@@ -1,12 +1,22 @@
 ---
 type: knowledge_atom
 title: "K1 启动模式与 Strap 管脚配置专题档案"
-status: needs_review
+status: "needs_review"
 created: 2026-06-29
-updated: 2026-06-29
+updated: "2026-10-20"
 aliases: ["K1启动模式与Strap配置专题", "K1 Boot Mode and Strap Config Topic", "k1_boot_strap_config"]
 domain: hardware_schematic_design
 target_audience: [硬件电路工程师, 嵌入式驱动]
+source_file: "Sources/docs-chip/zh/key_stone/k1/k1_docs/k1_ds.md"
+source_commit: "15254b1cfe339c1863d8edf8137a337681fb2780"
+source_locator: "K1 数据手册；PDF 版本下载；版本；1. 概述；1.1 简介"
+source_resolution: "partial"
+verification_status: "unverified"
+source_checked_at: "2026-10-20"
+source_note: "本次仅定位已有引用对应的文件与章节，未对正文全部事实逐项复核；引用的 Evidence 保留各自历史版本与核验状态。"
+source_origin: "https://github.com/spacemit-com/docs-chip"
+source_related_file: ["Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_design_guide.md"]
+source_related_commit: ["1ea15a766287024a5bb7b548850826e3525a80dc"]
 ---
 # K1 启动模式与 Strap 管脚配置专题档案
 

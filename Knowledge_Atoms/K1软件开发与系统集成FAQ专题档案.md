@@ -1,12 +1,20 @@
 ---
 type: knowledge_atom
 title: "K1 软件开发与系统集成 FAQ 专题档案"
-status: needs_review
+status: "needs_review"
 created: 2026-06-29
-updated: 2026-06-29
+updated: "2026-10-20"
 aliases: [K1软件集成FAQ, 系统压测与多媒体调试]
 domain: bianbu_os_distribution
 target_audience: [系统集成工程师, 应用开发]
+source_file: "Sources/docs-chip/zh/key_stone/k1/k1_sw/k1_sw_faq.md"
+source_commit: "15254b1cfe339c1863d8edf8137a337681fb2780"
+source_locator: "K1 软件常见问题；系统启动配置；SDK 编译打包；驱动调试与测试验证；OS 应用"
+source_resolution: "partial"
+verification_status: "unverified"
+source_checked_at: "2026-10-20"
+source_note: "本次仅定位已有引用对应的文件与章节，未对正文全部事实逐项复核；引用的 Evidence 保留各自历史版本与核验状态。"
+source_origin: "https://github.com/spacemit-com/docs-chip"
 ---
 
 # K1 软件开发与系统集成 FAQ 专题档案

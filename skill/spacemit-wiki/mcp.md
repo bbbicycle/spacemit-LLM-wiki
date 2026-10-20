@@ -41,7 +41,7 @@ Cloudflare 服务还可能提供 `report_wiki_issue`；这属于向维护者发�
 
 按问题直接取动线、专题或事实表，名称不明时先搜索。不要求逐层遍历。精炼证据缺失、冲突、过期或用户要求核实上游时可查询原文，不限于报错调试。
 
-原文建议显式给出行范围，每次约 100～200 行，再按需要继续。当前服务端没有强制读取预算，省略范围可能返回全文。专题/事实工具返回正文，重复查询之前先复用会话中仍适用的内容。
+原文默认从第 1 行返回最多 200 行；只给 `start_line` 时也读取最多 200 行。显式 `end_line` 为包含在内的结束行，窗口超过 500 行时裁剪为 500 行；按返回的 `has_more` 和 `next_start_line` 续读。专题/事实工具返回正文，重复查询之前先复用会话中仍适用的内容。
 
 ### 缺少 Sources 的设备
 
@@ -55,4 +55,6 @@ Cloudflare 服务还可能提供 `report_wiki_issue`；这属于向维护者发�
 
 回答应给出文件/链接、适用代际和版本，保留返回中的审核状态、撤回、冲突、时效及使用范围。`needs_review` 表示待审核；既有知识结构和静态 lint 均不构成事实准确率保证。
 
-原文返回 JSON：`source` 为索引固定 URL，`source_commit` 为对应 SHA，`origin` 表示 `local` 或 `github`；`total_lines`、`start_line`、`end_line` 说明范围，`content` 为该范围正文。节点名称有歧义时根据候选使用精确 ID。
+原文返回 JSON：`source` 为索引固定 URL，`source_commit` 为对应 SHA，`origin` 表示 `local` 或 `github`；`total_lines`、`start_line`、`end_line` 说明范围，`content` 为该范围正文。`has_more` 为是否还有后续行，`next_start_line` 为续读起点，无后续时为 `null`。空文件返回空正文、`total_lines/end_line:0`；起点超过文件末尾时返回空正文和实际总行数，不再续读。节点名称有歧义时根据候选使用精确 ID。
+
+节点结果另含 `freshness: current|stale|unknown`、`stale_paths`、`unknown_paths`、`checked_against_commit`（子模块到当前 SHA 的映射）及逐文件 `source_freshness`。新鲜度只表示已声明文件在历史版本与构建版本间是否变化；`current` 不等于事实已核验，`stale` 不改变 `verification_status`。Journey 的间接来源通过引用节点查询，无直接来源时为 `unknown`。

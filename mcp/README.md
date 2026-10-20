@@ -88,7 +88,7 @@ python3 mcp/server.py
 
 精炼正文内置在索引中。读取原文时只接受索引返回的完整路径或 raw URL；Python 优先使用匹配源 commit 且未修改的本地文件，否则回退 GitHub。中文和空格路径经过 URL 编码，回退固定源 commit，避免 `main` 漂移。响应包含 `source / source_commit / origin / total_lines / start_line / end_line / content`。网络不可用则明确返回错误。
 
-`start_line / end_line` 为正整数，建议每次约 100～200 行。省略范围仍返回全文，本轮没有加入服务端硬预算。核验信息随节点返回：`status / verification_status / external_use / source_file / source_commit / source_section / verified_at / conflicts` 等；未核验条目不能当作对外性能保证。
+`start_line / end_line` 为正整数。默认最多 200 行，显式范围最多 500 行，超大窗口裁剪；`has_more` 和 `next_start_line` 用于续读，末页的 `next_start_line` 为 `null`。核验信息随节点返回：`status / verification_status / external_use / source_file / source_commit / source_section / verified_at / conflicts` 等；未核验条目不能当作对外性能保证。
 
 公共索引过滤内部 tier 2/3、NDA、`publication:false` 或内部 visibility；`external_use:false` 的公开上游技术条目可用于定位待核验问题，不能作为已核准的对外结论。
 

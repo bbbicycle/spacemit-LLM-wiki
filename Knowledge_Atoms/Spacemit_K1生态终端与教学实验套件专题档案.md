@@ -3,10 +3,20 @@ type: knowledge_atom
 title: "Spacemit K1 生态终端与教学实验套件专题档案"
 domain: chip_product_specs
 target_audience: [产品经理, 解决方案架构师, 市场销售, 高校教师, 嵌入式开发者]
-status: needs_review
+status: "needs_review"
 created: 2026-10-07
-updated: 2026-10-13
+updated: "2026-10-20"
 aliases: [K1生态终端, MuseBook, MuseBox, MuseCard, MusePaper, MuseShelf, RISCV实验箱, k1_terminal_products, K1衍生硬件]
+source_file: "Sources/docs-product/zh/k1_series/k1_muse_paper/root_overview.md"
+source_commit: "8c851807f2c54e8ba54d568b268100ca727d0777"
+source_locator: "K1 MUSE Paper 简介；特性；产品规格；合作与采购咨询"
+source_resolution: "partial"
+verification_status: "unverified"
+source_checked_at: "2026-10-20"
+source_note: "本次仅定位已有引用对应的文件与章节，未对正文全部事实逐项复核；引用的 Evidence 保留各自历史版本与核验状态。"
+source_origin: "https://github.com/spacemit-com/docs-product"
+source_related_file: ["Sources/docs-product/zh/k1_series/k1_muse_book/root_overview.md", "Sources/docs-product/zh/k1_series/k1_muse_box/root_overview.md", "Sources/docs-product/zh/k1_series/k1_muse_card/root_overview.md", "Sources/docs-product/zh/k1_series/k1_muse_shelf/root_overview.md", "Sources/docs-product/zh/k1_series/k1_riscv_labkit/root_overview.md", "Sources/docs-chip/zh/key_stone/k1/k1_docs/root_overview.md"]
+source_related_commit: ["8c851807f2c54e8ba54d568b268100ca727d0777", "8c851807f2c54e8ba54d568b268100ca727d0777", "8c851807f2c54e8ba54d568b268100ca727d0777", "8c851807f2c54e8ba54d568b268100ca727d0777", "8c851807f2c54e8ba54d568b268100ca727d0777", "1ea15a766287024a5bb7b548850826e3525a80dc"]
 ---
 
 # Spacemit K1 生态终端与教学实验套件专题档案

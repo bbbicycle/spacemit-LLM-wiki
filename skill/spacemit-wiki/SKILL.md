@@ -32,7 +32,7 @@ user-invocable: false
 
 ## 读取与兜底
 
-- 原文建议显式指定 `start_line` 和 `end_line`，每次约 100～200 行，按需续读。这是调用建议，当前服务端没有强制读取预算。MCP 参数以实际 schema 为准；本地大专题按相关章节读取。
+- 原文默认返回 200 行，显式 `start_line`、`end_line` 范围最多 500 行；按 `has_more`、`next_start_line` 按需续读。MCP 参数以实际 schema 为准；本地大专题按相关章节读取。
 - 不整库读取 `Sources/` 或 JSON 索引，不跨 Sources 全盘递归输出搜索结果。先定位文件，再限定范围读取。
 - MCP 不可用时，在本地 `Developer_Journeys/`、`Knowledge_Atoms/`、`Evidence/` 定向查找；缺少 Sources 时按已知路径获取 `spacemit-com` 官方 GitHub 仓库同源公开资料。联网失败或资料仍缺失时明确说明。
 

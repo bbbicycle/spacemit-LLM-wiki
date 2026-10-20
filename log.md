@@ -3,7 +3,7 @@ type: vault_log
 title: "SpacemiT K3 芯片文档重构日志"
 status: active
 created: 2026-06-29
-updated: 2026-10-19
+updated: 2026-10-20
 ---
 
 # SpacemiT K3 芯片文档重构日志 (log.md)
@@ -12,6 +12,15 @@ updated: 2026-10-19
 > 本文件用于记录 Spacemit LLM Wiki 知识库的重构、清理、验证与 MCP 服务演进日志。
 
 ---
+
+## [2026-10-20] maintenance | 完成 P1 Wiki 新鲜度与自愈闭环
+
+- 补齐 27 篇 Evidence、32 篇 Knowledge Atom 的来源字段，覆盖主来源与多文件补充来源，修正专题内机器绝对路径和部分上游移动目录。仅定位来源时保持 `unverified / partial / needs_review`，保留历史事实核验记录。
+- 构建器按引用文件在历史 SHA 与当前 SHA 之间的差异计算 freshness，不用子模块 HEAD 变化代替文件变化，也不改写 `verification_status`。当前维护队列为 12 个 stale、7 个无直接来源的 Journey unknown、47 个 current；不将刷新 SHA 当作事实复核。
+- 上游影响工具覆盖 frontmatter、Markdown、Wiki 双链与传递依赖，保存可提交基线 `docs/source_baseline.json`，输出结构化变更、受影响节点、未覆盖与删除文件。同步脚本不再吞掉分析错误，CI 保存两类维护报告。
+- Python 与 Worker 的原文读取默认 200 行、显式窗口最多 500 行，统一 `has_more / next_start_line` 和 EOF 行为；精炼专题与事实表仍保留整篇语义。
+- 验证通过：24 项构建器测试、6 项上游影响测试、10 项 Python 服务测试、4 项最小安装测试，Worker 运行回归、40 次跨端一致性调用与 7 个工具的 schema 对齐，以及类型检查、双 lint、索引一致性、Shell 语法和 diff 检查。
+- 增加 freshness、上游基线与分页回归，保持双端索引一致；维护步骤与契约见 [新鲜度与维护闭环](docs/FRESHNESS_MAINTENANCE.md)，项目阶段进度见 [项目计划](docs/PROJECT_PLAN.md)。查询路径仍为只读。
 
 ## [2026-10-19] merge | 合并远端知识更新与云端 / 本地最小安装入口
 

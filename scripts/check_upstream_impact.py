@@ -1,410 +1,218 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
-"""
-Spacemit LLM Wiki - 上游变更影响分析工具 (Upstream Change Impact Analyzer)
-功能：
-  1. 对比子模块同步前后的 commit 差异，提取变更文件清单
-  2. 扫描 Knowledge_Atoms/ 中所有知识原子对 Sources/ 的引用关系
-  3. 构建"变更文件 → 受影响知识原子"的映射
-  4. 检测无对应知识原子的新增/修改文件（潜在盲区）
-  5. 生成结构化影响报告，辅助开发者决策
-用法：
-  python3 check_upstream_impact.py              # 对比当前子模块指针与远端最新
-  python3 check_upstream_impact.py --cached      # 对比上次记录的指针与当前指针
-"""
-
-import os
-import re
-import sys
-import subprocess
-import json
+"""按已保存基线或远端版本分析上游变更，同时输出 JSON 和可读报告。"""
+import argparse
 from collections import defaultdict
-from datetime import datetime
+from datetime import datetime, timezone
+import json
+import os
+from pathlib import Path
+import re
+import subprocess
+import sys
+import tempfile
 
-# ==============================================================================
-# 配置
-# ==============================================================================
+# 也支持通过 importlib 加载脚本的离线回归测试。
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from build_mcp_index import SUBMODULE_REPOS, extract_wikilinks, normalize_source_path, parse_frontmatter, source_references
 
-VAULT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+VAULT_ROOT = Path(__file__).resolve().parents[1]
+SUBMODULES = ["Sources/" + name for name in SUBMODULE_REPOS]
+BASELINE_PATH = "docs/source_baseline.json"
 
-SUBMODULES = [
-    "Sources/docs-chip",
-    "Sources/docs-buildroot",
-    "Sources/docs-product",
-    "Sources/docs-ai",
-    "Sources/docs-ros",
-]
 
-KNOWLEDGE_ATOMS_DIR = os.path.join(VAULT_ROOT, "Knowledge_Atoms")
-EVIDENCE_DIR = os.path.join(VAULT_ROOT, "Evidence")
-INDEX_FILE = os.path.join(VAULT_ROOT, "index.md")
-POINTER_CACHE_FILE = os.path.join(VAULT_ROOT, ".last_synced_commits.json")
+def git(root, module, *args):
+    directory = Path(root) / module
+    if not (directory / ".git").exists():
+        raise ValueError(f"{module} 未初始化")
+    result = subprocess.run(["git", "-C", str(directory), *args], capture_output=True, text=True)
+    if result.returncode:
+        raise ValueError(f"{module}: git {args[0]} 失败: {result.stderr.strip()}")
+    return result.stdout
 
-# 排除的文件模式 (CI/CD 配置、模板等不影响知识库的文件)
-EXCLUDE_PATTERNS = [
-    r"^\.github/",
-    r"^\.gitignore$",
-    r"^README\.md$",
-    r"^LICENSE",
-]
 
-# ANSI 颜色
-C_RESET  = "\033[0m"
-C_RED    = "\033[1;31m"
-C_GREEN  = "\033[1;32m"
-C_YELLOW = "\033[1;33m"
-C_BLUE   = "\033[1;34m"
-C_CYAN   = "\033[1;36m"
-C_BOLD   = "\033[1m"
-C_DIM    = "\033[2m"
+def current_pointers(root):
+    return {module: git(root, module, "rev-parse", "HEAD").strip() for module in SUBMODULES}
 
-# ==============================================================================
-# 工具函数
-# ==============================================================================
 
-def run_git(args, cwd=None):
-    """执行 git 命令并返回 stdout"""
-    result = subprocess.run(
-        ["git"] + args,
-        cwd=cwd or VAULT_ROOT,
-        capture_output=True,
-        text=True,
-    )
-    return result.stdout.strip(), result.returncode
+def save_pointers(path, pointers):
+    path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with tempfile.NamedTemporaryFile("w", encoding="utf-8", dir=path.parent, delete=False) as handle:
+        temporary = handle.name
+        json.dump(pointers, handle, ensure_ascii=False, indent=2, sort_keys=True)
+        handle.write("\n")
+    try:
+        os.replace(temporary, path)
+    finally:
+        if os.path.exists(temporary):
+            os.unlink(temporary)
 
-def get_submodule_head(submodule_path):
-    """获取子模块当前 HEAD commit hash"""
-    full_path = os.path.join(VAULT_ROOT, submodule_path)
-    if not os.path.isdir(full_path):
-        return None
-    out, rc = run_git(["rev-parse", "HEAD"], cwd=full_path)
-    return out if rc == 0 else None
 
-def get_submodule_remote_head(submodule_path):
-    """获取子模块远端 origin/main 的最新 commit hash"""
-    full_path = os.path.join(VAULT_ROOT, submodule_path)
-    if not os.path.isdir(full_path):
-        return None
-    run_git(["fetch", "origin", "--quiet"], cwd=full_path)
-    out, rc = run_git(["rev-parse", "origin/main"], cwd=full_path)
-    return out if rc == 0 else None
+def load_pointers(path):
+    pointers = json.loads(Path(path).read_text(encoding="utf-8"))
+    if not isinstance(pointers, dict) or any(
+        key not in SUBMODULES or not isinstance(value, str) or not re.fullmatch(r"[0-9a-f]{40}|[0-9a-f]{64}", value)
+        for key, value in pointers.items()
+    ):
+        raise ValueError("基线必须是 Sources 子模块到完整 commit SHA 的 JSON 对象")
+    return pointers
 
-def get_changed_files(submodule_path, old_commit, new_commit):
-    """获取两个 commit 之间变更的文件列表 (含状态: A/M/D)"""
-    full_path = os.path.join(VAULT_ROOT, submodule_path)
-    out, rc = run_git(
-        ["diff", "--name-status", old_commit, new_commit],
-        cwd=full_path
-    )
-    if rc != 0 or not out:
-        return []
-    
-    changes = []
-    for line in out.split("\n"):
-        if not line.strip():
-            continue
-        parts = line.split("\t", 1)
-        if len(parts) == 2:
-            status, filepath = parts
-            changes.append((status[0], filepath))  # A/M/D/R
-    return changes
 
-def get_commit_count(submodule_path, old_commit, new_commit):
-    """获取两个 commit 之间的提交数"""
-    full_path = os.path.join(VAULT_ROOT, submodule_path)
-    out, rc = run_git(
-        ["rev-list", "--count", f"{old_commit}..{new_commit}"],
-        cwd=full_path
-    )
-    return int(out) if rc == 0 and out.isdigit() else 0
-
-def should_exclude(filepath):
-    """判断文件是否应排除 (CI/CD 配置等)"""
-    for pattern in EXCLUDE_PATTERNS:
-        if re.match(pattern, filepath):
-            return True
-    return False
-
-# ==============================================================================
-# 核心：构建知识原子引用映射
-# ==============================================================================
-
-def build_reference_map():
-    """
-    扫描所有 Knowledge_Atoms/*.md 文件，提取其中引用的 Sources/ 路径，
-    构建 { 'sources/相对路径' -> ['知识原子文件名', ...] } 映射表。
-    """
-    ref_map = defaultdict(set)  # source_path -> set of knowledge_atom names
-    
-    if not os.path.isdir(KNOWLEDGE_ATOMS_DIR):
-        return ref_map
-    
-    # 匹配 Markdown 链接中的 Sources/ 路径
-    # 支持: (../Sources/xxx), (Sources/xxx), (file:///path/Sources/xxx)
-    patterns = [
-        re.compile(r'\(\.\.\/Sources\/([^)#\s]+)'),     # ../Sources/xxx
-        re.compile(r'\(Sources\/([^)#\s]+)'),            # Sources/xxx
-        re.compile(r'\(file:\/\/\/[^)]*Sources\/([^)#\s]+)'),  # file:///path/Sources/xxx
-    ]
-    
-    for fname in os.listdir(KNOWLEDGE_ATOMS_DIR):
-        if not fname.endswith(".md"):
-            continue
-        fpath = os.path.join(KNOWLEDGE_ATOMS_DIR, fname)
-        try:
-            with open(fpath, "r", encoding="utf-8") as f:
-                content = f.read()
-        except Exception:
-            continue
-        
-        atom_name = fname.replace(".md", "")
-        
-        for pattern in patterns:
-            for match in pattern.finditer(content):
-                source_rel = match.group(1)
-                # 去掉 URL 编码
-                source_rel = source_rel.replace("%20", " ")
-                ref_map[source_rel].add(atom_name)
-    
-    return ref_map
-
-def find_affected_atoms(submodule_name, changed_file, ref_map):
-    """
-    给定一个变更文件，找到所有引用它的知识原子。
-    submodule_name: 如 'docs-chip'
-    changed_file: 子模块内的相对路径，如 'zh/key_stone/k3/k3_hw/k3_hw_faq.md'
-    """
-    # 构造完整的 Sources/ 相对路径
-    full_source_path = f"{submodule_name}/{changed_file}"
-    
-    affected = set()
-    
-    # 精确匹配
-    if full_source_path in ref_map:
-        affected.update(ref_map[full_source_path])
-    
-    # 也检查带 URL 编码的路径
-    encoded_path = full_source_path.replace(" ", "%20")
-    if encoded_path in ref_map:
-        affected.update(ref_map[encoded_path])
-    
-    # 模糊匹配：如果变更文件的目录下有 static/ 图片变更，
-    # 查找引用同目录下其他文件的知识原子
-    file_dir = os.path.dirname(full_source_path)
-    if "/static/" in changed_file or changed_file.endswith((".png", ".jpg", ".svg", ".webp")):
-        for source_path, atoms in ref_map.items():
-            if source_path.startswith(file_dir + "/") or os.path.dirname(source_path) == file_dir:
-                affected.update(atoms)
-    
-    return affected
-
-# ==============================================================================
-# 指针缓存管理
-# ==============================================================================
-
-def load_cached_pointers():
-    """加载上次同步时记录的子模块 commit 指针"""
-    if os.path.exists(POINTER_CACHE_FILE):
-        try:
-            with open(POINTER_CACHE_FILE, "r") as f:
-                return json.load(f)
-        except Exception:
-            pass
-    return {}
-
-def save_cached_pointers(pointers):
-    """保存当前子模块 commit 指针"""
-    with open(POINTER_CACHE_FILE, "w") as f:
-        json.dump(pointers, f, indent=2)
-
-# ==============================================================================
-# 报告生成
-# ==============================================================================
-
-def generate_report(all_results, ref_map):
-    """生成影响分析报告"""
-    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    
-    print(f"\n{C_BLUE}{C_BOLD}{'='*65}{C_RESET}")
-    print(f"{C_BLUE}{C_BOLD}   Spacemit LLM Wiki — 上游变更影响分析报告{C_RESET}")
-    print(f"{C_BLUE}{C_BOLD}   生成时间: {timestamp}{C_RESET}")
-    print(f"{C_BLUE}{C_BOLD}{'='*65}{C_RESET}\n")
-    
-    total_changes = 0
-    total_affected = set()
-    total_uncovered = []
-    has_updates = False
-    
-    for submodule, result in all_results.items():
-        if not result["changes"]:
-            continue
-        
-        has_updates = True
-        sub_name = os.path.basename(submodule)
-        commit_count = result["commit_count"]
-        changes = result["changes"]
-        
-        # 过滤掉应排除的文件
-        content_changes = [(s, f) for s, f in changes if not should_exclude(f)]
-        if not content_changes:
-            continue
-        
-        total_changes += len(content_changes)
-        
-        print(f"{C_CYAN}{C_BOLD}📦 {sub_name} (+{commit_count} commits, {len(content_changes)} 文件变更){C_RESET}")
-        print(f"   {C_DIM}{result['old_commit'][:8]}..{result['new_commit'][:8]}{C_RESET}\n")
-        
-        # 分类统计
-        affected_map = {}  # file -> affected atoms
-        uncovered = []     # 无对应知识原子的文件
-        
-        for status, filepath in content_changes:
-            affected = find_affected_atoms(sub_name, filepath, ref_map)
-            affected_map[filepath] = (status, affected)
-            total_affected.update(affected)
-            
-            if not affected:
-                uncovered.append((status, filepath))
-                total_uncovered.append((sub_name, status, filepath))
-        
-        # 输出有对应知识原子的变更
-        covered = [(f, s, a) for f, (s, a) in affected_map.items() if a]
-        if covered:
-            print(f"   {C_GREEN}✅ 已覆盖变更 ({len(covered)} 个文件 → {len(set().union(*[a for _, _, a in covered]))} 个知识原子):{C_RESET}")
-            for filepath, status, atoms in covered:
-                status_icon = {"A": "🆕", "M": "📝", "D": "🗑️"}.get(status, "❓")
-                print(f"   {status_icon} {filepath}")
-                for atom in sorted(atoms):
-                    print(f"      └→ {C_YELLOW}{atom}{C_RESET}")
-            print()
-        
-        # 输出无对应知识原子的变更
-        if uncovered:
-            print(f"   {C_RED}⚠️  未覆盖变更 ({len(uncovered)} 个文件无对应知识原子):{C_RESET}")
-            for status, filepath in uncovered:
-                status_icon = {"A": "🆕", "M": "📝", "D": "🗑️"}.get(status, "❓")
-                print(f"   {status_icon} {C_DIM}{filepath}{C_RESET}")
-            print()
-        
-        print(f"   {'─'*55}\n")
-    
-    if not has_updates:
-        print(f"{C_GREEN}{C_BOLD}   🎉 所有子模块均已是最新版本，无需同步！{C_RESET}\n")
-        return
-    
-    # 汇总
-    print(f"{C_BOLD}{'='*65}{C_RESET}")
-    print(f"{C_BOLD}   📊 汇总{C_RESET}")
-    print(f"{C_BOLD}{'='*65}{C_RESET}")
-    print(f"   • 总变更文件数: {C_BOLD}{total_changes}{C_RESET}")
-    print(f"   • 受影响知识原子: {C_GREEN}{C_BOLD}{len(total_affected)}{C_RESET} 篇")
-    
-    if total_affected:
-        print(f"\n   {C_GREEN}需要审查更新的知识原子:{C_RESET}")
-        for atom in sorted(total_affected):
-            print(f"   📄 {C_YELLOW}{atom}{C_RESET}")
-    
-    if total_uncovered:
-        print(f"\n   {C_RED}未覆盖变更 ({len(total_uncovered)} 个文件无对应知识原子):{C_RESET}")
-        new_files = [(s, f) for s, st, f in total_uncovered if st == "A"]
-        mod_files = [(s, f) for s, st, f in total_uncovered if st != "A"]
-        
-        if new_files:
-            print(f"   {C_RED}🆕 新增文件 (可能需要创建新知识原子):{C_RESET}")
-            for sub, filepath in new_files:
-                print(f"      • {sub}/{filepath}")
-        
-        if mod_files:
-            md_mods = [(s, f) for s, f in mod_files if f.endswith(".md")]
-            if md_mods:
-                print(f"   {C_YELLOW}📝 修改的文档文件 (可能需要扩展现有知识原子):{C_RESET}")
-                for sub, filepath in md_mods:
-                    print(f"      • {sub}/{filepath}")
-    
-    print(f"\n{C_BLUE}{'='*65}{C_RESET}\n")
-
-# ==============================================================================
-# 主入口
-# ==============================================================================
-
-def main():
-    use_cached = "--cached" in sys.argv
-    fetch_only = "--fetch-only" in sys.argv
-    save_pointers = "--save" in sys.argv
-    
-    print(f"\n{C_BLUE}{C_BOLD}=== Spacemit LLM Wiki 上游变更影响分析工具启动 ==={C_RESET}")
-    print(f"{C_BLUE}工作目录: {VAULT_ROOT}{C_RESET}\n")
-    
-    # 第一步：构建知识原子引用映射
-    print(f"{C_BLUE}[1/3] 正在扫描知识原子引用关系...{C_RESET}")
-    ref_map = build_reference_map()
-    unique_sources = len(ref_map)
-    unique_atoms = len(set().union(*ref_map.values())) if ref_map else 0
-    print(f"   ✓ 发现 {unique_sources} 个 Sources/ 引用 → {unique_atoms} 个知识原子\n")
-    
-    # 第二步：获取子模块变更
-    print(f"{C_BLUE}[2/3] 正在检查子模块变更...{C_RESET}")
-    
-    cached_pointers = load_cached_pointers() if use_cached else {}
-    current_pointers = {}
-    all_results = {}
-    
-    for submodule in SUBMODULES:
-        sub_name = os.path.basename(submodule)
-        full_path = os.path.join(VAULT_ROOT, submodule)
-        
-        if not os.path.isdir(full_path):
-            print(f"   ⚠️  {sub_name}: 子模块目录不存在，跳过")
-            continue
-        
-        current_head = get_submodule_head(submodule)
-        if not current_head:
-            print(f"   ⚠️  {sub_name}: 无法获取当前 HEAD")
-            continue
-        
-        current_pointers[submodule] = current_head
-        
-        if use_cached:
-            old_commit = cached_pointers.get(submodule)
-            new_commit = current_head
-            if not old_commit:
-                print(f"   ⚠️  {sub_name}: 无缓存指针记录，跳过")
-                continue
+def body_source_paths(body):
+    targets = re.findall(r"\[[^\]\n]*\]\(\s*(<[^>]+>|[^)\n]+)\)", body)
+    targets += re.findall(r"\[\[([^\]\n]+)\]\]", body)
+    paths = set()
+    for target in targets:
+        if target.startswith("<") and ">" in target:
+            target = target[1:target.index(">")]
         else:
-            old_commit = current_head
-            new_commit = get_submodule_remote_head(submodule)
-            if not new_commit:
-                print(f"   ⚠️  {sub_name}: 无法获取远端 HEAD")
-                continue
-        
-        if old_commit == new_commit:
-            print(f"   ✓ {sub_name}: 已是最新")
-            all_results[submodule] = {"changes": [], "commit_count": 0,
-                                       "old_commit": old_commit, "new_commit": new_commit}
+            target = re.split(r"\s+[\"']", target, maxsplit=1)[0]
+        path = normalize_source_path(target)
+        if path:
+            paths.add(path)
+    return paths
+
+
+def build_reference_map(root=VAULT_ROOT):
+    """Sources 直接关系 + Journey/Atom/Evidence 双链的传递影响。"""
+    documents, names = {}, defaultdict(set)
+    for folder in ("Developer_Journeys", "Knowledge_Atoms", "Evidence"):
+        for path in sorted((Path(root) / folder).rglob("*.md")):
+            metadata, body, error = parse_frontmatter(path)
+            if error:
+                raise ValueError(f"{path}: {error}")
+            node = path.relative_to(root).as_posix()
+            documents[node] = (metadata, body)
+            for name in (path.stem, metadata.get("title", ""), *metadata.get("aliases", [])):
+                names[name.lower()].add(node)
+    references, dependents = defaultdict(set), defaultdict(set)
+    for node, (metadata, body) in documents.items():
+        paths = {path for path, _ in source_references(metadata)} | body_source_paths(body)
+        for path in paths:
+            references[path].add(node)
+        for name in extract_wikilinks(body):
+            for target in names.get(name.lower(), ()):
+                dependents[target].add(node)
+    for nodes in references.values():
+        pending = list(nodes)
+        while pending:
+            for dependent in dependents[pending.pop()]:
+                if dependent not in nodes:
+                    nodes.add(dependent)
+                    pending.append(dependent)
+    return references
+
+
+def get_changed_files(root, module, old_commit, new_commit):
+    # Renames are D+A so the old and new paths both participate in impact analysis.
+    fields = git(root, module, "diff", "--no-renames", "--name-status", "-z", old_commit, new_commit, "--").split("\0")
+    return [(fields[i], fields[i + 1]) for i in range(0, len(fields) - 1, 2)]
+
+
+def empty_report():
+    return {"schema_version": 1, "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+            "baseline_initialized": False, "submodules": {}, "changed_files": [],
+            "affected_nodes": [], "uncovered_files": [], "deleted_files": [], "errors": []}
+
+
+def analyze(root, old, new, references):
+    report = empty_report()
+    affected = set()
+    for module in SUBMODULES:
+        previous, current = old.get(module), new.get(module)
+        if not previous or not current:
+            report["errors"].append(f"{module}: 缺少基线或目标 commit，不能判断变更")
             continue
-        
-        changes = get_changed_files(submodule, old_commit, new_commit)
-        commit_count = get_commit_count(submodule, old_commit, new_commit)
-        print(f"   📦 {sub_name}: {C_YELLOW}+{commit_count} commits, {len(changes)} 文件变更{C_RESET}")
-        
-        all_results[submodule] = {
-            "changes": changes,
-            "commit_count": commit_count,
-            "old_commit": old_commit,
-            "new_commit": new_commit,
-        }
-    
-    print()
-    
-    # 第三步：生成影响报告
-    print(f"{C_BLUE}[3/3] 正在生成影响分析报告...{C_RESET}")
-    generate_report(all_results, ref_map)
-    
-    # 可选：保存当前指针
-    if save_pointers:
-        save_cached_pointers(current_pointers)
-        print(f"{C_GREEN}✓ 已保存当前子模块指针到 {POINTER_CACHE_FILE}{C_RESET}\n")
+        try:
+            changes = get_changed_files(root, module, previous, current)
+            count = int(git(root, module, "rev-list", "--count", f"{previous}..{current}").strip())
+        except ValueError as error:
+            report["errors"].append(str(error))
+            continue
+        report["submodules"][module] = dict(old_commit=previous, new_commit=current, commit_count=count, changed_files=len(changes))
+        for status, relative in changes:
+            path = module + "/" + relative
+            nodes = sorted(references.get(path, ()))
+            affected.update(nodes)
+            report["changed_files"].append(dict(status=status, path=path, affected_nodes=nodes))
+            if not nodes:
+                report["uncovered_files"].append(path)
+            if status == "D":
+                report["deleted_files"].append(path)
+    report["affected_nodes"] = sorted(affected)
+    return report
+
+
+def human_report(report, stream=sys.stdout):
+    print("SpacemiT Wiki — 上游变更影响报告", file=stream)
+    if report["baseline_initialized"]:
+        print("首次运行：已保存当前子模块基线；后续运行将对比该基线。", file=stream)
+    for module, versions in report["submodules"].items():
+        print(f"{module}: {versions['old_commit'][:8]}..{versions['new_commit'][:8]}，{versions['changed_files']} 个文件", file=stream)
+    for change in report["changed_files"]:
+        print(f"  {change['status']} {change['path']}", file=stream)
+        for node in change["affected_nodes"]:
+            print(f"    → {node}", file=stream)
+    print(f"共 {len(report['changed_files'])} 个变更文件，影响 {len(report['affected_nodes'])} 个节点，"
+          f"未覆盖 {len(report['uncovered_files'])} 个，删除 {len(report['deleted_files'])} 个。", file=stream)
+    for error in report["errors"]:
+        print("错误：" + error, file=stream)
+
+
+def emit_report(report, destination, root):
+    human_report(report, sys.stderr if destination == "-" else sys.stdout)
+    if destination:
+        encoded = json.dumps(report, ensure_ascii=False, indent=2) + "\n"
+        if destination == "-":
+            print(encoded, end="")
+        else:
+            output = root / destination
+            output.parent.mkdir(parents=True, exist_ok=True)
+            output.write_text(encoded, encoding="utf-8")
+
+
+def main(argv=None):
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--cached", action="store_true", help="比较已保存基线与当前 checkout，不联网")
+    parser.add_argument("--save", action="store_true", help="分析成功后将当前 checkout 保存为下次基线")
+    parser.add_argument("--init-baseline", action="store_true", help="只在基线不存在时初始化，供同步前调用")
+    parser.add_argument("--baseline", default=BASELINE_PATH, help="基线 JSON 路径，相对仓库根目录")
+    parser.add_argument("--json", metavar="PATH", help="写入结构化报告；- 表示 stdout，可读报告转到 stderr")
+    args = parser.parse_args(argv)
+    baseline = VAULT_ROOT / args.baseline
+    try:
+        current = current_pointers(VAULT_ROOT)
+        initialized = not baseline.exists()
+        if initialized:
+            save_pointers(baseline, current)
+        old = load_pointers(baseline)
+        if args.init_baseline:
+            print("已初始化基线" if initialized else "保留已有基线")
+            return 0
+        target = current
+        if not args.cached:
+            old, target = current, {}
+            for module in SUBMODULES:
+                git(VAULT_ROOT, module, "fetch", "origin", "--quiet")
+                remote_ref = git(VAULT_ROOT, module, "symbolic-ref", "refs/remotes/origin/HEAD").strip()
+                target[module] = git(VAULT_ROOT, module, "rev-parse", remote_ref).strip()
+        report = analyze(VAULT_ROOT, old, target, build_reference_map(VAULT_ROOT))
+        report["baseline_initialized"] = initialized
+        emit_report(report, args.json, VAULT_ROOT)
+        if report["errors"]:
+            return 1
+        if args.save:
+            save_pointers(baseline, current)
+        return 0
+    except (OSError, ValueError, json.JSONDecodeError) as error:
+        report = empty_report()
+        report["errors"].append(str(error))
+        try:
+            emit_report(report, args.json, VAULT_ROOT)
+        except OSError as output_error:
+            print(f"影响报告写入失败：{output_error}；原始错误：{error}", file=sys.stderr)
+        return 1
+
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

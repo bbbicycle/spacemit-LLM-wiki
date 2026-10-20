@@ -2,7 +2,7 @@
 type: evidence
 title: "K1 芯片 AI 算力与大模型推理数据"
 claim_type: "metric"
-status: needs_review
+status: "needs_review"
 verification_status: unverified
 external_use: false
 source_file: "Sources/docs-chip/zh/key_stone/k1/k1_docs/root_overview.md"
@@ -12,10 +12,10 @@ source_section: "概述；特性"
 source_resolution: partial
 source_checked_at: 2026-10-13
 source_note: "产品简介与 AI 架构文档对 CPU 核命名口径不同；保留各自出处。框架兼容、测试年份和全部安全参数未逐项核验。"
-source_related_file: "Sources/docs-ai/zh/architecture/concept.md"
-source_related_commit: "2b3894e983a295ed0278bc625867e0c132e0e259"
+source_related_file: ["Sources/docs-ai/zh/architecture/concept.md"]
+source_related_commit: ["2b3894e983a295ed0278bc625867e0c132e0e259"]
 created: 2026-06-29
-updated: 2026-10-13
+updated: "2026-10-20"
 aliases: ["K1 AI算力与大模型性能数据", "K1 AI Performance and LLM Benchmarks", "k1_ai_performance_data"]
 domain: edge_ai_robotics
 target_audience: [AI 算法工程师, 嵌入式软件]

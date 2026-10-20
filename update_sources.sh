@@ -60,6 +60,10 @@ SUBMODULES=(
 echo -e "${BLUE}[1/2] 正在初始化并同步 .gitmodules 配置...${NC}"
 git submodule sync --recursive
 git submodule init
+git submodule update --init --recursive
+
+# 同步前建立缺失基线；已有基线保留，避免首次同步丢失变化窗口。
+python3 scripts/check_upstream_impact.py --init-baseline
 
 TOTAL=${#SUBMODULES[@]}
 echo -e "\n${BLUE}[2/2] 开始遍历更新 ${TOTAL} 个 Spacemit 官方文档子模块...${NC}"
@@ -93,16 +97,12 @@ echo -e "\n${GREEN}${BOLD}=====================================================$
 echo -e "${GREEN}${BOLD}   🎉 所有子模块 (${TOTAL}/${TOTAL}) 已成功同步至最新 upstream！ ${NC}"
 echo -e "${GREEN}${BOLD}=====================================================${NC}"
 
-# 自动运行上游变更影响分析
-IMPACT_SCRIPT="${SCRIPT_DIR}/scripts/check_upstream_impact.py"
-if [ -f "$IMPACT_SCRIPT" ]; then
-    echo -e "\n${BLUE}${BOLD}[自动检查] 正在运行上游变更影响分析...${NC}"
-    python3 "$IMPACT_SCRIPT" --cached 2>/dev/null || echo -e "${YELLOW}[提示] 影响分析工具未生成报告（可能是首次运行或无缓存指针）${NC}"
-fi
-
 # 同步的本地入口也必须更新消费索引，避免双击更新后仍搜索旧路径。
 echo -e "\n${BLUE}${BOLD}[索引校验] 正在重建并验证 MCP 双端索引...${NC}"
-python3 scripts/build_mcp_index.py --if-changed
+python3 scripts/build_mcp_index.py --if-changed --freshness-report reports/freshness.json
 python3 scripts/build_mcp_index.py --check
 python3 vault_linker_lint.py
 python3 scripts/lint_wiki_integrity.py
+
+# 仅全部校验成功后推进可提交基线；错误不再被吞掉，供维护者和 CI 定位。
+python3 scripts/check_upstream_impact.py --cached --save --json reports/upstream-impact.json

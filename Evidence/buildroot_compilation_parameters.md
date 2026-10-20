@@ -1,7 +1,7 @@
 ---
 type: evidence
 title: "SpacemiT Buildroot 编译指令、镜像生成与离线包下载参数规格"
-status: needs_review
+status: "needs_review"
 verification_status: unverified
 external_use: false
 source_file: "Sources/docs-buildroot/zh/k1_buildroot/source.md"
@@ -11,10 +11,10 @@ source_section: "下载；交叉编译"
 source_resolution: partial
 source_checked_at: 2026-10-13
 source_note: "K1/K3 编译文档已定位；各命令和离线包地址仍需按所选 SDK 版本核验。"
-source_related_file: "Sources/docs-buildroot/zh/k3_buildroot/source.md"
-source_related_commit: "6d4c2a65989f0b61819bebfbc85f77d72732745e"
+source_related_file: ["Sources/docs-buildroot/zh/k3_buildroot/source.md"]
+source_related_commit: ["6d4c2a65989f0b61819bebfbc85f77d72732745e"]
 created: 2026-08-10
-updated: 2026-10-13
+updated: "2026-10-20"
 aliases: [buildroot_compilation_parameters, Buildroot Make Parameters, Buildroot Commands Specs]
 domain: bsp_kernel_drivers
 target_audience: [BSP 工程师, CI/CD 工程师]

@@ -1,7 +1,7 @@
 ---
 type: knowledge_atom
 title: "SpacemiT V100 计算、存储与智算服务器专题档案"
-status: needs_review
+status: "needs_review"
 verification_status: unverified
 source_origin: "https://github.com/spacemit-com/docs-product"
 source_file: "Sources/docs-product/zh/v100_series/index.md"
@@ -12,10 +12,12 @@ source_checked_at: 2026-10-19
 source_note: "已对照固定提交的中英文产品简介核对三款服务器分类；未对全部配置参数及软件兼容性逐项认证。"
 conflicts: "旧稿将 C2201、S5236、G5201 分别归为边缘单元、工业主控和网关，与官方服务器产品简介冲突；原口径在正文留存，等待人工审核。"
 created: 2026-10-16
-updated: 2026-10-19
+updated: "2026-10-20"
 aliases: ["V100系列硬件专题", "Vital Stone V100", "SpacemiT V100 Series", "v100_series", "V100硬件档案", "SpacemiT V100 系列工业与边缘计算硬件专题档案", "V100计算存储智算服务器"]
 domain: chip_product_specs
 target_audience: [系统架构师, 服务器硬件工程师, 数据中心工程师, 产品经理]
+source_related_file: ["Sources/docs-product/zh/v100_series/v100_c2201/root_overview.md", "Sources/docs-product/zh/v100_series/v100_g5201/root_overview.md", "Sources/docs-product/zh/v100_series/v100_s5236/root_overview.md"]
+source_related_commit: ["bc640755145625cc20745f49861f82588863fca3", "bc640755145625cc20745f49861f82588863fca3", "bc640755145625cc20745f49861f82588863fca3"]
 ---
 
 # SpacemiT V100 计算、存储与智算服务器专题档案

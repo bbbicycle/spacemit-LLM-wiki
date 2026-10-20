@@ -15,6 +15,8 @@ Spacemit LLM Wiki - 事实完整性与防拼凑静态质检工具 (Content Integ
 import os
 import re
 import sys
+from datetime import date
+from build_mcp_index import normalize_source_path, parse_frontmatter, source_references
 
 COLOR_RESET = "\033[0m"
 COLOR_RED = "\033[1;31m"
@@ -54,6 +56,36 @@ class IntegrityLinter:
             return
 
         self.scanned_files_count += 1
+        if rel_path.split(os.sep)[0] in ("Evidence", "Knowledge_Atoms"):
+            metadata, _, error = parse_frontmatter(file_path)
+            if not str(metadata.get("source_tier", "")).startswith(("tier_2", "tier_3")):
+                required = ("source_file", "source_commit", "source_resolution", "verification_status", "source_checked_at")
+                missing = [key for key in required if not metadata.get(key)]
+                if not (metadata.get("source_section") or metadata.get("source_locator")):
+                    missing.append("source_section/source_locator")
+                if error or missing:
+                    self.log_error(rel_path, 1, "SOURCE_METADATA", error or "缺少来源字段: " + ", ".join(missing))
+                for prefix in ("source", "source_related"):
+                    paths, commits = metadata.get(prefix + "_file", []), metadata.get(prefix + "_commit", [])
+                    paths = paths if isinstance(paths, list) else [paths]
+                    commits = commits if isinstance(commits, list) else [commits]
+                    if len(paths) != len(commits):
+                        self.log_error(rel_path, 1, "SOURCE_METADATA", prefix + " 的路径与 commit 必须一一对应")
+                for path, commit in source_references(metadata):
+                    if normalize_source_path(path) != path or not isinstance(commit, str) or not re.fullmatch(r"[0-9a-f]{40}|[0-9a-f]{64}", commit):
+                        self.log_error(rel_path, 1, "SOURCE_METADATA", "来源需为完整 Sources 路径和固定 commit: " + path)
+                if metadata.get("source_resolution") not in ("resolved", "partial", "unresolved"):
+                    self.log_error(rel_path, 1, "SOURCE_METADATA", "source_resolution 必须为 resolved/partial/unresolved")
+                if metadata.get("verification_status") not in ("verified", "unverified", "conflicted"):
+                    self.log_error(rel_path, 1, "SOURCE_METADATA", "verification_status 必须为 verified/unverified/conflicted")
+                if metadata.get("verification_status") == "verified" and not metadata.get("verified_at"):
+                    self.log_error(rel_path, 1, "SOURCE_METADATA", "verified 必须记录实际复核日期 verified_at")
+                for field in ("source_checked_at", "verified_at"):
+                    if metadata.get(field):
+                        try:
+                            date.fromisoformat(metadata[field])
+                        except (ValueError, TypeError):
+                            self.log_error(rel_path, 1, "SOURCE_METADATA", field + " 必须为 YYYY-MM-DD")
         lines = content.split("\n")
         in_code_block = False
 

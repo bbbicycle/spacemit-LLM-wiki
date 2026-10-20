@@ -1,12 +1,22 @@
 ---
 type: knowledge_atom
 title: "SpacemiT ROS 2 机器人与具身智能专题档案"
-status: needs_review
+status: "needs_review"
 created: 2026-08-10
-updated: 2026-10-19
+updated: "2026-10-20"
 aliases: [SpacemiT_ROS2_机器人与具身智能专题档案, ROS 2 & Embodied AI Dossier, SpacemiT Robotics Guide]
 domain: edge_ai_robotics
 target_audience: [机器人工程师, 具身 AI 开发者]
+source_file: "Sources/docs-ros/zh/root_overview.md"
+source_commit: "808d02c1bd11cf0d4376555919bd61c90e38d853"
+source_locator: "简介；ROS 2；Robot SDK"
+source_resolution: "partial"
+verification_status: "unverified"
+source_checked_at: "2026-10-20"
+source_note: "本次仅定位已有引用对应的文件与章节，未对正文全部事实逐项复核；引用的 Evidence 保留各自历史版本与核验状态。"
+source_origin: "https://github.com/spacemit-com/docs-ros"
+source_related_file: ["Sources/docs-ros/zh/k3/06-系统与平台/6.6-ROS2/6.6.1-ROS2-INSTALL.md", "Sources/docs-ros/zh/k1/06_Robot_development/6.1_OS_Preparation/6.1.2_ROS2_Installation.md", "Sources/docs-ros/zh/k3/03-参考方案/3.1-桌面机器人Reachy-mini.md"]
+source_related_commit: ["808d02c1bd11cf0d4376555919bd61c90e38d853", "808d02c1bd11cf0d4376555919bd61c90e38d853", "5b94e7e61e3be4bf00981fd74b7c9eba7595f4e1"]
 ---
 
 # SpacemiT ROS 2 机器人与具身智能专题档案
