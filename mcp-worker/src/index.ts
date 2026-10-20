@@ -14,6 +14,11 @@ export interface Env {
   DB?: D1Database;
 }
 
+export interface ExecutionContext {
+  waitUntil(promise: Promise<any>): void;
+  passThroughOnException(): void;
+}
+
 interface WikiNode {
   id: string;
   title: string;
@@ -255,7 +260,15 @@ async function logQueryToD1(env: Env, log: {
   }
 }
 
-async function handleToolCall(name: string, args: any, env: Env, cfData?: any) {
+function recordQueryLog(env: Env, log: Parameters<typeof logQueryToD1>[1], ctx?: ExecutionContext) {
+  const p = logQueryToD1(env, log);
+  if (ctx && typeof ctx.waitUntil === "function") {
+    ctx.waitUntil(p);
+  }
+}
+
+
+async function handleToolCall(name: string, args: any, env: Env, cfData?: any, ctx?: ExecutionContext) {
   let status = "SUCCESS";
   let matchedId = "";
   let errorMsg = "";
@@ -298,7 +311,7 @@ async function handleToolCall(name: string, args: any, env: Env, cfData?: any) {
         matchedId = results[0].id;
       }
 
-      logQueryToD1(env, { tool_name: name, query_text: args.query, category, status, matched_id: matchedId, country: cfData?.country, city: cfData?.city });
+      recordQueryLog(env, { tool_name: name, query_text: args.query, category, status, matched_id: matchedId, country: cfData?.country, city: cfData?.city }, ctx);
       return { content: [{ type: "text", text: JSON.stringify(results.slice(0, 5), null, 2) }] };
     }
 
@@ -306,12 +319,12 @@ async function handleToolCall(name: string, args: any, env: Env, cfData?: any) {
       const nodeId = resolveNodeId(args.board_or_task, "developer_journey");
       if (!nodeId || !nodes[nodeId]) {
         status = "MISS_NO_RESULT";
-        logQueryToD1(env, { tool_name: name, query_text: args.board_or_task, category, status, error_message: "未找到动线", country: cfData?.country, city: cfData?.city });
+        recordQueryLog(env, { tool_name: name, query_text: args.board_or_task, category, status, error_message: "未找到动线", country: cfData?.country, city: cfData?.city }, ctx);
         return { isError: true, content: [{ type: "text", text: `未找到相关动线: ${args.board_or_task}` }] };
       }
       const node = nodes[nodeId];
       matchedId = nodeId;
-      logQueryToD1(env, { tool_name: name, query_text: args.board_or_task, category, status, matched_id: matchedId, country: cfData?.country, city: cfData?.city });
+      recordQueryLog(env, { tool_name: name, query_text: args.board_or_task, category, status, matched_id: matchedId, country: cfData?.country, city: cfData?.city }, ctx);
       return {
         content: [{
           type: "text",
@@ -331,12 +344,12 @@ async function handleToolCall(name: string, args: any, env: Env, cfData?: any) {
       const nodeId = resolveNodeId(args.atom_name, "knowledge_atom");
       if (!nodeId || !nodes[nodeId]) {
         status = "MISS_NO_RESULT";
-        logQueryToD1(env, { tool_name: name, query_text: args.atom_name, category, status, error_message: "未找到专题", country: cfData?.country, city: cfData?.city });
+        recordQueryLog(env, { tool_name: name, query_text: args.atom_name, category, status, error_message: "未找到专题", country: cfData?.country, city: cfData?.city }, ctx);
         return { isError: true, content: [{ type: "text", text: `未找到专题档案: ${args.atom_name}` }] };
       }
       const node = nodes[nodeId];
       matchedId = nodeId;
-      logQueryToD1(env, { tool_name: name, query_text: args.atom_name, category, status, matched_id: matchedId, country: cfData?.country, city: cfData?.city });
+      recordQueryLog(env, { tool_name: name, query_text: args.atom_name, category, status, matched_id: matchedId, country: cfData?.country, city: cfData?.city }, ctx);
       return {
         content: [{
           type: "text",
@@ -356,12 +369,12 @@ async function handleToolCall(name: string, args: any, env: Env, cfData?: any) {
       const nodeId = resolveNodeId(args.spec_name, "evidence");
       if (!nodeId || !nodes[nodeId]) {
         status = "MISS_NO_RESULT";
-        logQueryToD1(env, { tool_name: name, query_text: args.spec_name, category, status, error_message: "未找到事实数据", country: cfData?.country, city: cfData?.city });
+        recordQueryLog(env, { tool_name: name, query_text: args.spec_name, category, status, error_message: "未找到事实数据", country: cfData?.country, city: cfData?.city }, ctx);
         return { isError: true, content: [{ type: "text", text: `未找到事实数据: ${args.spec_name}` }] };
       }
       const node = nodes[nodeId];
       matchedId = nodeId;
-      logQueryToD1(env, { tool_name: name, query_text: args.spec_name, category, status, matched_id: matchedId, country: cfData?.country, city: cfData?.city });
+      recordQueryLog(env, { tool_name: name, query_text: args.spec_name, category, status, matched_id: matchedId, country: cfData?.country, city: cfData?.city }, ctx);
       return {
         content: [{
           type: "text",
@@ -379,12 +392,12 @@ async function handleToolCall(name: string, args: any, env: Env, cfData?: any) {
       const nodeId = resolveNodeId(args.node_name || "");
       if (!nodeId || !nodes[nodeId]) {
         status = "MISS_NO_RESULT";
-        logQueryToD1(env, { tool_name: name, query_text: args.node_name, category, status, error_message: "未找到节点", country: cfData?.country, city: cfData?.city });
+        recordQueryLog(env, { tool_name: name, query_text: args.node_name, category, status, error_message: "未找到节点", country: cfData?.country, city: cfData?.city }, ctx);
         return { isError: true, content: [{ type: "text", text: `未找到节点: ${args.node_name}` }] };
       }
       const node = nodes[nodeId];
       matchedId = nodeId;
-      logQueryToD1(env, { tool_name: name, query_text: args.node_name, category, status, matched_id: matchedId, country: cfData?.country, city: cfData?.city });
+      recordQueryLog(env, { tool_name: name, query_text: args.node_name, category, status, matched_id: matchedId, country: cfData?.country, city: cfData?.city }, ctx);
       return {
         content: [{
           type: "text",
@@ -432,7 +445,7 @@ async function handleToolCall(name: string, args: any, env: Env, cfData?: any) {
       if (matches.length === 0) status = "MISS_NO_RESULT";
       else matchedId = matches[0].file_path;
 
-      logQueryToD1(env, { tool_name: name, query_text: args.query, category, status, matched_id: matchedId, country: cfData?.country, city: cfData?.city });
+      recordQueryLog(env, { tool_name: name, query_text: args.query, category, status, matched_id: matchedId, country: cfData?.country, city: cfData?.city }, ctx);
       return { content: [{ type: "text", text: JSON.stringify(matches.slice(0, 8), null, 2) }] };
     }
 
@@ -449,7 +462,7 @@ async function handleToolCall(name: string, args: any, env: Env, cfData?: any) {
         if (!resp.ok) {
           status = "ERROR";
           errorMsg = `HTTP ${resp.status}`;
-          logQueryToD1(env, { tool_name: name, query_text: args.file_path_or_url, category, status, error_message: errorMsg, country: cfData?.country, city: cfData?.city });
+          recordQueryLog(env, { tool_name: name, query_text: args.file_path_or_url, category, status, error_message: errorMsg, country: cfData?.country, city: cfData?.city }, ctx);
           return { isError: true, content: [{ type: "text", text: `无法从 GitHub 获取源文件 (${resp.status}): ${targetUrl}` }] };
         }
         const rawText = await resp.text();
@@ -460,7 +473,7 @@ async function handleToolCall(name: string, args: any, env: Env, cfData?: any) {
         const hasMore = end < lines.length;
 
         matchedId = targetUrl;
-        logQueryToD1(env, { tool_name: name, query_text: args.file_path_or_url, category, status, matched_id: matchedId, country: cfData?.country, city: cfData?.city });
+        recordQueryLog(env, { tool_name: name, query_text: args.file_path_or_url, category, status, matched_id: matchedId, country: cfData?.country, city: cfData?.city }, ctx);
         return {
           content: [{
             type: "text",
@@ -472,7 +485,7 @@ async function handleToolCall(name: string, args: any, env: Env, cfData?: any) {
       } catch (e: any) {
         status = "ERROR";
         errorMsg = e.message;
-        logQueryToD1(env, { tool_name: name, query_text: args.file_path_or_url, category, status, error_message: errorMsg, country: cfData?.country, city: cfData?.city });
+        recordQueryLog(env, { tool_name: name, query_text: args.file_path_or_url, category, status, error_message: errorMsg, country: cfData?.country, city: cfData?.city }, ctx);
         return { isError: true, content: [{ type: "text", text: `请求 GitHub 失败: ${e.message}` }] };
       }
     }
@@ -484,12 +497,17 @@ async function handleToolCall(name: string, args: any, env: Env, cfData?: any) {
       const desc = args.description || "";
 
       if (env.DB) {
-        await env.DB.prepare(
+        const issuePromise = env.DB.prepare(
           `INSERT INTO mcp_issue_reports (topic, issue_type, description, reported_by) VALUES (?, ?, ?, 'developer_ai')`
-        ).bind(topic, issueType, desc).run();
+        ).bind(topic, issueType, desc).run().catch(err => console.error("D1 issue report error:", err));
+        if (ctx && typeof ctx.waitUntil === "function") {
+          ctx.waitUntil(issuePromise);
+        } else {
+          await issuePromise;
+        }
       }
 
-      logQueryToD1(env, { tool_name: name, query_text: `${topic}: ${desc}`, category: "错误与反馈提交", status: "SUCCESS", country: cfData?.country, city: cfData?.city });
+      recordQueryLog(env, { tool_name: name, query_text: `${topic}: ${desc}`, category: "错误与反馈提交", status: "SUCCESS", country: cfData?.country, city: cfData?.city }, ctx);
       return {
         content: [{
           type: "text",
@@ -500,12 +518,12 @@ async function handleToolCall(name: string, args: any, env: Env, cfData?: any) {
 
     return { isError: true, content: [{ type: "text", text: `未知工具: ${name}` }] };
   } catch (globalErr: any) {
-    logQueryToD1(env, { tool_name: name, query_text: queryStr, category, status: "ERROR", error_message: globalErr.message, country: cfData?.country, city: cfData?.city });
+    recordQueryLog(env, { tool_name: name, query_text: queryStr, category, status: "ERROR", error_message: globalErr.message, country: cfData?.country, city: cfData?.city }, ctx);
     return { isError: true, content: [{ type: "text", text: `执行异常: ${globalErr.message}` }] };
   }
 }
 
-async function handleJsonRpc(body: any, env: Env, cfData?: any): Promise<any> {
+async function handleJsonRpc(body: any, env: Env, cfData?: any, ctx?: ExecutionContext): Promise<any> {
   const { jsonrpc, id, method, params } = body;
   if (method === "initialize") {
     return {
@@ -527,7 +545,7 @@ async function handleJsonRpc(body: any, env: Env, cfData?: any): Promise<any> {
     };
   }
   if (method === "tools/call") {
-    const result = await handleToolCall(params.name, params.arguments || {}, env, cfData);
+    const result = await handleToolCall(params.name, params.arguments || {}, env, cfData, ctx);
     return {
       jsonrpc: "2.0",
       id,
@@ -687,7 +705,7 @@ async function renderStatsDashboard(env: Env): Promise<Response> {
 }
 
 export default {
-  async fetch(request: Request, env: Env): Promise<Response> {
+  async fetch(request: Request, env: Env, ctx?: ExecutionContext): Promise<Response> {
     const url = new URL(request.url);
     const cf = (request as any).cf;
 
@@ -754,7 +772,7 @@ export default {
       const sessionId = url.searchParams.get("sessionId") || "";
       try {
         const body = await request.json();
-        const responseData = await handleJsonRpc(body, env, cf);
+        const responseData = await handleJsonRpc(body, env, cf, ctx);
 
         if (responseData) {
           const stringified = JSON.stringify(responseData);

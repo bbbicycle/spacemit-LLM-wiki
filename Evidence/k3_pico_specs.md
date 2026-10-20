@@ -13,7 +13,7 @@ source_resolution: resolved
 source_checked_at: 2026-10-13
 source_note: "已定位正确的官方产品目录；具体配置和接口复用仍需逐项复核。"
 created: 2026-06-30
-updated: 2026-10-13
+updated: 2026-10-20
 aliases: ["K3 Pico板级核心参数", "K3 Pico Board Hardware Specs", "k3_pico_specs"]
 domain: chip_product_specs
 target_audience: [硬件工程师, 产品架构师]
@@ -28,7 +28,7 @@ target_audience: [硬件工程师, 产品架构师]
 
 | 规格维度 | 详细参数规格 | 说明 / 调试设计 |
 | :--- | :--- | :--- |
-| **主控处理器** | SpacemiT K3 8核（8计算核 + 8智算核） | 融合 60 TOPS AI 算力，符合 RVA23 标准，支持 IME 向量扩展与完整虚拟化 |
+| **主控处理器** | SpacemiT K3 16核（8计算核 + 8智算核） | 融合 60 TOPS AI 算力，符合 RVA23 标准，支持 IME 向量扩展与完整虚拟化 |
 | **内存 (DRAM)** | 双通道 2 × 32-bit LPDDR5，6400 MT/s | 可选 16GB / 32GB 容量，计算核与智算核统一内存架构，支持 30B MoE 稀疏大模型推理 |
 | **本地存储** | 板载 UFS 2.2 闪存 | 可选 128GB / 256GB 容量，读取速率比普通 eMMC 提升 3.4 倍 |
 | **存储扩展** | M.2 M-Key (2280) 连接器 | 支持 PCIe Gen3 x4 链路，可挂载 NVMe SSD（注：B-Key 插入设备时降为 Gen3 x2） |

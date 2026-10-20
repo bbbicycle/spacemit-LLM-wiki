@@ -1,15 +1,34 @@
 ---
 type: vault_log
-title: "SpacemiT K3 芯片文档重构日志"
+title: "Spacemit LLM Wiki 知识库重构与演进日志"
 status: active
 created: 2026-06-29
 updated: 2026-10-20
 ---
 
-# SpacemiT K3 芯片文档重构日志 (log.md)
+# Spacemit LLM Wiki 知识库重构与演进日志 (log.md)
 
 > [!NOTE]
 > 本文件用于记录 Spacemit LLM Wiki 知识库的重构、清理、验证与 MCP 服务演进日志。
+
+---
+
+## [2026-10-20] milestone | 完成 P0 冻结目标与接口并正式闭环
+
+- 正式编写并发布标准化接口规范文档 `docs/MCP_CONTRACT_V1.md`，冻结 7 大核心 MCP 工具的输入输出规范与安全分页约束（默认 200 行，单次最大 500 行）。
+- 完成面向未来接入公司 RAG 的联合结果元数据契约定义，固化 `source_kind`（`wiki|company_rag|raw_source`）、`access_scope`（`public|internal|restricted`）、`verification_status`、`freshness` 及 `external_use` 等字段规范。
+- 补全涵盖 Wiki 维护者、服务器运维团队、企业 RAG 团队及客户端工程师的四方责任矩阵（RACI），并在 `docs/PROJECT_PLAN.md` 中追加 P0 执行记录与验收闭环。
+
+---
+
+## [2026-10-20] fix | 修正代际混淆、对齐 K3 16核与 K1 标称主频、清除遗留路径死链并加固 Worker 异步日志
+
+- 纠正 `index.md` 中关于 `Evidence/k1_ai_performance_data` 的代际混淆条目，剔除 K3 的 A100 AI Core 误标，更正为 A60 智算核 (AI CPU)。
+- 统一 K3 芯片核心数为 16 核（8计算核 + 8智算核），修正 `Evidence/k3_pico_specs.md` 中出现的 8 核笔误，与全景档案及服务器集群规格对齐。
+- 明确 K1 标称工作主频为 1.6 GHz（最高支持 2.0 GHz），消除 `Evidence/space_ai_architecture_specs.md` 中“默认 2.0 GHz”与芯片物理规格档案的冲突。
+- 清除 `Developer_Journeys/Muse_Pi_开发板快速上手向导.md` 与 `Developer_Journeys/K3_Pico_开发板快速上手向导.md` 中遗留的本地个人绝对路径 `file:///Users/bicycle/...`，恢复为标准相对路径。
+- 加固 Cloudflare Worker (`mcp-worker/src/index.ts`)：在 `fetch` 处理函数中引入 `ExecutionContext`，为所有 D1 查询日志与问题报告写入添加 `ctx.waitUntil` 保护，防止 Serverless 环境下异步 Promise 被提前截断。
+- 遵循维护原则，Bianbu 相关内容在本次保持现状，留待后续专项完善。
 
 ---
 

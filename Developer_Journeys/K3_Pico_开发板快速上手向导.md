@@ -3,7 +3,7 @@ type: developer_journey
 title: "K3 Pico-ITX 开发板快速上手向导"
 status: needs_review
 created: 2026-06-30
-updated: 2026-06-30
+updated: 2026-10-20
 aliases: ["K3 Pico 开发板快速上手向导", "K3 Pico Quick Start Guide", "k3_pico_quick_start"]
 domain: hardware_schematic_design
 ---
@@ -76,4 +76,4 @@ llama-cli -m ./Meta-Llama-3-8B-Instruct-Q4_K_M.gguf -p "介绍一下 RISC-V 架�
 
 * 硬件避坑与优先级：[[Knowledge_Atoms/K3_Pico_板级硬件设计专题|K3 Pico-ITX 板级硬件设计与调试专题]]
 * 芯片级 AI 部署指南：[[Knowledge_Atoms/K3大模型本地推理与AI算力专题档案|K3 大模型本地推理与 AI 算力专题]]
-* 官方完整指南：[K3 Pico 使用指南（原始文件）](file:///Users/bicycle/Spacemit%20LLM%20Wiki/Sources/docs-product/zh/k3_pico/pico_user_guide.md)
+* 官方完整指南：[K3 Pico 使用指南（原始文件）](../Sources/docs-product/zh/k3_pico/pico_user_guide.md)

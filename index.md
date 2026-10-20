@@ -141,7 +141,7 @@ aliases: [index, index.md, 索引, 全局索引]
 ### 事实证据 (Evidence)
 *   [[Evidence/space_ai_architecture_specs]] —— SpacemiT A60 智算核 (AI CPU) 同构融合架构、IME 矩阵扩展规格 (4x8x4) 与 cpufp 实测算力 (2.046 TOPS)。
 *   [[Evidence/space_ai_software_stack_specs]] —— SpaceAI 软件栈全景、SpaceMITExecutionProvider 接口、XSlim 模型量化工具链参数与算子支持规格。
-*   [[Evidence/k1_ai_performance_data]] —— K1 芯片通用 50KDMIPS、2.0 TOPS 算力与 1B 大模型实测、A100 AI Core 与安全引擎规格。
+*   [[Evidence/k1_ai_performance_data]] —— K1 芯片通用 50KDMIPS、2.0 TOPS 算力与 1B 大模型实测、A60 智算核 (AI CPU) 与安全引擎规格。
 *   [[Evidence/k3_ai_performance_data]] —— K3 芯片在 AI 算力与主流大模型本地推理的实测数据。
 *   [[Evidence/ros2_platform_specs]] —— SpacemiT K1/K3 平台 ROS 2 发行版支持、DDS 中间件网络调优、micro-ROS 接口及节点资源开销。
 *   [[Evidence/robot_hardware_specs]] —— Reachy Mini、LeRobot SO101 机械臂、Linksee 移动机器人物理规格及端侧 ACT/SmolVLA 模仿学习模型数据。

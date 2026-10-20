@@ -14,7 +14,7 @@ source_resolution: partial
 source_checked_at: 2026-10-13
 source_note: "本来源描述 K1 A60 和 cpufp 数据；本文架构参数限定 K1，TCM、主频和全部指令细节尚未逐项核验。"
 created: 2026-08-10
-updated: 2026-10-13
+updated: 2026-10-20
 aliases: [space_ai_architecture_specs, A60 AI CPU Specs, IME Instruction Specs]
 ---
 
@@ -36,7 +36,7 @@ aliases: [space_ai_architecture_specs, A60 AI CPU Specs, IME Instruction Specs]
 | **矢量总线宽度** | 256-bit RISC-V Vector 1.0 (RVV 1.0) | 提供 2 倍于传统 NEON 的向量并行计算位宽 |
 | **Matrix 矩阵形状** | `4 x 8 x 4` 硬件矩阵乘加计算单元 | 输入/输出复用 Vector 寄存器（IME 架构路线） |
 | **紧耦合存储器** | 512 KB 专用加速 TCM (Tight-Coupled Memory) | 零 DMA 延时，解决大模型矩阵计算外存带宽瓶颈 |
-| **工作主频** | 2.0 GHz (K1 默认频率) | 单核提供 0.5 TOPS (Int8) 硬件矩阵算力 |
+| **工作主频** | 1.6 GHz (K1 标称频率，支持最高 2.0 GHz) | 单核提供 0.5 TOPS (Int8) 硬件矩阵算力 |
 
 ---
 

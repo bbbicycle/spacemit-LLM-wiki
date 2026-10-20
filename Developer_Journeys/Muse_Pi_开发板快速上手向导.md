@@ -3,7 +3,7 @@ type: developer_journey
 title: "MUSE Pi 开发板快速上手向导"
 status: needs_review
 created: 2026-06-30
-updated: 2026-06-30
+updated: 2026-10-20
 aliases: ["Muse Pi 开发板快速上手向导", "Muse Pi Quick Start Guide", "muse_pi_quick_start"]
 domain: hardware_schematic_design
 ---
@@ -80,4 +80,4 @@ python3 chat_inference.py --model ./qwen1.5-0.5b-chat-int8.onnx
 
 * 硬件避坑与调试：[[Knowledge_Atoms/Muse_Pi_板级硬件设计专题|MUSE Pi 板级硬件设计与调试专题]]
 * 芯片级 AI 部署指南：[[Knowledge_Atoms/K1大模型本地推理与AI算力专题档案|K1 大模型本地推理与 AI 算力专题]]
-* 官方完整指南：[MUSE Pi 使用指南（原始文件）](file:///Users/bicycle/Spacemit%20LLM%20Wiki/Sources/docs-product/zh/k1_muse_pi/pi_user_guide.md)
+* 官方完整指南：[MUSE Pi 使用指南（原始文件）](../Sources/docs-product/zh/k1_muse_pi/pi_user_guide.md)

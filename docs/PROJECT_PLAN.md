@@ -129,16 +129,35 @@ Wiki 和公司 RAG 是两个检索后端：
 
 ### 产物
 
-- 本计划文档。
-- MCP 接口契约 v1。
-- Wiki/RAG 结果元数据契约 v1。
-- 责任矩阵：你、公司服务器维护者、RAG 维护者、客户端用户。
+- 本计划文档：[docs/PROJECT_PLAN.md](PROJECT_PLAN.md)。
+- 标准化接口与元数据契约：[docs/MCP_CONTRACT_V1.md](MCP_CONTRACT_V1.md)（含 MCP 接口契约 v1 与 Wiki/RAG 联合元数据契约 v1）。
+- 责任矩阵（见下表）。
+
+#### 四方责任矩阵 (RACI)
+
+| 职责环节 | Wiki 维护者 (你/核心维护者) | 公司服务器维护者 (运维/平台) | 公司 RAG 维护者 (AI/数据团队) | 客户端用户 (工程师/开发者) |
+| :--- | :---: | :---: | :---: | :---: |
+| **目标架构与规范制定** | **Accountable (主导)** | Consulted (协商) | Consulted (协商) | Informed (知晓) |
+| **精炼知识编写与双链拓扑**| **Responsible (执行)** | Informed (知晓) | Informed (知晓) | Consulted (反馈需求) |
+| **上游子模块同步与 Freshness 审计**| **Responsible (执行)** | Informed (知晓) | Informed (知晓) | Informed (知晓) |
+| **MCP Gateway 部署与高可用监控**| Consulted (协助) | **Accountable (主导)** | Responsible (配合) | Informed (使用) |
+| **公司内部资料向量化与 ACL 权限** | Informed (知晓) | Consulted (鉴权) | **Accountable (主导)** | Informed (知晓) |
+| **混合检索编排与来源冲突裁决**| **Responsible (Wiki侧)**| Informed (知晓) | **Responsible (RAG侧)**| Consulted (提交盲区) |
+| **Skill 安装与客户端查询合规**| Consulted (指引) | Informed (知晓) | Informed (知晓) | **Responsible (执行)** |
 
 ### 验收标准
 
 - 可以画出从源资料到 Agent 的完整数据流。
 - 可以说明每个结果来自 Wiki、原始资料还是公司 RAG。
 - 未来替换 Cloudflare 时不需要修改工具的核心语义。
+
+### P0 执行记录（2026-10-20）
+
+- **工程状态：已完成**。
+- 正式发布并冻结标准化接口与元数据契约文档 [MCP_CONTRACT_V1.md](MCP_CONTRACT_V1.md)，严格界定了 7 大核心 MCP 工具的入参、出参及安全分页规范，保证未来演进不破坏消费端 Skill 的调用稳定性。
+- 完成 Wiki 与公司 RAG 联合结果元数据模型冻结，明确了 `source_kind`（`wiki|company_rag|raw_source`）、`access_scope`（`public|internal|restricted`）、`verification_status`、`freshness` 及 `external_use` 的字段枚举与语义约束。
+- 补全四方责任矩阵（RACI），厘清了 Wiki 维护者、服务器平台维护者、RAG 算法维护者及客户端工程师在架构、数据、部署与检索编排上的权责边界。
+- 与 P1（新鲜度与自愈闭环）形成完整前置依赖闭环，正式进入 P2（发布工程化）就绪状态。
 
 ## 6. P1：Wiki 新鲜度与自愈闭环
 
