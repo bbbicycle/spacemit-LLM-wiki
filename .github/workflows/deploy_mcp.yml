@@ -88,6 +88,7 @@ jobs:
           node --disable-warning=ExperimentalWarning mcp-worker/test_index_runtime.cjs
 
       - name: Initialize D1 Database Schema
+        continue-on-error: true
         working-directory: mcp-worker
         run: |
           npx wrangler d1 execute spacemit-wiki-db --remote --file=schema.sql -y
