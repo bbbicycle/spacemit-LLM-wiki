@@ -3,20 +3,20 @@ type: knowledge_atom
 title: "MUSE Pi / Pro 板级硬件设计与调试专题档案"
 status: "needs_review"
 created: 2026-06-30
-updated: "2026-10-20"
+updated: "2026-10-21"
 aliases: ["Muse Pi 板级硬件设计专题", "Muse Pi Board Hardware Design Topic", "muse_pi_hw_design", "Muse Pi产品特点", "Muse Pi Pro", "muse_pi_profile", "MusePi选型"]
 domain: hardware_schematic_design
 target_audience: [硬件电路工程师, 嵌入式工程师, 产品经理]
-source_file: "Sources/docs-product/zh/k1_series/k1_muse_box/root_overview.md"
+source_file: "Sources/docs-product/zh/k1_series/k1_muse_pi/root_overview.md"
 source_commit: "bc640755145625cc20745f49861f82588863fca3"
-source_locator: "K1 MUSE Box 简介；产品规格；合作与采购咨询"
+source_locator: "MUSE Pi/Pro 产品规格；Pi 用户指南硬件介绍；其他历史板级细节待复核"
 source_resolution: "partial"
 verification_status: "unverified"
-source_checked_at: "2026-10-20"
-source_note: "本次仅定位已有引用对应的文件与章节，未对正文全部事实逐项复核；引用的 Evidence 保留各自历史版本与核验状态。"
+source_checked_at: "2026-10-21"
+source_note: "2026-10-21 评测定向核对两份产品表，撤回旧稿功放与网口/排针错误；主来源由误绑MUSE Box改为MUSE Pi，供电拓扑及其他正文仍未全文核验。"
 source_origin: "https://github.com/spacemit-com/docs-product"
 source_related_file: ["Sources/docs-product/zh/k1_series/k1_muse_pi/pi_user_guide.md", "Sources/docs-product/zh/k1_series/k1_muse_pi/root_overview.md", "Sources/docs-product/zh/k1_series/k1_muse_pi_pro/root_overview.md", "Sources/docs-chip/zh/power_stone/p1/p1_docs/p1_ds.md"]
-source_related_commit: ["bc640755145625cc20745f49861f82588863fca3", "8c851807f2c54e8ba54d568b268100ca727d0777", "8c851807f2c54e8ba54d568b268100ca727d0777", "1ea15a766287024a5bb7b548850826e3525a80dc"]
+source_related_commit: ["bc640755145625cc20745f49861f82588863fca3", "bc640755145625cc20745f49861f82588863fca3", "bc640755145625cc20745f49861f82588863fca3", "1ea15a766287024a5bb7b548850826e3525a80dc"]
 ---
 # MUSE Pi / Pro 板级硬件设计与产品特点专题档案
 
@@ -30,18 +30,20 @@ source_related_commit: ["bc640755145625cc20745f49861f82588863fca3", "8c851807f2c
 ## 0. 产品定位与 MUSE Pi vs Pro 差异化选型 (Product Profile)
 
 ### 0.1 一句话产品定位
-* **MUSE Pi (标准版)**：面向全球 RISC-V 创客、嵌入式学习者打造的**经典开源单板计算机 (SBC)**。名片大小，超低 3~5W 功耗，具备 2.0 TOPS AI 算力与 1080P 双屏异显能力。
-* **MUSE Pi Pro (增强版)**：面向**工业物联网与商业显示**打造的高阶单板计算机。保持紧凑尺寸的同时，全面兼容 **40-Pin 树莓派标准扩展插针**，并板载音频硬件功放与更多工业扩展总线。
+* **MUSE Pi**：产品表列 129.45×80mm、双 RJ45 与双 M.2 2280，适用于按该板接口配置开展原型开发；芯片功耗不等同于整机功耗。
+* **MUSE Pi Pro**：产品表列 85×56mm、40-Pin、M.2 2230 与 miniPCIe。连接兼容扩展板前仍需逐针核对复用、电平及驱动，不将物理排针相似当作全面兼容。
 
 ### 0.2 标准版 (Muse Pi) 与增强版 (Muse Pi Pro) 核心差异速查
 
 | 核心维度 | MUSE Pi (标准版) | MUSE Pi Pro (增强版) | 选型建议 / 场景决策 |
 | :--- | :--- | :--- | :--- |
-| **扩展插针规格** | **26-Pin** 双排插针 (2.54mm) | **40-Pin** 树莓派兼容彩色排针 | 需要接入成熟树莓派 HAT 扩展板或更多 GPIO 选 **Pro 版** |
-| **音频输出能力** | 仅支持 3.5mm 耳麦接口输出 | 3.5mm 耳麦口 + **板载 3W 喇叭功放 (PA)** | 需做智能音箱、交互商显、自动播报选 **Pro 版** (免外挂功放) |
-| **管脚映射定义** | [[Knowledge_Atoms/MUSE_Pi_26Pin_IOMAP管脚映射专题|26-Pin 引脚定义]] | [[Knowledge_Atoms/MUSE_Pi_Pro_40Pin_IOMAP管脚映射专题|40-Pin 引脚定义]] | Pro 版提供独立的 CAN、SPI 及更多 PWM/I2C 通道 |
-| **显示与相机** | 1×HDMI + 1×MIPI DSI, 2路 CSI | 1×HDMI + 1×MIPI DSI, 2路 CSI | 均支持 1080P 双屏独立异显，支持双摄并发采集 |
-| **典型适用客群** | 嵌入式教学、个人极客开源实验 | 工业数据采集网关、智能交互终端、商显设备 | 两者软件栈 100% 同源 (Bianbu OS / Linux 6.6) |
+| **扩展插针规格** | **26-Pin** | **40-Pin** | 按各板用户指南接线 |
+| **处理器表述** | 产品表列 M1 | 产品表列 M1 | K1 MUSE 是产品系列名，芯片与板级规格分别确认 |
+| **以太网** | 2 路 RJ45 | 1 路 RJ45 | 不能按 Pro 名称推断双网口 |
+| **存储与 USB** | 双 M.2 2280；1×USB3.0 Type-A | M.2 2230；4×USB3.0 Type-A | 详细配置及 Type-C 角色见下方 Evidence |
+| **音频接口** | 3.5mm耳麦接口 | 3.5mm耳麦接口 | 当前产品表不足以确认旧稿“Pro板载3W功放” |
+| **显示与相机** | DSI 4lane、CSI 4+4/4+2+2 | DSI 2lane、CSI 4lane+2lane | 按板型核对连接器，不能套用 SoC 总能力 |
+| **系统与镜像** | 按 MUSE Pi 版本核对 | 按 MUSE Pi Pro 版本核对 | 不保证任意镜像或排针配置互换 |
 
 > 💡 *详细物理规格与物料尺寸对比表参阅：[[Evidence/muse_pi_vs_pi_pro_specs|Muse Pi 与 Muse Pi Pro 规格比对表]]*
 

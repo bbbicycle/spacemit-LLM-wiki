@@ -3,17 +3,17 @@ type: knowledge_atom
 title: "K1 软件开发与系统集成 FAQ 专题档案"
 status: "needs_review"
 created: 2026-06-29
-updated: "2026-10-20"
+updated: "2026-10-21"
 aliases: [K1软件集成FAQ, 系统压测与多媒体调试]
 domain: bianbu_os_distribution
 target_audience: [系统集成工程师, 应用开发]
 source_file: "Sources/docs-chip/zh/key_stone/k1/k1_sw/k1_sw_faq.md"
-source_commit: "15254b1cfe339c1863d8edf8137a337681fb2780"
+source_commit: "2525ee3b68e0f4864f1bf12c8a59df040bf27e84"
 source_locator: "K1 软件常见问题；系统启动配置；SDK 编译打包；驱动调试与测试验证；OS 应用"
 source_resolution: "partial"
 verification_status: "unverified"
-source_checked_at: "2026-10-20"
-source_note: "本次仅定位已有引用对应的文件与章节，未对正文全部事实逐项复核；引用的 Evidence 保留各自历史版本与核验状态。"
+source_checked_at: "2026-10-21"
+source_note: "2026-10-21 定向复核 GPIO 命令、HDMI 路径与软件安装段落；补充环境/工具版本边界，其他正文未全文核验。"
 source_origin: "https://github.com/spacemit-com/docs-chip"
 ---
 
@@ -34,7 +34,7 @@ source_origin: "https://github.com/spacemit-com/docs-chip"
 
 ### 1.1 HDMI 状态与显示控制
 *   **HDMI 连接状态检测**：
-    读取 DRM 驱动状态节点即可判定物理连接：
+    官方示例读取以下 DRM 状态节点；实际 card 编号与接口名随硬件/驱动变化，先查 `/sys/class/drm/`：
     ```bash
     cat /sys/class/drm/card1-HDMI-A-1/status
     # 输出 connected 代表已连接；输出 disconnected 代表未连接
@@ -134,6 +134,12 @@ K1 平台集成硬解码 VPU 与 PowerVR GPU，可执行高效视频解码：
 ---
 
 ## 3. 全系统压力测试与集成高级配置
+
+### 3.0 GPIO 命令的环境与版本边界
+
+K1 软件 FAQ「如何通过命令行拉高 GPIO」分别给出 Kernel 下的 sysfs 示例（GPIO122：`export` → `direction=out` → `value=1`），以及 U-Boot 的 `gpio set 116`。两种编号不是扩展排针物理 Pin，不能交叉使用。
+
+该 FAQ 没有给出各 Bianbu 发行版与 libgpiod 1.x/2.x 的对应矩阵，也没有给出通用 `gpioset` 命令。因此不能保证这些 sysfs 步骤在任意新版系统仍适用，不能猜测工具参数。先确认板型、内核、`gpioinfo` / `gpioset --version` 和对应版本帮助，再按原理图、复用状态与电平核对目标引脚。本节仅核对文档示例，未在板端执行。
 
 ### 3.1 系统压力测试矩阵
 为了验证系统在高温或满负载下的稳定性，可以同时对四大核心组件进行压测：

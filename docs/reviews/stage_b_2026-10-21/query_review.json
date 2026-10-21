@@ -1,0 +1,52 @@
+{
+  "review_date": "2026-10-21",
+  "initial_snapshot_file": "stats_before_audit.html",
+  "initial_snapshot_sha256": "9fceed8e0b25f46ea3e105b2ed49fc291ab27ec1d839e5dbc9d55e9326c62395",
+  "initial_capture_time": "2026-10-21T06:15:38.070375Z 起至 06:15:41.812048Z 的审计请求区间；审计前 GET /stats 得到44/2/1，完整前后快照及请求见 d1_audit.json。",
+  "statistics_scope": "看板查询全部保留行；无起止日期过滤、最早/最晚时间或会话ID，不是近7天窗口，也不是独立用户数。",
+  "initial_counts": {
+    "tool_calls": 44,
+    "non_success_calls": 2,
+    "pending_feedback": 1
+  },
+  "categories": {
+    "原始手册源码穿透": 23,
+    "综合技术查询": 17,
+    "电源与热设计": 3,
+    "端侧AI与机器人": 1
+  },
+  "misses": [
+    {
+      "timestamp_as_displayed": "2026-10-19 05:46:05",
+      "tool": "search_wiki",
+      "query": "产品培训 内部采购 MTP 配置",
+      "classification": "内部流程/授权来源缺口",
+      "action": "公开Wiki无对应资料，不编造流程或引入未授权培训文档；待维护者确认授权资料与访问范围。"
+    },
+    {
+      "timestamp_as_displayed": "2026-10-19 02:18:27",
+      "tool": "search_wiki",
+      "query": "P1 P3 PMIC",
+      "classification": "叫法差异",
+      "action": "给现有PMIC专题增加精确别名；alias_replay.json保存同一生产Python算法的基线空结果与当前命中，各1次工具调用。"
+    }
+  ],
+  "feedback": [
+    {
+      "timestamp_as_displayed": "2026-08-25 10:49:17",
+      "topic": "Muse Pi Pro 40Pin",
+      "type": "MISSING_DOC",
+      "description": "希望补充更多关于 40Pin 排针 I2C3 的电气时序图",
+      "source_review": "docs-product@bc640755，中英文pi_pro_user_guide.md 7.3仅给Pin27/28的SDA/SCL与示意图，无该节板级时序和测量条件。",
+      "action": "在现有40Pin专题添加已确认引脚与时序缺口说明，不虚构时序图、不重复建节点。",
+      "owner": "维护者协调板级硬件负责人补充对应版本原理图/时序资料或实测",
+      "status": "documented_pending_authoritative_timing_data"
+    }
+  ],
+  "raw_read_analysis": "23只是“原始手册源码穿透”分类调用数，当前看板不提供按路径聚合；也缺会话关联，无法区分分页、主动核实与检索回退，因此不能据此选出高频文件或计算回退率。",
+  "runtime_validation": "d1_audit.json与前后HTML证明唯一审计搜索此前不存在、随后真实出现在miss列表，总数44→45，非成功2→3，反馈仍1；证明本次查询日志写入/看板读取可用，不代表全部异步写入永不丢失。",
+  "audit_traffic_policy": "stage-b-d1-audit-2026-10-21为本轮生成的预期空结果，从自然需求/缺口分析排除。之后部署smoke及检索验收也属于维护流量；旧44条无法按用户/历史smoke精确拆分，不冒充44条自然用户问答。",
+  "no_feedback_sent": true,
+  "follow_up": "按docs/MAINTENANCE.md每周30分钟流程人工复盘；本轮不扩展日志架构，不创建定时提醒。",
+  "snapshot_normalization": "HTML逐行去除行尾空白并保留一个末尾换行；语义与统计值不变，原始响应及归档字节哈希分别记录。"
+}

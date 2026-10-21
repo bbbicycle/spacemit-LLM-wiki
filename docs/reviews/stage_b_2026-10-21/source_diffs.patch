@@ -1,0 +1,27 @@
+diff --git a/zh/key_stone/k1/k1_hw/k1_hw_faq.md b/zh/key_stone/k1/k1_hw/k1_hw_faq.md
+index 6e7ea64..7873413 100644
+--- a/zh/key_stone/k1/k1_hw/k1_hw_faq.md
++++ b/zh/key_stone/k1/k1_hw/k1_hw_faq.md
+@@ -12 +12 @@ sidebar_position: 5
+-     [K1 MUSE Pi 用户使用指南](https://spacemit.com/community/document/info?lang=zh&nodepath=hardware/eco/k1_muse_pi/pi_user_guide.md)
++     [K1 MUSE Pi 用户使用指南](https://spacemit.com/community/document/info?lang=zh&nodepath=ecohardware/k1_series/k1_muse_pi/pi_user_guide.md)
+@@ -35 +35 @@ sidebar_position: 5
+-       使用 SEC JTAG 前，请先按照 K1 MUSE Pi 用户使用指南 \> 硬件介绍 \> **Boot Download Sel&JTAG Sel** 的说明调整硬件。**参考链接**：[K1 MUSE Pi 用户使用指南](https://spacemit.com/community/document/info?lang=zh&nodepath=hardware/eco/k1_muse_pi/pi_user_guide.md)
++       使用 SEC JTAG 前，请先按照 K1 MUSE Pi 用户使用指南 \> 硬件介绍 \> **Boot Download Sel&JTAG Sel** 的说明调整硬件。**参考链接**：[K1 MUSE Pi 用户使用指南](https://spacemit.com/community/document/info?lang=zh&nodepath=ecohardware/k1_series/k1_muse_pi/pi_user_guide.md)
+diff --git a/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md b/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md
+index 74eccc7..72971e9 100644
+--- a/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md
++++ b/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md
+@@ -2 +2 @@
+-sidebar_position: 2
++sidebar_position: 1
+@@ -14,0 +15 @@ sidebar_position: 2
++| V1.1 | 2026.10.16 | 1. 第 1.2.5 小节 CPU 电源设计，两种核心电源要求修改为合并电源供电；<br>2. 第 1.2.6 小节的 DDR 电源设计，Buglist 增加设计要求。 |
+@@ -357 +358 @@ sidebar_position: 2
+-芯片具有 16 个大核，分别是 X100 的 8 个核和 A100 的 8 个核，X100 和 A100 分别独立供电，由多相控制器两个 rail 分别供电。CPU A100 跟 sys 电源合并供电。特别注意，滤波电容数量和容值以及 Layout 设计须严格按照参考电路进行设计。选择供电电源时，需特别注意：
++芯片具有 16 个大核，分别是 X100 8 个核和 A100 8 个核，X100/A100/VCC_SYS/VDD0V8_DDR 需要合并供电。特别注意，滤波电容数量和容值以及 layout 设计严格按照参考电路进行设计。选择供电电源时，需特别注意：
+@@ -371,0 +373 @@ K3 芯片支持 LPDDR5/LPDDR4x，共两个通道，供电电压可参考 [1.2.1]
++
+@@ -373,0 +376,2 @@ K3 芯片支持 LPDDR5/LPDDR4x，共两个通道，供电电压可参考 [1.2.1]
++该部分的参考设计有 Buglist 修改，注意关注 Buglist 的设计要求。[K3 硬件设计 Buglist](k3_hw_design_buglist.md)
++

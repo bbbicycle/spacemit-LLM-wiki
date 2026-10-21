@@ -3,17 +3,18 @@ type: knowledge_atom
 title: "K3 启动模式与 Strap 管脚配置专题档案"
 status: "needs_review"
 created: 2026-06-29
-updated: "2026-10-20"
+updated: 2026-10-21
 aliases: ["K3启动模式与Strap配置专题", "K3 Boot Mode and Strap Config Topic", "k3_boot_strap_config"]
 domain: hardware_schematic_design
 target_audience: [硬件电路工程师, 嵌入式驱动]
 source_file: "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md"
-source_commit: "1ea15a766287024a5bb7b548850826e3525a80dc"
+source_commit: "2525ee3b68e0f4864f1bf12c8a59df040bf27e84"
 source_locator: "K3 硬件设计指南和 Layout 指导手册；PDF 版本下载；版本；前言；1. 原理图设计"
 source_resolution: "partial"
-verification_status: "unverified"
-source_checked_at: "2026-10-20"
-source_note: "本次仅定位已有引用对应的文件与章节，未对正文全部事实逐项复核；引用的 Evidence 保留各自历史版本与核验状态。"
+verification_status: conflicted
+conflicts: "K3 指南 1.1.5 的开头管脚列表与后续 Strap0～5 功能表不一致，详见 k3_strap_pins_config。"
+source_checked_at: 2026-10-21
+source_note: "2026-10-21 阶段 B：K3 1.1.5 功能表、1.4.4 MMC；同步 Strap 来源内部矛盾，移除无依据的通用上拉阻值/悬空接线承诺，修正 MMC2 全面禁用 SD 的过度结论。 保留来源冲突并置 conflicted/needs_review；不表示全文事实通过。"
 source_origin: "https://github.com/spacemit-com/docs-chip"
 source_related_file: ["Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_faq.md", "Sources/docs-chip/zh/key_stone/k3/k3_sw/k3_sdk_user_guide.md"]
 source_related_commit: ["15254b1cfe339c1863d8edf8137a337681fb2780", "15254b1cfe339c1863d8edf8137a337681fb2780"]
@@ -33,9 +34,8 @@ source_related_commit: ["15254b1cfe339c1863d8edf8137a337681fb2780", "15254b1cfe3
 K3 芯片在复位释放（Reset Release）的瞬间，会通过采样特定的配置管脚（Strap Pins）的电平状态，来决定芯片的启动介质、烧录通道、内存类型和接口电压。
 
 *   **硬件连接要求**：
-    *   所有 Strap 管脚在芯片内部默认都有**弱下拉**电阻。因此，若需要配置为 `0`（默认值），在单板设计时该管脚可以**悬空**。
-    *   若需要配置为 `1`，必须通过 **4.7kΩ ~ 10kΩ 的强上拉电阻** 连接到对应的 IO 电源域（通常为 VCC18_PMIC 或 3.3V，根据管脚电压域而定）。
-    *   **警告**：切勿将 Strap 管脚直接硬连到电源或地，必须通过电阻进行隔离，否则会导致管脚在作为普通 GPIO 使用时发生短路损坏。
+    *   功能表将相关项标为 default down，但同节的管脚数量/列表存在内部矛盾，必须同时保留 [[Evidence/k3_strap_pins_config]] 的冲突提示。
+    *   本轮未在声明来源中确认旧稿的通用 `4.7kΩ～10kΩ` 上拉范围或“默认可悬空”的板级接线保证。按对应版本原理图核对电阻、IO 电源域、采样与复用条件；不能照抄 K1 或其他板型的接线。
 
 ---
 
@@ -45,18 +45,18 @@ K3 芯片在复位释放（Reset Release）的瞬间，会通过采样特定的�
 
 ### 2.1 启动介质（Boot Mode）
 单板设计时，需通过拨码开关或强上拉电阻配置 **GPIO66** 和 **GPIO65**：
-*   若从内置的 **eMMC** 启动，双管脚保持悬空（`0 0`）即可。
-*   若设计为使用 **SPI NAND** 启动，必须在 **GPIO65** 上拉 10kΩ 电阻（`0 1`）。
+*   功能表的 `GPIO66/GPIO65 = 0/0` 表示 **TF Card → eMMC**，不是无条件跳过 TF 卡直接启动 eMMC。
+*   `0/1` 表示 **TF Card → SPI NAND**。电平如何实现需按板型原理图确认，不指定无出处的上拉阻值。
 
 ### 2.2 烧录与启动切换（Boot / Download）
 *   **GPIO69** 是决定单板是“正常工作”还是“进入烧录”的开关：
-    *   **正常运行**：GPIO69 保持悬空（`0`）。
+    *   **正常运行**：功能表 GPIO69 为 `0`，具体上下拉接线按原理图。
     *   **出厂烧录**：将 GPIO69 上拉到高电平（`1`），芯片上电后将自动进入下载模式，等待通过 USB 接口烧录固件。
 
 ### 2.3 核心板强制刷机 (Recovery) 与升级限制
 对于基于 K3 核心板（如 CoM260）的设计：
 *   **强制刷机 (Recovery)**：核心板第 214 引脚为 `FORCE_RECOVERY`。在开发或量产时，将该引脚**下拉到 GND 状态后上电**，系统将强制进入 USB 刷机模式。
-*   **固件升级限制**：固件升级必须使用 **MMC1** 通道（核心板自带的 TF 卡接口），**MMC2 接口不支持 TF 卡固件升级**，亦不能作为普通 SD 卡存储引导接口。
+*   **MMC 边界**：芯片指南 1.4.4 说明 MMC1 支持 SD 卡完整功能和动态电压切换；MMC2 只支持固定电平下的低速模式或仅 1.8V SD 卡。启动/升级还须核对核心板与 ROM 的支持，不能把该限制表述为 MMC2 完全不能接 SD 卡。
 
 ### 2.4 GPIO 双电压自适应设计
 K3 芯片的 GPIO 电平支持 1.8V 与 3.3V 自适应切换：

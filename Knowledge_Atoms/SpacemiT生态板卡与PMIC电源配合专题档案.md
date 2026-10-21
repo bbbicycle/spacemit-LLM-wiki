@@ -3,8 +3,8 @@ type: knowledge_atom
 title: "SpacemiT 生态板卡与 PMIC 电源配合专题档案"
 status: "needs_review"
 created: 2026-06-29
-updated: "2026-10-20"
-aliases: ["SpacemiT生态板卡与PMIC电源配合专题", "SpacemiT Board and PMIC Power Matching Topic", "spacemit_pmic_matching"]
+updated: 2026-10-21
+aliases: ["SpacemiT生态板卡与PMIC电源配合专题", "SpacemiT Board and PMIC Power Matching Topic", "spacemit_pmic_matching", "P1 P3 PMIC"]
 domain: hardware_schematic_design
 target_audience: [电源电路工程师, PCB Layout]
 source_file: Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md
@@ -12,11 +12,12 @@ source_commit: 15254b1cfe339c1863d8edf8137a337681fb2780
 source_section: "1.2.5 CPU 电源设计；1.2.6 DDR 电源设计"
 source_resolution: partial
 verification_status: unverified
-source_checked_at: 2026-10-19
+source_checked_at: 2026-10-21
+source_note: "2026-10-21 定向复核K1 FAQ链接迁移、K3指南1.2.5/1.2.6与Buglist1.2.2/2.2，补合并供电及共平面勘误；其余PMIC/布局历史断言未全文核验。"
 conflicts: "旧同步稿称 X100/A100 独立供电，与官方 V1.1 合并供电修订冲突；保留勘误说明，待人工审核。"
 source_origin: "https://github.com/spacemit-com/docs-chip"
-source_related_file: ["Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_faq.md", "Sources/docs-chip/zh/power_stone/p1/p1_docs/root_overview.md", "Sources/docs-chip/zh/power_stone/p1/p1_hw/p1_pcb_guide.md", "Sources/docs-chip/zh/power_stone/p3/p3_docs/root_overview.md", "Sources/docs-product/zh/k1_series/k1_muse_pi/root_overview.md", "Sources/docs-product/zh/k1_series/k1_muse_pi_pro/root_overview.md", "Sources/docs-chip/zh/power_stone/p1/p1_docs/p1_ds.md", "Sources/docs-chip/zh/power_stone/p1s/p1s_docs/p1s_ds.md"]
-source_related_commit: ["1ea15a766287024a5bb7b548850826e3525a80dc", "15254b1cfe339c1863d8edf8137a337681fb2780", "15254b1cfe339c1863d8edf8137a337681fb2780", "15254b1cfe339c1863d8edf8137a337681fb2780", "8c851807f2c54e8ba54d568b268100ca727d0777", "8c851807f2c54e8ba54d568b268100ca727d0777", "1ea15a766287024a5bb7b548850826e3525a80dc", "1ea15a766287024a5bb7b548850826e3525a80dc"]
+source_related_file: ["Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_faq.md", "Sources/docs-chip/zh/power_stone/p1/p1_docs/root_overview.md", "Sources/docs-chip/zh/power_stone/p1/p1_hw/p1_pcb_guide.md", "Sources/docs-chip/zh/power_stone/p3/p3_docs/root_overview.md", "Sources/docs-product/zh/k1_series/k1_muse_pi/root_overview.md", "Sources/docs-product/zh/k1_series/k1_muse_pi_pro/root_overview.md", "Sources/docs-chip/zh/power_stone/p1/p1_docs/p1_ds.md", "Sources/docs-chip/zh/power_stone/p1s/p1s_docs/p1s_ds.md", "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_buglist.md"]
+source_related_commit: ["2525ee3b68e0f4864f1bf12c8a59df040bf27e84", "15254b1cfe339c1863d8edf8137a337681fb2780", "15254b1cfe339c1863d8edf8137a337681fb2780", "15254b1cfe339c1863d8edf8137a337681fb2780", "8c851807f2c54e8ba54d568b268100ca727d0777", "8c851807f2c54e8ba54d568b268100ca727d0777", "1ea15a766287024a5bb7b548850826e3525a80dc", "1ea15a766287024a5bb7b548850826e3525a80dc", "2525ee3b68e0f4864f1bf12c8a59df040bf27e84"]
 ---
 # SpacemiT 生态板卡与 PMIC 电源配合专题档案
 
@@ -49,7 +50,10 @@ source_related_commit: ["1ea15a766287024a5bb7b548850826e3525a80dc", "15254b1cfe3
 *   **DDR 供电与 Buglist 勘误红线**：
     *   K3 支持双通道 LPDDR5 / LPDDR4x，不同类型颗粒的电压轨（如 VDD1/VDD2/VDDQ）不一致，务必核对电路设计图纸。
     *   > [!WARNING]
-        > **设计避坑**：官方在 2026 年 10 月更新中明确指出：**DDR 供电部分的参考设计存在 Buglist 勘误修改**。工程师在进行单板原理图与 PCB 设计时，必须严格对照官方发布的《K3 硬件设计 Buglist》核对滤波电容容值及布线要求，严禁直接复制早期未经勘误的参考原理图。
+        > **设计避坑**：官方在 2026 年 10 月更新中明确指出：**DDR 供电部分的参考设计存在 Buglist 勘误修改**。工程师在进行单板原理图与 PCB 设计时，必须严格对照官方发布的《K3 硬件设计 Buglist》核对供电拓扑、压降、纹波、滤波电容与布线要求，严禁直接复制早期未经勘误的参考原理图。
+
+> [!WARNING]
+> **K3 专项勘误不能套用 K1 通则**：当前 Buglist §1.2.2 要求 VCC_SYS 与 VDD0V8_DDR **直接共用电源平面，不使用磁珠隔离**；短接旧板磁珠只是文档描述的短期缓解，长期需按合并供电与 PI 设计整改。§2.2 要求 X100/A100 合并供电。Vripple-pp ≤70 mV 与 Vnoise-pp ≤140 mV 是该 DDR 电源设计要求，实际结果仍取决于 Layout、电源响应与电容，建议 PI 仿真。下文 K1 模拟 PHY 的磁珠隔离通则不能用于否定此 K3 特定勘误。
 
 ### 1.4 PMIC P1 调压避坑
 *   **RTC 定时开机**：P1 PMIC 具备 RTC 闹钟自动开机功能（精度参见 [[Evidence/k1_hardware_debug_parameters]]）。当系统处于关机且电池有电的状态时，若定时时间到达，P1 会自动拉高启动，无需外部中断信号。

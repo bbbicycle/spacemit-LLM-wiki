@@ -10,12 +10,12 @@ source_origin: "https://github.com/spacemit-com/docs-chip"
 source_commit: "1ea15a766287024a5bb7b548850826e3525a80dc"
 source_section: "1.3.3 MIPI CSI RX 配置接口设计"
 source_resolution: partial
-source_checked_at: 2026-10-13
-source_note: "已定位 K1 通道组合与 ISP 并发说明；K3 参数及全文残留占位符尚未核验。"
+source_checked_at: 2026-10-21
+source_note: "2026-10-21 阶段 B：K3 指南 1.3.2 的 12 Lane 组合；修正物理输入与 ISP 软件并发的混用，不承诺未定位的降噪/低延迟指标。 保持 unverified/needs_review；不表示全文事实通过。"
 source_related_file: ["Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md"]
-source_related_commit: ["1ea15a766287024a5bb7b548850826e3525a80dc"]
+source_related_commit: ["2525ee3b68e0f4864f1bf12c8a59df040bf27e84"]
 created: 2026-06-29
-updated: "2026-10-20"
+updated: 2026-10-21
 aliases: ["K1/K3摄像与ISP规格参数", "K1 K3 Camera and ISP Specs", "k1_k3_camera_specs"]
 domain: chip_product_specs
 target_audience: [ISP图像工程师, 硬件工程师]
@@ -38,9 +38,6 @@ target_audience: [ISP图像工程师, 硬件工程师]
 *   **单摄最高分辨率**：最大支持 **16 MP** 摄像头输入。
 
 ## 2. 进迭时空 K3 芯片摄像规格
-*   **MIPI CSI RX 通道**：
-    *   支持多路 MIPI CSI 接口输入，典型配置为 **2 × MIPI CSI 4-Lanes** 与 **2 × MIPI CSI 2-Lanes**。
-*   **多摄像头支持**：
-    *   支持最多 **4 个摄像头（四摄）同时接入**。
-    *   升级版图像信号处理器（ISP）支持更强的多路并发实时处理与低延迟硬件降噪。
-*   **智能视觉硬件加速**：配合 256bit RVV 1.0 向量加速，可实时处理多路 AI 视觉算法。
+*   **MIPI CSI RX 通道**：K3 硬件设计指南 1.3.2 给出 **12 Lanes**，支持 `4+4+4` 或 `4+4+2+2` 输入。
+*   **时钟关系**：CSI2 的 D2/D3 在 2-Lane 模式参考 CSI3 时钟，D0/D1 参考 CSI2 时钟；4-Lane 模式统一参考 CSI2 时钟。具体连接须核对该节原图。
+*   **边界**：四路物理输入不等于四路 ISP/AI 并发性能保证；本轮未定位此前“低延迟降噪”和具体 AI 并发指标的证据，不能从 Lane 数推导。K3 A100 的 RVV 位宽也不能套用 K1 X60 的值。

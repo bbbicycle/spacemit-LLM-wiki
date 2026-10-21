@@ -10,12 +10,12 @@ source_origin: "https://github.com/spacemit-com/docs-chip"
 source_commit: "1ea15a766287024a5bb7b548850826e3525a80dc"
 source_section: "特性"
 source_resolution: partial
-source_checked_at: 2026-10-13
-source_note: "K3 UFS 2.2 与 PCIe/USB Combo 已据补充来源的 1.1.9 和 1.4.1 修正；其余扩展芯片兼容细节尚未逐项核验。"
+source_checked_at: 2026-10-21
+source_note: "2026-10-21 阶段 B：K3 指南 1.1.9 UFS 2.2、1.4.1 USB/PCIe Combo；CPU/DDR 修订不改变这两个章节。其他桥接兼容性未全测。 保持 unverified/needs_review；不表示全文事实通过。"
 source_related_file: ["Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md"]
-source_related_commit: ["1ea15a766287024a5bb7b548850826e3525a80dc"]
+source_related_commit: ["2525ee3b68e0f4864f1bf12c8a59df040bf27e84"]
 created: 2026-06-29
-updated: "2026-10-20"
+updated: 2026-10-21
 aliases: ["K1/K3 PCIe与USB规格参数", "K1 K3 PCIe and USB Specs", "k1_k3_pcie_usb_specs"]
 domain: chip_product_specs
 target_audience: [高速接口工程师, 硬件工程师]

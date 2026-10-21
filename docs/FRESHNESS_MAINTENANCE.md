@@ -2,7 +2,7 @@
 
 来源版本、新鲜度和事实核验是三个独立维度。构建与查询不会自动改写知识正文或把事实升级为已核验；维护者根据报告定向复核，再按授权提交和发布。
 
-P1 工具链已完成；当前 [项目计划 v2.0](PROJECT_PLAN.md) 的阶段 B 才是存量复核与 Journey 来源补齐任务，尚未执行。阶段 A 的响应提示与 Worker 健康接口已完成并通过部署验收；提示用于解释状态，不替代本页的事实复核流程，线上版本以 `/health` 为准。
+P1 工具链已完成；当前 [项目计划 v2.0](PROJECT_PLAN.md) 的阶段 B 已完成首轮 12 项来源 diff 复核、7 篇 Journey 补来源与查询评测；K3 Strap 官方内部矛盾仍阻塞 B1 验收，见 [审计记录](reviews/stage_b_2026-10-21/README.md)。阶段 A 的响应提示与 Worker 健康接口已完成并通过部署验收；提示用于解释状态，不替代本页的事实复核流程，线上版本以 `/health` 为准。
 
 ## 来源记录
 
@@ -24,7 +24,7 @@ status: needs_review
 
 Journey 可通过双链访问 Atom/Evidence 的来源；没有直接来源时，其自身 freshness 为 `unknown`。关键操作步骤应直接声明原始出处。不得把整条 Journey 的无来源状态解释成所有引用均已过期。
 
-阶段 B 将为现有 7 篇 Journey 优先补 1～2 个核心来源，按关键步骤补充必要的其他出处，记录定位与核验范围。只锚定少数文件不能证明全文都受新鲜度监控；覆盖不足保持 `partial / unverified / needs_review`，不填无关来源来消除 `unknown`。
+阶段 B 已为现有 7 篇 Journey 补充直接来源，按关键步骤补充必要的其他出处并记录核验范围，详见 [逐篇记录](reviews/stage_b_2026-10-21/journey_sources.json)。只锚定少数文件不能证明全文都受新鲜度监控；覆盖不足保持 `partial / unverified / needs_review`，不填无关来源来消除 `unknown`。
 
 ## 构建与定位 stale 节点
 
@@ -96,7 +96,7 @@ JSON 包含 `submodules`（old/new SHA）、`changed_files`（状态、完整路
 | 参数、接线、命令或适用条件变化 | 阅读新旧章节上下文，修正正文并检查依赖节点与 Journey，保留勘误和未解决冲突；按实际复核范围更新核验记录，等待人工终审。 |
 | 删除、拆分、迁移或撤回 | 用历史 diff/log 定位；新路径须确认产品、版本及语义对应，再改路径/SHA。无可用替代时保留历史来源与撤回警告，将事项列为阻塞。 |
 
-当前索引快照为 47 current、12 stale、7 unknown；阶段 B 目标是在有证据复核后消化队列。无法判定的项保持真实状态并记录原因、负责人/后续动作；不能批量刷新 SHA 使报告清零。`stale: 0 / unknown: 0` 仅说明声明来源在该构建快照下可判定，不代表全文正确或 `status: approved`。`check_upstream_impact.py --cached` 比较持久基线，不一定保留所有旧 stale 的变化，逐条复核仍须使用节点自己的历史 `source_commit`。
+P1 历史基线为 47 current、12 stale、7 unknown；本轮逐项复核后为 66 current、0 stale、0 unknown。K3 Strap 两节点保持 conflicted，B1 验收仍未完成；不能把 freshness 清零当作冲突消失。无法判定的项保持真实状态并记录原因、负责人/后续动作；不能批量刷新 SHA 使报告清零。`stale: 0 / unknown: 0` 仅说明声明来源在该构建快照下可判定，不代表全文正确或 `status: approved`。`check_upstream_impact.py --cached` 比较持久基线，不一定保留所有旧 stale 的变化，逐条复核仍须使用节点自己的历史 `source_commit`。
 
 ```bash
 python3 vault_linker_lint.py
@@ -109,6 +109,7 @@ python3 scripts/build_mcp_index.py --check
 (cd mcp-worker && npx tsc --noEmit)
 node --disable-warning=ExperimentalWarning mcp-worker/test_runtime.cjs
 node --disable-warning=ExperimentalWarning mcp-worker/test_index_runtime.cjs
+python3 -B scripts/eval_stage_b.py
 git diff --check
 git diff --stat
 # 定向查看刚修改的节点、脚本及来源 SHA，审阅后按用户授权提交

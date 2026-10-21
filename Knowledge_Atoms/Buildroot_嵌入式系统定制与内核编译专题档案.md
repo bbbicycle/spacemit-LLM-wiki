@@ -3,20 +3,20 @@ type: knowledge_atom
 title: "Buildroot 嵌入式系统定制与内核编译专题档案"
 status: "needs_review"
 created: 2026-08-10
-updated: "2026-10-20"
+updated: "2026-10-21"
 aliases: [Buildroot_嵌入式系统定制与内核编译专题档案, Buildroot SDK 编译与内核定制专题, SpacemiT Buildroot Guide]
 domain: bsp_kernel_drivers
 target_audience: [BSP 工程师, 驱动工程师]
 source_file: "Sources/docs-buildroot/zh/k1_buildroot/source.md"
-source_commit: "6d4c2a65989f0b61819bebfbc85f77d72732745e"
+source_commit: "163a8fccf8e7071f3177753d2e86e482e97970fe"
 source_locator: "源码；开发环境；硬件配置；操作系统；安装依赖"
 source_resolution: "partial"
 verification_status: "unverified"
-source_checked_at: "2026-10-20"
-source_note: "本次仅定位已有引用对应的文件与章节，未对正文全部事实逐项复核；引用的 Evidence 保留各自历史版本与核验状态。"
+source_checked_at: "2026-10-21"
+source_note: "2026-10-21 定向复核 K1/K3 source.md 的镜像输出段落，修正最终 SD 镜像名称与 K3 路径边界；其他章节未全文复核，引用的 Evidence 保留各自核验状态。"
 source_origin: "https://github.com/spacemit-com/docs-buildroot"
 source_related_file: ["Sources/docs-buildroot/zh/k3_buildroot/source.md", "Sources/docs-buildroot/zh/k1_buildroot/faqs.md", "Sources/docs-buildroot/zh/k3_buildroot/faqs.md"]
-source_related_commit: ["6d4c2a65989f0b61819bebfbc85f77d72732745e", "6d4c2a65989f0b61819bebfbc85f77d72732745e", "6d4c2a65989f0b61819bebfbc85f77d72732745e"]
+source_related_commit: ["163a8fccf8e7071f3177753d2e86e482e97970fe", "6d4c2a65989f0b61819bebfbc85f77d72732745e", "6d4c2a65989f0b61819bebfbc85f77d72732745e"]
 ---
 
 # Buildroot 嵌入式系统定制与内核编译专题档案
@@ -138,9 +138,8 @@ make envconfig
 
 ## 6. 生态板卡部署与镜像输出
 
-编译成功后，产物保存在 `output/<solution>/images/` 目录下：
+K1 当前官方示例的最终产物位于 `output/k1_v2/images/`：线刷用 `buildroot-k1_v2.zip`，SD 卡镜像为 `buildroot-k1_v2-sdcard.img`。日志中的 `sdcard.img` 是生成过程名称，不能代替最终文件名。
 
-1. **Titan Flasher 线刷**：使用 `buildroot-<solution>.zip` 镜像。
-2. **SD 卡本地刻录**：使用 `sdcard.img`，利用 `dd` 命令刻录至 TF/SD 卡并设置 Strap 引脚选通启动。
+K3 示例输出为 `/k3/images/Buildroot-k3-20260425142457-sdcard.img` 及对应 ZIP；时间戳、大小写和输出目录以所选 SDK 的实际日志为准，不将 K1 的目录模板强套到 K3。烧录前先确认板型、镜像版本和目标存储设备。
 
 开发板板级硬件与 Strap 拨码开关设计请参考 [[Knowledge_Atoms/Muse_Pi_板级硬件设计专题|Muse Pi 板级硬件设计专题]] 及 [[Knowledge_Atoms/K1启动模式与Strap管脚配置专题档案|K1 启动模式与 Strap 管脚配置专题]]。

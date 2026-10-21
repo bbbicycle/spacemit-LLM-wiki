@@ -1,0 +1,51 @@
+{
+  "started_at_utc": "2026-10-21T06:15:38.070375+00:00",
+  "finished_at_utc": "2026-10-21T06:15:41.812048+00:00",
+  "request": {
+    "jsonrpc": "2.0",
+    "id": "stage-b-audit",
+    "method": "tools/call",
+    "params": {
+      "name": "search_wiki",
+      "arguments": {
+        "query": "stage-b-d1-audit-2026-10-21"
+      }
+    }
+  },
+  "response": {
+    "jsonrpc": "2.0",
+    "id": "stage-b-audit",
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "[]"
+        }
+      ]
+    }
+  },
+  "query_in_stats_before": false,
+  "query_in_stats_after": true,
+  "metric_values_before": [
+    "44",
+    "2",
+    "1"
+  ],
+  "metric_values_after": [
+    "45",
+    "3",
+    "1"
+  ],
+  "purpose": "人为审计搜索，预期空结果；从真实缺口统计排除，不是自然用户需求；未发送反馈。",
+  "snapshot_normalization": "HTML逐行去除行尾空白并保留一个末尾换行；语义与统计值不变，原始响应及归档字节哈希分别记录。",
+  "snapshots": {
+    "before": {
+      "raw_response_sha256": "bf6f721e2926da0782ed958cb035daee370a5223ed094b3b689866a00f382f07",
+      "archived_html_sha256": "9fceed8e0b25f46ea3e105b2ed49fc291ab27ec1d839e5dbc9d55e9326c62395"
+    },
+    "after": {
+      "raw_response_sha256": "a7b20c9347ef93d8cd01e21d12ad4050113012083c2f4fae8279a77bf41199a5",
+      "archived_html_sha256": "3b06da3987a93311d1da05c6028a2a5fb0b7ab55fb64319283ed796f306608d6"
+    }
+  }
+}

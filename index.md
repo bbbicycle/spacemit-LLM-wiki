@@ -26,7 +26,7 @@ aliases: [index, index.md, 索引, 全局索引]
 *面向产品选型、功耗评估与物理接口极限等研发生命周期前期视角。*
 
 ### 开发者上手向导
-*   [[Developer_Journeys/K1芯片开发快速上手向导]] —— 帮助开发者从评估功耗、设计配置到跑通本地 1B 大模型的极简通关动线。
+*   [[Developer_Journeys/K1芯片开发快速上手向导]] —— 确认 K1 板型、SDK 与当前 Qwen3-0.6B GGUF 路径，保留功耗和性能条件。
 *   [[Developer_Journeys/K3芯片开发快速上手向导]] —— 帮助开发者从了解规格、设计散热到跑通本地大模型的极简通关动线。
 
 ### 主题档案 (Knowledge Atoms)
@@ -66,8 +66,8 @@ aliases: [index, index.md, 索引, 全局索引]
 *   [[Knowledge_Atoms/SpacemiT生态板卡与PMIC电源配合专题档案]] —— 汇总 K1/P1 与 K3/P1S/P3 电源轨配合、动态反馈调压以及 SW/FB PCB 布局走线。
 *   [[Knowledge_Atoms/SpacemiT_P3_PMIC电源芯片专题档案]] —— 🆕 汇总 P3 四相 32A 大电流 Buck PMIC、5 种相位组合与 WLCSP 超小封装。
 *   [[Knowledge_Atoms/K1_K3显示系统与多媒体输出专题档案]] —— 汇总 HDMI/DSI 接口设计、电平转换、防静电、Linux DRM/KMS 显示流水线及屏幕驱动移植调试。
-*   [[Knowledge_Atoms/K1_K3摄像系统与图像处理专题档案]] —— 汇总 MIPI CSI 100Ω 差分走线等长、三摄/四摄并发与 DTS 通道绑定。
-*   [[Knowledge_Atoms/K1_K3网络通信与千兆网口专题档案]] —— 汇总双路 GMAC 以太网、百兆 PHY 兼容限值、Wi-Fi/BT 模组联调、DPDK 用户态加速及 EtherCAT 工业实时总线方案。
+*   [[Knowledge_Atoms/K1_K3摄像系统与图像处理专题档案]] —— 区分 K1/K3 CSI 通道组合、时钟关系与板级引出；Lane 数不保证 ISP/AI 并发性能。
+*   [[Knowledge_Atoms/K1_K3网络通信与千兆网口专题档案]] —— 区分 K1 双 GMAC 与 K3 四 GMAC 的接口模式和板级条件，保留未核验项。
 *   [[Knowledge_Atoms/K1_K3高速外设接口专题档案]] —— 汇总 PCIe 2.1/3.0 通道拆分限制、USB 主从切换与外部 SATA 扩展。
 *   [[Knowledge_Atoms/Muse_Pi_板级硬件设计专题]] —— 汇总 MUSE Pi/Pro 开发板的 USB-PD 供电规范、Strap 拨码启动与 JTAG/UART 调试复用设计。
     *   [[Knowledge_Atoms/MUSE_Pi_26Pin_IOMAP管脚映射专题]] —— 汇总 MUSE Pi 26-Pin 扩展双排插针定义、JTAG/UART/CAN0/SPI3 引脚映射及 DTS 设备树路由表。
@@ -79,7 +79,7 @@ aliases: [index, index.md, 索引, 全局索引]
 
 ### 事实证据 (Evidence)
 *   [[Evidence/k1_strap_pins_config]] —— K1 芯片六类 Strap 管脚物理连接与 JTAG 路由组合。
-*   [[Evidence/k3_strap_pins_config]] —— K3 芯片五类 Strap Pins 配置管脚与电平功能组合。
+*   [[Evidence/k3_strap_pins_config]] —— K3 Strap 功能表与来源清单矛盾，完整接线清单待官方确认。
 *   [[Evidence/p1_pmic_specs]] —— Power Stone P1 PMIC 芯片各电轨输出电压、电流极限及引脚定义。
 *   [[Evidence/p1s_pmic_specs]] —— Power Stone P1S PMIC 芯片电轨规格及精简引脚定义。
 *   [[Evidence/p3_pmic_specs]] —— 🆕 Power Stone P3 PMIC 四相 32A 大电流规格、相位组合与电气参数。
@@ -221,6 +221,7 @@ aliases: [index, index.md, 索引, 全局索引]
 *   [[Agent]] —— 知识库运行与 AI Agent 协作规范。
 *   [[log]] —— 重构与维护日志。
 
-*   [项目计划与阶段进度](docs/PROJECT_PLAN.md) —— v2.0：P0/P1 与阶段 A 已完成并通过部署验收，B 来源复核与查询驱动迭代待执行；公司部署/RAG 按需启动。
+*   [项目计划与阶段进度](docs/PROJECT_PLAN.md) —— v2.0：P0/P1 与阶段 A 已完成并通过部署验收，阶段 B 首轮复核、查询优化与 20 题工具评测已落地，B1 因 K3 Strap 官方清单矛盾保留未完成验收；公司部署/RAG 按需启动。
 *   [MCP 接口与目标元数据契约](docs/MCP_CONTRACT_V1.md) —— 7 核心工具兼容边界、Worker 运营扩展与未来 Gateway 模型。
+*   [阶段 B 首轮审计](docs/reviews/stage_b_2026-10-21/README.md) —— 12 项 diff、7 篇 Journey、真实查询与 20 题评测；保留阻塞事项。
 *   [新鲜度与维护闭环](docs/FRESHNESS_MAINTENANCE.md) —— P1 报告、来源字段、分页与 stale 复核流程。

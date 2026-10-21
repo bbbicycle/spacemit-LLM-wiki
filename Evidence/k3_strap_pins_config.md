@@ -3,17 +3,18 @@ type: evidence
 title: "K3 芯片 Strap Pins 启动与系统配置参数"
 claim_type: "parameter"
 status: needs_review
-verification_status: unverified
+verification_status: conflicted
+conflicts: "固定来源 1.1.5 开头写 5 个 strap 并列 GPIO90；随后五张功能表却列 Strap0～5，包含 GPIO64 和 GPIO52。功能表可引用，完整管脚清单须人工确认。"
 external_use: false
 source_file: "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md"
 source_origin: "https://github.com/spacemit-com/docs-chip"
-source_commit: "1ea15a766287024a5bb7b548850826e3525a80dc"
+source_commit: "2525ee3b68e0f4864f1bf12c8a59df040bf27e84"
 source_section: "1.1.5 硬件初始化系统配置电路"
 source_resolution: resolved
-source_checked_at: 2026-10-13
-source_note: "已定位 Strap 功能表；全部板级接线条件尚未逐项核验。"
+source_checked_at: 2026-10-21
+source_note: "2026-10-21 阶段 B：K3 指南 1.1.5 五张功能表：启动顺序、下载、QSPI、LPDDR；发现开头声称五管脚且列 GPIO90，与六个 Strap 功能表矛盾，标 conflicted。 保留来源冲突并置 conflicted/needs_review；不表示全文事实通过。"
 created: 2026-06-29
-updated: 2026-10-13
+updated: 2026-10-21
 aliases: ["K3 Strap管脚物理配置参数", "K3 Strap Pins Config Specs", "k3_strap_pins_config"]
 domain: hardware_schematic_design
 target_audience: [硬件电路工程师, 驱动工程师]
@@ -24,7 +25,10 @@ target_audience: [硬件电路工程师, 驱动工程师]
 > **💡 工程师导读与排坑焦点**：详细标注 K3 芯片 Strap 管脚配置阻值与启动介质引脚选择。
 > **目标读者**：`硬件电路工程师 / 驱动工程师` | **技术领域**：`hardware_schematic_design`
 
-本文件包含 K3 芯片级硬件初始化配置管脚（Strap Pins）的物理连接与功能组合。共有 6 个配置管脚（Strap 0 ~ 5）。
+本文件按 K3 指南 1.1.5 的功能表列出 Strap 0～5。
+
+> [!WARNING]
+> **来源内部冲突，待确认**：同节开头却写“共有 5 个 strap pin”，并列 GPIO65/66/68/69/90；后面的 QSPI 与 LPDDR 表分别写 GPIO64 和 GPIO52。以下保留各功能表原值，不能将其称为已确认的完整管脚清单；电阻、供电和实际接线须对照对应板型原理图及官方勘误。
 
 ## 1. Boot 启动介质选择 (Strap 0 & 1)
 通过 **GPIO66 (Strap 1)** 与 **GPIO65 (Strap 0)** 的电平组合选择芯片引导介质：

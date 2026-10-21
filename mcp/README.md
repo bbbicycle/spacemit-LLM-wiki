@@ -9,7 +9,7 @@
 
 Worker 是生产端，除 7 核心检索工具外，已提供 D1 异步日志、`/stats` 和用户授权反馈 `report_wiki_issue`。Python 是纯标准库的 stdio 契约镜像，用于精炼查询离线兜底与 CI，不复制 Worker 的运营端点和 D1 功能；原文仍可能需要联网。
 
-[项目计划 v2.0](../docs/PROJECT_PLAN.md) 已将旧 P2/P3 近期范围收敛为 A/B。当前索引 v2.3.0；阶段 A 的确定性 `build_meta`、Worker `/health`、双端 `agent_notice` / 搜索 `hint` 与轻量 Skill v1 已完成并通过部署验收；阶段 B 再复核存量来源与补充真实查询评测。核心工具兼容边界及未来字段见 [MCP 契约](../docs/MCP_CONTRACT_V1.md)。
+[项目计划 v2.0](../docs/PROJECT_PLAN.md) 已将旧 P2/P3 近期范围收敛为 A/B。当前索引 v2.3.0；阶段 A 的确定性 `build_meta`、Worker `/health`、双端 `agent_notice` / 搜索 `hint` 与轻量 Skill v1 已完成并通过部署验收；阶段 B 首轮复核、查询优化与 20 题工具评测已落地，B1 因 K3 Strap 官方清单矛盾保留未完成验收，详见 [审计记录](../docs/reviews/stage_b_2026-10-21/README.md)。核心工具兼容边界及未来字段见 [MCP 契约](../docs/MCP_CONTRACT_V1.md)。
 
 ---
 
@@ -38,7 +38,7 @@ Worker 是生产端，除 7 核心检索工具外，已提供 D1 异步日志、
 ```bash
 python3 scripts/build_mcp_index.py
 ```
-构建需完整初始化五个 Sources 子模块；当前仓库索引快照为 66 个精炼节点、1231 个原始文件（47 current、12 stale、7 unknown）。索引同时写入 Python 和 Worker，已有顶层构建时间、主仓库来源 commit、Sources 版本和内容哈希；`--if-changed` 在内容与来源未变时保留原文件，`--check` 只校验不写入。构建时间取最近一次输入提交的固定时间，`wiki_worktree_dirty` 只反映知识、Sources 与构建器输入；文档或索引自身提交不会引发重建漂移。缺少或存在已跟踪修改的 Sources 时构建失败，已有索引保留。
+构建需完整初始化五个 Sources 子模块；当前仓库索引快照为 66 个精炼节点、1231 个原始文件（66 current、0 stale、0 unknown；另有 K3 Strap 冲突待官方确认，不等于人工终审）。索引同时写入 Python 和 Worker，已有顶层构建时间、主仓库来源 commit、Sources 版本和内容哈希；`--if-changed` 在内容与来源未变时保留原文件，`--check` 只校验不写入。构建时间取最近一次输入提交的固定时间，`wiki_worktree_dirty` 只反映知识、Sources 与构建器输入；文档或索引自身提交不会引发重建漂移。缺少或存在已跟踪修改的 Sources 时构建失败，已有索引保留。
 
 ```bash
 git submodule update --init --recursive
@@ -81,6 +81,8 @@ python3 -B scripts/test_minimal_install.py
 python3 -B -m unittest discover -s mcp -p 'test_server.py'
 python3 -B scripts/test_build_mcp_index.py
 node --disable-warning=ExperimentalWarning mcp-worker/test_runtime.cjs
+# 20题评测另需完整Sources、Git历史和Node.js 24+
+python3 -B scripts/eval_stage_b.py
 ```
 
 

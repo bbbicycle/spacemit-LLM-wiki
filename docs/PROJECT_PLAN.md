@@ -37,7 +37,7 @@
 - **知识规模**：66 个精炼节点（7 篇 `Developer_Journeys`、32 篇 `Knowledge_Atoms`、27 篇 `Evidence`）+ 5 大官方子模块共 1,231 篇 `Sources/` 原始资料索引。
 - **P1 新鲜度与自愈闭环（已完成）**：
   - 全部 27 篇 Evidence 与 32 篇 Knowledge Atom 均已补齐 `source_file`、`source_commit`、`source_resolution`、`verification_status` 与 `source_checked_at`。
-  - 索引 `v2.2.0` 支持按文件路径精确计算 `freshness`（当前基线：**47 个 `current`、12 个 `stale`、7 个无直接来源的 Journey 为 `unknown`**）。
+  - 索引 `v2.2.0` 支持按文件路径精确计算 `freshness`（P1 历史基线：**47 个 `current`、12 个 `stale`、7 个无直接来源的 Journey 为 `unknown`**；阶段 B 首轮复核后为 **66 current / 0 stale / 0 unknown**，仍保留事实冲突与待终审）。
   - `scripts/check_upstream_impact.py` 已支持持久基线 `docs/source_baseline.json` 及双链传递影响分析。
   - 本地 `mcp/server.py` 与云端 `mcp-worker/src/index.ts` 已对齐原文 200 行默认分页（最大窗口 500 行），且 Worker 已通过 `ctx.waitUntil` 实现 D1 查询日志与问题反馈的异步非阻塞写入。
 
@@ -52,7 +52,7 @@ P0 已完成的是接口与目标元数据模型定义，不表示未来 Gateway
 | **P0** | 冻结目标与接口 | 明确三层拓扑、7 大核心 MCP 工具与来源元数据模型 | **DONE** |
 | **P1** | Wiki 新鲜度与自愈闭环 | 按文件路径检测 `stale`、固化上游影响基线与原文安全分页 | **DONE** |
 | **阶段 A（原第二步）** | **MCP 自解释改造与对外 Skill 瘦身** | 用“索引内嵌 `build_meta` + `/health` 自检 + 结果内联提示 + 极简 Skill 冻结”替代繁重的 P2 打包基建 | **DONE（2026-10-21 部署验收通过）** |
-| **阶段 B（原第三步）** | **存量来源复核与查询驱动迭代** | 逐项复核首轮 12 个 `stale`、为 7 个 Journey 补来源，目标有据清零；利用 Cloudflare D1 真实查询日志驱动专题扩充与评测 | **当前待执行（日常核心闭环）** |
+| **阶段 B（原第三步）** | **存量来源复核与查询驱动迭代** | 逐项复核首轮 12 个 `stale`、为 7 个 Journey 补来源，目标有据清零；利用 Cloudflare D1 真实查询日志驱动专题扩充与评测 | **首轮已执行；B1 官方 Strap 冲突阻塞验收** |
 | **P4** | 公司服务器承载 Wiki MCP | 在公司内部服务器运行独立 Wiki MCP 服务（灰度替代 Cloudflare） | 待公司服务器就绪后启动 |
 | **P5** | 接入公司 RAG 与混合编排 | 在服务端通过 MCP Gateway 编排 Wiki 精确检索与公司 RAG（含 ACL 权限过滤） | 待公司 RAG 接口就绪后启动 |
 
@@ -197,7 +197,7 @@ P0 已完成的是接口与目标元数据模型定义，不表示未来 Gateway
 - 双 lint、26 项构建器测试、6 项上游影响测试、11 项 Python 服务测试、4 项最小安装测试、Worker 运行回归、79 次真实索引跨端调用与类型检查通过；7 组状态场景逐项比较两端提示。Skill 主入口 32 行、安装清单 3 个文件，Skill 格式校验通过。
 - 正式索引来源为 `8d7bae80e22cdd782f4269ae819afc838a903cb9`，`wiki_worktree_dirty:false`；重复构建及索引提交后重建均保持字节一致，`--check` 通过。内容 SHA-256：`362db39d8dea57e44bdf577547ade952d32833560b7d05f5b0842f5b404e52af`。
 - 发布验收基准 `dfb883481be8fa8661e1042115a3d72a056ab2eb` 的 [自动部署与在线检查](https://github.com/bbbicycle/spacemit-LLM-wiki/actions/runs/39540028549) 通过；独立请求确认线上 v2.3.0、部署 ref、完整 `build_meta` 一致，SSE、核心工具清单、搜索 hint、事实 notice、固定来源默认 200 行及最大 500 行窗口均通过。
-- 以同一完整 SHA 作为手动 `ref` 入参执行 [指定版本重部署演练](https://github.com/bbbicycle/spacemit-LLM-wiki/actions/runs/39540322273)，重建、部署及部署后 smoke 全部通过，再次独立检查版本与哈希一致。已验证回退所用的指定 ref 部署路径；本次未切回缺少新健康接口的旧服务。当前实际部署 ref 继续以 [线上健康接口](https://mcp.yao1302.xyz/health) 为准。阶段 B 的 12 个 stale / 7 个 unknown 仍待逐项来源复核。
+- 以同一完整 SHA 作为手动 `ref` 入参执行 [指定版本重部署演练](https://github.com/bbbicycle/spacemit-LLM-wiki/actions/runs/39540322273)，重建、部署及部署后 smoke 全部通过，再次独立检查版本与哈希一致。已验证回退所用的指定 ref 部署路径；本次未切回缺少新健康接口的旧服务。当前实际部署 ref 继续以 [线上健康接口](https://mcp.yao1302.xyz/health) 为准。该次阶段 A 验收时，12 个 stale / 7 个 unknown 尚待阶段 B 复核；后续记录见下文。
 
 ## 4. 阶段 B（原第三步详细计划）：存量来源复核与查询驱动的内容迭代
 
@@ -256,7 +256,7 @@ python3 scripts/build_mcp_index.py --check
 
 ### B2. 为 7 篇 `Developer_Journeys` 补齐核心来源锚点
 
-目前 7 篇上手向导在 `reports/freshness.json` 中显示为 `freshness: unknown`，因为它们只通过双链指向 `Knowledge_Atoms` / `Evidence`，自身 frontmatter 未填写 `source_file`。
+阶段 B 开始时，7 篇上手向导在 `reports/freshness.json` 中显示为 `freshness: unknown`，因为它们只通过双链指向 `Knowledge_Atoms` / `Evidence`，自身 frontmatter 未填写 `source_file`。
 
 #### 具体改造动作
 为以下 7 篇向导优先绑定 1~2 个最核心的官方快速上手原文，并检查未覆盖的关键步骤是否还需补充来源（填入 `source_file`、`source_commit`、`source_section`、`source_resolution`、`verification_status`、`source_checked_at`）：
@@ -309,9 +309,17 @@ python3 scripts/build_mcp_index.py --check
 ### 阶段 B 验收清单（完成后逐项打勾）
 
 - [ ] 当前 12 个 `stale` 均有逐项 diff 复核记录；有据修正后目标为 0。未解决项明确列入阻塞清单，不能以批量刷新 SHA 通过验收。
-- [ ] 7 篇 Journey 已补齐适用的直接来源与核验范围；目标 `unknown: 0`，不能据此宣称全库全文受监控或所有事实已审核。
-- [ ] 已核查 `/stats` 或 D1 首轮真实数据并保留时间窗口、统计口径及维护依据，据此完成至少一轮 aliases 补充或节点优化。
-- [ ] 20 题覆盖 6 个 domain，记录准确出处、适用边界、状态与诚实降级；普通问题以 1~3 次调用为目标，证据不足允许继续必要核查，不能为调用上限牺牲正确性。
+- [x] 7 篇 Journey 已补齐适用的直接来源与核验范围；目标 `unknown: 0`，不能据此宣称全库全文受监控或所有事实已审核。
+- [x] 已核查 `/stats` 或 D1 首轮真实数据并保留时间窗口、统计口径及维护依据，据此完成至少一轮 aliases 补充或节点优化。
+- [x] 20 题覆盖 6 个 domain，记录准确出处、适用边界、状态与诚实降级；普通问题以 1~3 次调用为目标，证据不足允许继续必要核查，不能为调用上限牺牲正确性。
+
+### 阶段 B 首轮执行记录（2026-10-21）
+
+- [逐项审计入口](reviews/stage_b_2026-10-21/README.md)：以 `7856b16` 为基线，对 12 个 stale 保留各自新旧 SHA、精确 diff、修正结果与依赖检查；修正 K3 摄像通道、GMAC 模式、Strap 过度结论及 CPU/DDR 供电勘误，未批量刷新无关来源。
+- 7 篇 Journey 补直接来源、范围与版本条件，纠正旧命令/产物名/平台组合；当前 freshness 为 **66 current / 0 stale / 0 unknown**。全部保留各自事实核验状态，未设置 approved 或伪造硬件实测。
+- `/stats` 首轮全保留数据为 44 调用、2 个非成功、1 反馈。根据真实 `P1 P3 PMIC` 未命中补别名并复现前后结果；唯一审计查询实际落库。原文分类 23 次不视为回退率，I2C3 时序和内部流程需求保留资料缺口。
+- [20 题评测](reviews/stage_b_2026-10-21/core_20_results.md)覆盖 6 个 domain、真实历史 stale/unknown 回放、当前 conflicted/needs_review；每端 42 次调用，逐题 2～3 次。验证工具检索证据、来源与提示契约及双端一致性，未调用独立问答模型，不能声称模型准确率。
+- **B1 保持未勾选**：K3 指南 1.1.5 概述列 5 脚且包含 GPIO90，功能表却含 GPIO64/52、Strap0～5，中英文均存在矛盾。两节点保持 `conflicted`。阻塞项 `K3-STRAP-01` 由维护者协调官方确认或提供对应板型经审定原理图；未获得依据前不能宣布完整管脚清单已确定，因此本阶段未全项收口。
 
 ## 5. 中远期储备阶段（P4 ~ P5：按需启动，当下不提前写代码）
 

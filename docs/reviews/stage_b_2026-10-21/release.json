@@ -1,0 +1,5 @@
+{
+  "status": "prepared_pending_publish",
+  "stage_acceptance": "B2/B3/B4 locally verified; B1 open for K3-STRAP-01; stage B not fully accepted",
+  "validation": "local checks passed; deployment not yet verified"
+}

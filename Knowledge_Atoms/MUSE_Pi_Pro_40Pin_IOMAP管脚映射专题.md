@@ -3,7 +3,7 @@ type: knowledge_atom
 title: "MUSE Pi Pro 40-Pin IOMAP 与外设管脚复用专题档案"
 status: "needs_review"
 created: 2026-08-10
-updated: "2026-10-20"
+updated: "2026-10-21"
 aliases: ["Muse Pi Pro 40Pin IOMAP", "Muse Pi Pro Pinout", "Muse Pi Pro 管脚映射表", "muse_pi_pro_40pin_iomap"]
 domain: hardware_schematic_design
 target_audience: [硬件调试工程师, 驱动开发工程师, AI-Agent]
@@ -12,8 +12,10 @@ source_commit: "bc640755145625cc20745f49861f82588863fca3"
 source_locator: "7.3 40pin Header，行 454–482"
 source_resolution: "partial"
 verification_status: "unverified"
-source_checked_at: "2026-10-20"
-source_note: "本次仅定位已有引用对应的文件与章节，未对正文全部事实逐项复核；引用的 Evidence 保留各自历史版本与核验状态。"
+source_checked_at: "2026-10-21"
+source_note: "2026-10-21 定向复核中英文用户指南 7.3 与 I2C3 反馈；仅确认 Pin 27/28 信号及板级时序资料缺口，其他复用待核验。"
+source_related_file: ["Sources/docs-product/zh/k1_series/k1_muse_pi_pro/pi_pro_user_guide.md"]
+source_related_commit: ["bc640755145625cc20745f49861f82588863fca3"]
 source_origin: "https://github.com/spacemit-com/docs-product"
 ---
 
@@ -59,6 +61,9 @@ MUSE Pi Pro 开发板将扩展排针升级为 40-Pin 兼容规范：
 ---
 
 ## 2. 调试与多总线通道速查
+
+> [!WARNING]
+> **I2C3 电气时序资料缺口（2026-10-21 反馈复核）**：当前中英文用户指南 7.3 仅给出排针表与示意图：Pin 27 为 `AP_I2C3_SDA_3V3`，Pin 28 为 `AP_I2C3_SCL_3V3`。该节没有板级上升/下降时间、建立/保持时间、上拉与总线电容测试条件，不能由排针名称推导时序图。连接前核对板卡硬件版本、原理图及对应 I2C 控制器规范；需官方补充资料或实测后再给板级时序结论。表中其他复用功能仍待逐项核验。
 
 * **X60 主核 Console 调试串口**：Pin 8 (`UART0_TXD`), Pin 10 (`UART0_RXD`), Pin 6 (`GND`)。
 * **RCPU 实时核调试串口**：Pin 33 (`GPIO_47 / R_UART0_TX`), Pin 35 (`GPIO_48 / R_UART0_RX`)。

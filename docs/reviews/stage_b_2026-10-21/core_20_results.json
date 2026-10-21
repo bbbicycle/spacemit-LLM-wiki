@@ -1,0 +1,2288 @@
+{
+  "evaluation": "retrieval evidence / metadata / notices / pinned sources / Python-Worker parity",
+  "limitations": "No independent LLM answer generation or scoring; reference answers are AI source-review rubrics, not measured model accuracy. No hardware execution.",
+  "suite_sha256": "942ab550d8adde902d2e2ad253547d7f6247e235ac0b224e4be16cf2f0ecfea7",
+  "content_sha256": "8151bfecd228497b37f39dd31276b6d9cea6e9b4ca96eadd119666d2212f6dca",
+  "replay_baseline": "7856b16de70df6e2d494bb09acb93529063c3206",
+  "domains": [
+    "bianbu_os_distribution",
+    "bsp_kernel_drivers",
+    "chip_product_specs",
+    "edge_ai_robotics",
+    "hardware_schematic_design",
+    "toolchain_debug_tools"
+  ],
+  "passed": 20,
+  "total": 20,
+  "tool_calls_per_backend": 42,
+  "pinned_excerpts_checked": 23,
+  "results": [
+    {
+      "id": "B01",
+      "question": "K1 与 K3 的 CPU/ISA 能否混用描述？",
+      "domain": "chip_product_specs",
+      "product_version": "K1/K3，固定产品简介",
+      "reference_answer": "K1 为8核X60、RVA22/RVV1.0；K3为8核X100及8个A100、RVA23。芯片代际和板型分开，不把智算核当通用大核。",
+      "citations": [
+        {
+          "path": "Sources/docs-chip/zh/key_stone/k1/k1_docs/root_overview.md",
+          "commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+          "start_line": 10,
+          "end_line": 40,
+          "excerpt_sha256": "00b3b9d491a732555dc135ff57512d68304fbc7f44cbd8f8c8d359a10ecacf3c"
+        },
+        {
+          "path": "Sources/docs-chip/zh/key_stone/k3/k3_docs/root_overview.md",
+          "commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+          "start_line": 12,
+          "end_line": 48,
+          "excerpt_sha256": "de5062bdc7e88000e4c68b9d673bc30b9098e0886ed7053fb3e546642070a1b7"
+        }
+      ],
+      "calls": [
+        {
+          "name": "get_developer_journey",
+          "arguments": {
+            "board_or_task": "K1芯片开发快速上手向导"
+          },
+          "expect": {
+            "contains": [
+              "X60",
+              "RVA22",
+              "RVV 1.0"
+            ],
+            "notices": [
+              "UNVERIFIED",
+              "NEEDS_REVIEW"
+            ]
+          }
+        },
+        {
+          "name": "get_developer_journey",
+          "arguments": {
+            "board_or_task": "K3芯片开发快速上手向导"
+          },
+          "expect": {
+            "contains": [
+              "X100",
+              "A100",
+              "RVA23"
+            ],
+            "notices": [
+              "UNVERIFIED",
+              "NEEDS_REVIEW"
+            ]
+          }
+        }
+      ],
+      "actual": [
+        {
+          "tool": "get_developer_journey",
+          "arguments": {
+            "board_or_task": "K1芯片开发快速上手向导"
+          },
+          "mode": "current index",
+          "python_worker_equal": true,
+          "matched_evidence": [
+            "X60",
+            "RVA22",
+            "RVV 1.0"
+          ],
+          "notice_codes": [
+            "UNVERIFIED",
+            "NEEDS_REVIEW",
+            "GENERATION_BOUNDARY"
+          ],
+          "empty": false,
+          "response_sha256": "87b09175c2df0e8127a5a225ae252010539e4e191e00a822384d6dff4870bde6",
+          "metadata": {
+            "freshness": "current",
+            "verification_status": "unverified",
+            "status": "needs_review",
+            "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84"
+          }
+        },
+        {
+          "tool": "get_developer_journey",
+          "arguments": {
+            "board_or_task": "K3芯片开发快速上手向导"
+          },
+          "mode": "current index",
+          "python_worker_equal": true,
+          "matched_evidence": [
+            "X100",
+            "A100",
+            "RVA23"
+          ],
+          "notice_codes": [
+            "UNVERIFIED",
+            "NEEDS_REVIEW",
+            "GENERATION_BOUNDARY"
+          ],
+          "empty": false,
+          "response_sha256": "90e448ea33f9d8f0e2a94f160c2d2bdf5846fc8d0d43cccb8cb33e75a6738660",
+          "metadata": {
+            "freshness": "current",
+            "verification_status": "unverified",
+            "status": "needs_review",
+            "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84"
+          }
+        }
+      ],
+      "failures": [],
+      "tool_calls_per_backend": 2,
+      "passed": true
+    },
+    {
+      "id": "B02",
+      "question": "K3 的 60 TOPS 是否保证30B模型每秒15个token？",
+      "domain": "chip_product_specs",
+      "product_version": "K3，llama.cpp 0.1.1 / bianbu-4.0rc3 / 2026-05-26",
+      "reference_answer": "不能换算保证；固定Q4_0的Qwen3-MoE-30B-A3B表列TG128=12.32、TG1280=11.17，PP/TG分开；15/18与首词0.9s仍未核验。",
+      "citations": [
+        {
+          "path": "Sources/docs-chip/zh/key_stone/k3/k3_docs/root_overview.md",
+          "commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+          "start_line": 12,
+          "end_line": 48,
+          "excerpt_sha256": "de5062bdc7e88000e4c68b9d673bc30b9098e0886ed7053fb3e546642070a1b7"
+        },
+        {
+          "path": "Sources/docs-ai/zh/compute_stack/ai_compute_stack/modelzoo.md",
+          "commit": "2b3894e983a295ed0278bc625867e0c132e0e259",
+          "start_line": 265,
+          "end_line": 299,
+          "excerpt_sha256": "1642eb5cd1202762b04dc2ad6875e51e03f393f677d906a614070b7db729a829"
+        }
+      ],
+      "calls": [
+        {
+          "name": "get_evidence_fact",
+          "arguments": {
+            "spec_name": "k3_ai_performance_data"
+          },
+          "expect": {
+            "contains": [
+              "12.32",
+              "11.17",
+              "bianbu-4.0rc3",
+              "不能作为对外性能承诺"
+            ],
+            "notices": [
+              "UNVERIFIED",
+              "NEEDS_REVIEW"
+            ]
+          }
+        },
+        {
+          "name": "read_raw_source_file",
+          "arguments": {
+            "file_path_or_url": "Sources/docs-ai/zh/compute_stack/ai_compute_stack/modelzoo.md",
+            "start_line": 265,
+            "end_line": 299
+          },
+          "expect": {
+            "contains": [
+              "0.1.1",
+              "12.32",
+              "11.17"
+            ],
+            "source_file": "Sources/docs-ai/zh/compute_stack/ai_compute_stack/modelzoo.md",
+            "reference_excerpt_sha256": "1642eb5cd1202762b04dc2ad6875e51e03f393f677d906a614070b7db729a829"
+          }
+        }
+      ],
+      "actual": [
+        {
+          "tool": "get_evidence_fact",
+          "arguments": {
+            "spec_name": "k3_ai_performance_data"
+          },
+          "mode": "current index",
+          "python_worker_equal": true,
+          "matched_evidence": [
+            "12.32",
+            "11.17",
+            "bianbu-4.0rc3",
+            "不能作为对外性能承诺"
+          ],
+          "notice_codes": [
+            "UNVERIFIED",
+            "NEEDS_REVIEW",
+            "EXTERNAL_USE_RESTRICTED",
+            "GENERATION_BOUNDARY"
+          ],
+          "empty": false,
+          "response_sha256": "c2ee2c2d7a5f4f0786fd149528d32b82603a92164b93f84c58749ff2745359b5",
+          "metadata": {
+            "freshness": "current",
+            "verification_status": "unverified",
+            "status": "needs_review",
+            "source_commit": "2b3894e983a295ed0278bc625867e0c132e0e259"
+          }
+        },
+        {
+          "tool": "read_raw_source_file",
+          "arguments": {
+            "file_path_or_url": "Sources/docs-ai/zh/compute_stack/ai_compute_stack/modelzoo.md",
+            "start_line": 265,
+            "end_line": 299
+          },
+          "mode": "current index",
+          "python_worker_equal": true,
+          "matched_evidence": [
+            "0.1.1",
+            "12.32",
+            "11.17"
+          ],
+          "notice_codes": [],
+          "empty": false,
+          "response_sha256": "663bb6ac1dd475be4d97122013adcad1ca5ddd720ef17f0a999fc2d645060289",
+          "metadata": {
+            "source_commit": "2b3894e983a295ed0278bc625867e0c132e0e259",
+            "start_line": 265,
+            "end_line": 299
+          }
+        }
+      ],
+      "failures": [],
+      "tool_calls_per_backend": 2,
+      "passed": true
+    },
+    {
+      "id": "B03",
+      "question": "K3 跑30B-A3B是否等同于30B Dense，激活3B是否只占3B内存？",
+      "domain": "chip_product_specs",
+      "product_version": "K3，Qwen3-30B-A3B Q4_0示例",
+      "reference_answer": "不是；MoE总参数约30B与单token激活约3B分开，完整权重、KV cache与运行时仍占内存，不给无条件Dense上限。",
+      "citations": [
+        {
+          "path": "Sources/docs-ai/zh/compute_stack/ai_compute_stack/modelzoo.md",
+          "commit": "2b3894e983a295ed0278bc625867e0c132e0e259",
+          "start_line": 265,
+          "end_line": 299,
+          "excerpt_sha256": "1642eb5cd1202762b04dc2ad6875e51e03f393f677d906a614070b7db729a829"
+        },
+        {
+          "path": "Sources/docs-ai/zh/compute_stack/ai_compute_stack/llama.cpp.md",
+          "commit": "2b3894e983a295ed0278bc625867e0c132e0e259",
+          "start_line": 34,
+          "end_line": 108,
+          "excerpt_sha256": "209e401feb03fa283add26f0cadb3e7ba98c6815c8295e7292eae4e40d2613a7"
+        }
+      ],
+      "calls": [
+        {
+          "name": "get_evidence_fact",
+          "arguments": {
+            "spec_name": "k3_ai_performance_data"
+          },
+          "expect": {
+            "contains": [
+              "MoE",
+              "激活约 3B",
+              "不能推论为 30B Dense"
+            ],
+            "notices": [
+              "UNVERIFIED",
+              "NEEDS_REVIEW"
+            ]
+          }
+        },
+        {
+          "name": "get_developer_journey",
+          "arguments": {
+            "board_or_task": "K3_Pico_开发板快速上手向导"
+          },
+          "expect": {
+            "contains": [
+              "总容量、权重、KV cache",
+              "总参数与激活量"
+            ],
+            "notices": [
+              "UNVERIFIED",
+              "NEEDS_REVIEW"
+            ]
+          }
+        }
+      ],
+      "actual": [
+        {
+          "tool": "get_evidence_fact",
+          "arguments": {
+            "spec_name": "k3_ai_performance_data"
+          },
+          "mode": "current index",
+          "python_worker_equal": true,
+          "matched_evidence": [
+            "MoE",
+            "激活约 3B",
+            "不能推论为 30B Dense"
+          ],
+          "notice_codes": [
+            "UNVERIFIED",
+            "NEEDS_REVIEW",
+            "EXTERNAL_USE_RESTRICTED",
+            "GENERATION_BOUNDARY"
+          ],
+          "empty": false,
+          "response_sha256": "c2ee2c2d7a5f4f0786fd149528d32b82603a92164b93f84c58749ff2745359b5",
+          "metadata": {
+            "freshness": "current",
+            "verification_status": "unverified",
+            "status": "needs_review",
+            "source_commit": "2b3894e983a295ed0278bc625867e0c132e0e259"
+          }
+        },
+        {
+          "tool": "get_developer_journey",
+          "arguments": {
+            "board_or_task": "K3_Pico_开发板快速上手向导"
+          },
+          "mode": "current index",
+          "python_worker_equal": true,
+          "matched_evidence": [
+            "总容量、权重、KV cache",
+            "总参数与激活量"
+          ],
+          "notice_codes": [
+            "UNVERIFIED",
+            "NEEDS_REVIEW",
+            "GENERATION_BOUNDARY"
+          ],
+          "empty": false,
+          "response_sha256": "8ac3ba523d6e2fe4ff4b51f6c8d93820cbda2f43579c3ba26a2174ae24509965",
+          "metadata": {
+            "freshness": "current",
+            "verification_status": "unverified",
+            "status": "needs_review",
+            "source_commit": "bc640755145625cc20745f49861f82588863fca3"
+          }
+        }
+      ],
+      "failures": [],
+      "tool_calls_per_backend": 2,
+      "passed": true
+    },
+    {
+      "id": "B04",
+      "question": "MUSE Pi Pro与Pi的排针/网口是否相同，是否属于K3板？",
+      "domain": "chip_product_specs",
+      "product_version": "MUSE Pi / Pi Pro固定产品表，K3 Pico另属K3",
+      "reference_answer": "Pi为26Pin双RJ45，Pro为40Pin单RJ45；两产品表处理器为M1，不能按Pro命名推断与K3同代。",
+      "citations": [
+        {
+          "path": "Sources/docs-product/zh/k1_series/k1_muse_pi/root_overview.md",
+          "commit": "bc640755145625cc20745f49861f82588863fca3",
+          "start_line": 19,
+          "end_line": 37,
+          "excerpt_sha256": "ecbf1bece4f5efadb667d03a73cfab54e5b849190cc246632b51a176b5d4375f"
+        },
+        {
+          "path": "Sources/docs-product/zh/k1_series/k1_muse_pi_pro/root_overview.md",
+          "commit": "bc640755145625cc20745f49861f82588863fca3",
+          "start_line": 37,
+          "end_line": 64,
+          "excerpt_sha256": "f3d65431e4351ec5efd935aef225963718c46bb172a4900323590a4c9a89b6e0"
+        },
+        {
+          "path": "Sources/docs-product/zh/k3_series/k3_pico/pico_user_guide.md",
+          "commit": "bc640755145625cc20745f49861f82588863fca3",
+          "start_line": 1,
+          "end_line": 70,
+          "excerpt_sha256": "127d2db5704930cbccb9a7ddd903ad3764c83e8177e481328ed0d4e314a9d990"
+        }
+      ],
+      "calls": [
+        {
+          "name": "get_evidence_fact",
+          "arguments": {
+            "spec_name": "muse_pi_vs_pi_pro_specs"
+          },
+          "expect": {
+            "contains": [
+              "26-Pin",
+              "40-Pin",
+              "2 路 RJ45",
+              "1 路 RJ45",
+              "M1"
+            ],
+            "notices": [
+              "UNVERIFIED",
+              "NEEDS_REVIEW"
+            ]
+          }
+        },
+        {
+          "name": "get_developer_journey",
+          "arguments": {
+            "board_or_task": "K3_Pico_开发板快速上手向导"
+          },
+          "expect": {
+            "contains": [
+              "K3"
+            ],
+            "notices": [
+              "UNVERIFIED",
+              "NEEDS_REVIEW"
+            ]
+          }
+        }
+      ],
+      "actual": [
+        {
+          "tool": "get_evidence_fact",
+          "arguments": {
+            "spec_name": "muse_pi_vs_pi_pro_specs"
+          },
+          "mode": "current index",
+          "python_worker_equal": true,
+          "matched_evidence": [
+            "26-Pin",
+            "40-Pin",
+            "2 路 RJ45",
+            "1 路 RJ45",
+            "M1"
+          ],
+          "notice_codes": [
+            "UNVERIFIED",
+            "NEEDS_REVIEW",
+            "EXTERNAL_USE_RESTRICTED",
+            "GENERATION_BOUNDARY"
+          ],
+          "empty": false,
+          "response_sha256": "dee316dd33de5aacb2aa6184f9f4b485fd7c261779c75afe73e22a07087622ec",
+          "metadata": {
+            "freshness": "current",
+            "verification_status": "unverified",
+            "status": "needs_review",
+            "source_commit": "bc640755145625cc20745f49861f82588863fca3"
+          }
+        },
+        {
+          "tool": "get_developer_journey",
+          "arguments": {
+            "board_or_task": "K3_Pico_开发板快速上手向导"
+          },
+          "mode": "current index",
+          "python_worker_equal": true,
+          "matched_evidence": [
+            "K3"
+          ],
+          "notice_codes": [
+            "UNVERIFIED",
+            "NEEDS_REVIEW",
+            "GENERATION_BOUNDARY"
+          ],
+          "empty": false,
+          "response_sha256": "8ac3ba523d6e2fe4ff4b51f6c8d93820cbda2f43579c3ba26a2174ae24509965",
+          "metadata": {
+            "freshness": "current",
+            "verification_status": "unverified",
+            "status": "needs_review",
+            "source_commit": "bc640755145625cc20745f49861f82588863fca3"
+          }
+        }
+      ],
+      "failures": [],
+      "tool_calls_per_backend": 2,
+      "passed": true
+    },
+    {
+      "id": "B05",
+      "question": "K1 QSPI_DATA3及启动介质选择能否直接照抄K3 GPIO表？",
+      "domain": "hardware_schematic_design",
+      "product_version": "K1 硬件设计指南1.1.5",
+      "reference_answer": "不能。K1 QSPI_DATA3/Strap3：0启动、1下载；Strap1/0选择介质，先核对板卡电平与拨码映射，K3 GPIO表另查。",
+      "citations": [
+        {
+          "path": "Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_design_guide.md",
+          "commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+          "start_line": 61,
+          "end_line": 146,
+          "excerpt_sha256": "790488dff1974194d4e31e7bbe1a91414b69e959fc14b3e584cc9cc6d4916746"
+        }
+      ],
+      "calls": [
+        {
+          "name": "get_evidence_fact",
+          "arguments": {
+            "spec_name": "k1_strap_pins_config"
+          },
+          "expect": {
+            "contains": [
+              "QSPI_DATA3/Strap3",
+              "SPI NOR",
+              "SD CARD",
+              "启动模式"
+            ],
+            "notices": [
+              "UNVERIFIED",
+              "NEEDS_REVIEW"
+            ]
+          }
+        },
+        {
+          "name": "read_raw_source_file",
+          "arguments": {
+            "file_path_or_url": "Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_design_guide.md",
+            "start_line": 61,
+            "end_line": 146
+          },
+          "expect": {
+            "contains": [
+              "QSPI",
+              "Boot"
+            ],
+            "source_file": "Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_design_guide.md",
+            "reference_excerpt_sha256": "790488dff1974194d4e31e7bbe1a91414b69e959fc14b3e584cc9cc6d4916746"
+          }
+        }
+      ],
+      "actual": [
+        {
+          "tool": "get_evidence_fact",
+          "arguments": {
+            "spec_name": "k1_strap_pins_config"
+          },
+          "mode": "current index",
+          "python_worker_equal": true,
+          "matched_evidence": [
+            "QSPI_DATA3/Strap3",
+            "SPI NOR",
+            "SD CARD",
+            "启动模式"
+          ],
+          "notice_codes": [
+            "UNVERIFIED",
+            "NEEDS_REVIEW",
+            "EXTERNAL_USE_RESTRICTED",
+            "GENERATION_BOUNDARY"
+          ],
+          "empty": false,
+          "response_sha256": "6831351cccc8ff17570dd254e05704baef9948a57c45067c94e10738936c0b49",
+          "metadata": {
+            "freshness": "current",
+            "verification_status": "unverified",
+            "status": "needs_review",
+            "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc"
+          }
+        },
+        {
+          "tool": "read_raw_source_file",
+          "arguments": {
+            "file_path_or_url": "Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_design_guide.md",
+            "start_line": 61,
+            "end_line": 146
+          },
+          "mode": "current index",
+          "python_worker_equal": true,
+          "matched_evidence": [
+            "QSPI",
+            "Boot"
+          ],
+          "notice_codes": [],
+          "empty": false,
+          "response_sha256": "5ae57f2f077fb78ea85b98c02673c38cb663226174e090e82979d9d628f1ef1e",
+          "metadata": {
+            "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+            "start_line": 61,
+            "end_line": 146
+          }
+        }
+      ],
+      "failures": [],
+      "tool_calls_per_backend": 2,
+      "passed": true
+    },
+    {
+      "id": "B06",
+      "question": "K3默认启动顺序及完整Strap管脚清单是什么？",
+      "domain": "hardware_schematic_design",
+      "product_version": "K3 指南V1.1，1.1.5存在内部矛盾",
+      "reference_answer": "表中GPIO66/65=0/0为TF Card→eMMC；概述称5个且列GPIO90，功能表却列GPIO64/52和Strap0～5。并列来源，完整清单未知，需官方/对应原理图确认，不能自行裁决。",
+      "citations": [
+        {
+          "path": "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md",
+          "commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+          "start_line": 243,
+          "end_line": 283,
+          "excerpt_sha256": "1b91ff5542f6ef9dcbf5f30926718a91818f5cf93b3b8214c5f775036455a6ab"
+        }
+      ],
+      "calls": [
+        {
+          "name": "get_evidence_fact",
+          "arguments": {
+            "spec_name": "k3_strap_pins_config"
+          },
+          "expect": {
+            "contains": [
+              "GPIO90",
+              "GPIO64",
+              "GPIO52",
+              "TF Card"
+            ],
+            "notices": [
+              "CONFLICTED",
+              "NEEDS_REVIEW",
+              "GENERATION_BOUNDARY"
+            ],
+            "metadata": {
+              "verification_status": "conflicted"
+            }
+          }
+        },
+        {
+          "name": "read_raw_source_file",
+          "arguments": {
+            "file_path_or_url": "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md",
+            "start_line": 243,
+            "end_line": 283
+          },
+          "expect": {
+            "contains": [
+              "共有 5 个",
+              "GPIO[64]",
+              "GPIO[52]"
+            ],
+            "source_file": "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md",
+            "reference_excerpt_sha256": "1b91ff5542f6ef9dcbf5f30926718a91818f5cf93b3b8214c5f775036455a6ab"
+          }
+        }
+      ],
+      "actual": [
+        {
+          "tool": "get_evidence_fact",
+          "arguments": {
+            "spec_name": "k3_strap_pins_config"
+          },
+          "mode": "current index",
+          "python_worker_equal": true,
+          "matched_evidence": [
+            "GPIO90",
+            "GPIO64",
+            "GPIO52",
+            "TF Card"
+          ],
+          "notice_codes": [
+            "CONFLICTED",
+            "NEEDS_REVIEW",
+            "EXTERNAL_USE_RESTRICTED",
+            "GENERATION_BOUNDARY"
+          ],
+          "empty": false,
+          "response_sha256": "ca3657ff863dd8aa84a438b3467d6ff87938cfe9e7bbf244ea83c30e3134a744",
+          "metadata": {
+            "freshness": "current",
+            "verification_status": "conflicted",
+            "status": "needs_review",
+            "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84"
+          }
+        },
+        {
+          "tool": "read_raw_source_file",
+          "arguments": {
+            "file_path_or_url": "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md",
+            "start_line": 243,
+            "end_line": 283
+          },
+          "mode": "current index",
+          "python_worker_equal": true,
+          "matched_evidence": [
+            "共有 5 个",
+            "GPIO[64]",
+            "GPIO[52]"
+          ],
+          "notice_codes": [],
+          "empty": false,
+          "response_sha256": "d1b8c18f73716862bf0c06af1e0e65062bbcf28295ed471db8dac56d68bda13f",
+          "metadata": {
+            "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+            "start_line": 243,
+            "end_line": 283
+          }
+        }
+      ],
+      "failures": [],
+      "tool_calls_per_backend": 2,
+      "passed": true
+    },
+    {
+      "id": "B07",
+      "question": "K3 VDD0V8_DDR还能按旧版用磁珠独立供电吗？",
+      "domain": "hardware_schematic_design",
+      "product_version": "K3 V1.1与当前Buglist；不推广到K1",
+      "reference_answer": "当前专项勘误要求VCC_SYS与VDD0V8_DDR共平面，不用磁珠隔离；旧板短接只作短期缓解，长期合并供电并验证PI/纹波。K1模拟PHY通则不能覆盖K3专项要求。",
+      "citations": [
+        {
+          "path": "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md",
+          "commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+          "start_line": 356,
+          "end_line": 377,
+          "excerpt_sha256": "9607c58bd627053c15df2ea45a1a68415c8d0f4f00c7d29ef8d631bd693bfa64"
+        },
+        {
+          "path": "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_buglist.md",
+          "commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+          "start_line": 3,
+          "end_line": 62,
+          "excerpt_sha256": "16520a47297a847ce373c1138f50af3081cdeebe36888d8dde4952769f09329f"
+        }
+      ],
+      "calls": [
+        {
+          "name": "read_knowledge_atom",
+          "arguments": {
+            "atom_name": "SpacemiT生态板卡与PMIC电源配合专题档案"
+          },
+          "expect": {
+            "contains": [
+              "VDD0V8_DDR",
+              "共用电源平面",
+              "短期",
+              "70",
+              "140"
+            ],
+            "notices": [
+              "UNVERIFIED",
+              "NEEDS_REVIEW"
+            ]
+          }
+        },
+        {
+          "name": "read_raw_source_file",
+          "arguments": {
+            "file_path_or_url": "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md",
+            "start_line": 356,
+            "end_line": 377
+          },
+          "expect": {
+            "contains": [
+              "合并供电"
+            ],
+            "source_file": "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md",
+            "reference_excerpt_sha256": "9607c58bd627053c15df2ea45a1a68415c8d0f4f00c7d29ef8d631bd693bfa64"
+          }
+        }
+      ],
+      "actual": [
+        {
+          "tool": "read_knowledge_atom",
+          "arguments": {
+            "atom_name": "SpacemiT生态板卡与PMIC电源配合专题档案"
+          },
+          "mode": "current index",
+          "python_worker_equal": true,
+          "matched_evidence": [
+            "VDD0V8_DDR",
+            "共用电源平面",
+            "短期",
+            "70",
+            "140"
+          ],
+          "notice_codes": [
+            "UNVERIFIED",
+            "NEEDS_REVIEW",
+            "GENERATION_BOUNDARY"
+          ],
+          "empty": false,
+          "response_sha256": "a4e86079c8a11828e753bb8369170f2db44e83f1584be7ec15f8e217ab5fb3d0",
+          "metadata": {
+            "freshness": "current",
+            "verification_status": "unverified",
+            "status": "needs_review",
+            "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780"
+          }
+        },
+        {
+          "tool": "read_raw_source_file",
+          "arguments": {
+            "file_path_or_url": "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md",
+            "start_line": 356,
+            "end_line": 377
+          },
+          "mode": "current index",
+          "python_worker_equal": true,
+          "matched_evidence": [
+            "合并供电"
+          ],
+          "notice_codes": [],
+          "empty": false,
+          "response_sha256": "ee0dbd91f4a273e727cc18d284fbd479da60f72b362d822147b8a93fac05819c",
+          "metadata": {
+            "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+            "start_line": 356,
+            "end_line": 377
+          }
+        }
+      ],
+      "failures": [],
+      "tool_calls_per_backend": 2,
+      "passed": true
+    },
+    {
+      "id": "B08",
+      "question": "撤回K3热设计后，能否把0.23°C/W当θJC并保证PL1=15W？",
+      "domain": "hardware_schematic_design",
+      "product_version": "K3 数据手册5.3；历史热设计文档已撤回",
+      "reference_answer": "不能；手册0.23°C/W带散热盖但未标热阻类型。历史θJC1.2、PL1/PL2条件未定位，保留撤回与未知，不能用于定量散热承诺。",
+      "citations": [
+        {
+          "path": "Sources/docs-chip/zh/key_stone/k3/k3_docs/k3_ds.md",
+          "commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+          "start_line": 2647,
+          "end_line": 2672,
+          "excerpt_sha256": "37515e923e827a02a6a89141eb38e36cc02604b6e8e178568c8e9bb9def82a43"
+        }
+      ],
+      "calls": [
+        {
+          "name": "read_knowledge_atom",
+          "arguments": {
+            "atom_name": "K3热设计与散热专题档案"
+          },
+          "expect": {
+            "contains": [
+              "0.23",
+              "未注明其热阻类型",
+              "15W PL1",
+              "撤回"
+            ],
+            "notices": [
+              "UNVERIFIED",
+              "NEEDS_REVIEW"
+            ]
+          }
+        },
+        {
+          "name": "read_raw_source_file",
+          "arguments": {
+            "file_path_or_url": "Sources/docs-chip/zh/key_stone/k3/k3_docs/k3_ds.md",
+            "start_line": 2647,
+            "end_line": 2672
+          },
+          "expect": {
+            "contains": [
+              "0.23"
+            ],
+            "source_file": "Sources/docs-chip/zh/key_stone/k3/k3_docs/k3_ds.md",
+            "reference_excerpt_sha256": "37515e923e827a02a6a89141eb38e36cc02604b6e8e178568c8e9bb9def82a43"
+          }
+        }
+      ],
+      "actual": [
+        {
+          "tool": "read_knowledge_atom",
+          "arguments": {
+            "atom_name": "K3热设计与散热专题档案"
+          },
+          "mode": "current index",
+          "python_worker_equal": true,
+          "matched_evidence": [
+            "0.23",
+            "未注明其热阻类型",
+            "15W PL1",
+            "撤回"
+          ],
+          "notice_codes": [
+            "UNVERIFIED",
+            "NEEDS_REVIEW",
+            "GENERATION_BOUNDARY"
+          ],
+          "empty": false,
+          "response_sha256": "6a5f9545f11e009007ce5d1a2d676211aacd17c36d60cb627c3c2a4bc7a28e63",
+          "metadata": {
+            "freshness": "current",
+            "verification_status": "unverified",
+            "status": "needs_review",
+            "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc"
+          }
+        },
+        {
+          "tool": "read_raw_source_file",
+          "arguments": {
+            "file_path_or_url": "Sources/docs-chip/zh/key_stone/k3/k3_docs/k3_ds.md",
+            "start_line": 2647,
+            "end_line": 2672
+          },
+          "mode": "current index",
+          "python_worker_equal": true,
+          "matched_evidence": [
+            "0.23"
+          ],
+          "notice_codes": [],
+          "empty": false,
+          "response_sha256": "31a30d45ead2c7f83932e7aa5d5ba38c9455676b2337378794cf55b3a64672d3",
+          "metadata": {
+            "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+            "start_line": 2647,
+            "end_line": 2672
+          }
+        }
+      ],
+      "failures": [],
+      "tool_calls_per_backend": 2,
+      "passed": true
+    },
+    {
+      "id": "B09",
+      "question": "MUSE Pi 的26Pin JTAG能否照Pi Pro的40Pin接？",
+      "domain": "hardware_schematic_design",
+      "product_version": "MUSE Pi 26Pin，固定英文用户指南",
+      "reference_answer": "不能按物理Pin互抄；MUSE Pi按26Pin PRI JTAG表与3.3V域逐针核对，UART独立3Pin另查，禁止把功能GPIO号当物理Pin。",
+      "citations": [
+        {
+          "path": "Sources/docs-product/en/k1_series/k1_muse_pi/pi_user_guide.md",
+          "commit": "bc640755145625cc20745f49861f82588863fca3",
+          "start_line": 590,
+          "end_line": 645,
+          "excerpt_sha256": "038cda48f5b623247e17362e48f86e22821e9d3687ebc843cda0ec5c74ae8104"
+        }
+      ],
+      "calls": [
+        {
+          "name": "read_knowledge_atom",
+          "arguments": {
+            "atom_name": "MUSE_Pi_26Pin_IOMAP管脚映射专题"
+          },
+          "expect": {
+            "contains": [
+              "26",
+              "JTAG",
+              "3.3V"
+            ],
+            "notices": [
+              "UNVERIFIED",
+              "NEEDS_REVIEW"
+            ]
+          }
+        },
+        {
+          "name": "read_raw_source_file",
+          "arguments": {
+            "file_path_or_url": "Sources/docs-product/en/k1_series/k1_muse_pi/pi_user_guide.md",
+            "start_line": 590,
+            "end_line": 645
+          },
+          "expect": {
+            "contains": [
+              "JTAG",
+              "UART0",
+              "GPIO68"
+            ],
+            "source_file": "Sources/docs-product/en/k1_series/k1_muse_pi/pi_user_guide.md",
+            "reference_excerpt_sha256": "038cda48f5b623247e17362e48f86e22821e9d3687ebc843cda0ec5c74ae8104"
+          }
+        }
+      ],
+      "actual": [
+        {
+          "tool": "read_knowledge_atom",
+          "arguments": {
+            "atom_name": "MUSE_Pi_26Pin_IOMAP管脚映射专题"
+          },
+          "mode": "current index",
+          "python_worker_equal": true,
+          "matched_evidence": [
+            "26",
+            "JTAG",
+            "3.3V"
+          ],
+          "notice_codes": [
+            "UNVERIFIED",
+            "NEEDS_REVIEW",
+            "GENERATION_BOUNDARY"
+          ],
+          "empty": false,
+          "response_sha256": "cc1bc3d4969d6830310db85e2a15f540331b64ebe3ccd75b79ad22c4907f5797",
+          "metadata": {
+            "freshness": "current",
+            "verification_status": "unverified",
+            "status": "needs_review",
+            "source_commit": "bc640755145625cc20745f49861f82588863fca3"
+          }
+        },
+        {
+          "tool": "read_raw_source_file",
+          "arguments": {
+            "file_path_or_url": "Sources/docs-product/en/k1_series/k1_muse_pi/pi_user_guide.md",
+            "start_line": 590,
+            "end_line": 645
+          },
+          "mode": "current index",
+          "python_worker_equal": true,
+          "matched_evidence": [
+            "JTAG",
+            "UART0",
+            "GPIO68"
+          ],
+          "notice_codes": [],
+          "empty": false,
+          "response_sha256": "858c6f6e62c353a94f8fd73bf65624cc50606cd2ec0d5313bef564a69f95976d",
+          "metadata": {
+            "source_commit": "bc640755145625cc20745f49861f82588863fca3",
+            "start_line": 590,
+            "end_line": 645
+          }
+        }
+      ],
+      "failures": [],
+      "tool_calls_per_backend": 2,
+      "passed": true
+    },
+    {
+      "id": "B10",
+      "question": "Pi Pro 40Pin的I2C3时序能从管脚表直接确定吗？",
+      "domain": "hardware_schematic_design",
+      "product_version": "MUSE Pi Pro固定用户指南7.3",
+      "reference_answer": "Pin27为SDA、Pin28为SCL；源只有排针表与图，缺板级时序和测试条件。不能从3.3V信号名推定上升/保持时间，需官方资料或实测。",
+      "citations": [
+        {
+          "path": "Sources/docs-product/zh/k1_series/k1_muse_pi_pro/pi_pro_user_guide.md",
+          "commit": "bc640755145625cc20745f49861f82588863fca3",
+          "start_line": 395,
+          "end_line": 438,
+          "excerpt_sha256": "5190055a6191b490132f4216f88c07d3f0d3f414e9ee964f7b092a1c41e5394b"
+        }
+      ],
+      "calls": [
+        {
+          "name": "read_knowledge_atom",
+          "arguments": {
+            "atom_name": "MUSE_Pi_Pro_40Pin_IOMAP管脚映射专题"
+          },
+          "expect": {
+            "contains": [
+              "Pin 27",
+              "Pin 28",
+              "时序资料缺口",
+              "建立/保持时间"
+            ],
+            "notices": [
+              "UNVERIFIED",
+              "NEEDS_REVIEW"
+            ]
+          }
+        },
+        {
+          "name": "read_raw_source_file",
+          "arguments": {
+            "file_path_or_url": "Sources/docs-product/zh/k1_series/k1_muse_pi_pro/pi_pro_user_guide.md",
+            "start_line": 395,
+            "end_line": 438
+          },
+          "expect": {
+            "contains": [
+              "AP_I2C3_SDA_3V3",
+              "AP_I2C3_SCL_3V3"
+            ],
+            "source_file": "Sources/docs-product/zh/k1_series/k1_muse_pi_pro/pi_pro_user_guide.md",
+            "reference_excerpt_sha256": "5190055a6191b490132f4216f88c07d3f0d3f414e9ee964f7b092a1c41e5394b"
+          }
+        }
+      ],
+      "actual": [
+        {
+          "tool": "read_knowledge_atom",
+          "arguments": {
+            "atom_name": "MUSE_Pi_Pro_40Pin_IOMAP管脚映射专题"
+          },
+          "mode": "current index",
+          "python_worker_equal": true,
+          "matched_evidence": [
+            "Pin 27",
+            "Pin 28",
+            "时序资料缺口",
+            "建立/保持时间"
+          ],
+          "notice_codes": [
+            "UNVERIFIED",
+            "NEEDS_REVIEW",
+            "GENERATION_BOUNDARY"
+          ],
+          "empty": false,
+          "response_sha256": "f6df595595ac6f76b4c1de588359658b4c626741424768adfbc4816cd921d060",
+          "metadata": {
+            "freshness": "current",
+            "verification_status": "unverified",
+            "status": "needs_review",
+            "source_commit": "bc640755145625cc20745f49861f82588863fca3"
+          }
+        },
+        {
+          "tool": "read_raw_source_file",
+          "arguments": {
+            "file_path_or_url": "Sources/docs-product/zh/k1_series/k1_muse_pi_pro/pi_pro_user_guide.md",
+            "start_line": 395,
+            "end_line": 438
+          },
+          "mode": "current index",
+          "python_worker_equal": true,
+          "matched_evidence": [
+            "AP_I2C3_SDA_3V3",
+            "AP_I2C3_SCL_3V3"
+          ],
+          "notice_codes": [],
+          "empty": false,
+          "response_sha256": "6dfe735e2feb1230ea4e0a4682187a99939c560e1437f3d80ed490bcc4d12b66",
+          "metadata": {
+            "source_commit": "bc640755145625cc20745f49861f82588863fca3",
+            "start_line": 395,
+            "end_line": 438
+          }
+        }
+      ],
+      "failures": [],
+      "tool_calls_per_backend": 2,
+      "passed": true
+    },
+    {
+      "id": "B11",
+      "question": "K3 的USB3与PCIe能按全部独立接口同时使用吗？",
+      "domain": "hardware_schematic_design",
+      "product_version": "K3指南1.4.1，与K1复用规则分开",
+      "reference_answer": "不能；4个USB3中3个与PCIe Combo、4个USB2与USB3 Combo；按控制器和PHY组合及板级引出核对。",
+      "citations": [
+        {
+          "path": "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md",
+          "commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+          "start_line": 463,
+          "end_line": 503,
+          "excerpt_sha256": "052697b048fe7f034f10e848832aa2edaf1cd6706e454cb35ac6e0a9f03b88b4"
+        }
+      ],
+      "calls": [
+        {
+          "name": "read_knowledge_atom",
+          "arguments": {
+            "atom_name": "K1_K3高速外设接口专题档案"
+          },
+          "expect": {
+            "contains": [
+              "3 个与 PCIe 复用",
+              "不能按全部接口独立同时可用"
+            ],
+            "notices": [
+              "UNVERIFIED",
+              "NEEDS_REVIEW"
+            ]
+          }
+        },
+        {
+          "name": "read_raw_source_file",
+          "arguments": {
+            "file_path_or_url": "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md",
+            "start_line": 463,
+            "end_line": 503
+          },
+          "expect": {
+            "contains": [
+              "3 个 USB3.0 与 PCIe Combo",
+              "4 个 USB2.0"
+            ],
+            "source_file": "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md",
+            "reference_excerpt_sha256": "052697b048fe7f034f10e848832aa2edaf1cd6706e454cb35ac6e0a9f03b88b4"
+          }
+        }
+      ],
+      "actual": [
+        {
+          "tool": "read_knowledge_atom",
+          "arguments": {
+            "atom_name": "K1_K3高速外设接口专题档案"
+          },
+          "mode": "current index",
+          "python_worker_equal": true,
+          "matched_evidence": [
+            "3 个与 PCIe 复用",
+            "不能按全部接口独立同时可用"
+          ],
+          "notice_codes": [
+            "UNVERIFIED",
+            "NEEDS_REVIEW",
+            "GENERATION_BOUNDARY"
+          ],
+          "empty": false,
+          "response_sha256": "26ae1fd21da29c023b2a29bda58e50a0c72bbc37f606cd7add9ade44a9a503db",
+          "metadata": {
+            "freshness": "current",
+            "verification_status": "unverified",
+            "status": "needs_review",
+            "source_commit": "163a8fccf8e7071f3177753d2e86e482e97970fe"
+          }
+        },
+        {
+          "tool": "read_raw_source_file",
+          "arguments": {
+            "file_path_or_url": "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md",
+            "start_line": 463,
+            "end_line": 503
+          },
+          "mode": "current index",
+          "python_worker_equal": true,
+          "matched_evidence": [
+            "3 个 USB3.0 与 PCIe Combo",
+            "4 个 USB2.0"
+          ],
+          "notice_codes": [],
+          "empty": false,
+          "response_sha256": "aa9a8ae59a33ecb6d5fca34c2e1f28b25c64483cb777187d8914839c82231ffe",
+          "metadata": {
+            "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+            "start_line": 463,
+            "end_line": 503
+          }
+        }
+      ],
+      "failures": [],
+      "tool_calls_per_backend": 2,
+      "passed": true
+    },
+    {
+      "id": "B12",
+      "question": "历史stale的K1调试节点能否直接给接线结论？",
+      "domain": "toolchain_debug_tools",
+      "product_version": "7856b16历史节点回放+当前固定K1 FAQ",
+      "reference_answer": "先遵循STALE提示核对固定原文，FAQ调试串口为3.3V/115200；具体板卡UART/JTAG引脚和占用另核对。stale消失不等于终审。",
+      "citations": [
+        {
+          "path": "Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_faq.md",
+          "commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+          "start_line": 15,
+          "end_line": 37,
+          "excerpt_sha256": "ccf99644e9db49d47cd3b01c8883db4e58293e03f1e71ce618af19946f9ff0e6"
+        }
+      ],
+      "calls": [
+        {
+          "name": "get_evidence_fact",
+          "arguments": {
+            "spec_name": "k1_hardware_debug_parameters"
+          },
+          "expect": {
+            "contains": [
+              "115200"
+            ],
+            "notices": [
+              "STALE",
+              "UNVERIFIED",
+              "NEEDS_REVIEW"
+            ],
+            "metadata": {
+              "freshness": "stale"
+            }
+          },
+          "replay_node": "k1_hardware_debug_parameters"
+        },
+        {
+          "name": "read_raw_source_file",
+          "arguments": {
+            "file_path_or_url": "Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_faq.md",
+            "start_line": 15,
+            "end_line": 37
+          },
+          "expect": {
+            "contains": [
+              "115200",
+              "3.3"
+            ],
+            "source_file": "Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_faq.md",
+            "reference_excerpt_sha256": "ccf99644e9db49d47cd3b01c8883db4e58293e03f1e71ce618af19946f9ff0e6"
+          }
+        }
+      ],
+      "actual": [
+        {
+          "tool": "get_evidence_fact",
+          "arguments": {
+            "spec_name": "k1_hardware_debug_parameters"
+          },
+          "mode": "historical replay",
+          "python_worker_equal": true,
+          "matched_evidence": [
+            "115200"
+          ],
+          "notice_codes": [
+            "STALE",
+            "UNVERIFIED",
+            "NEEDS_REVIEW",
+            "EXTERNAL_USE_RESTRICTED"
+          ],
+          "empty": false,
+          "response_sha256": "8c59c269f8ea30d24ffa88446d5b01aef11b839233641fabac41f37d6bf52b43",
+          "metadata": {
+            "freshness": "stale",
+            "verification_status": "unverified",
+            "status": "needs_review",
+            "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc"
+          }
+        },
+        {
+          "tool": "read_raw_source_file",
+          "arguments": {
+            "file_path_or_url": "Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_faq.md",
+            "start_line": 15,
+            "end_line": 37
+          },
+          "mode": "current index",
+          "python_worker_equal": true,
+          "matched_evidence": [
+            "115200",
+            "3.3"
+          ],
+          "notice_codes": [],
+          "empty": false,
+          "response_sha256": "3814cdf1a50117e219909d5b6b9a22755465d1c03da6cad358ac2bf0cee6af0e",
+          "metadata": {
+            "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+            "start_line": 15,
+            "end_line": 37
+          }
+        }
+      ],
+      "failures": [],
+      "tool_calls_per_backend": 2,
+      "passed": true
+    },
+    {
+      "id": "B13",
+      "question": "Buildroot如何配置内核/U-Boot、选方案并区分K1/K3最终SD镜像名？",
+      "domain": "bsp_kernel_drivers",
+      "product_version": "K1 k1-bl-v2.2.y / K3 k3-br-v1.0.y",
+      "reference_answer": "按defconfig与make help，内核/U-Boot配置按对应方案；K1最终buildroot-k1_v2-sdcard.img，K3时间戳镜像以日志为准，不能固定菜单编号。",
+      "citations": [
+        {
+          "path": "Sources/docs-buildroot/zh/k1_buildroot/source.md",
+          "commit": "163a8fccf8e7071f3177753d2e86e482e97970fe",
+          "start_line": 163,
+          "end_line": 305,
+          "excerpt_sha256": "c2bcb0e6fdbcd23240ddaa49bcfe2b6970eeae56bc8c746de3427f4f5cf8d86e"
+        },
+        {
+          "path": "Sources/docs-buildroot/zh/k3_buildroot/source.md",
+          "commit": "163a8fccf8e7071f3177753d2e86e482e97970fe",
+          "start_line": 201,
+          "end_line": 287,
+          "excerpt_sha256": "f0e531274a292379d4224c50b17a6df866f5ecc92208ca44ab48bfbfac2f9fe1"
+        }
+      ],
+      "calls": [
+        {
+          "name": "get_developer_journey",
+          "arguments": {
+            "board_or_task": "Buildroot_SDK_快速编译与镜像生成向导"
+          },
+          "expect": {
+            "contains": [
+              "k1-bl-v2.2.y.xml",
+              "k3-br-v1.0.y.xml",
+              "buildroot-k1_v2-sdcard.img",
+              "make linux-menuconfig",
+              "make uboot-menuconfig",
+              "重新构建和打包"
+            ],
+            "notices": [
+              "UNVERIFIED",
+              "NEEDS_REVIEW"
+            ]
+          }
+        },
+        {
+          "name": "read_raw_source_file",
+          "arguments": {
+            "file_path_or_url": "Sources/docs-buildroot/zh/k1_buildroot/source.md",
+            "start_line": 163,
+            "end_line": 305
+          },
+          "expect": {
+            "contains": [
+              "buildroot-k1_v2-sdcard.img"
+            ],
+            "source_file": "Sources/docs-buildroot/zh/k1_buildroot/source.md",
+            "reference_excerpt_sha256": "c2bcb0e6fdbcd23240ddaa49bcfe2b6970eeae56bc8c746de3427f4f5cf8d86e"
+          }
+        },
+        {
+          "name": "read_raw_source_file",
+          "arguments": {
+            "file_path_or_url": "Sources/docs-buildroot/zh/k3_buildroot/source.md",
+            "start_line": 201,
+            "end_line": 287
+          },
+          "expect": {
+            "contains": [
+              "Buildroot-k3-20260425142457-sdcard.img"
+            ],
+            "source_file": "Sources/docs-buildroot/zh/k3_buildroot/source.md",
+            "reference_excerpt_sha256": "f0e531274a292379d4224c50b17a6df866f5ecc92208ca44ab48bfbfac2f9fe1"
+          }
+        }
+      ],
+      "actual": [
+        {
+          "tool": "get_developer_journey",
+          "arguments": {
+            "board_or_task": "Buildroot_SDK_快速编译与镜像生成向导"
+          },
+          "mode": "current index",
+          "python_worker_equal": true,
+          "matched_evidence": [
+            "k1-bl-v2.2.y.xml",
+            "k3-br-v1.0.y.xml",
+            "buildroot-k1_v2-sdcard.img",
+            "make linux-menuconfig",
+            "make uboot-menuconfig",
+            "重新构建和打包"
+          ],
+          "notice_codes": [
+            "UNVERIFIED",
+            "NEEDS_REVIEW"
+          ],
+          "empty": false,
+          "response_sha256": "5ca2c663cad0e5067d246115ae7c2c617f1f99c3c80b1b16493e8ec3043b53cd",
+          "metadata": {
+            "freshness": "current",
+            "verification_status": "unverified",
+            "status": "needs_review",
+            "source_commit": "163a8fccf8e7071f3177753d2e86e482e97970fe"
+          }
+        },
+        {
+          "tool": "read_raw_source_file",
+          "arguments": {
+            "file_path_or_url": "Sources/docs-buildroot/zh/k1_buildroot/source.md",
+            "start_line": 163,
+            "end_line": 305
+          },
+          "mode": "current index",
+          "python_worker_equal": true,
+          "matched_evidence": [
+            "buildroot-k1_v2-sdcard.img"
+          ],
+          "notice_codes": [],
+          "empty": false,
+          "response_sha256": "146517dd65f4b69205359aa8e95da0daaf409563eb70d9b8c37af20cec386600",
+          "metadata": {
+            "source_commit": "163a8fccf8e7071f3177753d2e86e482e97970fe",
+            "start_line": 163,
+            "end_line": 305
+          }
+        },
+        {
+          "tool": "read_raw_source_file",
+          "arguments": {
+            "file_path_or_url": "Sources/docs-buildroot/zh/k3_buildroot/source.md",
+            "start_line": 201,
+            "end_line": 287
+          },
+          "mode": "current index",
+          "python_worker_equal": true,
+          "matched_evidence": [
+            "Buildroot-k3-20260425142457-sdcard.img"
+          ],
+          "notice_codes": [],
+          "empty": false,
+          "response_sha256": "30665f64647c3c1c5dc9caa4d15c1bc3f7905c1979c8e55efdd11d5868c809e7",
+          "metadata": {
+            "source_commit": "163a8fccf8e7071f3177753d2e86e482e97970fe",
+            "start_line": 201,
+            "end_line": 287
+          }
+        }
+      ],
+      "failures": [],
+      "tool_calls_per_backend": 3,
+      "passed": true
+    },
+    {
+      "id": "B14",
+      "question": "K3 SecureBoot烧eFuse后能否切回未签名镜像？",
+      "domain": "bsp_kernel_drivers",
+      "product_version": "K3 SecureBoot固定指南",
+      "reference_answer": "使能eFuse不可逆；BootROM校验FSBL证书，bank4存ROTPK hash，先在测试环境验证。不得在评测执行烧录。",
+      "citations": [
+        {
+          "path": "Sources/docs-buildroot/zh/k3_buildroot/device/secureboot.md",
+          "commit": "163a8fccf8e7071f3177753d2e86e482e97970fe",
+          "start_line": 32,
+          "end_line": 90,
+          "excerpt_sha256": "96e04ccf62263f942ec6180a95bf7c8c0e504c4b051ec963d38246392f448ac6"
+        }
+      ],
+      "calls": [
+        {
+          "name": "read_knowledge_atom",
+          "arguments": {
+            "atom_name": "K3安全启动SecureBoot开发专题档案"
+          },
+          "expect": {
+            "contains": [
+              "不可逆",
+              "Bank 4",
+              "KEY_DIR"
+            ],
+            "notices": [
+              "UNVERIFIED",
+              "NEEDS_REVIEW"
+            ]
+          }
+        },
+        {
+          "name": "read_raw_source_file",
+          "arguments": {
+            "file_path_or_url": "Sources/docs-buildroot/zh/k3_buildroot/device/secureboot.md",
+            "start_line": 32,
+            "end_line": 90
+          },
+          "expect": {
+            "contains": [
+              "不可逆",
+              "bank 4"
+            ],
+            "source_file": "Sources/docs-buildroot/zh/k3_buildroot/device/secureboot.md",
+            "reference_excerpt_sha256": "96e04ccf62263f942ec6180a95bf7c8c0e504c4b051ec963d38246392f448ac6"
+          }
+        }
+      ],
+      "actual": [
+        {
+          "tool": "read_knowledge_atom",
+          "arguments": {
+            "atom_name": "K3安全启动SecureBoot开发专题档案"
+          },
+          "mode": "current index",
+          "python_worker_equal": true,
+          "matched_evidence": [
+            "不可逆",
+            "Bank 4",
+            "KEY_DIR"
+          ],
+          "notice_codes": [
+            "UNVERIFIED",
+            "NEEDS_REVIEW"
+          ],
+          "empty": false,
+          "response_sha256": "12ff01d3db5bdbccadea373255e5e5952d49a8ee25e222b71ee9809f01fe091f",
+          "metadata": {
+            "freshness": "current",
+            "verification_status": "unverified",
+            "status": "needs_review",
+            "source_commit": "163a8fccf8e7071f3177753d2e86e482e97970fe"
+          }
+        },
+        {
+          "tool": "read_raw_source_file",
+          "arguments": {
+            "file_path_or_url": "Sources/docs-buildroot/zh/k3_buildroot/device/secureboot.md",
+            "start_line": 32,
+            "end_line": 90
+          },
+          "mode": "current index",
+          "python_worker_equal": true,
+          "matched_evidence": [
+            "不可逆",
+            "bank 4"
+          ],
+          "notice_codes": [],
+          "empty": false,
+          "response_sha256": "2b79d788a60bc1bbc9c1fb50addb1558ad0bbb278e96f9b67bcddfb66ab754e3",
+          "metadata": {
+            "source_commit": "163a8fccf8e7071f3177753d2e86e482e97970fe",
+            "start_line": 32,
+            "end_line": 90
+          }
+        }
+      ],
+      "failures": [],
+      "tool_calls_per_backend": 2,
+      "passed": true
+    },
+    {
+      "id": "B15",
+      "question": "没有直接来源的旧Muse Journey能否保证当前Bianbu包名可用？",
+      "domain": "bianbu_os_distribution",
+      "product_version": "7856b16 unknown历史回放；当前docs-ai固定包入口",
+      "reference_answer": "旧Journey的UNKNOWN须暴露覆盖缺口；核对当前llama.cpp指南安装llama.cpp-tools-spacemit，旧固件另查llama-server，不能保证每版软件源相同。",
+      "citations": [
+        {
+          "path": "Sources/docs-ai/zh/compute_stack/ai_compute_stack/llama.cpp.md",
+          "commit": "2b3894e983a295ed0278bc625867e0c132e0e259",
+          "start_line": 34,
+          "end_line": 108,
+          "excerpt_sha256": "209e401feb03fa283add26f0cadb3e7ba98c6815c8295e7292eae4e40d2613a7"
+        }
+      ],
+      "calls": [
+        {
+          "name": "get_developer_journey",
+          "arguments": {
+            "board_or_task": "Muse_Pi_开发板快速上手向导"
+          },
+          "expect": {
+            "contains": [],
+            "notices": [
+              "UNKNOWN",
+              "UNVERIFIED",
+              "NEEDS_REVIEW"
+            ],
+            "metadata": {
+              "freshness": "unknown"
+            }
+          },
+          "replay_node": "Muse_Pi_开发板快速上手向导"
+        },
+        {
+          "name": "get_developer_journey",
+          "arguments": {
+            "board_or_task": "Muse_Pi_开发板快速上手向导"
+          },
+          "expect": {
+            "contains": [
+              "llama.cpp-tools-spacemit",
+              "旧固件"
+            ],
+            "notices": [
+              "UNVERIFIED",
+              "NEEDS_REVIEW"
+            ]
+          }
+        },
+        {
+          "name": "read_raw_source_file",
+          "arguments": {
+            "file_path_or_url": "Sources/docs-ai/zh/compute_stack/ai_compute_stack/llama.cpp.md",
+            "start_line": 34,
+            "end_line": 108
+          },
+          "expect": {
+            "contains": [
+              "llama.cpp-tools-spacemit"
+            ],
+            "source_file": "Sources/docs-ai/zh/compute_stack/ai_compute_stack/llama.cpp.md",
+            "reference_excerpt_sha256": "209e401feb03fa283add26f0cadb3e7ba98c6815c8295e7292eae4e40d2613a7"
+          }
+        }
+      ],
+      "actual": [
+        {
+          "tool": "get_developer_journey",
+          "arguments": {
+            "board_or_task": "Muse_Pi_开发板快速上手向导"
+          },
+          "mode": "historical replay",
+          "python_worker_equal": true,
+          "matched_evidence": [],
+          "notice_codes": [
+            "UNKNOWN",
+            "UNVERIFIED",
+            "NEEDS_REVIEW",
+            "GENERATION_BOUNDARY"
+          ],
+          "empty": false,
+          "response_sha256": "b0a266fce15b8248971ada1e0b88c24d3b66bee9ac11a8c4c0f1f669f60a47f8",
+          "metadata": {
+            "freshness": "unknown",
+            "status": "needs_review"
+          }
+        },
+        {
+          "tool": "get_developer_journey",
+          "arguments": {
+            "board_or_task": "Muse_Pi_开发板快速上手向导"
+          },
+          "mode": "current index",
+          "python_worker_equal": true,
+          "matched_evidence": [
+            "llama.cpp-tools-spacemit",
+            "旧固件"
+          ],
+          "notice_codes": [
+            "UNVERIFIED",
+            "NEEDS_REVIEW",
+            "GENERATION_BOUNDARY"
+          ],
+          "empty": false,
+          "response_sha256": "0f97b5456f22a0471783b12ee41f9e3b13ec963acc13c5e88f9eb61d2cf1783d",
+          "metadata": {
+            "freshness": "current",
+            "verification_status": "unverified",
+            "status": "needs_review",
+            "source_commit": "bc640755145625cc20745f49861f82588863fca3"
+          }
+        },
+        {
+          "tool": "read_raw_source_file",
+          "arguments": {
+            "file_path_or_url": "Sources/docs-ai/zh/compute_stack/ai_compute_stack/llama.cpp.md",
+            "start_line": 34,
+            "end_line": 108
+          },
+          "mode": "current index",
+          "python_worker_equal": true,
+          "matched_evidence": [
+            "llama.cpp-tools-spacemit"
+          ],
+          "notice_codes": [],
+          "empty": false,
+          "response_sha256": "a8ed298062875f4930684552e1bed1be3101d1d03beae0a7c40ca2866e7b4b98",
+          "metadata": {
+            "source_commit": "2b3894e983a295ed0278bc625867e0c132e0e259",
+            "start_line": 34,
+            "end_line": 108
+          }
+        }
+      ],
+      "failures": [],
+      "tool_calls_per_backend": 3,
+      "passed": true
+    },
+    {
+      "id": "B16",
+      "question": "K1新Bianbu是否都能用sysfs GPIO；libgpiod版本矩阵是什么？",
+      "domain": "bianbu_os_distribution",
+      "product_version": "K1 FAQ示例；具体Bianbu/内核/libgpiod版本未给",
+      "reference_answer": "仅有Kernel sysfs GPIO122与U-Boot gpio set116示例；未给发行版/libgpiod1.x/2.x矩阵，诚实未知。确认版本、chip/line、复用和电平，不猜gpioset参数。",
+      "citations": [
+        {
+          "path": "Sources/docs-chip/zh/key_stone/k1/k1_sw/k1_sw_faq.md",
+          "commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+          "start_line": 952,
+          "end_line": 982,
+          "excerpt_sha256": "9b2e5a49c273363a72341abb59a32f3bbb2cce960a63cabe58d20892a815bb29"
+        }
+      ],
+      "calls": [
+        {
+          "name": "read_knowledge_atom",
+          "arguments": {
+            "atom_name": "K1软件开发与系统集成FAQ专题档案"
+          },
+          "expect": {
+            "contains": [
+              "GPIO122",
+              "gpio set 116",
+              "没有给出各 Bianbu 发行版与 libgpiod",
+              "不能猜测工具参数"
+            ],
+            "notices": [
+              "UNVERIFIED",
+              "NEEDS_REVIEW"
+            ]
+          }
+        },
+        {
+          "name": "read_raw_source_file",
+          "arguments": {
+            "file_path_or_url": "Sources/docs-chip/zh/key_stone/k1/k1_sw/k1_sw_faq.md",
+            "start_line": 952,
+            "end_line": 982
+          },
+          "expect": {
+            "contains": [
+              "gpio set 116",
+              "gpio122/value"
+            ],
+            "source_file": "Sources/docs-chip/zh/key_stone/k1/k1_sw/k1_sw_faq.md",
+            "reference_excerpt_sha256": "9b2e5a49c273363a72341abb59a32f3bbb2cce960a63cabe58d20892a815bb29"
+          }
+        }
+      ],
+      "actual": [
+        {
+          "tool": "read_knowledge_atom",
+          "arguments": {
+            "atom_name": "K1软件开发与系统集成FAQ专题档案"
+          },
+          "mode": "current index",
+          "python_worker_equal": true,
+          "matched_evidence": [
+            "GPIO122",
+            "gpio set 116",
+            "没有给出各 Bianbu 发行版与 libgpiod",
+            "不能猜测工具参数"
+          ],
+          "notice_codes": [
+            "UNVERIFIED",
+            "NEEDS_REVIEW"
+          ],
+          "empty": false,
+          "response_sha256": "59343a0d7a04ca7fd27c292f9fafa70629764f5640853cfadc60fbc54c4bd407",
+          "metadata": {
+            "freshness": "current",
+            "verification_status": "unverified",
+            "status": "needs_review",
+            "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84"
+          }
+        },
+        {
+          "tool": "read_raw_source_file",
+          "arguments": {
+            "file_path_or_url": "Sources/docs-chip/zh/key_stone/k1/k1_sw/k1_sw_faq.md",
+            "start_line": 952,
+            "end_line": 982
+          },
+          "mode": "current index",
+          "python_worker_equal": true,
+          "matched_evidence": [
+            "gpio set 116",
+            "gpio122/value"
+          ],
+          "notice_codes": [],
+          "empty": false,
+          "response_sha256": "b2a458b5cc2176935e53ba89709dabac1a15bc4ddcd30c0cc5fcc5f06a79c341",
+          "metadata": {
+            "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+            "start_line": 952,
+            "end_line": 982
+          }
+        }
+      ],
+      "failures": [],
+      "tool_calls_per_backend": 2,
+      "passed": true
+    },
+    {
+      "id": "B17",
+      "question": "XSlim当前量化CLI是什么，能把视觉ONNX路线套到所有LLM吗？",
+      "domain": "edge_ai_robotics",
+      "product_version": "docs-ai当前YOLOv8n示例 / spacemit-ort.riscv64.2.0.1",
+      "reference_answer": "用python -m xslim并准备真实校准配置，板端perf_test绑定运行库和输入；GGUF LLM走llama.cpp，不宣称全框架全算子。",
+      "citations": [
+        {
+          "path": "Sources/docs-ai/zh/compute_stack/ai_compute_stack/quick_start.md",
+          "commit": "2b3894e983a295ed0278bc625867e0c132e0e259",
+          "start_line": 1,
+          "end_line": 86,
+          "excerpt_sha256": "3c8feabb11e91f08c41a439df2456d02c9b850160a953300d33b6ec563ccfd08"
+        },
+        {
+          "path": "Sources/docs-ai/zh/compute_stack/ai_compute_stack/llama.cpp.md",
+          "commit": "2b3894e983a295ed0278bc625867e0c132e0e259",
+          "start_line": 34,
+          "end_line": 108,
+          "excerpt_sha256": "209e401feb03fa283add26f0cadb3e7ba98c6815c8295e7292eae4e40d2613a7"
+        }
+      ],
+      "calls": [
+        {
+          "name": "get_developer_journey",
+          "arguments": {
+            "board_or_task": "SpaceAI_模型量化与端侧推理快速上手向导"
+          },
+          "expect": {
+            "contains": [
+              "python -m xslim -c",
+              "spacemit-ort.riscv64.2.0.1",
+              "GGUF LLM"
+            ],
+            "notices": [
+              "UNVERIFIED",
+              "NEEDS_REVIEW"
+            ]
+          }
+        },
+        {
+          "name": "read_raw_source_file",
+          "arguments": {
+            "file_path_or_url": "Sources/docs-ai/zh/compute_stack/ai_compute_stack/quick_start.md",
+            "start_line": 1,
+            "end_line": 86
+          },
+          "expect": {
+            "contains": [
+              "python -m xslim"
+            ],
+            "source_file": "Sources/docs-ai/zh/compute_stack/ai_compute_stack/quick_start.md",
+            "reference_excerpt_sha256": "3c8feabb11e91f08c41a439df2456d02c9b850160a953300d33b6ec563ccfd08"
+          }
+        }
+      ],
+      "actual": [
+        {
+          "tool": "get_developer_journey",
+          "arguments": {
+            "board_or_task": "SpaceAI_模型量化与端侧推理快速上手向导"
+          },
+          "mode": "current index",
+          "python_worker_equal": true,
+          "matched_evidence": [
+            "python -m xslim -c",
+            "spacemit-ort.riscv64.2.0.1",
+            "GGUF LLM"
+          ],
+          "notice_codes": [
+            "UNVERIFIED",
+            "NEEDS_REVIEW",
+            "GENERATION_BOUNDARY"
+          ],
+          "empty": false,
+          "response_sha256": "cbb2130015f658b433fda3f8fe066532bf6d2a288e3439d1a71c447d42275510",
+          "metadata": {
+            "freshness": "current",
+            "verification_status": "unverified",
+            "status": "needs_review",
+            "source_commit": "2b3894e983a295ed0278bc625867e0c132e0e259"
+          }
+        },
+        {
+          "tool": "read_raw_source_file",
+          "arguments": {
+            "file_path_or_url": "Sources/docs-ai/zh/compute_stack/ai_compute_stack/quick_start.md",
+            "start_line": 1,
+            "end_line": 86
+          },
+          "mode": "current index",
+          "python_worker_equal": true,
+          "matched_evidence": [
+            "python -m xslim"
+          ],
+          "notice_codes": [],
+          "empty": false,
+          "response_sha256": "75218679044df4d776c46078891caf340b24493a175b0e84b734fcb96c381b53",
+          "metadata": {
+            "source_commit": "2b3894e983a295ed0278bc625867e0c132e0e259",
+            "start_line": 1,
+            "end_line": 86
+          }
+        }
+      ],
+      "failures": [],
+      "tool_calls_per_backend": 2,
+      "passed": true
+    },
+    {
+      "id": "B18",
+      "question": "K3 Pico统一内存是否让30B MoE无内存上限？",
+      "domain": "edge_ai_robotics",
+      "product_version": "K3 Pico，Qwen3-30B-A3B Q4_0参考",
+      "reference_answer": "仍有权重、KV cache、总容量和运行时限制；激活参数不是全部权重。先核对内存、上下文与软件版本，不把示例性能作保证。",
+      "citations": [
+        {
+          "path": "Sources/docs-ai/zh/compute_stack/ai_compute_stack/llama.cpp.md",
+          "commit": "2b3894e983a295ed0278bc625867e0c132e0e259",
+          "start_line": 34,
+          "end_line": 108,
+          "excerpt_sha256": "209e401feb03fa283add26f0cadb3e7ba98c6815c8295e7292eae4e40d2613a7"
+        },
+        {
+          "path": "Sources/docs-ai/zh/compute_stack/ai_compute_stack/modelzoo.md",
+          "commit": "2b3894e983a295ed0278bc625867e0c132e0e259",
+          "start_line": 265,
+          "end_line": 299,
+          "excerpt_sha256": "1642eb5cd1202762b04dc2ad6875e51e03f393f677d906a614070b7db729a829"
+        }
+      ],
+      "calls": [
+        {
+          "name": "get_developer_journey",
+          "arguments": {
+            "board_or_task": "K3_Pico_开发板快速上手向导"
+          },
+          "expect": {
+            "contains": [
+              "统一内存仍受总容量",
+              "KV cache"
+            ],
+            "notices": [
+              "UNVERIFIED",
+              "NEEDS_REVIEW"
+            ]
+          }
+        },
+        {
+          "name": "get_evidence_fact",
+          "arguments": {
+            "spec_name": "k3_ai_performance_data"
+          },
+          "expect": {
+            "contains": [
+              "单 token 激活约 3B",
+              "量化、上下文长度"
+            ],
+            "notices": [
+              "UNVERIFIED",
+              "NEEDS_REVIEW"
+            ]
+          }
+        }
+      ],
+      "actual": [
+        {
+          "tool": "get_developer_journey",
+          "arguments": {
+            "board_or_task": "K3_Pico_开发板快速上手向导"
+          },
+          "mode": "current index",
+          "python_worker_equal": true,
+          "matched_evidence": [
+            "统一内存仍受总容量",
+            "KV cache"
+          ],
+          "notice_codes": [
+            "UNVERIFIED",
+            "NEEDS_REVIEW",
+            "GENERATION_BOUNDARY"
+          ],
+          "empty": false,
+          "response_sha256": "8ac3ba523d6e2fe4ff4b51f6c8d93820cbda2f43579c3ba26a2174ae24509965",
+          "metadata": {
+            "freshness": "current",
+            "verification_status": "unverified",
+            "status": "needs_review",
+            "source_commit": "bc640755145625cc20745f49861f82588863fca3"
+          }
+        },
+        {
+          "tool": "get_evidence_fact",
+          "arguments": {
+            "spec_name": "k3_ai_performance_data"
+          },
+          "mode": "current index",
+          "python_worker_equal": true,
+          "matched_evidence": [
+            "单 token 激活约 3B",
+            "量化、上下文长度"
+          ],
+          "notice_codes": [
+            "UNVERIFIED",
+            "NEEDS_REVIEW",
+            "EXTERNAL_USE_RESTRICTED",
+            "GENERATION_BOUNDARY"
+          ],
+          "empty": false,
+          "response_sha256": "c2ee2c2d7a5f4f0786fd149528d32b82603a92164b93f84c58749ff2745359b5",
+          "metadata": {
+            "freshness": "current",
+            "verification_status": "unverified",
+            "status": "needs_review",
+            "source_commit": "2b3894e983a295ed0278bc625867e0c132e0e259"
+          }
+        }
+      ],
+      "failures": [],
+      "tool_calls_per_backend": 2,
+      "passed": true
+    },
+    {
+      "id": "B19",
+      "question": "K1/K3当前支持哪些ROS2版本，Lyrical已经正式支持了吗？",
+      "domain": "edge_ai_robotics",
+      "product_version": "docs-ros 808d02c；K1 Bianbu2.3.x/K3 4.0.1+",
+      "reference_answer": "Humble/Jazzy两平台支持；Lyrical仅K3计划支持。按平台软件源，多机同发行版，不保证跨版通信。",
+      "citations": [
+        {
+          "path": "Sources/docs-ros/zh/root_overview.md",
+          "commit": "808d02c1bd11cf0d4376555919bd61c90e38d853",
+          "start_line": 7,
+          "end_line": 25,
+          "excerpt_sha256": "35de9bb997e36081266ea6ea09687f59a43c3b91632c888e0d1665f548a586bb"
+        }
+      ],
+      "calls": [
+        {
+          "name": "get_evidence_fact",
+          "arguments": {
+            "spec_name": "ros2_platform_specs"
+          },
+          "expect": {
+            "contains": [
+              "Humble、Jazzy",
+              "Lyrical",
+              "计划支持",
+              "2.3.x",
+              "4.0.1"
+            ],
+            "notices": [
+              "UNVERIFIED",
+              "NEEDS_REVIEW"
+            ]
+          }
+        },
+        {
+          "name": "read_raw_source_file",
+          "arguments": {
+            "file_path_or_url": "Sources/docs-ros/zh/root_overview.md",
+            "start_line": 7,
+            "end_line": 25
+          },
+          "expect": {
+            "contains": [
+              "Lyrical（计划支持）",
+              "不保证不同发行版"
+            ],
+            "source_file": "Sources/docs-ros/zh/root_overview.md",
+            "reference_excerpt_sha256": "35de9bb997e36081266ea6ea09687f59a43c3b91632c888e0d1665f548a586bb"
+          }
+        }
+      ],
+      "actual": [
+        {
+          "tool": "get_evidence_fact",
+          "arguments": {
+            "spec_name": "ros2_platform_specs"
+          },
+          "mode": "current index",
+          "python_worker_equal": true,
+          "matched_evidence": [
+            "Humble、Jazzy",
+            "Lyrical",
+            "计划支持",
+            "2.3.x",
+            "4.0.1"
+          ],
+          "notice_codes": [
+            "UNVERIFIED",
+            "NEEDS_REVIEW",
+            "EXTERNAL_USE_RESTRICTED",
+            "GENERATION_BOUNDARY"
+          ],
+          "empty": false,
+          "response_sha256": "7b0dc2a5824d2674c8153fd5501cb93a39b10678a4d727c4029b89d64e385778",
+          "metadata": {
+            "freshness": "current",
+            "verification_status": "unverified",
+            "status": "needs_review",
+            "source_commit": "808d02c1bd11cf0d4376555919bd61c90e38d853"
+          }
+        },
+        {
+          "tool": "read_raw_source_file",
+          "arguments": {
+            "file_path_or_url": "Sources/docs-ros/zh/root_overview.md",
+            "start_line": 7,
+            "end_line": 25
+          },
+          "mode": "current index",
+          "python_worker_equal": true,
+          "matched_evidence": [
+            "Lyrical（计划支持）",
+            "不保证不同发行版"
+          ],
+          "notice_codes": [],
+          "empty": false,
+          "response_sha256": "b660838a69d623e3e505099959d655c9e72af79787946579a31ef5e8fe55a06b",
+          "metadata": {
+            "source_commit": "808d02c1bd11cf0d4376555919bd61c90e38d853",
+            "start_line": 7,
+            "end_line": 25
+          }
+        }
+      ],
+      "failures": [],
+      "tool_calls_per_backend": 2,
+      "passed": true
+    },
+    {
+      "id": "B20",
+      "question": "安装ROS-Base就能保证传感器SLAM及Reachy运动控制全栈可用吗？",
+      "domain": "edge_ai_robotics",
+      "product_version": "对应板卡/ROS发行版和Robot SDK方案，未实物测试",
+      "reference_answer": "不能；传感器、Nav2/MoveIt驱动按方案安装，Robot SDK不是ROSBase自动提供。Reachy有视觉PD跟随/语音/仿真等方案，按设备和版本验证，不将演示覆盖当实测保证。",
+      "citations": [
+        {
+          "path": "Sources/docs-ros/zh/root_overview.md",
+          "commit": "808d02c1bd11cf0d4376555919bd61c90e38d853",
+          "start_line": 7,
+          "end_line": 25,
+          "excerpt_sha256": "35de9bb997e36081266ea6ea09687f59a43c3b91632c888e0d1665f548a586bb"
+        },
+        {
+          "path": "Sources/docs-ros/zh/k3/03-参考方案/3.1-桌面机器人Reachy-mini.md",
+          "commit": "808d02c1bd11cf0d4376555919bd61c90e38d853",
+          "start_line": 7,
+          "end_line": 20,
+          "excerpt_sha256": "2b01d62a4215cc5fdb9e2670281e31862ba1e9ef2653e27bf1b36ff5e3632729"
+        }
+      ],
+      "calls": [
+        {
+          "name": "get_developer_journey",
+          "arguments": {
+            "board_or_task": "ROS2_机器人与具身智能快速上手向导"
+          },
+          "expect": {
+            "contains": [
+              "Nav2",
+              "不是 ROS-Base 自动具备",
+              "未做机器人实物测试"
+            ],
+            "notices": [
+              "UNVERIFIED",
+              "NEEDS_REVIEW"
+            ]
+          }
+        },
+        {
+          "name": "read_raw_source_file",
+          "arguments": {
+            "file_path_or_url": "Sources/docs-ros/zh/k3/03-参考方案/3.1-桌面机器人Reachy-mini.md",
+            "start_line": 7,
+            "end_line": 20
+          },
+          "expect": {
+            "contains": [
+              "PD",
+              "仿真控制"
+            ],
+            "source_file": "Sources/docs-ros/zh/k3/03-参考方案/3.1-桌面机器人Reachy-mini.md",
+            "reference_excerpt_sha256": "2b01d62a4215cc5fdb9e2670281e31862ba1e9ef2653e27bf1b36ff5e3632729"
+          }
+        }
+      ],
+      "actual": [
+        {
+          "tool": "get_developer_journey",
+          "arguments": {
+            "board_or_task": "ROS2_机器人与具身智能快速上手向导"
+          },
+          "mode": "current index",
+          "python_worker_equal": true,
+          "matched_evidence": [
+            "Nav2",
+            "不是 ROS-Base 自动具备",
+            "未做机器人实物测试"
+          ],
+          "notice_codes": [
+            "UNVERIFIED",
+            "NEEDS_REVIEW",
+            "GENERATION_BOUNDARY"
+          ],
+          "empty": false,
+          "response_sha256": "9d7a727cab44b21e8929bf316f81ae11f2aa26b707bad1a82ea8e9b5d2d0ecfa",
+          "metadata": {
+            "freshness": "current",
+            "verification_status": "unverified",
+            "status": "needs_review",
+            "source_commit": "808d02c1bd11cf0d4376555919bd61c90e38d853"
+          }
+        },
+        {
+          "tool": "read_raw_source_file",
+          "arguments": {
+            "file_path_or_url": "Sources/docs-ros/zh/k3/03-参考方案/3.1-桌面机器人Reachy-mini.md",
+            "start_line": 7,
+            "end_line": 20
+          },
+          "mode": "current index",
+          "python_worker_equal": true,
+          "matched_evidence": [
+            "PD",
+            "仿真控制"
+          ],
+          "notice_codes": [],
+          "empty": false,
+          "response_sha256": "29681ca7c687dfe8ea9e8bd3c6224edfa58705fe5534cb2719ae3d7f7a3df44c",
+          "metadata": {
+            "source_commit": "808d02c1bd11cf0d4376555919bd61c90e38d853",
+            "start_line": 7,
+            "end_line": 20
+          }
+        }
+      ],
+      "failures": [],
+      "tool_calls_per_backend": 2,
+      "passed": true
+    }
+  ]
+}

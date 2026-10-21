@@ -1,0 +1,143 @@
+[
+  {
+    "snapshot": "baseline",
+    "call": {
+      "name": "search_wiki",
+      "arguments": {
+        "query": "P1 P3 PMIC"
+      }
+    },
+    "result": []
+  },
+  {
+    "snapshot": "reviewed",
+    "call": {
+      "name": "search_wiki",
+      "arguments": {
+        "query": "P1 P3 PMIC"
+      }
+    },
+    "result": [
+      {
+        "id": "SpacemiT生态板卡与PMIC电源配合专题档案",
+        "type": "knowledge_atom",
+        "status": "needs_review",
+        "verification_status": "unverified",
+        "source_file": "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md",
+        "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+        "source_section": "1.2.5 CPU 电源设计；1.2.6 DDR 电源设计",
+        "source_resolution": "partial",
+        "source_checked_at": "2026-10-21",
+        "source_related_file": [
+          "Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_faq.md",
+          "Sources/docs-chip/zh/power_stone/p1/p1_docs/root_overview.md",
+          "Sources/docs-chip/zh/power_stone/p1/p1_hw/p1_pcb_guide.md",
+          "Sources/docs-chip/zh/power_stone/p3/p3_docs/root_overview.md",
+          "Sources/docs-product/zh/k1_series/k1_muse_pi/root_overview.md",
+          "Sources/docs-product/zh/k1_series/k1_muse_pi_pro/root_overview.md",
+          "Sources/docs-chip/zh/power_stone/p1/p1_docs/p1_ds.md",
+          "Sources/docs-chip/zh/power_stone/p1s/p1s_docs/p1s_ds.md",
+          "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_buglist.md"
+        ],
+        "source_related_commit": [
+          "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+          "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "8c851807f2c54e8ba54d568b268100ca727d0777",
+          "8c851807f2c54e8ba54d568b268100ca727d0777",
+          "1ea15a766287024a5bb7b548850826e3525a80dc",
+          "1ea15a766287024a5bb7b548850826e3525a80dc",
+          "2525ee3b68e0f4864f1bf12c8a59df040bf27e84"
+        ],
+        "freshness": "current",
+        "stale_paths": [],
+        "unknown_paths": [],
+        "checked_against_commit": {
+          "docs-chip": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+          "docs-product": "bc640755145625cc20745f49861f82588863fca3"
+        },
+        "source_freshness": [
+          {
+            "source_file": "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md",
+            "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+            "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+            "freshness": "current",
+            "reason": "source_file_unchanged"
+          },
+          {
+            "source_file": "Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_faq.md",
+            "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+            "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+            "freshness": "current",
+            "reason": "source_file_unchanged"
+          },
+          {
+            "source_file": "Sources/docs-chip/zh/power_stone/p1/p1_docs/root_overview.md",
+            "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+            "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+            "freshness": "current",
+            "reason": "source_file_unchanged"
+          },
+          {
+            "source_file": "Sources/docs-chip/zh/power_stone/p1/p1_hw/p1_pcb_guide.md",
+            "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+            "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+            "freshness": "current",
+            "reason": "source_file_unchanged"
+          },
+          {
+            "source_file": "Sources/docs-chip/zh/power_stone/p3/p3_docs/root_overview.md",
+            "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+            "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+            "freshness": "current",
+            "reason": "source_file_unchanged"
+          },
+          {
+            "source_file": "Sources/docs-product/zh/k1_series/k1_muse_pi/root_overview.md",
+            "source_commit": "8c851807f2c54e8ba54d568b268100ca727d0777",
+            "checked_against_commit": "bc640755145625cc20745f49861f82588863fca3",
+            "freshness": "current",
+            "reason": "source_file_unchanged"
+          },
+          {
+            "source_file": "Sources/docs-product/zh/k1_series/k1_muse_pi_pro/root_overview.md",
+            "source_commit": "8c851807f2c54e8ba54d568b268100ca727d0777",
+            "checked_against_commit": "bc640755145625cc20745f49861f82588863fca3",
+            "freshness": "current",
+            "reason": "source_file_unchanged"
+          },
+          {
+            "source_file": "Sources/docs-chip/zh/power_stone/p1/p1_docs/p1_ds.md",
+            "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc",
+            "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+            "freshness": "current",
+            "reason": "source_file_unchanged"
+          },
+          {
+            "source_file": "Sources/docs-chip/zh/power_stone/p1s/p1s_docs/p1s_ds.md",
+            "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc",
+            "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+            "freshness": "current",
+            "reason": "source_file_unchanged"
+          },
+          {
+            "source_file": "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_buglist.md",
+            "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+            "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+            "freshness": "current",
+            "reason": "source_file_unchanged"
+          }
+        ],
+        "conflicts": "旧同步稿称 X100/A100 独立供电，与官方 V1.1 合并供电修订冲突；保留勘误说明，待人工审核。",
+        "source_origin": "https://github.com/spacemit-com/docs-chip",
+        "updated": "2026-10-21",
+        "score": 8,
+        "title": "SpacemiT 生态板卡与 PMIC 电源配合专题档案",
+        "domain": "hardware_schematic_design",
+        "summary": "# SpacemiT 生态板卡与 PMIC 电源配合专题档案  > [!TIP] > **💡 工程师导读与排坑焦点**：详解 K1/P1 与 K3/P1S 动态反馈 DVFS 调压、K3 16核多相供电拓扑、DDR 电源 Buglist 勘误、P3 高性能 32A Buck 拓扑、SW/FB 布线与...",
+        "hint": "UNVERIFIED / NEEDS_REVIEW / GENERATION_BOUNDARY"
+      }
+    ]
+  }
+]

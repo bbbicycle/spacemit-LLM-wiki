@@ -3,103 +3,57 @@ type: developer_journey
 title: "Buildroot SDK 快速编译与镜像生成向导"
 status: needs_review
 created: 2026-08-10
-updated: 2026-08-10
+updated: 2026-10-21
 aliases: [Buildroot_SDK_快速编译与镜像生成向导, Buildroot Quick Start Guide]
 domain: bsp_kernel_drivers
+source_file: "Sources/docs-buildroot/zh/k1_buildroot/source.md"
+source_commit: "163a8fccf8e7071f3177753d2e86e482e97970fe"
+source_section: "K1/K3 源码指南 开发环境/版本分支/下载代码/交叉编译/打包产物"
+source_resolution: partial
+verification_status: unverified
+source_checked_at: 2026-10-21
+source_note: "覆盖两代 manifest、容器构建、方案选择与产物名；未实际下载 SDK、编译或刷写硬件。 本轮为来源与关键步骤定向核对，未在实物执行；关联节点保留各自核验状态。"
+source_related_file: ["Sources/docs-buildroot/zh/k3_buildroot/source.md"]
+source_related_commit: ["163a8fccf8e7071f3177753d2e86e482e97970fe"]
 ---
-
 # Buildroot SDK 快速编译与镜像生成向导
 
-本上手向导提供从环境配置、源码获取、工程编译到烧录镜像生成的极简通关动线，帮助开发者快速在 SpacemiT K1 / K3 芯片与生态开发板上跑通基于 Buildroot 的 Linux 操作系统。
+先选择 K1 或 K3，使用各自的 [K1 源码指南](../Sources/docs-buildroot/zh/k1_buildroot/source.md) / [K3 源码指南](../Sources/docs-buildroot/zh/k3_buildroot/source.md)。以下示例绑定 K1 v2.2 与 K3 v1.0，不跨版本套用。
 
----
+## 1. 准备环境
 
-## 🗺️ 通关路线图
+官方推荐 Ubuntu 20.04 或更新 LTS，以及足够的内存/SSD。K1 Buildroot 2.2.7 起与 K3 SDK 默认在容器构建，按原文安装 Docker CE；选择宿主机构建时才按对应系统安装原文依赖。不要把旧版 `sudo pip3` 示例当作所有新版 Ubuntu 的通用安装方式。
 
-```mermaid
-graph LR
-    Step1[1. 环境准备] --> Step2[2. 源码与依赖同步]
-    Step2 --> Step3[3. 方案配置与编译]
-    Step3 --> Step4[4. 镜像生成与烧录]
-```
+## 2. 获取对应清单
 
----
-
-## 步骤 1：准备开发环境与安装依赖
-
-推荐使用 **Ubuntu 20.04 / 22.04 LTS**，或任何已安装 Docker CE 的 Linux 系统。
+安装 repo 并配置 GitHub SSH 后，分别在独立工作目录执行相应示例：
 
 ```bash
-# 安装基础构建依赖项
-sudo apt-get update
-sudo apt-get install -y git build-essential cpio unzip rsync file bc wget python3 python-is-python3 libncurses5-dev libssl-dev dosfstools mtools u-boot-tools flex bison python3-pip
-sudo pip3 install pyyaml
-```
-
-详细环境依赖与 Docker 容器要求请参考 [[Evidence/buildroot_bsp_specs|Buildroot 宿主机与容器依赖规格]]。
-
----
-
-## 步骤 2：使用 Repo 同步 SDK 源码
-
-获取 Google `repo` 工具并完成拉取（以 K1 v2.2 及 K3 v1.0 分支为例）：
-
-```bash
-# 1. 初始化工作目录
-mkdir ~/buildroot-sdk && cd ~/buildroot-sdk
-
-# 2. 从 GitHub 拉取 Manifest 源码清单
+# K1 v2.2
 repo init -u git@github.com:spacemit-com/manifests.git -b main -m k1-bl-v2.2.y.xml
-
-# 3. 同步全量源码
 repo sync
 repo start k1-bl-v2.2.y --all
-
-# 4. (可选) 预下载第三方依赖包加速编译
-wget -c -r -nv -np -nH -R "index.html*" http://archive.spacemit.com/buildroot/dl/
 ```
-
-源码分支与版本对应关系请查阅 [[Evidence/buildroot_bsp_specs|Repo 版本分支映射表]]。
-
----
-
-## 步骤 3：选择方案并开始交叉编译
-
-进入 SDK 根目录，使用配置菜单或快捷命令开始构建：
-
-### 方式 A：交互式选择编译（推荐首次使用）
 
 ```bash
-make envconfig
-```
-* **针对 K1 全功能开发板**：输入 `5` (`spacemit_k1_v2_defconfig`) 并回车。
-* **针对 K1 硬实时控制**：输入 `4` (`spacemit_k1_rt_defconfig`) 并回车。
-* **针对 K3 开发板**：输入 `2` (`spacemit_k3_defconfig`) 并回车。
-
-### 方式 B：无交互命令行快捷构建
-
-```bash
-# 直接编译 K1 v2 全功能方案
-make k1_v2-build
-
-# 直接编译 K3 方案
-make k3-build
+# K3 v1.0：不要复用 K1 清单
+repo init -u git@github.com:spacemit-com/manifests.git -b main -m k3-br-v1.0.y.xml
+repo sync
+repo start k3-br-v1.0.y --all
 ```
 
-更多内核 `menuconfig` 及单包重编译指令请查阅 [[Evidence/buildroot_compilation_parameters|Make 快捷编译指令表]] 与 [[Knowledge_Atoms/Buildroot_嵌入式系统定制与内核编译专题档案|Buildroot 嵌入式系统定制与内核编译专题档案]]。
+版本矩阵参见 [[Evidence/buildroot_bsp_specs]]，实际清单以所选 SDK 发布版本为准。
 
----
+## 3. 方案选择与编译
 
-## 步骤 4：镜像产物获取与烧录
+首次执行 `make envconfig`，按显示的名称选择：K1 示例 `spacemit_k1_v2_defconfig`，K3 示例 `spacemit_k3_defconfig`。菜单编号随版本变化，不能只记固定编号。支持新命令的分支可查 `make help` 后使用 `make k1_v2-build` / `make k3-build`；旧命令环境与新命令不兼容时按原文迁移。
 
-编译完成后，构建系统会自动生成刷机镜像并输出到 `output/<solution>/images/` 目录：
+内核、U-Boot、单包和打包参数参见 [[Evidence/buildroot_compilation_parameters]] 与 [[Knowledge_Atoms/Buildroot_嵌入式系统定制与内核编译专题档案]]，不要把两代快捷命令混用。
 
-1. **Titan Flasher 固件刷写**：
-   定位至 `output/k1_v2/images/buildroot-k1_v2.zip` 压缩包，使用 SpacemiT 官方 Titan Flasher 工具解压或直接连接线刷。
-2. **MicroSD 卡直接刻录**：
-   定位至 `output/k1_v2/images/sdcard.img`，在 Linux 宿主机上执行 `dd` 命令：
-   ```bash
-   sudo dd if=output/k1_v2/images/sdcard.img of=/dev/sdX bs=1M status=progress conv=fsync
-   ```
+当前两份源码指南的已选方案示例使用 `make linux-menuconfig` 配置内核，`make linux-update-defconfig` 保存；U-Boot 对应 `make uboot-menuconfig` 与 `make uboot-update-defconfig`。带 `<solution>-` 前缀的快捷形式和单包命令须以该分支 `make help` 为准，配置完成仍需重新构建和打包，不能把打开菜单当作镜像已生成。
 
-硬件引脚复用与线刷/卡刷调试步骤请参阅 [[Knowledge_Atoms/Muse_Pi_板级硬件设计专题|Muse Pi 板级硬件设计专题]]。
+## 4. 检查产物再烧录
+
+K1 示例输出 `output/k1_v2/images/buildroot-k1_v2.zip` 和 `buildroot-k1_v2-sdcard.img`；旧稿笼统的 `sdcard.img` 不是该日志中的最终文件名。K3 官方日志示例为 `/k3/images/Buildroot-k3-20260425142457-sdcard.img` 及对应 ZIP；实际输出目录、时间戳与大小写以该次打包日志为准。
+
+zip 按 Titan/fastboot 指南使用；SD 镜像按所选板型烧录，确认设备名、介质和备份后操作。先检查目标板的启动与供电条件，参见 [[Knowledge_Atoms/Muse_Pi_板级硬件设计专题]]；本次文档复核没有执行刷写。

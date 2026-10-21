@@ -3,81 +3,45 @@ type: developer_journey
 title: "MUSE Pi 开发板快速上手向导"
 status: needs_review
 created: 2026-06-30
-updated: 2026-10-20
+updated: 2026-10-21
 aliases: ["Muse Pi 开发板快速上手向导", "Muse Pi Quick Start Guide", "muse_pi_quick_start"]
 domain: hardware_schematic_design
+source_file: "Sources/docs-product/zh/k1_series/k1_muse_pi/pi_user_guide.md"
+source_commit: "bc640755145625cc20745f49861f82588863fca3"
+source_section: "MUSE Pi 指南 电源输入/Boot Download Sel/初次设置/刷入固件；Llama.cpp 2"
+source_resolution: partial
+verification_status: unverified
+source_checked_at: 2026-10-21
+source_note: "覆盖标准 MUSE Pi 的连接与 FDL，LLM 使用当前官方 GGUF 路径；不把 Pro 的接口或旧演示脚本套入。 本轮为来源与关键步骤定向核对，未在实物执行；关联节点保留各自核验状态。"
+source_related_file: ["Sources/docs-ai/zh/compute_stack/ai_compute_stack/llama.cpp.md"]
+source_related_commit: ["2b3894e983a295ed0278bc625867e0c132e0e259"]
 ---
 # MUSE Pi 开发板快速上手向导
 
-本向导旨在帮助开发者在最短时间内完成 K1 MUSE Pi 开发板的硬件连接、操作系统烧录、首次开机配置，并跑通本地大语言模型（LLM）。
+本页面向 **K1 MUSE Pi 标准板**，不是 Pi Pro。先确认板卡修订与镜像版本，按 [MUSE Pi 用户指南](../Sources/docs-product/zh/k1_series/k1_muse_pi/pi_user_guide.md) 的实物图定位接口。
 
----
+## 1. 硬件准备
 
-## 阶段 1：硬件准备与连接
+连接 HDMI 显示器、USB 键鼠与网络。Type-C 供电要求匹配 PD3.0 的 12V 档位；拨码按该板 Boot Download Sel&JTAG Sel 表核对，不能把拨码 OFF/ON 直接等同于 SoC Strap 电平。排针与电平参考 [[Knowledge_Atoms/Muse_Pi_板级硬件设计专题]]。
 
-在上电前，请正确连接以下外设：
-1. **显示器**：通过标准 HDMI 线缆连接至板载 `HDMI Type-A` 接口。
-2. **输入设备**：插上 USB 键盘和鼠标。
-3. **网络**：接入 RJ45 网线至千兆网口，或安装好随包装附赠的 Wi-Fi SMA 天线。
-4. **启动拨码**：检查板载双位拨码开关是否处于默认的 **OFF + OFF** 位置（即从 TF 卡或 eMMC 启动）。
+## 2. 烧录固件
 
----
+从官方发布渠道选择适用该板的 Bianbu Desktop/NAS 镜像，版本、烧录目标及工具按固件说明确认。
 
-## 阶段 2：操作系统烧录 (Bianbu OS)
+1. 断电时按住 DOWNLOAD（FDL），插电后松开；已开机时按住 FDL，短按 Reset 后松开。
+2. 将支持数据通信的 USB 线接至刷机连接器，用 Titan 或固件对应的 fastboot 流程。
+3. 烧录前核对镜像适用板型；本页不提供未经对应版本确认的自动分区/擦除命令。
 
-MUSE Pi 预装或支持 Bianbu Desktop 桌面系统。若需要重新烧录：
+## 3. 首次启动
 
-### 步骤 1：获取固件与工具
-* 下载最新的 [MUSE Pi Bianbu 镜像](https://spacemit.com/community/resources-download/)。
-* 在上位机（PC）上安装进迭时空官方刷机工具 **Titan**（支持 Windows/Linux/macOS）。
+按实际镜像的屏幕向导设置语言、时区、网络及用户；桌面组件和预装包随镜像变化。无法启动时先核对供电、介质和串口日志，不仅根据现象推断芯片损坏。
 
-### 步骤 2：进入刷机（FEL）模式
-1. **断电状态下**：按住板载侧边的 **Download 烧录按键 (FDL)** 不松开。
-2. **给设备上电**：使用 Type-C 供电线连接支持 **PD3.0 (12V/3A)** 的电源适配器。
-3. **连接电脑**：使用 Type-C 数据线将 MUSE Pi 的 Type-C 接口连接至上位机电脑。
-4. **松开按键**：松开 **FDL 按键**。此时电脑上的 Titan 工具应能识别到处于 FEL 模式的设备。
+## 4. 运行本地模型
 
-### 步骤 3：执行烧录
-在 Titan 软件中加载下载好的 `.zip` 格式固件包，点击“开始烧录”，等待进度条完成至 100% 后设备会自动重启。
+按 [Llama.cpp 指南](../Sources/docs-ai/zh/compute_stack/ai_compute_stack/llama.cpp.md) 核对当前 Bianbu 包 `llama.cpp-tools-spacemit`，K1 示例为 Qwen3-0.6B GGUF，线程数按 K1 条件不超过 4。先下载适配的量化模型，再用所安装版本的 `llama-cli`/`llama-bench` 运行。
 
----
+旧固件或旧平台未提供该包时，原文另列 `llama-server` 包路径；先核对实际软件源和版本。
 
-## 阶段 3：首次启动与系统配置
+旧稿中的 `chat_inference.py` 和通用 ONNX 0.5B 命令未在当前声明来源确认，不再作为可直接执行步骤；ONNX 视觉模型应走专用推理指南。结果记录模型、精度、固件、内存与速度，不承诺任意板卡均达到同一 tokens/s。
 
-系统首次开机后，显示器将输出 Bianbu Desktop 的配置向导：
-1. **语言与键盘**：选择“简体中文”与“标准美国英语键盘”。
-2. **时区**：选择 `Asia/Shanghai`。
-3. **网络连接**：若使用无线，在此步骤中连接您的 Wi-Fi 网络。
-4. **创建用户**：设置您的用户名和登录密码。
-5. **进入桌面**：配置完成后，系统将载入轻量级的 LXQt 桌面环境。
-
----
-
-## 阶段 4：部署本地大语言模型 (LLM)
-
-MUSE Pi 搭载的 K1 芯片在 CPU 内融合了 2.0 TOPS 的 AI 算力，支持零成本部署 1B / 0.5B 参数级别的端侧模型。
-
-### 步骤 1：安装运行时环境
-在 Bianbu OS 终端中执行以下命令，安装进迭时空优化的 ONNX Runtime 与 Python 依赖：
-```bash
-sudo apt update
-sudo apt install python3-pip python3-onnxruntime -y
-```
-
-### 步骤 2：获取量化模型
-从官方社区或 HuggingFace 下载经过 `smt.vmadot` 指令集量化编译的 **Qwen-1.5-0.5B-Chat-INT8** 模型。
-
-### 步骤 3：运行推理
-使用 SDK 附带的极简推理脚本启动模型：
-```bash
-python3 chat_inference.py --model ./qwen1.5-0.5b-chat-int8.onnx
-```
-系统将直接利用 K1 芯片的 Cluster 0（带 AI 加速 TCM 缓存的 4 核）进行极速端侧推理，速度可达 **>10 Tokens/s**。
-
----
-
-## 5. 关联技术专题与规格
-
-* 硬件避坑与调试：[[Knowledge_Atoms/Muse_Pi_板级硬件设计专题|MUSE Pi 板级硬件设计与调试专题]]
-* 芯片级 AI 部署指南：[[Knowledge_Atoms/K1大模型本地推理与AI算力专题档案|K1 大模型本地推理与 AI 算力专题]]
-* 官方完整指南：[MUSE Pi 使用指南（原始文件）](../Sources/docs-product/zh/k1_muse_pi/pi_user_guide.md)
+- AI 架构与证据：[[Knowledge_Atoms/K1大模型本地推理与AI算力专题档案]]。

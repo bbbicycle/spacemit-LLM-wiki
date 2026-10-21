@@ -7,13 +7,13 @@ verification_status: unverified
 external_use: false
 source_file: "Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_faq.md"
 source_origin: "https://github.com/spacemit-com/docs-chip"
-source_commit: "1ea15a766287024a5bb7b548850826e3525a80dc"
+source_commit: "2525ee3b68e0f4864f1bf12c8a59df040bf27e84"
 source_section: "电源系统；其他；开发调试"
 source_resolution: partial
-source_checked_at: 2026-10-13
-source_note: "休眠功耗、RTC、ALDO 和部分阻抗参数已定位；调试电平与高速损耗未逐项核验。"
+source_checked_at: 2026-10-21
+source_note: "2026-10-21 阶段 B：FAQ 开发调试、电源系统、其他：串口 3.3V/115200、RTC/ALDO、K1 休眠指标；来源改动仅两处链接。其余历史参数继续未核验。 保持 unverified/needs_review；不表示全文事实通过。"
 created: 2026-06-29
-updated: 2026-10-13
+updated: 2026-10-21
 aliases: ["K1硬件物理调试与休眠功耗参数", "K1 Hardware Debugging and Sleep Power Specs", "k1_hardware_debug_parameters"]
 domain: toolchain_debug_tools
 target_audience: [硬件调试工程师, 测试工程师]
@@ -33,7 +33,7 @@ target_audience: [硬件调试工程师, 测试工程师]
     *   **其他差分接口 (如 USB, PCIe, HDMI, MIPI)**：可控制在 **90 Ω ~ 100 Ω** 之间。
 
 ## 2. 功耗与电源管理参数
-*   **整机休眠功耗**：最低可做到 **28 mW** (在合理的 PMIC 休眠状态电源轨裁剪下)。
+*   **K1 休眠功耗参考**：FAQ 记录“目前可做到 **28 mW**”；未给出整板配置和测量条件，不能作为任意整机的保证值。
 *   **PMIC (P1) 内置 RTC 精度**：**20 ppm** (用于关机闹钟开机等高精度定时场景)。
 *   **AONLDO (常开 LDO) 默认电压**：**1.8 V** (用于 PMIC 上电时直接输出供电)。
 *   **ALDO 快速配置耗时**：在启动的 **SPL 阶段**，将 ALDO 配置为 3.3V 输出约需 **490 ms**。
