@@ -18,7 +18,8 @@ updated: 2026-10-21
 - 追加逐位核对固定 `docs-chip@2525ee3` 的硬件指南 V1.1 §1.1.5 与数据手册 V1.9 §2.11.2：GPIO66/65 的 10/01 对 SPI NOR/NAND 的映射相反，00→SD/TF→eMMC、11→SD/TF→UFS 一致。上游 fetch 至 `aae85ae`，相关原表未修订；不按日期或单一表格裁决接线。
 - Evidence 并列两份原表，专题与 K3 Journey 同步补来源及冲突说明，撤回单方面 SPI 电平结论；明确 GPIO69=1 后仍由 GPIO68 选择 USB/UART。两篇 Strap 节点保持 conflicted/needs_review，B1 等待官方修订/明确答复或对应板型经审定原理图，阶段 B 未全项验收。
 - B06 增加数据手册固定片段与原文读取，20 题现为每端 43 次调用、24 个固定片段，全部通过；未运行独立问答模型。同步计划、入口、来源审计与维护说明，保留上一轮 42 次调用的历史记录。
-- 追加复核与后续发布证据见 [阶段 B 审计入口](docs/reviews/stage_b_2026-10-21/README.md)。
+- 本轮双 lint、26 项构建器、6 项影响分析、11 项 Python、4 项最小安装、Worker 回归、79 次跨端调用、TypeScript 与索引校验通过。输入 `11b3b11`、双端索引 `d1b1777` 已推送，[部署 Actions](https://github.com/bbbicycle/spacemit-LLM-wiki/actions/runs/39557662169) 与安装检查成功；独立 smoke、两份固定原表及冲突/关联来源在线核对通过，详情见 [追加发布记录](docs/reviews/stage_b_2026-10-21/release_strap_followup.json)。
+- 追加复核与发布证据见 [阶段 B 审计入口](docs/reviews/stage_b_2026-10-21/README.md)。
 
 ---
 

@@ -51,4 +51,6 @@ python3 -B scripts/eval_stage_b.py
 
 ## 本地验证
 
-双 lint、26 项构建器测试、6 项上游影响测试、11 项 Python 服务测试、4 项最小安装测试、Worker 运行回归、79 次真实索引跨端调用和状态提示比较、TypeScript、索引 `--check` 与 20 题评测通过。发布 ref、Actions 与线上独立 smoke 另记于 [首轮发布记录](release.json)；本轮追加修正的发布证据在部署验证后归档。
+双 lint、26 项构建器测试、6 项上游影响测试、11 项 Python 服务测试、4 项最小安装测试、Worker 运行回归、79 次真实索引跨端调用和状态提示比较、TypeScript、索引 `--check` 与 20 题评测通过。发布 ref、Actions 与线上独立 smoke 另记于 [首轮发布记录](release.json)；[最新追加修正发布记录](release_strap_followup.json)保留本轮完整证据。
+
+追加修正已部署于 `d1b177725a221b77af1208de48310a19819b9580`：[Actions](https://github.com/bbbicycle/spacemit-LLM-wiki/actions/runs/39557662169) 与最小安装检查成功，独立 smoke 和 6 次定向内容查询通过，实读两份原表的固定片段与本地 hash 一致。双端来源为 `11b3b11a446cd313bd5d360471fb0085d2b3d964`，重复构建和索引提交后实际重建字节一致，`wiki_worktree_dirty:false`；以上验证保留官方冲突，不代表 B1 已验收。

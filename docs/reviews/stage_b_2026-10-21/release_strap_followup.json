@@ -1,0 +1,132 @@
+{
+  "status": "deployed_and_independently_verified",
+  "checked_at_utc": "2026-10-21T06:49:54.251442+00:00",
+  "stage_acceptance": "B2/B3/B4 verified; B1 remains open for K3-STRAP-01 pin-list and SPI-selection conflicts; stage B not fully accepted",
+  "source_commit": "11b3b11a446cd313bd5d360471fb0085d2b3d964",
+  "deployment_ref": "d1b177725a221b77af1208de48310a19819b9580",
+  "build_meta": {
+    "wiki_commit": "11b3b11a446cd313bd5d360471fb0085d2b3d964",
+    "wiki_worktree_dirty": false,
+    "generated_at": "2026-10-21T06:47:07+00:00",
+    "sources_commits": {
+      "docs-chip": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "docs-buildroot": "163a8fccf8e7071f3177753d2e86e482e97970fe",
+      "docs-product": "bc640755145625cc20745f49861f82588863fca3",
+      "docs-ai": "2b3894e983a295ed0278bc625867e0c132e0e259",
+      "docs-ros": "808d02c1bd11cf0d4376555919bd61c90e38d853"
+    },
+    "content_sha256": "c5fb78dd402602513018828011dfa38d7f75e2c40b748da0628d12d0d7d99aaf",
+    "counts": {
+      "total_nodes": 66,
+      "developer_journeys": 7,
+      "knowledge_atoms": 32,
+      "evidence": 27,
+      "raw_sources": 1231
+    },
+    "freshness_summary": {
+      "current": 66,
+      "stale": 0,
+      "unknown": 0
+    }
+  },
+  "index_sha256": "8bd77d38c844d6f540c5094778d8d1407c8b2af4439e4f0201b143942d32f3c0",
+  "determinism": {
+    "repeated_build_bytes_equal": true,
+    "actual_rebuild_after_index_commit_bytes_equal": true
+  },
+  "local_checks": {
+    "dual_lint": "passed",
+    "builder_tests": 26,
+    "upstream_impact_tests": 6,
+    "python_server_tests": 11,
+    "minimal_install_tests": 4,
+    "worker_runtime": "passed",
+    "production_parity_calls": 79,
+    "typescript": "passed",
+    "core_evaluation_cases": 20,
+    "core_evaluation_calls_per_backend": 43,
+    "fixed_source_excerpts": 24,
+    "markdown_links": {
+      "checked": 232,
+      "existing": 231,
+      "explicitly_withdrawn_historical_links": [
+        [
+          "Knowledge_Atoms/K3热设计与散热专题档案.md",
+          "../Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_thermal_design.md"
+        ]
+      ],
+      "unexpected_missing": []
+    },
+    "diff_check": "passed"
+  },
+  "github_actions": [
+    {
+      "id": 39557662341,
+      "name": "Check Minimal Installation",
+      "head_sha": "d1b177725a221b77af1208de48310a19819b9580",
+      "conclusion": "success",
+      "url": "https://github.com/bbbicycle/spacemit-LLM-wiki/actions/runs/39557662341"
+    },
+    {
+      "id": 39557662169,
+      "name": "Auto Build & Deploy MCP to Cloudflare Workers",
+      "head_sha": "d1b177725a221b77af1208de48310a19819b9580",
+      "conclusion": "success",
+      "url": "https://github.com/bbbicycle/spacemit-LLM-wiki/actions/runs/39557662169"
+    }
+  ],
+  "independent_smoke": {
+    "status": "passed",
+    "deployment_ref": "d1b177725a221b77af1208de48310a19819b9580",
+    "version": "2.3.0",
+    "content_sha256": "c5fb78dd402602513018828011dfa38d7f75e2c40b748da0628d12d0d7d99aaf",
+    "d1_bound": true,
+    "checks": "health/SSE/initialize/tools/search/fact/raw-pages"
+  },
+  "content_checks": {
+    "pmic_alias_first_hit": "SpacemiT生态板卡与PMIC电源配合专题档案",
+    "strap": {
+      "freshness": "current",
+      "verification_status": "conflicted",
+      "status": "needs_review",
+      "source_file": "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md",
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "source_related_file": [
+        "Sources/docs-chip/zh/key_stone/k3/k3_docs/k3_ds.md"
+      ],
+      "source_related_commit": [
+        "2525ee3b68e0f4864f1bf12c8a59df040bf27e84"
+      ],
+      "conflicts": "K3指南1.1.5概述列5脚含GPIO90，功能表却列Strap0～5含GPIO64/52；另与K3数据手册2.11.2的GPIO66/65启动选择冲突：指南10=SPI NOR、01=SPI NAND，数据手册10=SPI NAND、01=SPI NOR。00/11一致；SPI接线与完整管脚清单待官方确认。"
+    },
+    "strap_notice_codes": [
+      "CONFLICTED",
+      "NEEDS_REVIEW",
+      "EXTERNAL_USE_RESTRICTED",
+      "GENERATION_BOUNDARY"
+    ],
+    "both_opposite_spi_rows_present": true,
+    "atom_and_journey_sources_match": true,
+    "download_requires_gpio68_selection": true,
+    "pinned_online_excerpts": [
+      {
+        "path": "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md",
+        "commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+        "start_line": 243,
+        "end_line": 283,
+        "excerpt_sha256": "1b91ff5542f6ef9dcbf5f30926718a91818f5cf93b3b8214c5f775036455a6ab",
+        "online_excerpt_matches": true
+      },
+      {
+        "path": "Sources/docs-chip/zh/key_stone/k3/k3_docs/k3_ds.md",
+        "commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+        "start_line": 1476,
+        "end_line": 1495,
+        "excerpt_sha256": "99e1305e1a00babc6fc539cd5a9266b6351b2067a54902eb74023b8da862e7e2",
+        "online_excerpt_matches": true
+      }
+    ]
+  },
+  "traffic_note": "本轮部署CI、独立smoke与6次定向内容查询均属维护流量，不作为自然需求。未发送新反馈。",
+  "audit_commit_policy": "随后仅归档发布证据的文档提交使用[skip ci]；线上部署ref保留本记录已验证的代码/索引提交。"
+}
