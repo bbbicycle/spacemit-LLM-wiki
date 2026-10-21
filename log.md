@@ -18,6 +18,7 @@ updated: 2026-10-21
 - 用户表示已与开发同步修订，要求两项问题标待确定、待官方 GitHub 更新后再修正 Wiki，并继续 B1 验收。Evidence、Atom 和 K3 Journey 已添加显式待确认说明，两篇冲突节点仍为 conflicted/needs_review，未将开发沟通当作已确认结论。
 - 本轮按用户明确安排单独跟踪官方勘误，B1 验收覆盖12项原始stale的逐项diff、正文修正、依赖复核与回归；保留两项争议技术结论，未设置approved。核对发现并补登记PMIC专题新增的K3 Journey入链复核。
 - 本轮归档diff与真实Git diff字节一致，12项记录和18条当前入链均通过核对；双lint、26项构建器、6项影响分析、11项Python、4项最小安装、Worker回归、79次跨端调用、TypeScript、索引校验及20题评测通过。后续检查已设置为每天北京时间10:00，官方相关章节无有效修订时保持安静。
+- 输入 `85dfa7b`、双端索引 `3c0347e` 已中文提交并推送；[部署 Actions](https://github.com/bbbicycle/spacemit-LLM-wiki/actions/runs/39563225764) 与安装检查成功。独立 smoke、三层待确认说明、保留的冲突提示和两份固定原文均核对通过；确定性重建字节一致，正式索引wiki_worktree_dirty=false。发布证据见 [B1发布记录](docs/reviews/stage_b_2026-10-21/release_b1_acceptance.json)。
 - 用户处置依据、原文版本、两项待确定内容及修订后的核对步骤见 [勘误跟踪](docs/reviews/stage_b_2026-10-21/k3_strap_pending.json)，验收证据见 [B1记录](docs/reviews/stage_b_2026-10-21/b1_acceptance.json)。此前日志和发布记录保留原验收状态，当前进度以计划和本轮记录为准。
 
 ---

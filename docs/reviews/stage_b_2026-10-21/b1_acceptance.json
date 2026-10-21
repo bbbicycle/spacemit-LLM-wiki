@@ -65,8 +65,8 @@
     "core_evaluation_calls_per_backend": 43,
     "pinned_excerpts": 24,
     "markdown_links": {
-      "checked": 252,
-      "existing": 251,
+      "checked": 256,
+      "existing": 255,
       "explicitly_withdrawn_historical_links": [
         [
           "Knowledge_Atoms/K3热设计与散热专题档案.md",
@@ -253,5 +253,10 @@
     }
   ],
   "follow_up": "k3_strap_pending.json",
-  "publication": "Code/index commit, Actions and independent online checks are recorded separately after deployment."
+  "publication": {
+    "status": "deployed_and_independently_verified",
+    "record": "release_b1_acceptance.json",
+    "deployment_ref": "3c0347e5571bb1e6f13e476c5d1d05be60442312",
+    "source_commit": "85dfa7b7b7c29e59ffcb4c6002ee483aee3f69dd"
+  }
 }

@@ -1,0 +1,170 @@
+{
+  "status": "deployed_and_independently_verified",
+  "checked_at_utc": "2026-10-21T07:39:41.083008+00:00",
+  "stage_acceptance": "B1/B2/B3/B4 source-review and disposition workflow accepted; two official K3 corrections remain pending under explicit user instruction",
+  "fact_approval": false,
+  "b1_acceptance": "b1_acceptance.json",
+  "pending_official_corrections": "k3_strap_pending.json",
+  "source_commit": "85dfa7b7b7c29e59ffcb4c6002ee483aee3f69dd",
+  "deployment_ref": "3c0347e5571bb1e6f13e476c5d1d05be60442312",
+  "build_meta": {
+    "wiki_commit": "85dfa7b7b7c29e59ffcb4c6002ee483aee3f69dd",
+    "wiki_worktree_dirty": false,
+    "generated_at": "2026-10-21T07:35:49+00:00",
+    "sources_commits": {
+      "docs-chip": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "docs-buildroot": "163a8fccf8e7071f3177753d2e86e482e97970fe",
+      "docs-product": "bc640755145625cc20745f49861f82588863fca3",
+      "docs-ai": "2b3894e983a295ed0278bc625867e0c132e0e259",
+      "docs-ros": "808d02c1bd11cf0d4376555919bd61c90e38d853"
+    },
+    "content_sha256": "7161de67bfb8fe0313903f6ee71193f92393fa5bc4ab1017da9d893f200357f4",
+    "counts": {
+      "total_nodes": 66,
+      "developer_journeys": 7,
+      "knowledge_atoms": 32,
+      "evidence": 27,
+      "raw_sources": 1231
+    },
+    "freshness_summary": {
+      "current": 66,
+      "stale": 0,
+      "unknown": 0
+    }
+  },
+  "index_sha256": "d580d59587a62885aa7303dd618d791036213d5e786e76fb3f760bcfd888d9c1",
+  "determinism": {
+    "repeated_build_bytes_equal": true,
+    "actual_rebuild_after_index_commit_bytes_equal": true
+  },
+  "local_checks": {
+    "dual_lint": "passed",
+    "builder_tests": 26,
+    "upstream_impact_tests": 6,
+    "python_server_tests": 11,
+    "minimal_install_tests": 4,
+    "worker_runtime": "passed",
+    "production_parity_calls": 79,
+    "typescript": "passed",
+    "index_check": "passed",
+    "cached_upstream_impact": "passed; no local Sources changes",
+    "core_evaluation_cases": 20,
+    "core_evaluation_calls_per_backend": 43,
+    "pinned_excerpts": 24,
+    "markdown_links": {
+      "checked": 256,
+      "existing": 255,
+      "explicitly_withdrawn_historical_links": [
+        [
+          "Knowledge_Atoms/K3热设计与散热专题档案.md",
+          "../Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_thermal_design.md"
+        ]
+      ],
+      "unexpected_missing": []
+    },
+    "diff_check": "passed"
+  },
+  "github_actions": [
+    {
+      "id": 39563225748,
+      "name": "Check Minimal Installation",
+      "head_sha": "3c0347e5571bb1e6f13e476c5d1d05be60442312",
+      "conclusion": "success",
+      "url": "https://github.com/bbbicycle/spacemit-LLM-wiki/actions/runs/39563225748"
+    },
+    {
+      "id": 39563225764,
+      "name": "Auto Build & Deploy MCP to Cloudflare Workers",
+      "head_sha": "3c0347e5571bb1e6f13e476c5d1d05be60442312",
+      "conclusion": "success",
+      "url": "https://github.com/bbbicycle/spacemit-LLM-wiki/actions/runs/39563225764"
+    }
+  ],
+  "independent_smoke": {
+    "status": "passed",
+    "deployment_ref": "3c0347e5571bb1e6f13e476c5d1d05be60442312",
+    "version": "2.3.0",
+    "content_sha256": "7161de67bfb8fe0313903f6ee71193f92393fa5bc4ab1017da9d893f200357f4",
+    "d1_bound": true,
+    "checks": "health/SSE/initialize/tools/search/fact/raw-pages"
+  },
+  "content_checks": {
+    "nodes": [
+      {
+        "layer": "Evidence",
+        "pending_marker_visible": true,
+        "development_sync_statement_visible": true,
+        "unconfirmed_wiring_statement_retained": true,
+        "freshness": "current",
+        "status": "needs_review",
+        "verification_status": "conflicted",
+        "notice_codes": [
+          "CONFLICTED",
+          "NEEDS_REVIEW",
+          "EXTERNAL_USE_RESTRICTED",
+          "GENERATION_BOUNDARY"
+        ],
+        "content_sha256": "74926de793623ba97f6885c41493af12165de40c41bea502e4a1f8abf8c6299e"
+      },
+      {
+        "layer": "Atom",
+        "pending_marker_visible": true,
+        "development_sync_statement_visible": true,
+        "unconfirmed_wiring_statement_retained": true,
+        "freshness": "current",
+        "status": "needs_review",
+        "verification_status": "conflicted",
+        "notice_codes": [
+          "CONFLICTED",
+          "NEEDS_REVIEW",
+          "GENERATION_BOUNDARY"
+        ],
+        "content_sha256": "82b7cc0bfc3e006258d0ab6212deb00f1c62b914a8bf99f8c9fa961741b16e81"
+      },
+      {
+        "layer": "Journey",
+        "pending_marker_visible": true,
+        "development_sync_statement_visible": true,
+        "unconfirmed_wiring_statement_retained": true,
+        "freshness": "current",
+        "status": "needs_review",
+        "verification_status": "unverified",
+        "notice_codes": [
+          "UNVERIFIED",
+          "NEEDS_REVIEW",
+          "GENERATION_BOUNDARY"
+        ],
+        "content_sha256": "304d0d69fcfac183e32043bfbf1fc06825514787bfe4b5f1951319e7d46e9eff"
+      }
+    ],
+    "opposite_spi_tables_retained": true,
+    "pinned_online_excerpts": [
+      {
+        "path": "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md",
+        "commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+        "start_line": 243,
+        "end_line": 283,
+        "excerpt_sha256": "1b91ff5542f6ef9dcbf5f30926718a91818f5cf93b3b8214c5f775036455a6ab",
+        "online_excerpt_matches": true
+      },
+      {
+        "path": "Sources/docs-chip/zh/key_stone/k3/k3_docs/k3_ds.md",
+        "commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+        "start_line": 1476,
+        "end_line": 1495,
+        "excerpt_sha256": "99e1305e1a00babc6fc539cd5a9266b6351b2067a54902eb74023b8da862e7e2",
+        "online_excerpt_matches": true
+      }
+    ],
+    "pmic_alias_first_hit": "SpacemiT生态板卡与PMIC电源配合专题档案"
+  },
+  "follow_up_automation": {
+    "id": "k3-strap-wiki",
+    "kind": "heartbeat",
+    "status": "ACTIVE",
+    "schedule": "每天10:00（Asia/Shanghai），在本聊天检查官方相关章节；无有效变更时保持安静。",
+    "stop_condition": "两项均按官方依据修正并发布验证后暂停任务"
+  },
+  "traffic_note": "本轮部署CI、独立smoke和6次定向查询均为维护流量，不计自然需求；未发送反馈。",
+  "audit_commit_policy": "随后仅归档发布证据的文档提交使用[skip ci]，线上保留本记录已验证的代码与索引版本。"
+}

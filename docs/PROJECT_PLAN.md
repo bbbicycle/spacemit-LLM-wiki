@@ -320,8 +320,10 @@ python3 scripts/build_mcp_index.py --check
 - `/stats` 首轮全保留数据为 44 调用、2 个非成功、1 反馈。根据真实 `P1 P3 PMIC` 未命中补别名并复现前后结果；唯一审计查询实际落库。原文分类 23 次不视为回退率，I2C3 时序和内部流程需求保留资料缺口。
 - [20 题评测](reviews/stage_b_2026-10-21/core_20_results.md)覆盖 6 个 domain、真实历史 stale/unknown 回放、当前 conflicted/needs_review；每端 43 次调用、24 个固定来源片段，逐题 2～3 次（B06 已补两份 SPI 映射对照）。验证工具检索证据、来源与提示契约及双端一致性，未调用独立问答模型，不能声称模型准确率。
 - 首轮发布验收：部署 ref `b973a5cb2f31a9cbe1b4640c21ee542559a348f9` 的 [GitHub Actions](https://github.com/bbbicycle/spacemit-LLM-wiki/actions/runs/39555907376) 成功；独立 smoke 核对完整 build_meta、SSE、检索/事实/固定原文分页，并确认线上 PMIC 别名命中和 K3 Strap 冲突提示。详情见 [发布记录](reviews/stage_b_2026-10-21/release.json)。
-- 追加修正发布：部署 ref `d1b177725a221b77af1208de48310a19819b9580` 的 [GitHub Actions](https://github.com/bbbicycle/spacemit-LLM-wiki/actions/runs/39557662169) 与最小安装检查成功；独立 smoke 核对完整 build_meta，并实读两份固定原表，确认相反的 SPI 映射、关联来源与 conflicted 提示均在线生效。详情见 [最新发布记录](reviews/stage_b_2026-10-21/release_strap_followup.json)，首轮记录保留历史版本。
+- 追加修正发布：部署 ref `d1b177725a221b77af1208de48310a19819b9580` 的 [GitHub Actions](https://github.com/bbbicycle/spacemit-LLM-wiki/actions/runs/39557662169) 与最小安装检查成功；独立 smoke 核对完整 build_meta，并实读两份固定原表，确认相反的 SPI 映射、关联来源与 conflicted 提示均在线生效。详情见 [此前追加发布记录](reviews/stage_b_2026-10-21/release_strap_followup.json)，首轮记录保留历史版本。
 - **B1 处置安排（2026-10-21）**：用户明确要求两项问题标待确定，表示已与开发同步修改，并要求继续 B1 验收。12 项逐项 diff、正文及依赖复核与回归按 [B1 验收记录](reviews/stage_b_2026-10-21/b1_acceptance.json)收口；两篇 Strap 节点仍为 `conflicted / needs_review`，K3 Journey 保留待确认提示。两项问题及 GitHub 修订后的核对步骤见 [后续勘误记录](reviews/stage_b_2026-10-21/k3_strap_pending.json)。只在原文实际修订且适用范围明确后修正争议结论，不视为已获官方确认。
+
+- 本轮 B1 验收发布：输入 `85dfa7b7b7c29e59ffcb4c6002ee483aee3f69dd`、部署 ref `3c0347e5571bb1e6f13e476c5d1d05be60442312` 已推送，[部署 Actions](https://github.com/bbbicycle/spacemit-LLM-wiki/actions/runs/39563225764) 与安装检查成功；独立 smoke 核对完整 build_meta、三层待确认标注、冲突提示和两份固定原文。最新证据见 [B1 发布记录](reviews/stage_b_2026-10-21/release_b1_acceptance.json)。两项官方勘误由本聊天每天北京时间 10:00 跟进，未修订时保持安静。
 
 ## 5. 中远期储备阶段（P4 ~ P5：按需启动，当下不提前写代码）
 
