@@ -2,9 +2,9 @@
   "version": "2.3.0",
   "wiki_commit": "8d7bae80e22cdd782f4269ae819afc838a903cb9",
   "generated_at": "2026-10-21T03:40:24+00:00",
-  "wiki_worktree_dirty": false,
+  "wiki_worktree_dirty": true,
   "source_versions": {
-    "docs-chip": "15254b1cfe339c1863d8edf8137a337681fb2780",
+    "docs-chip": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
     "docs-buildroot": "163a8fccf8e7071f3177753d2e86e482e97970fe",
     "docs-product": "bc640755145625cc20745f49861f82588863fca3",
     "docs-ai": "2b3894e983a295ed0278bc625867e0c132e0e259",
@@ -333,13 +333,13 @@
       "stale_paths": [],
       "unknown_paths": [],
       "checked_against_commit": {
-        "docs-chip": "15254b1cfe339c1863d8edf8137a337681fb2780"
+        "docs-chip": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84"
       },
       "source_freshness": [
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k1/k1_hw/avl_veri_sop.md",
           "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "current",
           "reason": "source_file_unchanged"
         }
@@ -390,20 +390,20 @@
       ],
       "unknown_paths": [],
       "checked_against_commit": {
-        "docs-chip": "15254b1cfe339c1863d8edf8137a337681fb2780"
+        "docs-chip": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84"
       },
       "source_freshness": [
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_design_guide.md",
           "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md",
           "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "stale",
           "reason": "source_file_changed"
         }
@@ -462,7 +462,7 @@
       "unknown_paths": [],
       "checked_against_commit": {
         "docs-buildroot": "163a8fccf8e7071f3177753d2e86e482e97970fe",
-        "docs-chip": "15254b1cfe339c1863d8edf8137a337681fb2780"
+        "docs-chip": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84"
       },
       "source_freshness": [
         {
@@ -482,35 +482,35 @@
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_design_guide.md",
           "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k3/k3_docs/k3_ds.md",
           "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md",
           "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k1/k1_docs/root_overview.md",
           "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k3/k3_docs/root_overview.md",
           "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "current",
           "reason": "source_file_unchanged"
         }
@@ -567,7 +567,7 @@
       "unknown_paths": [],
       "checked_against_commit": {
         "docs-buildroot": "163a8fccf8e7071f3177753d2e86e482e97970fe",
-        "docs-chip": "15254b1cfe339c1863d8edf8137a337681fb2780"
+        "docs-chip": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84"
       },
       "source_freshness": [
         {
@@ -587,14 +587,14 @@
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_faq.md",
           "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "stale",
           "reason": "source_file_changed"
         },
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k1/k1_sw/k1_sdk_user_guide.md",
           "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "current",
           "reason": "source_file_unchanged"
         }
@@ -650,7 +650,7 @@
       "unknown_paths": [],
       "checked_against_commit": {
         "docs-buildroot": "163a8fccf8e7071f3177753d2e86e482e97970fe",
-        "docs-chip": "15254b1cfe339c1863d8edf8137a337681fb2780"
+        "docs-chip": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84"
       },
       "source_freshness": [
         {
@@ -663,28 +663,28 @@
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_design_guide.md",
           "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_faq.md",
           "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md",
           "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "stale",
           "reason": "source_file_changed"
         },
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k1/k1_docs/root_overview.md",
           "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "current",
           "reason": "source_file_unchanged"
         }
@@ -735,20 +735,20 @@
       "stale_paths": [],
       "unknown_paths": [],
       "checked_against_commit": {
-        "docs-chip": "15254b1cfe339c1863d8edf8137a337681fb2780"
+        "docs-chip": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84"
       },
       "source_freshness": [
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k1/k1_docs/k1_ds.md",
           "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_design_guide.md",
           "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "current",
           "reason": "source_file_unchanged"
         }
@@ -801,21 +801,21 @@
       "stale_paths": [],
       "unknown_paths": [],
       "checked_against_commit": {
-        "docs-chip": "15254b1cfe339c1863d8edf8137a337681fb2780",
+        "docs-chip": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
         "docs-ai": "2b3894e983a295ed0278bc625867e0c132e0e259"
       },
       "source_freshness": [
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k1/k1_docs/root_overview.md",
           "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k1/k1_sw/k1_sdk_user_guide.md",
           "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
@@ -868,20 +868,20 @@
       "stale_paths": [],
       "unknown_paths": [],
       "checked_against_commit": {
-        "docs-chip": "15254b1cfe339c1863d8edf8137a337681fb2780"
+        "docs-chip": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84"
       },
       "source_freshness": [
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k1/k1_docs/root_overview.md",
           "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_design_guide.md",
           "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "current",
           "reason": "source_file_unchanged"
         }
@@ -937,28 +937,28 @@
       ],
       "unknown_paths": [],
       "checked_against_commit": {
-        "docs-chip": "15254b1cfe339c1863d8edf8137a337681fb2780",
+        "docs-chip": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
         "docs-product": "bc640755145625cc20745f49861f82588863fca3"
       },
       "source_freshness": [
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_design_guide.md",
           "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_faq.md",
           "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "stale",
           "reason": "source_file_changed"
         },
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_resources.md",
           "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
@@ -1018,27 +1018,27 @@
       ],
       "unknown_paths": [],
       "checked_against_commit": {
-        "docs-chip": "15254b1cfe339c1863d8edf8137a337681fb2780"
+        "docs-chip": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84"
       },
       "source_freshness": [
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k1/k1_sw/k1_sdk_user_guide.md",
           "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k1/k1_sw/k1_sw_faq.md",
           "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_faq.md",
           "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "stale",
           "reason": "source_file_changed"
         }
@@ -1076,13 +1076,13 @@
       "stale_paths": [],
       "unknown_paths": [],
       "checked_against_commit": {
-        "docs-chip": "15254b1cfe339c1863d8edf8137a337681fb2780"
+        "docs-chip": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84"
       },
       "source_freshness": [
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k1/k1_sw/k1_sw_faq.md",
           "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "current",
           "reason": "source_file_unchanged"
         }
@@ -1127,20 +1127,20 @@
       "stale_paths": [],
       "unknown_paths": [],
       "checked_against_commit": {
-        "docs-chip": "15254b1cfe339c1863d8edf8137a337681fb2780"
+        "docs-chip": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84"
       },
       "source_freshness": [
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_design_guide.md",
           "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k1/k1_sw/k1_sw_faq.md",
           "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "current",
           "reason": "source_file_unchanged"
         }
@@ -1408,14 +1408,14 @@
       "stale_paths": [],
       "unknown_paths": [],
       "checked_against_commit": {
-        "docs-chip": "15254b1cfe339c1863d8edf8137a337681fb2780",
+        "docs-chip": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
         "docs-product": "bc640755145625cc20745f49861f82588863fca3"
       },
       "source_freshness": [
         {
           "source_file": "Sources/docs-chip/en/key_stone/k3/k3_hw/k3_hw_resources.md",
           "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
@@ -1436,14 +1436,14 @@
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k1/k1_docs/root_overview.md",
           "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k3/k3_docs/root_overview.md",
           "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "current",
           "reason": "source_file_unchanged"
         }
@@ -1501,7 +1501,7 @@
       "checked_against_commit": {
         "docs-product": "bc640755145625cc20745f49861f82588863fca3",
         "docs-ai": "2b3894e983a295ed0278bc625867e0c132e0e259",
-        "docs-chip": "15254b1cfe339c1863d8edf8137a337681fb2780"
+        "docs-chip": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84"
       },
       "source_freshness": [
         {
@@ -1535,7 +1535,7 @@
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k3/k3_docs/root_overview.md",
           "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "current",
           "reason": "source_file_unchanged"
         }
@@ -1589,27 +1589,27 @@
       ],
       "unknown_paths": [],
       "checked_against_commit": {
-        "docs-chip": "15254b1cfe339c1863d8edf8137a337681fb2780"
+        "docs-chip": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84"
       },
       "source_freshness": [
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md",
           "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "stale",
           "reason": "source_file_changed"
         },
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_faq.md",
           "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k3/k3_sw/k3_sdk_user_guide.md",
           "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "current",
           "reason": "source_file_unchanged"
         }
@@ -1663,21 +1663,21 @@
       "stale_paths": [],
       "unknown_paths": [],
       "checked_against_commit": {
-        "docs-chip": "15254b1cfe339c1863d8edf8137a337681fb2780",
+        "docs-chip": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
         "docs-ai": "2b3894e983a295ed0278bc625867e0c132e0e259"
       },
       "source_freshness": [
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k3/k3_docs/root_overview.md",
           "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k3/k3_sw/k3_sdk_user_guide.md",
           "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
@@ -1778,20 +1778,20 @@
       "stale_paths": [],
       "unknown_paths": [],
       "checked_against_commit": {
-        "docs-chip": "15254b1cfe339c1863d8edf8137a337681fb2780"
+        "docs-chip": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84"
       },
       "source_freshness": [
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k3/k3_docs/k3_ds.md",
           "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md",
           "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "current",
           "reason": "source_file_unchanged"
         }
@@ -1994,7 +1994,7 @@
       "unknown_paths": [],
       "checked_against_commit": {
         "docs-product": "bc640755145625cc20745f49861f82588863fca3",
-        "docs-chip": "15254b1cfe339c1863d8edf8137a337681fb2780"
+        "docs-chip": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84"
       },
       "source_freshness": [
         {
@@ -2028,7 +2028,7 @@
         {
           "source_file": "Sources/docs-chip/zh/power_stone/p1/p1_docs/p1_ds.md",
           "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "current",
           "reason": "source_file_unchanged"
         }
@@ -2152,20 +2152,20 @@
       "stale_paths": [],
       "unknown_paths": [],
       "checked_against_commit": {
-        "docs-chip": "15254b1cfe339c1863d8edf8137a337681fb2780"
+        "docs-chip": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84"
       },
       "source_freshness": [
         {
           "source_file": "Sources/docs-chip/zh/power_stone/p3/p3_docs/p3_ds.md",
           "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-chip/zh/power_stone/p3/p3_docs/root_overview.md",
           "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "current",
           "reason": "source_file_unchanged"
         }
@@ -2406,42 +2406,42 @@
       ],
       "unknown_paths": [],
       "checked_against_commit": {
-        "docs-chip": "15254b1cfe339c1863d8edf8137a337681fb2780",
+        "docs-chip": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
         "docs-product": "bc640755145625cc20745f49861f82588863fca3"
       },
       "source_freshness": [
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md",
           "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_faq.md",
           "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "stale",
           "reason": "source_file_changed"
         },
         {
           "source_file": "Sources/docs-chip/zh/power_stone/p1/p1_docs/root_overview.md",
           "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-chip/zh/power_stone/p1/p1_hw/p1_pcb_guide.md",
           "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-chip/zh/power_stone/p3/p3_docs/root_overview.md",
           "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
@@ -2462,14 +2462,14 @@
         {
           "source_file": "Sources/docs-chip/zh/power_stone/p1/p1_docs/p1_ds.md",
           "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-chip/zh/power_stone/p1s/p1s_docs/p1s_ds.md",
           "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "current",
           "reason": "source_file_unchanged"
         }
@@ -2541,7 +2541,7 @@
       "unknown_paths": [],
       "checked_against_commit": {
         "docs-product": "bc640755145625cc20745f49861f82588863fca3",
-        "docs-chip": "15254b1cfe339c1863d8edf8137a337681fb2780"
+        "docs-chip": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84"
       },
       "source_freshness": [
         {
@@ -2589,7 +2589,7 @@
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k1/k1_docs/root_overview.md",
           "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "current",
           "reason": "source_file_unchanged"
         }
@@ -2690,21 +2690,21 @@
       "stale_paths": [],
       "unknown_paths": [],
       "checked_against_commit": {
-        "docs-chip": "15254b1cfe339c1863d8edf8137a337681fb2780",
+        "docs-chip": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
         "docs-product": "bc640755145625cc20745f49861f82588863fca3"
       },
       "source_freshness": [
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k1/k1_docs/root_overview.md",
           "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k3/k3_docs/root_overview.md",
           "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
@@ -2718,21 +2718,21 @@
         {
           "source_file": "Sources/docs-chip/zh/power_stone/p1/p1_docs/p1_ds.md",
           "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-chip/zh/power_stone/p1s/p1s_docs/p1s_ds.md",
           "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-chip/zh/power_stone/p3/p3_docs/p3_ds.md",
           "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
@@ -3040,14 +3040,14 @@
       "stale_paths": [],
       "unknown_paths": [],
       "checked_against_commit": {
-        "docs-chip": "15254b1cfe339c1863d8edf8137a337681fb2780",
+        "docs-chip": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
         "docs-ai": "2b3894e983a295ed0278bc625867e0c132e0e259"
       },
       "source_freshness": [
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k1/k1_docs/root_overview.md",
           "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
@@ -3101,13 +3101,13 @@
       ],
       "unknown_paths": [],
       "checked_against_commit": {
-        "docs-chip": "15254b1cfe339c1863d8edf8137a337681fb2780"
+        "docs-chip": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84"
       },
       "source_freshness": [
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_faq.md",
           "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "stale",
           "reason": "source_file_changed"
         }
@@ -3158,20 +3158,20 @@
       ],
       "unknown_paths": [],
       "checked_against_commit": {
-        "docs-chip": "15254b1cfe339c1863d8edf8137a337681fb2780"
+        "docs-chip": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84"
       },
       "source_freshness": [
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_design_guide.md",
           "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md",
           "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "stale",
           "reason": "source_file_changed"
         }
@@ -3221,20 +3221,20 @@
       "stale_paths": [],
       "unknown_paths": [],
       "checked_against_commit": {
-        "docs-chip": "15254b1cfe339c1863d8edf8137a337681fb2780"
+        "docs-chip": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84"
       },
       "source_freshness": [
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k1/k1_docs/root_overview.md",
           "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k3/k3_docs/root_overview.md",
           "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "current",
           "reason": "source_file_unchanged"
         }
@@ -3279,13 +3279,13 @@
       ],
       "unknown_paths": [],
       "checked_against_commit": {
-        "docs-chip": "15254b1cfe339c1863d8edf8137a337681fb2780"
+        "docs-chip": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84"
       },
       "source_freshness": [
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_faq.md",
           "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "stale",
           "reason": "source_file_changed"
         }
@@ -3336,20 +3336,20 @@
       ],
       "unknown_paths": [],
       "checked_against_commit": {
-        "docs-chip": "15254b1cfe339c1863d8edf8137a337681fb2780"
+        "docs-chip": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84"
       },
       "source_freshness": [
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k1/k1_docs/root_overview.md",
           "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md",
           "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "stale",
           "reason": "source_file_changed"
         }
@@ -3388,13 +3388,13 @@
       "stale_paths": [],
       "unknown_paths": [],
       "checked_against_commit": {
-        "docs-chip": "15254b1cfe339c1863d8edf8137a337681fb2780"
+        "docs-chip": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84"
       },
       "source_freshness": [
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_avl.md",
           "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "current",
           "reason": "source_file_unchanged"
         }
@@ -3439,13 +3439,13 @@
       "stale_paths": [],
       "unknown_paths": [],
       "checked_against_commit": {
-        "docs-chip": "15254b1cfe339c1863d8edf8137a337681fb2780"
+        "docs-chip": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84"
       },
       "source_freshness": [
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_design_guide.md",
           "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "current",
           "reason": "source_file_unchanged"
         }
@@ -3594,13 +3594,13 @@
       "stale_paths": [],
       "unknown_paths": [],
       "checked_against_commit": {
-        "docs-chip": "15254b1cfe339c1863d8edf8137a337681fb2780"
+        "docs-chip": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84"
       },
       "source_freshness": [
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k1/k1_docs/root_overview.md",
           "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "current",
           "reason": "source_file_unchanged"
         }
@@ -3655,7 +3655,7 @@
       "unknown_paths": [],
       "checked_against_commit": {
         "docs-ai": "2b3894e983a295ed0278bc625867e0c132e0e259",
-        "docs-chip": "15254b1cfe339c1863d8edf8137a337681fb2780"
+        "docs-chip": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84"
       },
       "source_freshness": [
         {
@@ -3668,7 +3668,7 @@
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k3/k3_docs/root_overview.md",
           "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "current",
           "reason": "source_file_unchanged"
         }
@@ -3760,13 +3760,13 @@
       "stale_paths": [],
       "unknown_paths": [],
       "checked_against_commit": {
-        "docs-chip": "15254b1cfe339c1863d8edf8137a337681fb2780"
+        "docs-chip": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84"
       },
       "source_freshness": [
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_avl.md",
           "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "current",
           "reason": "source_file_unchanged"
         }
@@ -3863,13 +3863,13 @@
       ],
       "unknown_paths": [],
       "checked_against_commit": {
-        "docs-chip": "15254b1cfe339c1863d8edf8137a337681fb2780"
+        "docs-chip": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84"
       },
       "source_freshness": [
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md",
           "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "stale",
           "reason": "source_file_changed"
         }
@@ -3914,13 +3914,13 @@
       "stale_paths": [],
       "unknown_paths": [],
       "checked_against_commit": {
-        "docs-chip": "15254b1cfe339c1863d8edf8137a337681fb2780"
+        "docs-chip": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84"
       },
       "source_freshness": [
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k3/k3_docs/k3_ds.md",
           "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "current",
           "reason": "source_file_unchanged"
         }
@@ -4028,13 +4028,13 @@
       "stale_paths": [],
       "unknown_paths": [],
       "checked_against_commit": {
-        "docs-chip": "15254b1cfe339c1863d8edf8137a337681fb2780"
+        "docs-chip": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84"
       },
       "source_freshness": [
         {
           "source_file": "Sources/docs-chip/zh/power_stone/p1/p1_docs/p1_ds.md",
           "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "current",
           "reason": "source_file_unchanged"
         }
@@ -4076,13 +4076,13 @@
       "stale_paths": [],
       "unknown_paths": [],
       "checked_against_commit": {
-        "docs-chip": "15254b1cfe339c1863d8edf8137a337681fb2780"
+        "docs-chip": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84"
       },
       "source_freshness": [
         {
           "source_file": "Sources/docs-chip/zh/power_stone/p1s/p1s_docs/p1s_ds.md",
           "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "current",
           "reason": "source_file_unchanged"
         }
@@ -4127,13 +4127,13 @@
       "stale_paths": [],
       "unknown_paths": [],
       "checked_against_commit": {
-        "docs-chip": "15254b1cfe339c1863d8edf8137a337681fb2780"
+        "docs-chip": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84"
       },
       "source_freshness": [
         {
           "source_file": "Sources/docs-chip/zh/power_stone/p3/p3_docs/p3_ds.md",
           "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc",
-          "checked_against_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "current",
           "reason": "source_file_unchanged"
         }
@@ -12569,8 +12569,8 @@
       "title": "Chips",
       "headers": [],
       "summary": "",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/index.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/index.md"
     },
     {
       "submodule": "docs-chip",
@@ -12580,8 +12580,8 @@
       "title": "K Series AI CPU Chips",
       "headers": [],
       "summary": "sidebar_position: 1",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/index.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/index.md"
     },
     {
       "submodule": "docs-chip",
@@ -12591,8 +12591,8 @@
       "title": "banner.txt",
       "headers": [],
       "summary": "K1 is World's Most Popular RISC-V AI CPU",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k1/banner.txt"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k1/banner.txt"
     },
     {
       "submodule": "docs-chip",
@@ -12602,8 +12602,8 @@
       "title": "K1",
       "headers": [],
       "summary": "sidebar_position: 2",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k1/index.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k1/index.md"
     },
     {
       "submodule": "docs-chip",
@@ -12613,8 +12613,8 @@
       "title": "Chip Product Documentation",
       "headers": [],
       "summary": "sidebar_position: 1",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k1/k1_docs/index.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k1/k1_docs/index.md"
     },
     {
       "submodule": "docs-chip",
@@ -12635,8 +12635,8 @@
         "2.2 Memory & Storage"
       ],
       "summary": "sidebar_position: 2",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k1/k1_docs/k1_ds.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k1/k1_docs/k1_ds.md"
     },
     {
       "submodule": "docs-chip",
@@ -12650,8 +12650,8 @@
         "Block Diagram"
       ],
       "summary": "sidebar_position: 1",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k1/k1_docs/root_overview.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k1/k1_docs/root_overview.md"
     },
     {
       "submodule": "docs-chip",
@@ -12663,8 +12663,8 @@
         "Revision History"
       ],
       "summary": "sidebar_position: 1",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k1/k1_docs/k1_usermanual/00_preface.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k1/k1_docs/k1_usermanual/00_preface.md"
     },
     {
       "submodule": "docs-chip",
@@ -12679,8 +12679,8 @@
         "1.4 Block Diagram"
       ],
       "summary": "sidebar_position: 2",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k1/k1_docs/k1_usermanual/1.Overview.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k1/k1_docs/k1_usermanual/1.Overview.md"
     },
     {
       "submodule": "docs-chip",
@@ -12701,8 +12701,8 @@
         "10.4.3 Functional Description"
       ],
       "summary": "sidebar_position: 11",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k1/k1_docs/k1_usermanual/10.Memory_%26_Storage.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k1/k1_docs/k1_usermanual/10.Memory_%26_Storage.md"
     },
     {
       "submodule": "docs-chip",
@@ -12718,8 +12718,8 @@
         "11.2.2 V2D"
       ],
       "summary": "sidebar_position: 12",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k1/k1_docs/k1_usermanual/11.Video_%26_Graphics.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k1/k1_docs/k1_usermanual/11.Video_%26_Graphics.md"
     },
     {
       "submodule": "docs-chip",
@@ -12740,8 +12740,8 @@
         "12.3.2 Features"
       ],
       "summary": "sidebar_position: 13",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k1/k1_docs/k1_usermanual/12.Display_Subsystem.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k1/k1_docs/k1_usermanual/12.Display_Subsystem.md"
     },
     {
       "submodule": "docs-chip",
@@ -12761,8 +12761,8 @@
         "13.3.3 Register Description"
       ],
       "summary": "sidebar_position: 14",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k1/k1_docs/k1_usermanual/13.Video_Capture_Subsystem.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k1/k1_docs/k1_usermanual/13.Video_Capture_Subsystem.md"
     },
     {
       "submodule": "docs-chip",
@@ -12783,8 +12783,8 @@
         "15.3.4 AUD_AHBDMA Registers"
       ],
       "summary": "sidebar_position: 15",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k1/k1_docs/k1_usermanual/14.RCPU_Subsystem.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k1/k1_docs/k1_usermanual/14.RCPU_Subsystem.md"
     },
     {
       "submodule": "docs-chip",
@@ -12805,8 +12805,8 @@
         "15.3 EMAC"
       ],
       "summary": "sidebar_position: 16",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k1/k1_docs/k1_usermanual/15.High-Speed_Interface_System.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k1/k1_docs/k1_usermanual/15.High-Speed_Interface_System.md"
     },
     {
       "submodule": "docs-chip",
@@ -12827,8 +12827,8 @@
         "16.2.4 Register Description"
       ],
       "summary": "sidebar_position: 17",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k1/k1_docs/k1_usermanual/16.Low-Speed_Interface_System.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k1/k1_docs/k1_usermanual/16.Low-Speed_Interface_System.md"
     },
     {
       "submodule": "docs-chip",
@@ -12842,8 +12842,8 @@
         "2.3 FCBGA Type"
       ],
       "summary": "sidebar_position: 3",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k1/k1_docs/k1_usermanual/2.Package.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k1/k1_docs/k1_usermanual/2.Package.md"
     },
     {
       "submodule": "docs-chip",
@@ -12864,8 +12864,8 @@
         "3.3.1 JTAG"
       ],
       "summary": "sidebar_position: 4",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k1/k1_docs/k1_usermanual/3.Pinout.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k1/k1_docs/k1_usermanual/3.Pinout.md"
     },
     {
       "submodule": "docs-chip",
@@ -12885,8 +12885,8 @@
         "4.5.2 In Particular Application Scenarios"
       ],
       "summary": "sidebar_position: 5",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k1/k1_docs/k1_usermanual/4.Electrical_Characteristics.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k1/k1_docs/k1_usermanual/4.Electrical_Characteristics.md"
     },
     {
       "submodule": "docs-chip",
@@ -12903,8 +12903,8 @@
         "5.2.4 SPI NAND/NOR Flash Boot Voltage Selection"
       ],
       "summary": "sidebar_position: 6",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k1/k1_docs/k1_usermanual/5.Boot_Modes.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k1/k1_docs/k1_usermanual/5.Boot_Modes.md"
     },
     {
       "submodule": "docs-chip",
@@ -12918,8 +12918,8 @@
         "6.3 Real-Time CPU Domain Address Mapping"
       ],
       "summary": "sidebar_position: 7",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k1/k1_docs/k1_usermanual/6.Address_Mapping.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k1/k1_docs/k1_usermanual/6.Address_Mapping.md"
     },
     {
       "submodule": "docs-chip",
@@ -12933,8 +12933,8 @@
         "7.3 Sensor-Hub Subsystem Interrupts"
       ],
       "summary": "sidebar_position: 8",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k1/k1_docs/k1_usermanual/7.Interrupt_Assignments.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k1/k1_docs/k1_usermanual/7.Interrupt_Assignments.md"
     },
     {
       "submodule": "docs-chip",
@@ -12955,8 +12955,8 @@
         "8.3.2 Features"
       ],
       "summary": "sidebar_position: 9",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k1/k1_docs/k1_usermanual/8.CPU_System.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k1/k1_docs/k1_usermanual/8.CPU_System.md"
     },
     {
       "submodule": "docs-chip",
@@ -12977,8 +12977,8 @@
         "9.3.3 Functional Description"
       ],
       "summary": "sidebar_position: 10",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k1/k1_docs/k1_usermanual/9.Top_System.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k1/k1_docs/k1_usermanual/9.Top_System.md"
     },
     {
       "submodule": "docs-chip",
@@ -12991,8 +12991,8 @@
         "Contents"
       ],
       "summary": "sidebar_position: 3",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k1/k1_docs/k1_usermanual/index.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k1/k1_docs/k1_usermanual/index.md"
     },
     {
       "submodule": "docs-chip",
@@ -13013,8 +13013,8 @@
         "3. LPDDR4x SDRAM Compatibility Test"
       ],
       "summary": "sidebar_position: 4",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k1/k1_hw/avl_veri_sop.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k1/k1_hw/avl_veri_sop.md"
     },
     {
       "submodule": "docs-chip",
@@ -13024,8 +13024,8 @@
       "title": "Hardware Design Resources & Guide",
       "headers": [],
       "summary": "sidebar_position: 2",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k1/k1_hw/index.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k1/k1_hw/index.md"
     },
     {
       "submodule": "docs-chip",
@@ -13035,8 +13035,8 @@
       "title": "K1 Hardware AVL",
       "headers": [],
       "summary": "sidebar_position: 3",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k1/k1_hw/k1_hw_avl.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k1/k1_hw/k1_hw_avl.md"
     },
     {
       "submodule": "docs-chip",
@@ -13057,8 +13057,8 @@
         "2.2 General Routing Guidelines"
       ],
       "summary": "sidebar_position: 2",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k1/k1_hw/k1_hw_design_guide.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k1/k1_hw/k1_hw_design_guide.md"
     },
     {
       "submodule": "docs-chip",
@@ -13079,8 +13079,8 @@
         "Peripherals and Interfaces"
       ],
       "summary": "sidebar_position: 5",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k1/k1_hw/k1_hw_faq.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k1/k1_hw/k1_hw_faq.md"
     },
     {
       "submodule": "docs-chip",
@@ -13101,8 +13101,8 @@
         "Schematic"
       ],
       "summary": "sidebar_position: 2",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k1/k1_hw/k1_hw_resources.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k1/k1_hw/k1_hw_resources.md"
     },
     {
       "submodule": "docs-chip",
@@ -13112,8 +13112,8 @@
       "title": "Software",
       "headers": [],
       "summary": "sidebar_position: 3",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k1/k1_sw/index.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k1/k1_sw/index.md"
     },
     {
       "submodule": "docs-chip",
@@ -13129,8 +13129,8 @@
         "ROS2 SDK (AI Robot Platform)"
       ],
       "summary": "sidebar_position: 1",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k1/k1_sw/k1_sdk_user_guide.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k1/k1_sw/k1_sdk_user_guide.md"
     },
     {
       "submodule": "docs-chip",
@@ -13151,8 +13151,8 @@
         "USB"
       ],
       "summary": "sidebar_position: 2",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k1/k1_sw/k1_sw_faq.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k1/k1_sw/k1_sw_faq.md"
     },
     {
       "submodule": "docs-chip",
@@ -13162,8 +13162,8 @@
       "title": "banner.txt",
       "headers": [],
       "summary": "K3 is World's First RVA23 Standard AI CPU",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k3/banner.txt"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k3/banner.txt"
     },
     {
       "submodule": "docs-chip",
@@ -13173,8 +13173,8 @@
       "title": "K3",
       "headers": [],
       "summary": "sidebar_position: 1",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k3/index.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k3/index.md"
     },
     {
       "submodule": "docs-chip",
@@ -13184,8 +13184,8 @@
       "title": "Chip Product Documentation",
       "headers": [],
       "summary": "sidebar_position: 1",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k3/k3_docs/index.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k3/k3_docs/index.md"
     },
     {
       "submodule": "docs-chip",
@@ -13206,8 +13206,8 @@
         "2.3 Image Subsystem"
       ],
       "summary": "sidebar_position: 2",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k3/k3_docs/k3_ds.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k3/k3_docs/k3_ds.md"
     },
     {
       "submodule": "docs-chip",
@@ -13221,8 +13221,8 @@
         "Block Diagram"
       ],
       "summary": "title: K3 Brief",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k3/k3_docs/root_overview.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k3/k3_docs/root_overview.md"
     },
     {
       "submodule": "docs-chip",
@@ -13234,8 +13234,8 @@
         "Revision History"
       ],
       "summary": "sidebar_position: 1",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k3/k3_docs/k3_usermanual/00_preface.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k3/k3_docs/k3_usermanual/00_preface.md"
     },
     {
       "submodule": "docs-chip",
@@ -13249,8 +13249,8 @@
         "1.3 Block Diagram"
       ],
       "summary": "sidebar_position: 2",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k3/k3_docs/k3_usermanual/01_overview.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k3/k3_docs/k3_usermanual/01_overview.md"
     },
     {
       "submodule": "docs-chip",
@@ -13264,8 +13264,8 @@
         "2.3 Part Number"
       ],
       "summary": "sidebar_position: 3",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k3/k3_docs/k3_usermanual/02_package.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k3/k3_docs/k3_usermanual/02_package.md"
     },
     {
       "submodule": "docs-chip",
@@ -13286,8 +13286,8 @@
         "3.3.1 JTAG – Primary"
       ],
       "summary": "sidebar_position: 4",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k3/k3_docs/k3_usermanual/03_pinout.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k3/k3_docs/k3_usermanual/03_pinout.md"
     },
     {
       "submodule": "docs-chip",
@@ -13305,8 +13305,8 @@
         "4.5 Power On/Off Sequence"
       ],
       "summary": "sidebar_position: 5",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k3/k3_docs/k3_usermanual/04_electrical.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k3/k3_docs/k3_usermanual/04_electrical.md"
     },
     {
       "submodule": "docs-chip",
@@ -13324,8 +13324,8 @@
         "5.2.5 DDR Type Selection"
       ],
       "summary": "sidebar_position: 6",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k3/k3_docs/k3_usermanual/05_boot_modes.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k3/k3_docs/k3_usermanual/05_boot_modes.md"
     },
     {
       "submodule": "docs-chip",
@@ -13338,8 +13338,8 @@
         "6.2 RCPU Domain Address Mapping"
       ],
       "summary": "sidebar_position: 7",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k3/k3_docs/k3_usermanual/06_address_map.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k3/k3_docs/k3_usermanual/06_address_map.md"
     },
     {
       "submodule": "docs-chip",
@@ -13352,8 +13352,8 @@
         "7.2 Real-Time CPU Interrupts"
       ],
       "summary": "sidebar_position: 8",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k3/k3_docs/k3_usermanual/07_interrupts.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k3/k3_docs/k3_usermanual/07_interrupts.md"
     },
     {
       "submodule": "docs-chip",
@@ -13374,8 +13374,8 @@
         "8.3.1 Overview"
       ],
       "summary": "sidebar_position: 9",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k3/k3_docs/k3_usermanual/08_cpu.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k3/k3_docs/k3_usermanual/08_cpu.md"
     },
     {
       "submodule": "docs-chip",
@@ -13396,8 +13396,8 @@
         "9.4 eMMC Interface"
       ],
       "summary": "sidebar_position: 10",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k3/k3_docs/k3_usermanual/09_memory_storage.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k3/k3_docs/k3_usermanual/09_memory_storage.md"
     },
     {
       "submodule": "docs-chip",
@@ -13418,8 +13418,8 @@
         "10.3.2 Features"
       ],
       "summary": "sidebar_position: 11",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k3/k3_docs/k3_usermanual/10_image.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k3/k3_docs/k3_usermanual/10_image.md"
     },
     {
       "submodule": "docs-chip",
@@ -13439,8 +13439,8 @@
         "11.4 Block Diagram"
       ],
       "summary": "sidebar_position: 12",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k3/k3_docs/k3_usermanual/11_video.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k3/k3_docs/k3_usermanual/11_video.md"
     },
     {
       "submodule": "docs-chip",
@@ -13459,8 +13459,8 @@
         "12.3.1 Features"
       ],
       "summary": "sidebar_position: 13",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k3/k3_docs/k3_usermanual/12_display.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k3/k3_docs/k3_usermanual/12_display.md"
     },
     {
       "submodule": "docs-chip",
@@ -13481,8 +13481,8 @@
         "13.5.1 Features"
       ],
       "summary": "sidebar_position: 14",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k3/k3_docs/k3_usermanual/13_audio.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k3/k3_docs/k3_usermanual/13_audio.md"
     },
     {
       "submodule": "docs-chip",
@@ -13503,8 +13503,8 @@
         "15.4 IOPMP"
       ],
       "summary": "sidebar_position: 16",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k3/k3_docs/k3_usermanual/15_security.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k3/k3_docs/k3_usermanual/15_security.md"
     },
     {
       "submodule": "docs-chip",
@@ -13523,8 +13523,8 @@
         "17.4.2 Register Description"
       ],
       "summary": "sidebar_position: 18",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k3/k3_docs/k3_usermanual/17_clock_reset.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k3/k3_docs/k3_usermanual/17_clock_reset.md"
     },
     {
       "submodule": "docs-chip",
@@ -13537,8 +13537,8 @@
         "Contents"
       ],
       "summary": "sidebar_position: 3",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k3/k3_docs/k3_usermanual/index.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k3/k3_docs/k3_usermanual/index.md"
     },
     {
       "submodule": "docs-chip",
@@ -13554,8 +13554,8 @@
         "14.4.3.2 Mode of Operation"
       ],
       "summary": "sidebar_position: 4",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k3/k3_docs/k3_usermanual/14_connectivity/can_fd.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k3/k3_docs/k3_usermanual/14_connectivity/can_fd.md"
     },
     {
       "submodule": "docs-chip",
@@ -13576,8 +13576,8 @@
         "14.9.3.1 Interface Signals"
       ],
       "summary": "sidebar_position: 9",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k3/k3_docs/k3_usermanual/14_connectivity/espi.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k3/k3_docs/k3_usermanual/14_connectivity/espi.md"
     },
     {
       "submodule": "docs-chip",
@@ -13597,8 +13597,8 @@
         "14.3.4.2 GMAC0 DLINE Register"
       ],
       "summary": "sidebar_position: 3",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k3/k3_docs/k3_usermanual/14_connectivity/ethernet_gmac.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k3/k3_docs/k3_usermanual/14_connectivity/ethernet_gmac.md"
     },
     {
       "submodule": "docs-chip",
@@ -13619,8 +13619,8 @@
         "14.7.3.7 Start & Stop Bus States"
       ],
       "summary": "sidebar_position: 7",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k3/k3_docs/k3_usermanual/14_connectivity/i2c.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k3/k3_docs/k3_usermanual/14_connectivity/i2c.md"
     },
     {
       "submodule": "docs-chip",
@@ -13630,8 +13630,8 @@
       "title": "14. Connectivity Subsystem",
       "headers": [],
       "summary": "sidebar_position: 15",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k3/k3_docs/k3_usermanual/14_connectivity/index.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k3/k3_docs/k3_usermanual/14_connectivity/index.md"
     },
     {
       "submodule": "docs-chip",
@@ -13652,8 +13652,8 @@
         "FIFO_STS REGISTER"
       ],
       "summary": "sidebar_position: 8",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k3/k3_docs/k3_usermanual/14_connectivity/ir_rx.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k3/k3_docs/k3_usermanual/14_connectivity/ir_rx.md"
     },
     {
       "submodule": "docs-chip",
@@ -13670,8 +13670,8 @@
         "14.1.4.2 Three Configuration Modes"
       ],
       "summary": "sidebar_position: 1",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k3/k3_docs/k3_usermanual/14_connectivity/pcie.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k3/k3_docs/k3_usermanual/14_connectivity/pcie.md"
     },
     {
       "submodule": "docs-chip",
@@ -13692,8 +13692,8 @@
         "14.5.3.7 FIFO Operation"
       ],
       "summary": "sidebar_position: 5",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k3/k3_docs/k3_usermanual/14_connectivity/spi.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k3/k3_docs/k3_usermanual/14_connectivity/spi.md"
     },
     {
       "submodule": "docs-chip",
@@ -13714,8 +13714,8 @@
         "14.6.3.7 Programmable Baud-Rate Generator"
       ],
       "summary": "sidebar_position: 6",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k3/k3_docs/k3_usermanual/14_connectivity/uart.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k3/k3_docs/k3_usermanual/14_connectivity/uart.md"
     },
     {
       "submodule": "docs-chip",
@@ -13736,8 +13736,8 @@
         "14.2.6.1 Power Management Registers"
       ],
       "summary": "sidebar_position: 2",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k3/k3_docs/k3_usermanual/14_connectivity/usb.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k3/k3_docs/k3_usermanual/14_connectivity/usb.md"
     },
     {
       "submodule": "docs-chip",
@@ -13758,8 +13758,8 @@
         "16.1.4.6 DMA Connectivity & Assignments"
       ],
       "summary": "sidebar_position: 1",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k3/k3_docs/k3_usermanual/16_peripherals/dma.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k3/k3_docs/k3_usermanual/16_peripherals/dma.md"
     },
     {
       "submodule": "docs-chip",
@@ -13776,8 +13776,8 @@
         "16.8.3.3 Register Description"
       ],
       "summary": "sidebar_position: 8",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k3/k3_docs/k3_usermanual/16_peripherals/gpio.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k3/k3_docs/k3_usermanual/16_peripherals/gpio.md"
     },
     {
       "submodule": "docs-chip",
@@ -13798,8 +13798,8 @@
         "16.2.4.6 Transfer Status"
       ],
       "summary": "sidebar_position: 2",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k3/k3_docs/k3_usermanual/16_peripherals/hdma.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k3/k3_docs/k3_usermanual/16_peripherals/hdma.md"
     },
     {
       "submodule": "docs-chip",
@@ -13809,8 +13809,8 @@
       "title": "16. System Peripherals",
       "headers": [],
       "summary": "sidebar_position: 17",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k3/k3_docs/k3_usermanual/16_peripherals/index.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k3/k3_docs/k3_usermanual/16_peripherals/index.md"
     },
     {
       "submodule": "docs-chip",
@@ -13824,8 +13824,8 @@
         "16.11.3 Functional Description"
       ],
       "summary": "sidebar_position: 11",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k3/k3_docs/k3_usermanual/16_peripherals/jtag.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k3/k3_docs/k3_usermanual/16_peripherals/jtag.md"
     },
     {
       "submodule": "docs-chip",
@@ -13845,8 +13845,8 @@
         "16.6.5.3 Mailbox Interrupt Thresholds"
       ],
       "summary": "sidebar_position: 6",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k3/k3_docs/k3_usermanual/16_peripherals/mailbox.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k3/k3_docs/k3_usermanual/16_peripherals/mailbox.md"
     },
     {
       "submodule": "docs-chip",
@@ -13865,8 +13865,8 @@
         "APCR_PER Voting Register"
       ],
       "summary": "sidebar_position: 10",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k3/k3_docs/k3_usermanual/16_peripherals/power_management.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k3/k3_docs/k3_usermanual/16_peripherals/power_management.md"
     },
     {
       "submodule": "docs-chip",
@@ -13884,8 +13884,8 @@
         "PWM_OUTCNT Register"
       ],
       "summary": "sidebar_position: 5",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k3/k3_docs/k3_usermanual/16_peripherals/pwm.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k3/k3_docs/k3_usermanual/16_peripherals/pwm.md"
     },
     {
       "submodule": "docs-chip",
@@ -13905,8 +13905,8 @@
         "16.7.5.2 Interrupt Mode"
       ],
       "summary": "sidebar_position: 7",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k3/k3_docs/k3_usermanual/16_peripherals/spinlock.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k3/k3_docs/k3_usermanual/16_peripherals/spinlock.md"
     },
     {
       "submodule": "docs-chip",
@@ -13919,8 +13919,8 @@
         "16.9.2 Features"
       ],
       "summary": "sidebar_position: 9",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k3/k3_docs/k3_usermanual/16_peripherals/timeout_monitor.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k3/k3_docs/k3_usermanual/16_peripherals/timeout_monitor.md"
     },
     {
       "submodule": "docs-chip",
@@ -13941,8 +13941,8 @@
         "Timer Count Restart Register"
       ],
       "summary": "sidebar_position: 3",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k3/k3_docs/k3_usermanual/16_peripherals/timer_watchdog.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k3/k3_docs/k3_usermanual/16_peripherals/timer_watchdog.md"
     },
     {
       "submodule": "docs-chip",
@@ -13955,8 +13955,8 @@
         "16.4.2 Features"
       ],
       "summary": "sidebar_position: 4",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k3/k3_docs/k3_usermanual/16_peripherals/tsensor.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k3/k3_docs/k3_usermanual/16_peripherals/tsensor.md"
     },
     {
       "submodule": "docs-chip",
@@ -13966,8 +13966,8 @@
       "title": "Hardware Design Resources & Guide",
       "headers": [],
       "summary": "sidebar_position: 2",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k3/k3_hw/index.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k3/k3_hw/index.md"
     },
     {
       "submodule": "docs-chip",
@@ -13977,8 +13977,8 @@
       "title": "K3 Hardware AVL",
       "headers": [],
       "summary": "sidebar_position: 3",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k3/k3_hw/k3_hw_avl.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k3/k3_hw/k3_hw_avl.md"
     },
     {
       "submodule": "docs-chip",
@@ -13996,8 +13996,8 @@
         "2.2 Design Improvements"
       ],
       "summary": "sidebar_position: 2",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k3/k3_hw/k3_hw_design_buglist.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k3/k3_hw/k3_hw_design_buglist.md"
     },
     {
       "submodule": "docs-chip",
@@ -14018,8 +14018,8 @@
         "2.1 PCB Stackup Design"
       ],
       "summary": "sidebar_position: 1",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k3/k3_hw/k3_hw_design_guide.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k3/k3_hw/k3_hw_design_guide.md"
     },
     {
       "submodule": "docs-chip",
@@ -14040,8 +14040,8 @@
         "Peripherals and Interfaces"
       ],
       "summary": "sidebar_position: 99",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k3/k3_hw/k3_hw_faq.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k3/k3_hw/k3_hw_faq.md"
     },
     {
       "submodule": "docs-chip",
@@ -14062,8 +14062,8 @@
         "Schematic"
       ],
       "summary": "sidebar_position: 4",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k3/k3_hw/k3_hw_resources.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k3/k3_hw/k3_hw_resources.md"
     },
     {
       "submodule": "docs-chip",
@@ -14073,8 +14073,8 @@
       "title": "Software",
       "headers": [],
       "summary": "sidebar_position: 3",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k3/k3_sw/index.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k3/k3_sw/index.md"
     },
     {
       "submodule": "docs-chip",
@@ -14089,8 +14089,8 @@
         "AI Robot SDK"
       ],
       "summary": "sidebar_position: 1",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/key_stone/k3/k3_sw/k3_sdk_user_guide.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/key_stone/k3/k3_sw/k3_sdk_user_guide.md"
     },
     {
       "submodule": "docs-chip",
@@ -14100,8 +14100,8 @@
       "title": "P Series Power Chips",
       "headers": [],
       "summary": "sidebar_position: 2",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/power_stone/index.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/power_stone/index.md"
     },
     {
       "submodule": "docs-chip",
@@ -14111,8 +14111,8 @@
       "title": "banner.txt",
       "headers": [],
       "summary": "P1 - Creating Efficient, Stable, and Flexible Customized Power Solutions for High-Performance Computing Systems",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/power_stone/p1/banner.txt"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/power_stone/p1/banner.txt"
     },
     {
       "submodule": "docs-chip",
@@ -14122,8 +14122,8 @@
       "title": "P1",
       "headers": [],
       "summary": "sidebar_position: 2",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/power_stone/p1/index.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/power_stone/p1/index.md"
     },
     {
       "submodule": "docs-chip",
@@ -14133,8 +14133,8 @@
       "title": "Chip Product Documentation",
       "headers": [],
       "summary": "sidebar_position: 1",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/power_stone/p1/p1_docs/index.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/power_stone/p1/p1_docs/index.md"
     },
     {
       "submodule": "docs-chip",
@@ -14155,8 +14155,8 @@
         "5. Electrical Characteristics"
       ],
       "summary": "sidebar_position: 2",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/power_stone/p1/p1_docs/p1_ds.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/power_stone/p1/p1_docs/p1_ds.md"
     },
     {
       "submodule": "docs-chip",
@@ -14170,8 +14170,8 @@
         "Block Diagram"
       ],
       "summary": "sidebar_position: 1",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/power_stone/p1/p1_docs/root_overview.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/power_stone/p1/p1_docs/root_overview.md"
     },
     {
       "submodule": "docs-chip",
@@ -14181,8 +14181,8 @@
       "title": "Hardware Design Guide",
       "headers": [],
       "summary": "sidebar_position: 2",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/power_stone/p1/p1_hw/index.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/power_stone/p1/p1_hw/index.md"
     },
     {
       "submodule": "docs-chip",
@@ -14200,8 +14200,8 @@
         "Double-Side Assembly Layout"
       ],
       "summary": "sidebar_position: 1",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/power_stone/p1/p1_hw/p1_pcb_guide.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/power_stone/p1/p1_hw/p1_pcb_guide.md"
     },
     {
       "submodule": "docs-chip",
@@ -14211,8 +14211,8 @@
       "title": "P1S",
       "headers": [],
       "summary": "sidebar_position: 3",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/power_stone/p1s/index.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/power_stone/p1s/index.md"
     },
     {
       "submodule": "docs-chip",
@@ -14222,8 +14222,8 @@
       "title": "Chip Product Documentation",
       "headers": [],
       "summary": "sidebar_position: 1",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/power_stone/p1s/p1s_docs/index.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/power_stone/p1s/p1s_docs/index.md"
     },
     {
       "submodule": "docs-chip",
@@ -14244,8 +14244,8 @@
         "5.1 Recommended working conditions"
       ],
       "summary": "sidebar_position: 2",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/power_stone/p1s/p1s_docs/p1s_ds.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/power_stone/p1s/p1s_docs/p1s_ds.md"
     },
     {
       "submodule": "docs-chip",
@@ -14259,8 +14259,8 @@
         "Block Diagram"
       ],
       "summary": "sidebar_position: 1",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/power_stone/p1s/p1s_docs/root_overview.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/power_stone/p1s/p1s_docs/root_overview.md"
     },
     {
       "submodule": "docs-chip",
@@ -14270,8 +14270,8 @@
       "title": "banner.txt",
       "headers": [],
       "summary": "P3 - High-Performance Four-Phase Buck Power Management Chip for High-Current, Space-Constrained Applications",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/power_stone/p3/banner.txt"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/power_stone/p3/banner.txt"
     },
     {
       "submodule": "docs-chip",
@@ -14281,8 +14281,8 @@
       "title": "P3",
       "headers": [],
       "summary": "sidebar_position: 1",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/power_stone/p3/index.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/power_stone/p3/index.md"
     },
     {
       "submodule": "docs-chip",
@@ -14292,8 +14292,8 @@
       "title": "Chip Product Documentation",
       "headers": [],
       "summary": "sidebar_position: 1",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/power_stone/p3/p3_docs/index.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/power_stone/p3/p3_docs/index.md"
     },
     {
       "submodule": "docs-chip",
@@ -14314,8 +14314,8 @@
         "4.1 Absolute Maximum Ratings"
       ],
       "summary": "sidebar_position: 2",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/power_stone/p3/p3_docs/p3_ds.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/power_stone/p3/p3_docs/p3_ds.md"
     },
     {
       "submodule": "docs-chip",
@@ -14331,8 +14331,8 @@
         "P3 Pin Diagram (Top View)"
       ],
       "summary": "sidebar_position: 1",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/power_stone/p3/p3_docs/root_overview.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/power_stone/p3/p3_docs/root_overview.md"
     },
     {
       "submodule": "docs-chip",
@@ -14342,8 +14342,8 @@
       "title": "V Series Server Chips",
       "headers": [],
       "summary": "sidebar_position: 3",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/vital_stone/index.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/vital_stone/index.md"
     },
     {
       "submodule": "docs-chip",
@@ -14353,8 +14353,8 @@
       "title": "banner.txt",
       "headers": [],
       "summary": "V100 is SpacemiT's High-Performance RISC-V Server Processor",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/vital_stone/v100/banner.txt"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/vital_stone/v100/banner.txt"
     },
     {
       "submodule": "docs-chip",
@@ -14364,8 +14364,8 @@
       "title": "V100",
       "headers": [],
       "summary": "sidebar_position: 1",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/vital_stone/v100/index.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/vital_stone/v100/index.md"
     },
     {
       "submodule": "docs-chip",
@@ -14375,8 +14375,8 @@
       "title": "Chip Product Documentation",
       "headers": [],
       "summary": "sidebar_position: 1",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/vital_stone/v100/v100_docs/index.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/vital_stone/v100/v100_docs/index.md"
     },
     {
       "submodule": "docs-chip",
@@ -14390,8 +14390,8 @@
         "Block Diagram"
       ],
       "summary": "title: V100 Brief",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/en/vital_stone/v100/v100_docs/root_overview.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/en/vital_stone/v100/v100_docs/root_overview.md"
     },
     {
       "submodule": "docs-chip",
@@ -14401,8 +14401,8 @@
       "title": "芯片",
       "headers": [],
       "summary": "",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/zh/index.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/zh/index.md"
     },
     {
       "submodule": "docs-chip",
@@ -14412,8 +14412,8 @@
       "title": "K 系列 AI CPU 芯片",
       "headers": [],
       "summary": "sidebar_position: 1",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/zh/key_stone/index.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/zh/key_stone/index.md"
     },
     {
       "submodule": "docs-chip",
@@ -14423,8 +14423,8 @@
       "title": "banner.txt",
       "headers": [],
       "summary": "K1 全球最受欢迎的 RISC-V AI CPU",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/zh/key_stone/k1/banner.txt"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/zh/key_stone/k1/banner.txt"
     },
     {
       "submodule": "docs-chip",
@@ -14434,8 +14434,8 @@
       "title": "K1",
       "headers": [],
       "summary": "sidebar_position: 2",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/zh/key_stone/k1/index.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/zh/key_stone/k1/index.md"
     },
     {
       "submodule": "docs-chip",
@@ -14445,8 +14445,8 @@
       "title": "芯片产品文档",
       "headers": [],
       "summary": "sidebar_position: 1",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/zh/key_stone/k1/k1_docs/index.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/zh/key_stone/k1/k1_docs/index.md"
     },
     {
       "submodule": "docs-chip",
@@ -14467,8 +14467,8 @@
         "2.2 内存与存储"
       ],
       "summary": "sidebar_position: 2",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/zh/key_stone/k1/k1_docs/k1_ds.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/zh/key_stone/k1/k1_docs/k1_ds.md"
     },
     {
       "submodule": "docs-chip",
@@ -14482,8 +14482,8 @@
         "框图"
       ],
       "summary": "sidebar_position: 1",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/zh/key_stone/k1/k1_docs/root_overview.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/zh/key_stone/k1/k1_docs/root_overview.md"
     },
     {
       "submodule": "docs-chip",
@@ -14493,8 +14493,8 @@
       "title": "用户手册",
       "headers": [],
       "summary": "sidebar_position: 3",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/zh/key_stone/k1/k1_docs/k1_usermanual/index.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/zh/key_stone/k1/k1_docs/k1_usermanual/index.md"
     },
     {
       "submodule": "docs-chip",
@@ -14515,8 +14515,8 @@
         "3. LPDDR4x SDRAM 兼容性测试"
       ],
       "summary": "sidebar_position: 4",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/zh/key_stone/k1/k1_hw/avl_veri_sop.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/zh/key_stone/k1/k1_hw/avl_veri_sop.md"
     },
     {
       "submodule": "docs-chip",
@@ -14526,8 +14526,8 @@
       "title": "硬件设计资源与指南",
       "headers": [],
       "summary": "sidebar_position: 2",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/zh/key_stone/k1/k1_hw/index.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/zh/key_stone/k1/k1_hw/index.md"
     },
     {
       "submodule": "docs-chip",
@@ -14537,8 +14537,8 @@
       "title": "K1 硬件 AVL",
       "headers": [],
       "summary": "sidebar_position: 3",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/zh/key_stone/k1/k1_hw/k1_hw_avl.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/zh/key_stone/k1/k1_hw/k1_hw_avl.md"
     },
     {
       "submodule": "docs-chip",
@@ -14559,8 +14559,8 @@
         "2.2 通用布线建议"
       ],
       "summary": "sidebar_position: 1",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/zh/key_stone/k1/k1_hw/k1_hw_design_guide.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/zh/key_stone/k1/k1_hw/k1_hw_design_guide.md"
     },
     {
       "submodule": "docs-chip",
@@ -14581,8 +14581,8 @@
         "外设及接口"
       ],
       "summary": "sidebar_position: 5",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/zh/key_stone/k1/k1_hw/k1_hw_faq.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/zh/key_stone/k1/k1_hw/k1_hw_faq.md"
     },
     {
       "submodule": "docs-chip",
@@ -14603,8 +14603,8 @@
         "原理图"
       ],
       "summary": "sidebar_position: 2",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/zh/key_stone/k1/k1_hw/k1_hw_resources.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/zh/key_stone/k1/k1_hw/k1_hw_resources.md"
     },
     {
       "submodule": "docs-chip",
@@ -14614,8 +14614,8 @@
       "title": "软件",
       "headers": [],
       "summary": "sidebar_position: 3",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/zh/key_stone/k1/k1_sw/index.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/zh/key_stone/k1/k1_sw/index.md"
     },
     {
       "submodule": "docs-chip",
@@ -14631,8 +14631,8 @@
         "ROS2 SDK（AI Robot 方案）"
       ],
       "summary": "sidebar_position: 1",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/zh/key_stone/k1/k1_sw/k1_sdk_user_guide.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/zh/key_stone/k1/k1_sw/k1_sdk_user_guide.md"
     },
     {
       "submodule": "docs-chip",
@@ -14653,8 +14653,8 @@
         "连接相关"
       ],
       "summary": "sidebar_position: 2",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/zh/key_stone/k1/k1_sw/k1_sw_faq.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/zh/key_stone/k1/k1_sw/k1_sw_faq.md"
     },
     {
       "submodule": "docs-chip",
@@ -14664,8 +14664,8 @@
       "title": "banner.txt",
       "headers": [],
       "summary": "K3 全球首款 RVA23 标准的 AI CPU",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/zh/key_stone/k3/banner.txt"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/zh/key_stone/k3/banner.txt"
     },
     {
       "submodule": "docs-chip",
@@ -14675,8 +14675,8 @@
       "title": "K3",
       "headers": [],
       "summary": "sidebar_position: 1",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/zh/key_stone/k3/index.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/zh/key_stone/k3/index.md"
     },
     {
       "submodule": "docs-chip",
@@ -14686,8 +14686,8 @@
       "title": "芯片产品文档",
       "headers": [],
       "summary": "sidebar_position: 1",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/zh/key_stone/k3/k3_docs/index.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/zh/key_stone/k3/k3_docs/index.md"
     },
     {
       "submodule": "docs-chip",
@@ -14708,8 +14708,8 @@
         "2.3 图像子系统"
       ],
       "summary": "sidebar_position: 2",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/zh/key_stone/k3/k3_docs/k3_ds.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/zh/key_stone/k3/k3_docs/k3_ds.md"
     },
     {
       "submodule": "docs-chip",
@@ -14723,8 +14723,8 @@
         "框图"
       ],
       "summary": "title: K3 产品简介",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/zh/key_stone/k3/k3_docs/root_overview.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/zh/key_stone/k3/k3_docs/root_overview.md"
     },
     {
       "submodule": "docs-chip",
@@ -14734,8 +14734,8 @@
       "title": "用户手册",
       "headers": [],
       "summary": "sidebar_position: 3",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/zh/key_stone/k3/k3_docs/k3_usermanual/index.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/zh/key_stone/k3/k3_docs/k3_usermanual/index.md"
     },
     {
       "submodule": "docs-chip",
@@ -14745,8 +14745,8 @@
       "title": "硬件设计资源与指南",
       "headers": [],
       "summary": "sidebar_position: 2",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/zh/key_stone/k3/k3_hw/index.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/zh/key_stone/k3/k3_hw/index.md"
     },
     {
       "submodule": "docs-chip",
@@ -14756,8 +14756,8 @@
       "title": "K3 硬件 AVL",
       "headers": [],
       "summary": "sidebar_position: 3",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/zh/key_stone/k3/k3_hw/k3_hw_avl.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/zh/key_stone/k3/k3_hw/k3_hw_avl.md"
     },
     {
       "submodule": "docs-chip",
@@ -14775,8 +14775,8 @@
         "2.2 设计改进"
       ],
       "summary": "sidebar_position: 2",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/zh/key_stone/k3/k3_hw/k3_hw_design_buglist.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/zh/key_stone/k3/k3_hw/k3_hw_design_buglist.md"
     },
     {
       "submodule": "docs-chip",
@@ -14797,8 +14797,8 @@
         "2.1 PCB 叠层设计"
       ],
       "summary": "sidebar_position: 1",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md"
     },
     {
       "submodule": "docs-chip",
@@ -14819,8 +14819,8 @@
         "外设及接口"
       ],
       "summary": "sidebar_position: 99",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/zh/key_stone/k3/k3_hw/k3_hw_faq.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/zh/key_stone/k3/k3_hw/k3_hw_faq.md"
     },
     {
       "submodule": "docs-chip",
@@ -14841,8 +14841,8 @@
         "原理图"
       ],
       "summary": "sidebar_position: 4",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/zh/key_stone/k3/k3_hw/k3_hw_resources.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/zh/key_stone/k3/k3_hw/k3_hw_resources.md"
     },
     {
       "submodule": "docs-chip",
@@ -14852,8 +14852,8 @@
       "title": "软件",
       "headers": [],
       "summary": "sidebar_position: 3",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/zh/key_stone/k3/k3_sw/index.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/zh/key_stone/k3/k3_sw/index.md"
     },
     {
       "submodule": "docs-chip",
@@ -14868,8 +14868,8 @@
         "AI Robot SDK"
       ],
       "summary": "sidebar_position: 1",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/zh/key_stone/k3/k3_sw/k3_sdk_user_guide.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/zh/key_stone/k3/k3_sw/k3_sdk_user_guide.md"
     },
     {
       "submodule": "docs-chip",
@@ -14879,8 +14879,8 @@
       "title": "P 系列电源芯片",
       "headers": [],
       "summary": "sidebar_position: 2",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/zh/power_stone/index.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/zh/power_stone/index.md"
     },
     {
       "submodule": "docs-chip",
@@ -14890,8 +14890,8 @@
       "title": "banner.txt",
       "headers": [],
       "summary": "P1 - 为高性能计算系统打造高效、稳定、灵活的定制化电源解决方案",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/zh/power_stone/p1/banner.txt"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/zh/power_stone/p1/banner.txt"
     },
     {
       "submodule": "docs-chip",
@@ -14901,8 +14901,8 @@
       "title": "P1",
       "headers": [],
       "summary": "sidebar_position: 2",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/zh/power_stone/p1/index.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/zh/power_stone/p1/index.md"
     },
     {
       "submodule": "docs-chip",
@@ -14912,8 +14912,8 @@
       "title": "芯片产品文档",
       "headers": [],
       "summary": "sidebar_position: 1",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/zh/power_stone/p1/p1_docs/index.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/zh/power_stone/p1/p1_docs/index.md"
     },
     {
       "submodule": "docs-chip",
@@ -14934,8 +14934,8 @@
         "5. 电气特性参数"
       ],
       "summary": "sidebar_position: 2",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/zh/power_stone/p1/p1_docs/p1_ds.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/zh/power_stone/p1/p1_docs/p1_ds.md"
     },
     {
       "submodule": "docs-chip",
@@ -14949,8 +14949,8 @@
         "框图"
       ],
       "summary": "sidebar_position: 1",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/zh/power_stone/p1/p1_docs/root_overview.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/zh/power_stone/p1/p1_docs/root_overview.md"
     },
     {
       "submodule": "docs-chip",
@@ -14960,8 +14960,8 @@
       "title": "硬件设计指南",
       "headers": [],
       "summary": "sidebar_position: 2",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/zh/power_stone/p1/p1_hw/index.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/zh/power_stone/p1/p1_hw/index.md"
     },
     {
       "submodule": "docs-chip",
@@ -14979,8 +14979,8 @@
         "双面贴片布局"
       ],
       "summary": "sidebar_position: 1",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/zh/power_stone/p1/p1_hw/p1_pcb_guide.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/zh/power_stone/p1/p1_hw/p1_pcb_guide.md"
     },
     {
       "submodule": "docs-chip",
@@ -14990,8 +14990,8 @@
       "title": "P1S",
       "headers": [],
       "summary": "sidebar_position: 3",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/zh/power_stone/p1s/index.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/zh/power_stone/p1s/index.md"
     },
     {
       "submodule": "docs-chip",
@@ -15001,8 +15001,8 @@
       "title": "芯片产品文档",
       "headers": [],
       "summary": "sidebar_position: 1",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/zh/power_stone/p1s/p1s_docs/index.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/zh/power_stone/p1s/p1s_docs/index.md"
     },
     {
       "submodule": "docs-chip",
@@ -15023,8 +15023,8 @@
         "5. 电气特性参数"
       ],
       "summary": "﻿sidebar_position: 2",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/zh/power_stone/p1s/p1s_docs/p1s_ds.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/zh/power_stone/p1s/p1s_docs/p1s_ds.md"
     },
     {
       "submodule": "docs-chip",
@@ -15038,8 +15038,8 @@
         "框图"
       ],
       "summary": "sidebar_position: 1",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/zh/power_stone/p1s/p1s_docs/root_overview.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/zh/power_stone/p1s/p1s_docs/root_overview.md"
     },
     {
       "submodule": "docs-chip",
@@ -15049,8 +15049,8 @@
       "title": "banner.txt",
       "headers": [],
       "summary": "P3 - 面向大电流、紧凑型场景的高性能四相降压电源管理芯片",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/zh/power_stone/p3/banner.txt"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/zh/power_stone/p3/banner.txt"
     },
     {
       "submodule": "docs-chip",
@@ -15060,8 +15060,8 @@
       "title": "P3",
       "headers": [],
       "summary": "sidebar_position: 1",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/zh/power_stone/p3/index.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/zh/power_stone/p3/index.md"
     },
     {
       "submodule": "docs-chip",
@@ -15071,8 +15071,8 @@
       "title": "芯片产品文档",
       "headers": [],
       "summary": "sidebar_position: 1",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/zh/power_stone/p3/p3_docs/index.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/zh/power_stone/p3/p3_docs/index.md"
     },
     {
       "submodule": "docs-chip",
@@ -15093,8 +15093,8 @@
         "4.1 绝对最大额定值"
       ],
       "summary": "sidebar_position: 2",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/zh/power_stone/p3/p3_docs/p3_ds.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/zh/power_stone/p3/p3_docs/p3_ds.md"
     },
     {
       "submodule": "docs-chip",
@@ -15110,8 +15110,8 @@
         "P3 引脚框图（Top View）"
       ],
       "summary": "sidebar_position: 1",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/zh/power_stone/p3/p3_docs/root_overview.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/zh/power_stone/p3/p3_docs/root_overview.md"
     },
     {
       "submodule": "docs-chip",
@@ -15121,8 +15121,8 @@
       "title": "V 系列服务器芯片",
       "headers": [],
       "summary": "sidebar_position: 3",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/zh/vital_stone/index.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/zh/vital_stone/index.md"
     },
     {
       "submodule": "docs-chip",
@@ -15132,8 +15132,8 @@
       "title": "banner.txt",
       "headers": [],
       "summary": "V100 是 SpacemiT 高性能 RISC-V 服务器处理器",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/zh/vital_stone/v100/banner.txt"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/zh/vital_stone/v100/banner.txt"
     },
     {
       "submodule": "docs-chip",
@@ -15143,8 +15143,8 @@
       "title": "V100",
       "headers": [],
       "summary": "sidebar_position: 1",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/zh/vital_stone/v100/index.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/zh/vital_stone/v100/index.md"
     },
     {
       "submodule": "docs-chip",
@@ -15154,8 +15154,8 @@
       "title": "芯片产品文档",
       "headers": [],
       "summary": "sidebar_position: 1",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/zh/vital_stone/v100/v100_docs/index.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/zh/vital_stone/v100/v100_docs/index.md"
     },
     {
       "submodule": "docs-chip",
@@ -15169,8 +15169,8 @@
         "产品框图"
       ],
       "summary": "title: V100 产品简介",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/15254b1cfe339c1863d8edf8137a337681fb2780/zh/vital_stone/v100/v100_docs/root_overview.md"
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-chip/2525ee3b68e0f4864f1bf12c8a59df040bf27e84/zh/vital_stone/v100/v100_docs/root_overview.md"
     },
     {
       "submodule": "docs-product",
@@ -26280,19 +26280,19 @@
       "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/808d02c1bd11cf0d4376555919bd61c90e38d853/zh/k3/07-%E7%89%88%E6%9C%AC%E8%AF%B4%E6%98%8E/index.md"
     }
   ],
-  "content_sha256": "362db39d8dea57e44bdf577547ade952d32833560b7d05f5b0842f5b404e52af",
+  "content_sha256": "67d70524011d11e03d7dfc6132378302cd84b1ecff03ce9e084e51ea2a3a970b",
   "build_meta": {
     "wiki_commit": "8d7bae80e22cdd782f4269ae819afc838a903cb9",
-    "wiki_worktree_dirty": false,
+    "wiki_worktree_dirty": true,
     "generated_at": "2026-10-21T03:40:24+00:00",
     "sources_commits": {
-      "docs-chip": "15254b1cfe339c1863d8edf8137a337681fb2780",
+      "docs-chip": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
       "docs-buildroot": "163a8fccf8e7071f3177753d2e86e482e97970fe",
       "docs-product": "bc640755145625cc20745f49861f82588863fca3",
       "docs-ai": "2b3894e983a295ed0278bc625867e0c132e0e259",
       "docs-ros": "808d02c1bd11cf0d4376555919bd61c90e38d853"
     },
-    "content_sha256": "362db39d8dea57e44bdf577547ade952d32833560b7d05f5b0842f5b404e52af",
+    "content_sha256": "67d70524011d11e03d7dfc6132378302cd84b1ecff03ce9e084e51ea2a3a970b",
     "counts": {
       "total_nodes": 66,
       "developer_journeys": 7,
