@@ -73,6 +73,29 @@ class RuntimeTests(unittest.TestCase):
             for key, value in dict(metadata, status="needs_review").items():
                 self.assertEqual(result[key], value)
 
+    def test_self_describing_notices_and_search_hints_preserve_evidence(self):
+        cases = json.loads((ROOT / "mcp/notice_cases.json").read_text())
+        for case in cases:
+            for kind, tool, parameter, content in [
+                ("evidence", "get_evidence_fact", "spec_name", "full_table_content"),
+                ("knowledge_atom", "read_knowledge_atom", "atom_name", "full_markdown_content"),
+                ("developer_journey", "get_developer_journey", "board_or_task", "full_markdown_content"),
+            ]:
+                with self.subTest(case=case["id"], kind=kind):
+                    item = node(case["id"], kind)
+                    item.update(case["metadata"])
+                    self.wiki.nodes = {item["id"]: item}
+                    result = self.call(tool, {parameter: item["id"]})
+                    self.assertEqual([n["code"] for n in result["agent_notice"]], case["codes"])
+                    self.assertEqual(result[content], item["content"])
+                    self.assertEqual(result["verification_status"], item["verification_status"])
+                    summary = self.call("search_wiki", {"query": item["id"]})[0]
+                    for code in case["codes"]:
+                        self.assertIn(code, summary["hint"])
+                    self.assertNotIn("agent_notice", summary)
+                    if item["freshness"] == "stale":
+                        self.assertEqual(result["agent_notice"][0]["source_paths"], item.get("stale_paths", []))
+
     def raw_fixture(self):
         item = dict(submodule="docs-ros", file_name="平台 概览.md", rel_path="docs-ros/zh/平台 概览.md",
                     repo_path="zh/平台 概览.md", source_commit="a" * 40,

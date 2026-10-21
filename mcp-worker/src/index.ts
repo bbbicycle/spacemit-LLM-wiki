@@ -1,5 +1,5 @@
 /**
- * Spacemit LLM Wiki - Cloudflare Worker 生产级 MCP Server (v2.2 D1 数据分析与错误记忆版)
+ * Spacemit LLM Wiki - Cloudflare Worker 生产级 MCP Server (v2.3 自解释知识服务)
  * 严格遵循 MCP 官方标准 SSE 协议与 Agent.md 规范
  * 
  * 核心功能：
@@ -12,6 +12,7 @@ import wikiData from "./data/wiki_graph.json";
 
 export interface Env {
   DB?: D1Database;
+  DEPLOYMENT_REF?: string;
 }
 
 export interface ExecutionContext {
@@ -31,6 +32,11 @@ interface WikiNode {
   backlinks: string[];
   summary: string;
   content: string;
+  freshness?: string;
+  verification_status?: string;
+  stale_paths?: string[];
+  unknown_paths?: string[];
+  external_use?: boolean;
 }
 
 interface RawSourceItem {
@@ -59,7 +65,7 @@ const SYSTEM_INSTRUCTIONS = `
 3. 缺失、冲突、过期或用户要求复核时，可 search_raw_sources 后 read_raw_source_file，默认返回 200 行，显式范围最多 500 行；按 has_more / next_start_line 续读。
 4. 普通问答以 1～3 次调用为目标；核心结论及关键参数已有支持即可停止，必要核实可继续。
 5. 区分芯片代际、板型和版本，引用来源并保留待审核/撤回/过期状态；verification_status 非 verified 时不得称为已核验；needs_review 表示尚未人工审核，deprecated 表示不作当前有效依据；来源已定位不等于事实已核验。freshness:current 仅表示已声明文件未变化，stale 需要复核，unknown 表示无法判断。external_use:false 的内容不得用于对外承诺。未知不猜测，歧义时使用候选的精确 ID。
-6. 问答不自动写库或上报反馈；反馈须由用户授权。
+6. 遵循节点 agent_notice 和搜索 hint；原文读取索引固定版本，不代表实时上游。问答不自动写库或上报反馈；反馈须由用户授权。
 `;
 
 const DEFAULT_RAW_LINES = 200;
@@ -217,6 +223,102 @@ function nodeMetadata(node: WikiNode) {
   return Object.fromEntries(fields.filter(field => field in node).map(field => [field, (node as any)[field]]));
 }
 
+interface AgentNotice {
+  code: string;
+  message: string;
+  source_paths?: string[];
+}
+
+function buildAgentNotice(node: WikiNode): AgentNotice[] {
+  const notices: AgentNotice[] = [];
+  const add = (code: string, message: string, paths?: string[]) => {
+    notices.push({ code, message, ...(paths !== undefined ? { source_paths: paths } : {}) });
+  };
+  const freshness = node.freshness ?? "unknown";
+  if (freshness === "stale") {
+    add("STALE", "声明来源在历史版本与索引固定快照之间已变化；用 read_raw_source_file 核对固定版本原文，说明节点待复核。实时上游需维护者另行同步核查。", node.stale_paths ?? []);
+  } else if (freshness === "unknown") {
+    add("UNKNOWN", "来源覆盖不完整或历史版本无法判断；核对 source_freshness 与原文，明确证据缺口，不能声称内容最新或已经核验。", node.unknown_paths ?? []);
+  }
+  const verification = node.verification_status ?? "unverified";
+  if (verification === "conflicted") {
+    add("CONFLICTED", "来源存在冲突；并列原始依据与适用版本，保留冲突说明，不自行择一或掩盖差异。");
+  } else if (verification !== "verified") {
+    add("UNVERIFIED", "事实尚未完成核验；引用具体来源并说明待复核，不表述为已审定结论。");
+  }
+  if (node.status === "needs_review") {
+    add("NEEDS_REVIEW", "文档待人工终审；事实核验与人工批准独立，current 或 verified 均不代表 approved。");
+  }
+  if (node.status === "deprecated") {
+    add("DEPRECATED", "文档已废弃或撤回；保留历史与替代来源，不作为当前有效依据。");
+  }
+  if (node.external_use === false) {
+    add("EXTERNAL_USE_RESTRICTED", "此条目不能用于对外事实承诺；访问公开资料不等于规格已获批准。");
+  }
+  if (["chip_product_specs", "hardware_schematic_design", "edge_ai_robotics"].includes(node.domain)) {
+    add("GENERATION_BOUNDARY", "参数绑定来源注明的芯片代际、板型与软硬件版本；接线前核对引脚、供电和电平，性能需保留测试条件，严禁跨产品套用。");
+  }
+  return notices;
+}
+
+function searchHint(node: WikiNode): string {
+  return buildAgentNotice(node).map(notice => notice.code).join(" / ") || "按来源与适用版本核对正文。";
+}
+
+// Match the builder's UTF-8 JSON (sort_keys=True, default separators). Sorting
+// by code point also agrees for supplementary Unicode characters in aliases.
+function canonicalJson(value: any): string {
+  if (Array.isArray(value)) return "[" + value.map(canonicalJson).join(", ") + "]";
+  if (value !== null && typeof value === "object") {
+    const keys = Object.keys(value).sort((a, b) => {
+      const left = Array.from(a, c => c.codePointAt(0)!);
+      const right = Array.from(b, c => c.codePointAt(0)!);
+      for (let i = 0; i < Math.min(left.length, right.length); i++) {
+        if (left[i] !== right[i]) return left[i] - right[i];
+      }
+      return left.length - right.length;
+    });
+    return "{" + keys.map(key => JSON.stringify(key) + ": " + canonicalJson(value[key])).join(", ") + "}";
+  }
+  return JSON.stringify(value);
+}
+
+async function validateLoadedIndex(): Promise<boolean> {
+  const data: any = wikiData;
+  const meta = data.build_meta;
+  const sha = (value: unknown) => typeof value === "string" && /^(?:[a-f0-9]{40}|[a-f0-9]{64})$/.test(value);
+  if (!meta || !sha(data.wiki_commit) || !/^[a-f0-9]{64}$/.test(data.content_sha256 ?? "")) return false;
+  if (!data.nodes || !Array.isArray(data.raw_sources) || !data.aliases || !data.source_versions) return false;
+  if (canonicalJson(Object.keys(data.source_versions).sort()) !== canonicalJson(
+    ["docs-ai", "docs-buildroot", "docs-chip", "docs-product", "docs-ros"])) return false;
+  if (!Object.values(data.source_versions).every(sha)) return false;
+  const entries = Object.values(data.nodes) as WikiNode[];
+  if (!entries.length || !data.raw_sources.length) return false;
+  const counts = {
+    total_nodes: entries.length,
+    developer_journeys: entries.filter(n => n.type === "developer_journey").length,
+    knowledge_atoms: entries.filter(n => n.type === "knowledge_atom").length,
+    evidence: entries.filter(n => n.type === "evidence").length,
+    raw_sources: data.raw_sources.length,
+  };
+  const freshness = Object.fromEntries(["current", "stale", "unknown"].map(state =>
+    [state, entries.filter(n => n.freshness === state).length]));
+  if (counts.total_nodes !== counts.developer_journeys + counts.knowledge_atoms + counts.evidence ||
+      counts.total_nodes !== freshness.current + freshness.stale + freshness.unknown ||
+      data.total_nodes !== counts.total_nodes || data.total_raw_sources !== counts.raw_sources) return false;
+  if (canonicalJson(meta.counts) !== canonicalJson(counts) ||
+      canonicalJson(meta.freshness_summary) !== canonicalJson(freshness) ||
+      canonicalJson(meta.sources_commits) !== canonicalJson(data.source_versions)) return false;
+  if (["wiki_commit", "generated_at", "wiki_worktree_dirty", "content_sha256"].some(key => meta[key] !== data[key])) return false;
+  if (typeof data.wiki_worktree_dirty !== "boolean" || !Number.isFinite(Date.parse(data.generated_at))) return false;
+  const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(canonicalJson({
+    nodes: data.nodes, raw_sources: data.raw_sources,
+  })));
+  return Array.from(new Uint8Array(digest), byte => byte.toString(16).padStart(2, "0")).join("") === data.content_sha256;
+}
+
+let loadedIndexValidation: Promise<boolean> | undefined;
+
 // 自动识别问题技术分类
 function categorizeQuery(toolName: string, queryStr: string): string {
   const q = (queryStr || "").toLowerCase();
@@ -299,7 +401,8 @@ async function handleToolCall(name: string, args: any, env: Env, cfData?: any, c
             title: node.title,
             type: node.type,
             domain: node.domain,
-            summary: Array.from(node.summary).slice(0, 150).join("") + "..."
+            summary: Array.from(node.summary).slice(0, 150).join("") + "...",
+            hint: searchHint(node)
           });
         }
       }
@@ -334,6 +437,7 @@ async function handleToolCall(name: string, args: any, env: Env, cfData?: any, c
             type: node.type,
             target_audience: node.target_audience,
             referenced_atoms: node.outlinks,
+            agent_notice: buildAgentNotice(node),
             full_markdown_content: node.content
           }, null, 2)
         }]
@@ -359,6 +463,7 @@ async function handleToolCall(name: string, args: any, env: Env, cfData?: any, c
             domain: node.domain,
             status: node.status,
             referenced_evidence: node.outlinks,
+            agent_notice: buildAgentNotice(node),
             full_markdown_content: node.content
           }, null, 2)
         }]
@@ -382,6 +487,7 @@ async function handleToolCall(name: string, args: any, env: Env, cfData?: any, c
             ...nodeMetadata(node),
             title: node.title,
             type: node.type,
+            agent_notice: buildAgentNotice(node),
             full_table_content: node.content
           }, null, 2)
         }]
@@ -532,7 +638,7 @@ async function handleJsonRpc(body: any, env: Env, cfData?: any, ctx?: ExecutionC
       result: {
         protocolVersion: "2024-11-05",
         capabilities: { tools: {} },
-        serverInfo: { name: "spacemit-wiki-mcp", version: "2.2.0" },
+        serverInfo: { name: "spacemit-wiki-mcp", version: wikiData.version },
         instructions: SYSTEM_INSTRUCTIONS
       }
     };
@@ -720,6 +826,26 @@ export default {
       return new Response(null, { headers: corsHeaders });
     }
 
+    if (url.pathname === "/health") {
+      const headers = { ...corsHeaders, "Content-Type": "application/json; charset=utf-8", "Cache-Control": "no-store" };
+      if (request.method !== "GET") return new Response(JSON.stringify({ error: "Method not allowed" }), {
+        status: 405, headers: { ...headers, Allow: "GET, OPTIONS" },
+      });
+      // The bundled index is immutable for this Worker version. Validate once;
+      // health is index readiness, not an assertion that D1 writes succeeded.
+      loadedIndexValidation ??= validateLoadedIndex().catch(() => false);
+      const valid = await loadedIndexValidation;
+      return new Response(JSON.stringify({
+        status: valid ? "ok" : "error",
+        service: "spacemit-wiki-mcp",
+        version: wikiData.version,
+        build_meta: (wikiData as any).build_meta ?? null,
+        deployment_ref: env.DEPLOYMENT_REF ?? null,
+        d1_bound: !!env.DB,
+        ...(!valid ? { error: "Loaded index failed validation" } : {}),
+      }), { status: valid ? 200 : 503, headers });
+    }
+
     // 访问可视化监控看板 /stats
     if (url.pathname === "/stats") {
       return renderStatsDashboard(env);
@@ -796,7 +922,7 @@ export default {
       }
     }
 
-    return new Response("Spacemit LLM Wiki MCP Server v2.2 is running! Stats: /stats, SSE: /sse", {
+    return new Response(`Spacemit LLM Wiki MCP Server ${wikiData.version} is running! Health: /health, Stats: /stats, SSE: /sse`, {
       headers: { ...corsHeaders, "Content-Type": "text/plain; charset=utf-8" }
     });
   }

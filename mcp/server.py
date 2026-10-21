@@ -26,7 +26,7 @@ SYSTEM_INSTRUCTIONS = """
 3. 缺失、冲突、过期或用户要求复核时，可 search_raw_sources 后 read_raw_source_file，默认返回 200 行，显式范围最多 500 行；按 has_more / next_start_line 续读。
 4. 普通问答以 1～3 次调用为目标；核心结论及关键参数已有支持即可停止，必要核实可继续。
 5. 区分芯片代际、板型和版本，引用来源并保留待审核/撤回/过期状态；verification_status 非 verified 时不得称为已核验；needs_review 表示尚未人工审核，deprecated 表示不作当前有效依据；来源已定位不等于事实已核验。freshness:current 仅表示已声明文件未变化，stale 需要复核，unknown 表示无法判断。external_use:false 的内容不得用于对外承诺。未知不猜测，歧义时使用候选的精确 ID。
-6. 问答不自动写库或上报反馈；反馈须由用户授权。
+6. 遵循节点 agent_notice 和搜索 hint；原文读取索引固定版本，不代表实时上游。问答不自动写库或上报反馈；反馈须由用户授权。
 """
 
 DEFAULT_RAW_LINES = 200
@@ -144,6 +144,40 @@ def node_metadata(node):
     return {field: node[field] for field in fields if field in node}
 
 
+def build_agent_notice(node):
+    """Stable response guidance shared with the production Worker contract."""
+    notices = []
+    def add(code, message, paths=None):
+        entry = dict(code=code, message=message)
+        if paths is not None:
+            entry["source_paths"] = paths
+        notices.append(entry)
+
+    freshness = node.get("freshness", "unknown")
+    if freshness == "stale":
+        add("STALE", "声明来源在历史版本与索引固定快照之间已变化；用 read_raw_source_file 核对固定版本原文，说明节点待复核。实时上游需维护者另行同步核查。", node.get("stale_paths", []))
+    elif freshness == "unknown":
+        add("UNKNOWN", "来源覆盖不完整或历史版本无法判断；核对 source_freshness 与原文，明确证据缺口，不能声称内容最新或已经核验。", node.get("unknown_paths", []))
+    verification = node.get("verification_status", "unverified")
+    if verification == "conflicted":
+        add("CONFLICTED", "来源存在冲突；并列原始依据与适用版本，保留冲突说明，不自行择一或掩盖差异。")
+    elif verification != "verified":
+        add("UNVERIFIED", "事实尚未完成核验；引用具体来源并说明待复核，不表述为已审定结论。")
+    if node.get("status") == "needs_review":
+        add("NEEDS_REVIEW", "文档待人工终审；事实核验与人工批准独立，current 或 verified 均不代表 approved。")
+    if node.get("status") == "deprecated":
+        add("DEPRECATED", "文档已废弃或撤回；保留历史与替代来源，不作为当前有效依据。")
+    if node.get("external_use") is False:
+        add("EXTERNAL_USE_RESTRICTED", "此条目不能用于对外事实承诺；访问公开资料不等于规格已获批准。")
+    if node.get("domain") in ("chip_product_specs", "hardware_schematic_design", "edge_ai_robotics"):
+        add("GENERATION_BOUNDARY", "参数绑定来源注明的芯片代际、板型与软硬件版本；接线前核对引脚、供电和电平，性能需保留测试条件，严禁跨产品套用。")
+    return notices
+
+
+def search_hint(node):
+    return " / ".join(notice["code"] for notice in build_agent_notice(node)) or "按来源与适用版本核对正文。"
+
+
 class SpacemitMCPServer:
     def __init__(self):
         with open(INDEX_PATH, "r", encoding="utf-8") as f:
@@ -232,7 +266,8 @@ class SpacemitMCPServer:
                         "title": node["title"],
                         "type": node["type"],
                         "domain": node["domain"],
-                        "summary": node["summary"][:150] + "..."
+                        "summary": node["summary"][:150] + "...",
+                        "hint": search_hint(node)
                     })
             results.sort(key=lambda result: result["score"], reverse=True)
             return {"content": [{"type": "text", "text": json.dumps(results[:5], ensure_ascii=False, indent=2)}]}
@@ -248,6 +283,7 @@ class SpacemitMCPServer:
                 "type": node["type"],
                 "target_audience": node["target_audience"],
                 "referenced_atoms": node["outlinks"],
+                "agent_notice": build_agent_notice(node),
                 "full_markdown_content": node["content"]
             }, ensure_ascii=False, indent=2)}]}
 
@@ -262,6 +298,7 @@ class SpacemitMCPServer:
                 "domain": node["domain"],
                 "status": node["status"],
                 "referenced_evidence": node["outlinks"],
+                "agent_notice": build_agent_notice(node),
                 "full_markdown_content": node["content"]
             }, ensure_ascii=False, indent=2)}]}
 
@@ -275,6 +312,7 @@ class SpacemitMCPServer:
                 "title": node["title"],
                 "type": node["type"],
                 "status": node["status"],
+                "agent_notice": build_agent_notice(node),
                 "full_table_content": node["content"]
             }, ensure_ascii=False, indent=2)}]}
 
@@ -375,7 +413,7 @@ class SpacemitMCPServer:
                     "result": {
                         "protocolVersion": "2024-11-05",
                         "capabilities": {"tools": {}},
-                        "serverInfo": {"name": "spacemit-wiki-mcp", "version": "2.0.0"},
+                        "serverInfo": {"name": "spacemit-wiki-mcp", "version": self.data["version"]},
                         "instructions": SYSTEM_INSTRUCTIONS
                     }
                 }

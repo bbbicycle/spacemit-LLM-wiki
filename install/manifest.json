@@ -8,12 +8,7 @@
     "files": [
       "SKILL.md",
       "README.md",
-      "mcp.md",
-      "rules/search-efficiency.md",
-      "rules/hardware-safety.md",
-      "rules/generational.md",
-      "rules/system-baseline.md",
-      "evals/evals.json"
+      "mcp.md"
     ]
   },
   "modes": {

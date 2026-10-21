@@ -50,6 +50,25 @@ async function call(name, args, expectError = false) {
     for (const [key, value] of Object.entries({ ...metadata, status: "needs_review" })) assert.deepEqual(result[key], value);
   }
 
+  const noticeCases = JSON.parse(fs.readFileSync(path.join(__dirname, "../mcp/notice_cases.json"), "utf8"));
+  for (const test of noticeCases) {
+    for (const [kind, tool, parameter, content] of [
+      ["evidence", "get_evidence_fact", "spec_name", "full_table_content"],
+      ["knowledge_atom", "read_knowledge_atom", "atom_name", "full_markdown_content"],
+      ["developer_journey", "get_developer_journey", "board_or_task", "full_markdown_content"],
+    ]) {
+      for (const id of Object.keys(data.nodes)) delete data.nodes[id];
+      data.nodes[test.id] = node(test.id, kind, test.metadata);
+      const detail = await call(tool, { [parameter]: test.id });
+      assert.deepEqual(detail.agent_notice.map(n => n.code), test.codes, `${test.id}: ${kind}`);
+      assert.equal(detail[content], "needle");
+      assert.equal(detail.verification_status, test.metadata.verification_status);
+      const summary = (await call("search_wiki", { query: test.id }))[0];
+      for (const code of test.codes) assert.ok(summary.hint.includes(code));
+      assert.equal(summary.agent_notice, undefined);
+    }
+  }
+
   data.raw_sources.length = 0;
   const item = { submodule: "docs-ros", file_name: "平台 概览.md", rel_path: "docs-ros/zh/平台 概览.md", repo_path: "zh/平台 概览.md", source_commit: "a".repeat(40), raw_url: `https://raw.githubusercontent.com/spacemit-com/docs-ros/${"a".repeat(40)}/zh/平台 概览.md` };
   data.raw_sources.push(item);

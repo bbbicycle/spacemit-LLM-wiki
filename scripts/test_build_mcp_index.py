@@ -10,7 +10,7 @@ import shutil
 import subprocess
 import tempfile
 import unittest
-from datetime import datetime, timezone
+from datetime import datetime
 
 spec = importlib.util.spec_from_file_location("build_mcp_index", Path(__file__).with_name("build_mcp_index.py"))
 builder = importlib.util.module_from_spec(spec)
@@ -61,18 +61,20 @@ class BuilderTests(unittest.TestCase):
     def snapshot(self):
         return [Path(path).read_bytes() for path in builder.index_paths(str(self.root))]
 
-    def test_build_records_real_time_commit_pins_and_metadata(self):
+    def test_build_records_input_commit_time_pins_and_metadata(self):
         evidence = self.root / "Evidence" / "evidence.md"
         self.write_document(evidence, extra=(
             "verification_status: unverified\nexternal_use: false\n"
             "source_file: Sources/docs-chip/hardware 中文.md\nsource_section: Boot\n"
             "verified_at: 2026-01-01\nchip: K1\nconflicts: pending\n"
         ))
-        before = datetime.now(timezone.utc).replace(microsecond=0)
         payload = self.build()
         timestamp = datetime.fromisoformat(payload["generated_at"])
-        self.assertLessEqual(before, timestamp)
-        self.assertLessEqual(timestamp, datetime.now(timezone.utc))
+        self.assertEqual(int(timestamp.timestamp()), int(git(self.root, "show", "-s", "--format=%ct", payload["wiki_commit"])))
+        self.assertEqual(payload["build_meta"]["wiki_commit"], payload["wiki_commit"])
+        self.assertEqual(payload["build_meta"]["content_sha256"], payload["content_sha256"])
+        self.assertEqual(payload["build_meta"]["counts"], dict(total_nodes=3, developer_journeys=1, knowledge_atoms=1, evidence=1, raw_sources=5))
+        self.assertEqual(payload["build_meta"]["freshness_summary"], dict(current=0, stale=0, unknown=3))
         self.assertEqual(payload["source_versions"], self.commits)
         self.assertEqual(payload["wiki_commit"], git(self.root, "rev-parse", "HEAD"))
         self.assertEqual(len(payload["raw_sources"]), 5)
@@ -225,17 +227,62 @@ class BuilderTests(unittest.TestCase):
             builder.check_indexes(str(self.root))
         self.assertEqual(self.snapshot(), original)
 
-    def test_if_changed_preserves_bytes_when_content_is_unchanged(self):
+    def commit_inputs(self):
+        git(self.root, "add", "Developer_Journeys", "Knowledge_Atoms", "Evidence", "Sources")
+        git(self.root, "commit", "-qm", "indexed inputs")
+
+    def test_repeated_builds_and_output_or_docs_commits_are_byte_identical(self):
+        self.commit_inputs()
         payload = self.build()
-        payload["generated_at"] = "2020-01-01T00:00:00+00:00"
-        payload["wiki_commit"] = "previous-build-commit"
-        payload["wiki_worktree_dirty"] = not payload["wiki_worktree_dirty"]
+        self.assertFalse(payload["wiki_worktree_dirty"])
+        original = self.snapshot()
+        for if_changed in (False, True):
+            self.build(if_changed=if_changed)
+            self.assertEqual(self.snapshot(), original)
+        git(self.root, "add", "mcp", "mcp-worker")
+        git(self.root, "commit", "-qm", "generated indexes")
+        (self.root / "README.md").write_text("operational documentation changed\n", encoding="utf-8")
+        self.build()
+        self.assertEqual(self.snapshot(), original)
+        git(self.root, "add", "README.md")
+        git(self.root, "commit", "-qm", "docs only")
+        self.build()
+        self.assertEqual(self.snapshot(), original)
+        self.assertNotEqual(payload["wiki_commit"], git(self.root, "rev-parse", "HEAD"))
+        with contextlib.redirect_stdout(io.StringIO()):
+            builder.check_indexes(str(self.root))
+        # A clean checkout with no preexisting output must reproduce the bytes.
+        for path in builder.index_paths(str(self.root)):
+            Path(path).unlink()
+        self.build()
+        self.assertEqual(self.snapshot(), original)
+
+    def test_input_changes_update_provenance_and_dirty_scope(self):
+        self.commit_inputs()
+        first = self.build()
+        self.write_document(self.root / "Evidence/evidence.md", body="revised fact")
+        dirty = self.build()
+        self.assertTrue(dirty["wiki_worktree_dirty"])
+        self.assertNotEqual(first["content_sha256"], dirty["content_sha256"])
+        self.commit_inputs()
+        clean = self.build()
+        self.assertFalse(clean["wiki_worktree_dirty"])
+        self.assertNotEqual(first["wiki_commit"], clean["wiki_commit"])
+        self.assertEqual(clean["content_sha256"], dirty["content_sha256"])
+        self.build()
+        self.assertEqual(*self.snapshot())
+
+    def test_check_rejects_forged_metadata_without_writing(self):
+        payload = self.build()
+        payload["build_meta"]["counts"]["evidence"] += 1
         with contextlib.redirect_stdout(io.StringIO()):
             builder.write_indexes(str(self.root), payload)
-        original = self.snapshot()
-        with contextlib.redirect_stdout(io.StringIO()):
-            builder.build_graph(str(self.root), if_changed=True)
-        self.assertEqual(self.snapshot(), original)
+        before = self.snapshot()
+        with contextlib.redirect_stdout(io.StringIO()), self.assertRaisesRegex(ValueError, "build_meta"):
+            builder.check_indexes(str(self.root))
+        self.assertEqual(self.snapshot(), before)
+        self.build(if_changed=True)
+        self.assertEqual(self.build()["build_meta"]["counts"]["evidence"], 1)
 
     def test_if_changed_rewrites_when_document_content_changes(self):
         self.build()

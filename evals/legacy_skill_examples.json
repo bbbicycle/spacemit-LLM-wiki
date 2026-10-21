@@ -59,5 +59,7 @@
         "给出正确的固件获取路径（board/spacemit/k1/target_overlay）"
       ]
     }
-  ]
+  ],
+  "status": "legacy_examples_not_validated",
+  "note": "历史问答样例，不是事实来源或通过报告；阶段 B 应按固定来源重新编制六领域评测。"
 }

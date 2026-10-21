@@ -1,0 +1,99 @@
+[
+  {
+    "id": "stale_unverified",
+    "metadata": {
+      "freshness": "stale",
+      "verification_status": "unverified",
+      "status": "needs_review",
+      "domain": "hardware_schematic_design",
+      "stale_paths": [
+        "Sources/docs-chip/board.md"
+      ]
+    },
+    "codes": [
+      "STALE",
+      "UNVERIFIED",
+      "NEEDS_REVIEW",
+      "GENERATION_BOUNDARY"
+    ]
+  },
+  {
+    "id": "unknown_missing_source",
+    "metadata": {
+      "freshness": "unknown",
+      "verification_status": "unverified",
+      "status": "needs_review",
+      "domain": "test"
+    },
+    "codes": [
+      "UNKNOWN",
+      "UNVERIFIED",
+      "NEEDS_REVIEW"
+    ]
+  },
+  {
+    "id": "current_pending_review",
+    "metadata": {
+      "freshness": "current",
+      "verification_status": "verified",
+      "status": "needs_review",
+      "domain": "test"
+    },
+    "codes": [
+      "NEEDS_REVIEW"
+    ]
+  },
+  {
+    "id": "conflicted_hardware",
+    "metadata": {
+      "freshness": "stale",
+      "verification_status": "conflicted",
+      "status": "needs_review",
+      "domain": "chip_product_specs"
+    },
+    "codes": [
+      "STALE",
+      "CONFLICTED",
+      "NEEDS_REVIEW",
+      "GENERATION_BOUNDARY"
+    ]
+  },
+  {
+    "id": "current_unverified_ai",
+    "metadata": {
+      "freshness": "current",
+      "verification_status": "unverified",
+      "status": "needs_review",
+      "domain": "edge_ai_robotics",
+      "external_use": false
+    },
+    "codes": [
+      "UNVERIFIED",
+      "NEEDS_REVIEW",
+      "EXTERNAL_USE_RESTRICTED",
+      "GENERATION_BOUNDARY"
+    ]
+  },
+  {
+    "id": "deprecated_verified",
+    "metadata": {
+      "freshness": "current",
+      "verification_status": "verified",
+      "status": "deprecated",
+      "domain": "test"
+    },
+    "codes": [
+      "DEPRECATED"
+    ]
+  },
+  {
+    "id": "approved_current",
+    "metadata": {
+      "freshness": "current",
+      "verification_status": "verified",
+      "status": "approved",
+      "domain": "test"
+    },
+    "codes": []
+  }
+]

@@ -41,7 +41,7 @@
   - `scripts/check_upstream_impact.py` 已支持持久基线 `docs/source_baseline.json` 及双链传递影响分析。
   - 本地 `mcp/server.py` 与云端 `mcp-worker/src/index.ts` 已对齐原文 200 行默认分页（最大窗口 500 行），且 Worker 已通过 `ctx.waitUntil` 实现 D1 查询日志与问题反馈的异步非阻塞写入。
 
-P0 已完成的是接口与目标元数据模型定义，不表示未来 Gateway 字段已全量实现。当前索引为 v2.2.0，已有顶层 `generated_at`、`wiki_commit`、`wiki_worktree_dirty`、`source_versions` 与 `content_sha256`；Worker 已有 `/stats` 和 `report_wiki_issue`。**`build_meta`、`/health`、`agent_notice` 及 Skill v1 瘦身冻结尚未实现**，均属于阶段 A。
+P0 已完成的是接口与目标元数据模型定义，不表示未来 Gateway 字段已全量实现。P1 索引 v2.2.0 已有顶层构建字段；阶段 A 将索引升级为 v2.3.0，已实现确定性 `build_meta`、Worker `/health`、双端 `agent_notice` / 搜索 `hint` 及轻量 Skill v1。Worker 保留 `/stats` 和授权反馈 `report_wiki_issue`；线上状态以 `/health` 与部署 smoke 为准。
 
 上述数量是当前仓库索引快照，不代表线上已部署版本或全库事实已经人工审核。P0 契约与 RACI 见 [MCP 接口契约](MCP_CONTRACT_V1.md)，P1 操作见 [新鲜度与维护闭环](FRESHNESS_MAINTENANCE.md)，历史记录见 [log.md](../log.md)。
 
@@ -51,7 +51,7 @@ P0 已完成的是接口与目标元数据模型定义，不表示未来 Gateway
 | :--- | :--- | :--- | :--- |
 | **P0** | 冻结目标与接口 | 明确三层拓扑、7 大核心 MCP 工具与来源元数据模型 | **DONE** |
 | **P1** | Wiki 新鲜度与自愈闭环 | 按文件路径检测 `stale`、固化上游影响基线与原文安全分页 | **DONE** |
-| **阶段 A（原第二步）** | **MCP 自解释改造与对外 Skill 瘦身** | 用“索引内嵌 `build_meta` + `/health` 自检 + 结果内联提示 + 极简 Skill 冻结”替代繁重的 P2 打包基建 | **当前待执行（近期第一步）** |
+| **阶段 A（原第二步）** | **MCP 自解释改造与对外 Skill 瘦身** | 用“索引内嵌 `build_meta` + `/health` 自检 + 结果内联提示 + 极简 Skill 冻结”替代繁重的 P2 打包基建 | **实现完成，部署验收中** |
 | **阶段 B（原第三步）** | **存量来源复核与查询驱动迭代** | 逐项复核首轮 12 个 `stale`、为 7 个 Journey 补来源，目标有据清零；利用 Cloudflare D1 真实查询日志驱动专题扩充与评测 | **当前待执行（日常核心闭环）** |
 | **P4** | 公司服务器承载 Wiki MCP | 在公司内部服务器运行独立 Wiki MCP 服务（灰度替代 Cloudflare） | 待公司服务器就绪后启动 |
 | **P5** | 接入公司 RAG 与混合编排 | 在服务端通过 MCP Gateway 编排 Wiki 精确检索与公司 RAG（含 ACL 权限过滤） | 待公司 RAG 接口就绪后启动 |
@@ -66,7 +66,7 @@ P0 已完成的是接口与目标元数据模型定义，不表示未来 Gateway
 
 #### 1. 修改 `scripts/build_mcp_index.py`
 
-两份索引继续保持字节一致；新增 `build_meta` 作为现有元数据的聚合视图，不另建 manifest。示意结构如下（版本号为拟议值，统计由构建器计算）：
+两份索引继续保持字节一致；新增 `build_meta` 作为现有元数据的聚合视图，不另建 manifest。结构如下（统计由构建器计算）：
 
 ```json
 {
@@ -96,8 +96,8 @@ P0 已完成的是接口与目标元数据模型定义，不表示未来 Gateway
 确定性与兼容要求：
 
 - 保留现有顶层字段及其兼容语义，新增聚合字段必须与其一致；记录五个 Sources 的完整固定 SHA 与内容哈希。
-- `wiki_commit` 表示构建输入来源，不能要求等于“包含此索引的提交自身”。索引提交会改变 HEAD，不能因此每次重建又产生一次无意义 diff。输入内容和来源版本未变时复用已记录的构建来源；同时记录实际部署 ref 于部署日志，区分构建来源和部署版本。
-- 入库索引不再使用每次变化的系统时间；兼容保留的 `generated_at` 使用固定构建来源提交时间等确定性值，真实运行时间写 CI 日志。阶段 A 明确并测试该策略，避免 SHA 自引用或时间戳引起反复改写。
+- `wiki_commit` 表示构建输入来源，不能要求等于“包含此索引的提交自身”。索引提交会改变 HEAD，不能因此每次重建又产生一次无意义 diff。按知识三层目录、Sources 和构建器的路径历史取最近一次输入提交；因此只提交索引或工程文档不会改变来源，清理输出后重建也可复现。同时记录实际部署 ref 于日志和 `/health.deployment_ref`，区分构建来源和部署版本。
+- 入库索引不再使用每次变化的系统时间；兼容保留的 `generated_at` 使用固定构建来源提交时间，真实运行时间写 CI 日志。`wiki_worktree_dirty` 仅反映构建输入；正式发布先提交输入再重建索引，避免带未提交来源发布。
 - `--if-changed` 的无变更保持策略与 `--check` 的只校验语义继续保留。验收还须实际重复构建比较文件字节，覆盖输入不变、仅提交索引、仅改工程文档及输入真正变化的场景，不能只运行 `--check` 证明确定性。
 
 #### 2. 在 `mcp-worker/src/index.ts` 增加 `GET /health` 端点
@@ -116,7 +116,7 @@ P0 已完成的是接口与目标元数据模型定义，不表示未来 Gateway
 
 - `/health` 暴露线上已加载索引的来源版本、内容哈希和 freshness 统计，不读取维护者本地 checkout。
 - `d1_bound` **只表示存在绑定**，不证明表已初始化、查询或异步写入成功。D1 运营可用性另用实际查询/反馈核查，不以绑定标志代替；索引不可用不得仍返回 `ok`。
-- 通过现有部署工作流部署指定 Git ref；回退时重新部署目标 ref 对应的服务代码与索引（重建时使用其固定的五个 Sources 指针），再核对版本、哈希及工具 smoke test。Git revert 或本地 checkout 本身不会切换线上 Worker。
+- 通过现有部署工作流手动 `ref` 入参或复用调用部署指定 Git ref；回退时重新部署目标 ref 对应的服务代码与索引（重建时使用其固定的五个 Sources 指针），再核对版本、哈希及工具 smoke test。Git revert 或本地 checkout 本身不会切换线上 Worker。
 
 ### A2. MCP 工具返回结果“自解释化”（Self-Describing Notices）
 
@@ -186,10 +186,10 @@ P0 已完成的是接口与目标元数据模型定义，不表示未来 Gateway
 2. **本地 Python（`mcp/server.py`）为纯标准库契约镜像**：维护 7 个核心检索工具的 stdio 协议支持，并在阶段 A 对齐 `agent_notice` 输出，不引入任何第三方 pip 依赖，作为精炼查询离线兜底与 CI 快速回归工具。原文读取仍需固定版本本地 Sources 或 GitHub，不能宣称无 Sources 时完整离线。
 
 ### 阶段 A 验收清单（完成后逐项打勾）
-- [ ] 两份索引新增一致的 `build_meta`，兼容顶层字段；重复构建字节一致、提交索引后不反复改写，`--check` 通过。
-- [ ] `mcp-worker/src/index.ts` 已支持 `GET /health` 并返回已加载索引的 `build_meta` 与 `d1_bound`，明确绑定不等于 D1 可用。
-- [ ] `mcp/server.py` 与 `mcp-worker/src/index.ts` 在返回节点时均已内联 `agent_notice`（覆盖 `stale`、`unverified/needs_review`、`conflicted` 与代际隔离提醒）。
-- [ ] `skill/spacemit-wiki/` 已清理全部维护指令与易变硬编码事实，冻结为稳定版。
+- [x] 两份索引新增一致的 `build_meta`，兼容顶层字段；重复构建字节一致、提交索引后不反复改写，`--check` 通过。
+- [x] `mcp-worker/src/index.ts` 已支持 `GET /health` 并返回已加载索引的 `build_meta` 与 `d1_bound`，明确绑定不等于 D1 可用。
+- [x] `mcp/server.py` 与 `mcp-worker/src/index.ts` 在返回节点时均已内联 `agent_notice`（覆盖 `stale`、`unverified/needs_review`、`conflicted` 与代际隔离提醒）。
+- [x] `skill/spacemit-wiki/` 已清理全部维护指令与易变硬编码事实，冻结为稳定版。
 - [ ] 双 lint、构建器、最小安装、Python/Worker 运行与跨端一致性回归及类型检查通过；部署后完成版本核对、核心搜索/事实读取及原文分页 smoke test，验证按 Git ref 重新部署的回退步骤。
 
 ## 4. 阶段 B（原第三步详细计划）：存量来源复核与查询驱动的内容迭代
@@ -287,7 +287,7 @@ python3 scripts/build_mcp_index.py --check
 
 ### B4. 建立 20 题核心回归评测集（Smoke & Accuracy Evals）
 
-在 `skill/spacemit-wiki/evals/`（或 `scripts/` 评测脚本）中固化 20 道覆盖 6 大技术领域（`domain`）的高价值真题，用于检验“极简 Skill + 自解释 MCP”的实际表现：
+在维护端 `evals/` 与 `scripts/` 评测脚本中固化 20 道覆盖 6 大技术领域（`domain`）的高价值真题，用于检验“极简 Skill + 自解释 MCP”的实际表现：
 
 | 题组 | 题数与候选主题 | `domain` 覆盖 |
 | --- | --- | --- |
@@ -297,7 +297,7 @@ python3 scripts/build_mcp_index.py --check
 | BSP、系统与安全启动 | 4：Buildroot 编译内核/U-Boot/打包、分区或 SecureBoot、Bianbu 版本与包安装、Bianbu GPIO 工具版本差异 | `bsp_kernel_drivers`、`bianbu_os_distribution` |
 | SpaceAI 与 ROS 2 | 4：量化/框架支持、MoE 总参数与激活参数及内存边界、ROS 2 平台/发行版支持、传感器/SLAM/运动控制的支持与计划状态 | `edge_ai_robotics` |
 
-每题记录问题、适用产品/版本、固定来源、预期命中或诚实未知行为、必要状态提示、实际结果与调用次数；算力和模型上限不写成脱离版本与测量条件的永久答案。在 20 题中安排 `stale`、`unknown`、冲突与待复核场景，确保 6 个 domain 均有明确题目。现有 `evals.json` 只是样例，不视为已通过的 20 题报告；评测执行记录留在维护端，避免为每轮结果更新用户 Skill。
+每题记录问题、适用产品/版本、固定来源、预期命中或诚实未知行为、必要状态提示、实际结果与调用次数；算力和模型上限不写成脱离版本与测量条件的永久答案。在 20 题中安排 `stale`、`unknown`、冲突与待复核场景，确保 6 个 domain 均有明确题目。历史样例已移至维护端 `evals/legacy_skill_examples.json`，不视为已通过的 20 题报告；评测执行记录留在维护端，避免为每轮结果更新用户 Skill。
 
 ### 阶段 B 验收清单（完成后逐项打勾）
 

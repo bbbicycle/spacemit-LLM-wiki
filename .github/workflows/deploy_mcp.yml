@@ -18,6 +18,11 @@ on:
       - 'docs/**'
       - '.github/workflows/deploy_mcp.yml'
   workflow_dispatch:
+    inputs:
+      ref:
+        description: Repository commit or tag to deploy (also used for rollback)
+        required: false
+        type: string
   workflow_call:
     inputs:
       ref:
@@ -57,9 +62,11 @@ jobs:
           python3 -B scripts/test_build_mcp_index.py
           python3 -B scripts/test_upstream_impact.py
           python3 -B -m unittest discover -s mcp -p 'test_server.py'
+          python3 -B scripts/test_minimal_install.py
 
       - name: Rebuild and validate MCP Dual-Layer Knowledge Index
         run: |
+          echo "Deployment ref: $(git rev-parse HEAD)"
           python3 scripts/build_mcp_index.py --freshness-report reports/freshness.json
           python3 scripts/build_mcp_index.py --check
 
@@ -98,6 +105,10 @@ jobs:
       - name: Deploy to Cloudflare Workers
         working-directory: mcp-worker
         run: |
-          npx wrangler deploy
+          npx wrangler deploy --var "DEPLOYMENT_REF:$(git rev-parse HEAD)"
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+
+      - name: Verify deployed version and MCP behavior
+        run: |
+          python3 -B scripts/smoke_mcp.py --url https://mcp.yao1302.xyz --expected-ref "$(git rev-parse HEAD)" --index mcp/data/wiki_graph.json

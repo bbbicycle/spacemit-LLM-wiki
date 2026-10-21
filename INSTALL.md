@@ -44,7 +44,7 @@ Worker 是生产端，Python 本地服务是纯标准库的 7 核心工具契约
 
 使用现有的下载或文件工具即可，云端用户不需要为了下载而安装 Git、Python、Node.js 或 Obsidian。下载文件内容应来自 raw 地址，不把 GitHub 网页 HTML 保存成 `SKILL.md` 或脚本。
 
-安装范围不包含 `Sources/`、子模块、Worker、整库 Markdown 或维护脚本。不要全量 clone、递归初始化子模块或运行 `build_mcp_index.py`。完整 Skill 包括 `SKILL.md`、`mcp.md`、`rules/` 和 `evals/` 等清单文件，不能只复制入口文件。
+安装范围不包含 `Sources/`、子模块、Worker、整库 Markdown 或维护脚本。不要全量 clone、递归初始化子模块或运行 `build_mcp_index.py`。完整 Skill v1 仅含清单中的 `SKILL.md`、`README.md` 和 `mcp.md`，不能只复制入口文件；旧安装的 `rules/`、`evals/` 已退出新版清单，不再作为查询规则加载。
 
 已有同名 Skill 或本地 MCP 时，先识别当前安装与用户修改，保留备份和非本安装管理的文件；存在冲突时向用户说明具体冲突。已安装且验证可用时复用，不为重复安装而改动配置。后续更新本地版时，Skill、服务脚本和发布索引仍取自同一提交，不在用户设备重新构建索引。
 
@@ -112,4 +112,4 @@ python3 -B scripts/test_minimal_install.py
 
 仓库维护、Sources 同步和云端部署见 [维护规范](docs/MAINTENANCE.md)，不是用户安装步骤。
 
-按 [项目计划 v2.0](docs/PROJECT_PLAN.md)，阶段 A 将精简并冻结用户 Skill；该任务尚未完成，本次计划调整不改变当前清单或安装要求。`build_meta`、`/health` 和 `agent_notice` 也仍待实现，安装验收继续使用上方现有 MCP 握手与真实查询流程。
+按 [项目计划 v2.0](docs/PROJECT_PLAN.md)，阶段 A 已将 Skill v1 精简为 3 个文件，新增服务端 `build_meta`、`/health`、`agent_notice` 与搜索 `hint`。健康接口用于核对线上索引、哈希和部署版本，`d1_bound` 仅表示绑定存在；安装验收仍须完成真实 MCP 握手与查询，不能仅以健康响应代替。

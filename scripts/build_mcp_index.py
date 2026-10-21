@@ -36,6 +36,24 @@ SUBMODULE_REPOS = {
     "docs-ros": "https://github.com/spacemit-com/docs-ros"
 }
 
+INDEX_VERSION = "2.3.0"
+# Generated indexes and operational docs are outputs, not build inputs. Using the
+# last input commit avoids a self-reference when the indexes themselves commit.
+INPUT_PATHS = ("Developer_Journeys", "Knowledge_Atoms", "Evidence", "Sources",
+               "scripts/build_mcp_index.py")
+
+
+def build_provenance(root_dir):
+    commit = git_output(root_dir, "log", "-1", "--format=%H", "--", *INPUT_PATHS)
+    commit = commit or git_output(root_dir, "rev-parse", "HEAD")
+    timestamp = int(git_output(root_dir, "show", "-s", "--format=%ct", commit))
+    return {
+        "wiki_commit": commit,
+        "generated_at": datetime.fromtimestamp(timestamp, timezone.utc).isoformat(timespec="seconds"),
+        "wiki_worktree_dirty": bool(git_output(
+            root_dir, "status", "--porcelain", "--untracked-files=normal", "--", *INPUT_PATHS)),
+    }
+
 
 def parse_scalar(value):
     """Parse the supported single-line YAML scalar subset; reject other syntax."""
@@ -481,10 +499,8 @@ def build_graph(root_dir=ROOT_DIR, write_outputs=True, if_changed=False):
     print(f"✅ 第二层（原始资料源清单）提取完成: 共 {len(raw_sources)} 篇原始官方手册")
 
     index_payload = {
-        "version": "2.2.0",
-        "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
-        "wiki_commit": git_output(root_dir, "rev-parse", "HEAD"),
-        "wiki_worktree_dirty": bool(git_output(root_dir, "status", "--porcelain", "--untracked-files=no")),
+        "version": INDEX_VERSION,
+        **build_provenance(root_dir),
         "source_versions": versions,
         "total_nodes": len(nodes),
         "total_raw_sources": len(raw_sources),
@@ -495,6 +511,16 @@ def build_graph(root_dir=ROOT_DIR, write_outputs=True, if_changed=False):
     index_payload["content_sha256"] = hashlib.sha256(
         json.dumps({"nodes": nodes, "raw_sources": raw_sources}, ensure_ascii=False, sort_keys=True).encode("utf-8")
     ).hexdigest()
+    index_payload["build_meta"] = {
+        "wiki_commit": index_payload["wiki_commit"],
+        "wiki_worktree_dirty": index_payload["wiki_worktree_dirty"],
+        "generated_at": index_payload["generated_at"],
+        "sources_commits": versions,
+        "content_sha256": index_payload["content_sha256"],
+        "counts": dict(total_nodes=len(nodes), developer_journeys=journeys_cnt,
+                       knowledge_atoms=atoms_cnt, evidence=evidence_cnt, raw_sources=len(raw_sources)),
+        "freshness_summary": freshness_report(index_payload)["summary"],
+    }
 
     if write_outputs:
         if if_changed and indexes_unchanged(root_dir, index_payload):
@@ -513,17 +539,20 @@ def index_paths(root_dir):
     ]
 
 
-CONTENT_FIELDS = ("version", "source_versions", "total_nodes", "total_raw_sources", "nodes", "aliases", "raw_sources", "content_sha256")
+CONTENT_FIELDS = ("version", "source_versions", "total_nodes", "total_raw_sources", "nodes", "aliases", "raw_sources", "content_sha256",
+                  "wiki_commit", "generated_at", "wiki_worktree_dirty", "build_meta")
 
 
 def indexes_unchanged(root_dir, expected):
-    """Ignore build provenance churn while checking both published copies."""
+    """Compare deterministic metadata as well as content in both copies."""
     try:
         copies = []
+        encoded = []
         for path in index_paths(root_dir):
-            with open(path, encoding="utf-8") as f:
-                copies.append(json.load(f))
-        if copies[0] != copies[1] or not isinstance(copies[0], dict):
+            with open(path, "rb") as f:
+                encoded.append(f.read())
+            copies.append(json.loads(encoded[-1]))
+        if encoded[0] != encoded[1] or not isinstance(copies[0], dict):
             return False
         timestamp = datetime.fromisoformat(copies[0]["generated_at"])
         if timestamp.tzinfo is None:
@@ -554,12 +583,13 @@ def write_indexes(root_dir, payload):
 
 def check_indexes(root_dir=ROOT_DIR):
     """验证两个索引完全一致，且其正文、源清单与当前 checkout 相符。"""
-    with open(index_paths(root_dir)[0], encoding="utf-8") as f:
-        payload = json.load(f)
-    with open(index_paths(root_dir)[1], encoding="utf-8") as f:
-        worker_payload = json.load(f)
-    if payload != worker_payload:
+    with open(index_paths(root_dir)[0], "rb") as f:
+        encoded = f.read()
+    with open(index_paths(root_dir)[1], "rb") as f:
+        worker_encoded = f.read()
+    if encoded != worker_encoded:
         raise ValueError("本地与 Worker 索引不一致，请重建索引")
+    payload = json.loads(encoded)
     generated_at = datetime.fromisoformat(payload["generated_at"])
     if generated_at.tzinfo is None:
         raise ValueError("索引构建时间缺少时区")

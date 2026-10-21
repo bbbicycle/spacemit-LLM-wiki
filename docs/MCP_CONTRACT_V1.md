@@ -3,7 +3,7 @@
 > 状态：**7 核心工具兼容契约与目标元数据模型已冻结** · 版本：**v1.0** · 更新：**2026-10-21**
 > 关联主计划：[docs/PROJECT_PLAN.md](PROJECT_PLAN.md) · 新鲜度维护：[docs/FRESHNESS_MAINTENANCE.md](FRESHNESS_MAINTENANCE.md)
 
-冻结的是工具语义与演进边界，不表示未来字段均已实现。阶段 A 的 `build_meta`、`/health`、`agent_notice` / `hint` 与用户 Skill 瘦身仍待执行；近期范围以主计划 A/B 为准。
+冻结的是工具语义与演进边界，不表示未来字段均已实现。阶段 A 已实现 `build_meta`、`/health`、`agent_notice` / `hint` 与轻量 Skill v1；线上以健康接口验证，阶段 B 仍待执行。
 
 ---
 
@@ -175,7 +175,7 @@ Worker 目前另有 `/stats`、异步 D1 查询日志和 `report_wiki_issue`；�
 
 `report_wiki_issue` 的必填参数为 `topic`、`description`，可选 `issue_type` 枚举为 `MISSING_DOC / INCORRECT_SPEC / BROKEN_LINK / SUGGESTION`（省略时当前默认 `MISSING_DOC`）。这是向维护者发送反馈的写操作，必须有用户明确授权；发现缺口时先诚实说明，不能自动上报。当前采用异步尽力写入，返回接受信息不能证明 D1 已成功持久化，也不表示问题已经核实或修复。
 
-只读查询指不改写知识库或用户文件、不触发提交推送；Worker 可记录查询日志。阶段 A 新增 `/health` 时，`d1_bound` 仅表示绑定存在，不能代替实际数据库可用性检查。
+只读查询指不改写知识库或用户文件、不触发提交推送；Worker 可记录查询日志。Worker `/health` 的 `d1_bound` 仅表示绑定存在，不能代替实际数据库可用性检查。
 
 ---
 
@@ -240,5 +240,14 @@ Worker 目前另有 `/stats`、异步 D1 查询日志和 `report_wiki_issue`；�
 * [x] **数据流边界已清晰**：官方资料 $\rightarrow$ Wiki 精炼图谱 $\rightarrow$ MCP 查询 $\rightarrow$ Agent 决策闭环已完成定义。
 * [x] **向后兼容边界已定义**：未来迁移公司服务器或接入 RAG 时，保持 7 大核心工具命名、入参与核心语义。
 * [x] **联合目标模型已固化**：明确 `source_kind`、`access_scope` 等跨库编排字段，当前实现情况见第 3 节。
-* [ ] **阶段 A 扩展实现**：确定性 `build_meta`、Worker `/health`、双端节点 `agent_notice` 与搜索 `hint`，兼容现有响应；Skill 瘦身与安装验收。
+* [x] **阶段 A 扩展实现**：确定性 `build_meta`、Worker `/health`、双端节点 `agent_notice` 与搜索 `hint`，兼容现有响应；Skill 瘦身与安装验收。
 * [ ] **公司 Gateway 接入**：P4/P5 条件就绪后再实现 HTTP/SSE 承载、认证、联合字段与 ACL，不随本契约文档更新宣称上线。
+
+
+## 6. 阶段 A 兼容扩展（v2.3.0）
+
+三个精炼正文工具新增可选 `agent_notice` 数组，每项包含稳定 `code`、中文 `message` 及可选 `source_paths`；搜索新增短 `hint`，继续返回原有状态与来源。原正文、参数与分页语义不变，提示不替代证据。
+
+提示 code：`STALE / UNKNOWN / CONFLICTED / UNVERIFIED / NEEDS_REVIEW / DEPRECATED / EXTERNAL_USE_RESTRICTED / GENERATION_BOUNDARY`。同一节点可同时包含多个提醒；`current + needs_review` 仍须提示待终审，`conflicted` 不能被普通待核验提醒盖掉。两端对相同节点生成相同结构。
+
+`GET /health` 是 Worker 运营接口：索引完整性通过返回 200/`ok`，失败返回 503/`error`；响应含索引 `version / build_meta`、可选部署配置 `deployment_ref`（未配置为 null）及 `d1_bound`。`build_meta` 与顶层构建字段一致，聚合 counts、freshness、五份 Sources SHA 和内容哈希。构建来源 SHA/时间由最近一次输入提交确定，实际部署 ref 单独记录；详见 [维护规范](MAINTENANCE.md)。这不扩展 Python 的 7 核心工具清单，不宣称联合 Gateway 字段已经落地。
