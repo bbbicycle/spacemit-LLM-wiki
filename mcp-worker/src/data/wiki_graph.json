@@ -1,8 +1,8 @@
 {
-  "version": "2.2.0",
-  "generated_at": "2026-10-20T10:35:04+00:00",
-  "wiki_commit": "f7768aad97ad44650c8da8276749ac2f14502d14",
-  "wiki_worktree_dirty": true,
+  "version": "2.3.0",
+  "wiki_commit": "8d7bae80e22cdd782f4269ae819afc838a903cb9",
+  "generated_at": "2026-10-21T03:40:24+00:00",
+  "wiki_worktree_dirty": false,
   "source_versions": {
     "docs-chip": "15254b1cfe339c1863d8edf8137a337681fb2780",
     "docs-buildroot": "163a8fccf8e7071f3177753d2e86e482e97970fe",
@@ -26280,5 +26280,30 @@
       "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/808d02c1bd11cf0d4376555919bd61c90e38d853/zh/k3/07-%E7%89%88%E6%9C%AC%E8%AF%B4%E6%98%8E/index.md"
     }
   ],
-  "content_sha256": "362db39d8dea57e44bdf577547ade952d32833560b7d05f5b0842f5b404e52af"
+  "content_sha256": "362db39d8dea57e44bdf577547ade952d32833560b7d05f5b0842f5b404e52af",
+  "build_meta": {
+    "wiki_commit": "8d7bae80e22cdd782f4269ae819afc838a903cb9",
+    "wiki_worktree_dirty": false,
+    "generated_at": "2026-10-21T03:40:24+00:00",
+    "sources_commits": {
+      "docs-chip": "15254b1cfe339c1863d8edf8137a337681fb2780",
+      "docs-buildroot": "163a8fccf8e7071f3177753d2e86e482e97970fe",
+      "docs-product": "bc640755145625cc20745f49861f82588863fca3",
+      "docs-ai": "2b3894e983a295ed0278bc625867e0c132e0e259",
+      "docs-ros": "808d02c1bd11cf0d4376555919bd61c90e38d853"
+    },
+    "content_sha256": "362db39d8dea57e44bdf577547ade952d32833560b7d05f5b0842f5b404e52af",
+    "counts": {
+      "total_nodes": 66,
+      "developer_journeys": 7,
+      "knowledge_atoms": 32,
+      "evidence": 27,
+      "raw_sources": 1231
+    },
+    "freshness_summary": {
+      "current": 47,
+      "stale": 12,
+      "unknown": 7
+    }
+  }
 }
