@@ -3,7 +3,7 @@ type: vault_index
 title: "Spacemit LLM Wiki · 6大前瞻技术领域全栈索引"
 status: needs_review
 created: 2026-06-29
-updated: 2026-10-20
+updated: 2026-10-21
 aliases: [index, index.md, 索引, 全局索引]
 ---
 
@@ -187,7 +187,7 @@ aliases: [index, index.md, 索引, 全局索引]
 *   [K3 数据手册（原始文件）](Sources/docs-chip/zh/key_stone/k3/k3_docs/k3_ds.md)
 *   [K3 硬件设计指南（原始文件）](Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md)
 *   [K3 硬件 AVL 列表（原始文件）](Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_avl.md)
-*   ~~[K3 热设计指南（原始文件）](Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_thermal_design.md)~~ **⚠️ 官方已于 2026-08 撤回**
+*   ~~K3 热设计指南（`Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_thermal_design.md`）~~ **⚠️ 官方已于 2026-08 撤回，保留历史路径，不再提供失效的本地跳转**
 *   [K3 SDK 使用指南（原始文件）](Sources/docs-chip/zh/key_stone/k3/k3_sw/k3_sdk_user_guide.md)
 *   [K3 硬件资源下载 (v2.1)](Sources/docs-chip/en/key_stone/k3/k3_hw/k3_hw_resources.md)
 *   [K3 硬件 FAQ（原始文件）](Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_faq.md)
@@ -221,5 +221,6 @@ aliases: [index, index.md, 索引, 全局索引]
 *   [[Agent]] —— 知识库运行与 AI Agent 协作规范。
 *   [[log]] —— 重构与维护日志。
 
-*   [项目计划与阶段进度](docs/PROJECT_PLAN.md) —— 公司服务器与 RAG 演进计划。
+*   [项目计划与阶段进度](docs/PROJECT_PLAN.md) —— v2.0：P0/P1 已完成，近期 A/B 自解释改造、来源复核与查询驱动迭代；公司部署/RAG 按需启动。
+*   [MCP 接口与目标元数据契约](docs/MCP_CONTRACT_V1.md) —— 7 核心工具兼容边界、Worker 运营扩展与未来 Gateway 模型。
 *   [新鲜度与维护闭环](docs/FRESHNESS_MAINTENANCE.md) —— P1 报告、来源字段、分页与 stale 复核流程。

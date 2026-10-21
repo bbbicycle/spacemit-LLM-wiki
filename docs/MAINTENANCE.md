@@ -3,12 +3,21 @@ type: maintenance_guide
 title: "Spacemit LLM Wiki 维护规范"
 status: needs_review
 created: 2026-06-29
-updated: 2026-10-20
+updated: 2026-10-21
 ---
 
 # 知识库维护规范
 
 仅在录入、编辑、同步或审计知识库时读取。普通问答遵循根目录 [Agent.md](../Agent.md)。本规范继承根入口的范围读取、证据核实和用户授权边界。
+
+阶段范围与验收以 [项目计划 v2.0](PROJECT_PLAN.md) 为准：P0/P1 已完成；近期为阶段 A（MCP 自解释与 Skill 瘦身）和阶段 B（存量来源复核与查询驱动迭代），均待执行；公司服务器与 RAG 进入 P4/P5 前须满足环境条件。
+
+## 服务端、用户 Skill 与维护规范的分工
+
+- Worker 是生产服务，负责知识返回、D1 日志、`/stats` 与 `report_wiki_issue`；Python 保持纯标准库的 7 核心工具契约镜像，用于精炼知识离线查询与 CI。两端共享知识语义，不要求复制运营能力。
+- 对外 Skill 的目标是稳定的检索与回答规则；硬件参数、节点统计与来源版本由服务器提供，维护命令留在本文件及配套维护文档。阶段 A 的 Skill 瘦身冻结尚未完成，当前安装仍按清单获取完整 Skill。
+- `build_meta`、`/health`、节点 `agent_notice` 与搜索 `hint` 是阶段 A 的待实现能力。当前应检查已有元数据，不依赖未来字段；接口边界见 [MCP 契约](MCP_CONTRACT_V1.md)。
+- 问答不改写知识或自动发送反馈；查询日志可由 Worker 异步记录。仅在用户明确授权时调用 `report_wiki_issue`，并且接受反馈不代表已成功持久化或完成核查。
 
 ## 1. 知识库定位与目标
 
@@ -153,7 +162,7 @@ sequenceDiagram
         - **未被覆盖的新增/重大文件**（潜在盲区文档）。
     3.  **知识提炼与档案重构**：
         - **更新现有知识原子**：对受影响的知识档案进行语义级比对，将上游的勘误、新配图、版本参数更新写入对应的 `Knowledge_Atoms/`，并标注 `updated: YYYY-MM-DD`。
-        - **新建知识原子**：对于全新的技术领域或产品（如新的 PMIC 芯片、服务器架构或安全机制），在 `Knowledge_Atoms/` 下创建新的主题档案。
+        - **新建知识原子**：新领域或产品先列为候选盲区，结合真实查询、授权反馈或明确的关键缺口，定向创建专题；不全量编译所有新增原文。
         - **官方撤文处理**：若上游删除了某篇文档（如撤回热设计指南），不得直接删除对应的知识原子，而应在原知识档案开头添加 `> [!CAUTION]` 撤文警告，并指向替代参考源。
     4.  **索引与日志同步挂载**：
         - 在 `index.md` 的对应技术领域板块挂载新建/更新的知识原子节点。
@@ -211,6 +220,8 @@ publication: false # 阻止条目进入公共 MCP；内部 tier 2/3、NDA 默认
 - 公共索引排除 tier 2/3、NDA、`publication:false` 或内部 visibility；公开条目不可引用这些节点。`external_use:false` 的上游技术条目作为待核验证据保留，不应对外承诺。
 - 来源元数据按确有依据填写：`source_origin`、`source_file`（完整路径）、`source_commit`、`source_section` 或 `source_locator`、`source_resolution`、`verification_status`、`verified_at`、`conflicts`。来源无法确定时标 `unresolved / unverified`；定位到文件不等于逐项核验。
 - 本地同步脚本先更新子模块再重建验证索引；CI将这两者共同提交并显式调用部署工作流，部署精确 commit。不要假设 GITHUB_TOKEN 的 push 会触发另一份 push 工作流。
+- 保留已配置 CI 对 Sources 指针、两份索引与影响基线的自动提交推送，以及派生报告和部署流程；不允许无人审阅的 AI 正文改写或事实来源 SHA/核验状态升级后自动发布。自动同步成功不是事实已批准。
+- 版本底座为 Git 与双端一致索引，不另建 `wiki-release/<version>` 目录。当前索引已有构建时间、来源 SHA 与内容哈希；阶段 A 再补确定性聚合 `build_meta`。回退线上需重新部署目标 ref 对应代码、索引及固定 Sources，随后验证版本与核心调用；本地 revert 不会切换服务。
 - `python3 vault_linker_lint.py` 检查链接、元数据和引用方向；`python3 scripts/lint_wiki_integrity.py` 检查有限的表达规则。二者均不能替代事实核查。
 - 原始出处优先记录仓库、文件路径、章节与 commit；`main` URL 代表实时版本，不能证明历史参数。
 - 新增节点同步挂载 `index.md`，重大维护记录到 `log.md`；资料撤回时保留历史并标明替代出处。
@@ -221,3 +232,11 @@ publication: false # 阻止条目进入公共 MCP；内部 tier 2/3、NDA 默认
 构建器支持顶层标量、别名/读者列表和来源路径/commit 平行列表；不支持的嵌套 YAML、块标量或重复字段会拒绝构建，不能静默绕过发布策略。完整字段透传不表示已自动认证其内容。
 
 P1 的来源字段、JSON 报告、分页边界与 stale 复核命令见 [新鲜度与维护闭环](FRESHNESS_MAINTENANCE.md)。
+
+## 9. 阶段 B 的日常内容闭环
+
+先处理当前索引中的 12 个 stale，区分非实质变更、事实/命令变化与迁移/撤回；再为 7 篇 Journey 补适用来源锚点。逐项保留 diff、核查范围与未解决原因，不为清零批量刷新 SHA，不把 `current` 当作人工批准。
+
+定期查看 `/stats` 或 D1 的未命中、原文高频读取与授权反馈：先判断叫法差异再补 aliases，确认真实盲区后才扩写节点。当前原文调用次数包含分页和主动核实，缺少会话关联时不能直接宣称回退率下降；记录统计窗口与口径，D1 绑定也不能证明实际读写成功。
+
+20 题评测须覆盖 6 个 domain，并记录来源、产品/版本、审核/新鲜度状态与实际结果。普通题以 1～3 次调用为目标，证据不足继续必要核实或说明未知；现有 Skill 评测样例不是已通过报告。具体任务与验收见 [项目计划阶段 B](PROJECT_PLAN.md)。

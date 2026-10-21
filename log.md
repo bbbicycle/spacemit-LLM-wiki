@@ -3,13 +3,24 @@ type: vault_log
 title: "Spacemit LLM Wiki 知识库重构与演进日志"
 status: active
 created: 2026-06-29
-updated: 2026-10-20
+updated: 2026-10-21
 ---
 
 # Spacemit LLM Wiki 知识库重构与演进日志 (log.md)
 
 > [!NOTE]
 > 本文件用于记录 Spacemit LLM Wiki 知识库的重构、清理、验证与 MCP 服务演进日志。
+
+---
+
+## [2026-10-21] docs | 项目计划 v2.0 收敛近期 A/B 范围并对齐配套文档
+
+- 按新计划将旧 P2/P3 的近期范围收敛为阶段 A（MCP 自解释、轻量版本溯源、用户 Skill 瘦身）和阶段 B（存量 stale/Journey 来源复核、D1 查询驱动迭代、20 题评测）；P4/P5 在公司环境和 RAG 接口就绪后再启动。
+- 保留 P0/P1 已完成基线与历史记录；本次仅更新计划和配套文档，不代表 `build_meta`、`/health`、`agent_notice`、Skill 冻结、12 个 stale 复核或 7 个 Journey 来源补齐已经完成。
+- 校正实际反馈工具 `report_wiki_issue` 及参数枚举、用户授权边界；明确原文读取固定索引 SHA，`current` 不等于人工批准或全文覆盖，清零必须有逐项核查证据。
+- 以 Git 与双端索引作为版本底座，补充确定性构建的来源 SHA/时间策略及重新部署回退要求；保留既有 CI 的 Sources/索引/影响基线自动提交，不自动改写知识正文或升级核验状态。
+- 同步 README、安装说明、MCP 契约、维护规范、新鲜度流程、Agent 入口和全局索引的阶段状态与职责分工；联合元数据明确为未来 Gateway 目标模型，避免误报为现有能力。全局索引中已撤回的 K3 热设计指南保留历史路径，移除失效的本地跳转。
+- 验证通过：双 lint、4 项最小安装测试、现有双端索引 `--check`、115 处本地 Markdown 链接目标检查与 `git diff --check`。服务代码、知识正文、Sources 和发布索引未变。
 
 ---
 

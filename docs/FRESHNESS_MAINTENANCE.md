@@ -2,6 +2,8 @@
 
 来源版本、新鲜度和事实核验是三个独立维度。构建与查询不会自动改写知识正文或把事实升级为已核验；维护者根据报告定向复核，再按授权提交和发布。
 
+P1 工具链已完成；当前 [项目计划 v2.0](PROJECT_PLAN.md) 的阶段 B 才是存量复核与 Journey 来源补齐任务，尚未执行。本页保留可用命令，阶段 A 的响应提示和健康接口不能作为当前已具备能力使用。
+
 ## 来源记录
 
 所有 Evidence 和包含事实的 Knowledge Atom 必填：
@@ -21,6 +23,8 @@ status: needs_review
 多文件用 `source_related_file` / `source_related_commit` 的等长列表，按位置一一对应；`source_file` / `source_commit` 也支持等长列表。单文件可用标量。补充来源跨子模块时，必须填写该子模块自己的 SHA，不继承主来源版本。构建器支持这些顶层列表，不支持嵌套 YAML。
 
 Journey 可通过双链访问 Atom/Evidence 的来源；没有直接来源时，其自身 freshness 为 `unknown`。关键操作步骤应直接声明原始出处。不得把整条 Journey 的无来源状态解释成所有引用均已过期。
+
+阶段 B 将为现有 7 篇 Journey 优先补 1～2 个核心来源，按关键步骤补充必要的其他出处，记录定位与核验范围。只锚定少数文件不能证明全文都受新鲜度监控；覆盖不足保持 `partial / unverified / needs_review`，不填无关来源来消除 `unknown`。
 
 ## 构建与定位 stale 节点
 
@@ -84,6 +88,16 @@ JSON 包含 `submodules`（old/new SHA）、`changed_files`（状态、完整路
 4. 对**实际检查过的来源**更新对应 `source_commit`（或补充来源列表中的该项）与 `source_checked_at`，设置 `status:needs_review` 和 `updated`。其余来源 SHA 不批量刷新。只有已逐项复核且证据充分，才按实际范围更新 `verification_status` 与 `verified_at`；AI 不设置 `status:approved`。
 5. 重建索引、运行以下校验并查看 diff。新增节点挂载 `index.md`，重大更新记录 `log.md`。
 
+复核时按变更类型分别处理：
+
+| 变更类型 | 处理与记录 |
+| --- | --- |
+| 排版、图片路径或无关章节变化 | 确认声明范围的事实未变后，仅更新已检查来源的 SHA、检查日期和文档更新日期，置 `needs_review`；保留核查说明，不升级未检查事实。 |
+| 参数、接线、命令或适用条件变化 | 阅读新旧章节上下文，修正正文并检查依赖节点与 Journey，保留勘误和未解决冲突；按实际复核范围更新核验记录，等待人工终审。 |
+| 删除、拆分、迁移或撤回 | 用历史 diff/log 定位；新路径须确认产品、版本及语义对应，再改路径/SHA。无可用替代时保留历史来源与撤回警告，将事项列为阻塞。 |
+
+当前索引快照为 47 current、12 stale、7 unknown；阶段 B 目标是在有证据复核后消化队列。无法判定的项保持真实状态并记录原因、负责人/后续动作；不能批量刷新 SHA 使报告清零。`stale: 0 / unknown: 0` 仅说明声明来源在该构建快照下可判定，不代表全文正确或 `status: approved`。`check_upstream_impact.py --cached` 比较持久基线，不一定保留所有旧 stale 的变化，逐条复核仍须使用节点自己的历史 `source_commit`。
+
 ```bash
 python3 vault_linker_lint.py
 python3 scripts/lint_wiki_integrity.py
@@ -101,6 +115,8 @@ git diff --stat
 ```
 
 Worker 测试需要 Node 22.13+（CI 使用 Node 24）；类型检查需要先在 `mcp-worker` 执行 `npm ci`。维护记录和检查通过不等于人工批准；提交与推送依据当前用户授权或既有自动化配置。
+
+已配置 CI 可自动同步 Sources、提交索引和影响基线并部署；不自动替维护者改写知识正文、刷新事实来源 SHA 或升级核验状态。线上回退需重新部署指定 Git ref 并核对索引与核心调用，不能只执行 Git revert。
 
 ## 原文分页契约
 

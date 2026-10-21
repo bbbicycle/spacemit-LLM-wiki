@@ -1,9 +1,15 @@
-# Spacemit LLM Wiki - 双层知识图谱 MCP Server (v2.1 index)
+# Spacemit LLM Wiki - 双层知识图谱 MCP Server
 
 本项目提供了专为 **Spacemit 芯片与产品知识库** 定制的 MCP Server。
 严格遵循 `Agent.md` 规范与 Anthropic MCP 协议，构建了 **“精炼知识图谱 + 原始资料源（Sources/）动态穿透”** 的双层知识服务架构。
 
 **用户安装请先读 [INSTALL.md](../INSTALL.md)**：云端版安装完整 Skill＋远程 SSE 配置；本地版安装完整 Skill＋本目录的服务脚本和发布索引。两种方式均无需全量克隆项目。下方 Cloudflare 部署步骤面向服务维护者。
+
+## 运行职责与近期计划
+
+Worker 是生产端，除 7 核心检索工具外，已提供 D1 异步日志、`/stats` 和用户授权反馈 `report_wiki_issue`。Python 是纯标准库的 stdio 契约镜像，用于精炼查询离线兜底与 CI，不复制 Worker 的运营端点和 D1 功能；原文仍可能需要联网。
+
+[项目计划 v2.0](../docs/PROJECT_PLAN.md) 已将旧 P2/P3 近期范围收敛为 A/B。当前索引 v2.2.0；阶段 A 的确定性 `build_meta`、Worker `/health`、双端 `agent_notice` / 搜索 `hint` 与 Skill 瘦身冻结均待实现；阶段 B 再复核存量来源与补充真实查询评测。核心工具兼容边界及未来字段见 [MCP 契约](../docs/MCP_CONTRACT_V1.md)。
 
 ---
 
@@ -21,7 +27,7 @@
 
 ---
 
-## 🚀 部署到 Cloudflare Workers（仅需 3 步，完全免费）
+## 🚀 部署到 Cloudflare Workers（维护者）
 
 ### 准备条件
 - 安装了 Node.js（v24+，运行 Worker 回归测试需要）
@@ -32,7 +38,7 @@
 ```bash
 python3 scripts/build_mcp_index.py
 ```
-构建需完整初始化五个 Sources 子模块；2026-10-19 合并快照为 66 个精炼节点、1231 个原始文件。索引同时写入 Python 和 Worker，记录真实构建时间、内容哈希与源 commit。缺少或存在未提交改动的 Sources 时构建失败，已有索引保留。
+构建需完整初始化五个 Sources 子模块；当前仓库索引快照为 66 个精炼节点、1231 个原始文件（47 current、12 stale、7 unknown）。索引同时写入 Python 和 Worker，已有顶层构建时间、主仓库来源 commit、Sources 版本和内容哈希；`--if-changed` 在内容与来源未变时保留原文件，`--check` 只校验不写入。阶段 A 将补确定性聚合元数据与重复构建验证。缺少或存在已跟踪修改的 Sources 时构建失败，已有索引保留。
 
 ```bash
 git submodule update --init --recursive
@@ -95,5 +101,9 @@ python3 mcp/server.py
 ## 同步与部署闭环
 
 本地 `./update_sources.sh` 完成子模块更新后重建双端索引并跑检查。CI 的同步工作流将更新和索引一起提交，然后直接调用可复用的部署工作流，传入精确 commit；不依赖 `GITHUB_TOKEN` 推送触发第二个工作流。部署必须先通过生产 Python/Worker 回归测试、索引校验、链接/文本规则和 TypeScript 检查。
+
+Git 与两份一致索引是版本底座，不额外维护 `wiki-release/<version>` 目录。线上回退须重新部署目标 ref 对应代码与索引；需重建时初始化其固定的五个 Sources 指针，再验证版本、内容哈希和核心调用。Git revert 本身不会恢复线上服务。
+
+保留 CI 对 Sources、索引和影响基线的自动提交推送，不进行无人审阅的 AI 正文改写或事实核验升级。`/stats` 与 `report_wiki_issue` 使用 D1，须确认表和实际读写可用；反馈仅按用户授权调用，当前异步接受信息不能证明已成功落库或修复。
 
 当前维护规范见 [MAINTENANCE.md](../docs/MAINTENANCE.md)。仅连接现有云端地址会使用已部署版本，本地修复需发布后才生效。

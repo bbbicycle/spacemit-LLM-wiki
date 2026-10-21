@@ -10,6 +10,8 @@
 
 **接入 AI：[安装指南（云端 / 本地两种方式）](INSTALL.md)** · [AI 按需下载清单](install/manifest.json)。两种方式都安装完整 Skill，无需全量克隆仓库。
 
+**项目进度：[架构演进与近期执行计划 v2.0](docs/PROJECT_PLAN.md)**。P0/P1 已完成；接下来是阶段 A「MCP 自解释与 Skill 瘦身」和阶段 B「存量来源复核与查询驱动迭代」，公司服务器和 RAG 按进入条件启动。`build_meta`、`/health`、`agent_notice` 与 Skill 冻结均待实现。
+
 ---
 
 <a name="中文文档"></a>
@@ -33,6 +35,8 @@
 | **本地 `local`** | 完整 Skill＋MCP 服务脚本＋发布索引 | Python 3.9+，客户端需支持 stdio |
 
 两种方式均无需克隆项目或下载 Sources。客户端还需支持 Skill；具体配置方式以客户端当前版本为准。本地精炼知识可离线查询，官方原文仍可能需要联网。
+
+Worker 是生产服务，提供 7 核心检索工具及 D1 日志、`/stats`、授权反馈 `report_wiki_issue`；本地 Python 保持纯标准库的 7 核心工具契约镜像，用于精炼查询兜底与 CI。Skill 的目标是稳定的检索行为契约，具体事实与状态以服务返回为依据；当前仍按安装清单获取完整 Skill。
 
 #### 2.1 复制给 AI 安装
 
@@ -210,7 +214,9 @@ GitHub Actions 工作流位于 `.github/workflows/sync_sources.yml`。
 2. **Execute Sync**：调用 `./update_sources.sh` 拉取并合并官方 upstream 分支变更。
 3. **Run Linker Lint**：运行 `python3 vault_linker_lint.py` 检查拓扑与 Domain 规则。
 4. **Run Integrity Lint**：运行 `python3 scripts/lint_wiki_integrity.py` 进行技术事实防幻觉校验。
-5. **Auto Commit & Push**：若检测到源文件更新，使用 `github-actions[bot]` 自动提交改动并推送至主分支。
+5. **Auto Commit & Push**：将 Sources 指针、双端索引和影响基线的更新提交并推送至主分支，保存 freshness / upstream-impact 报告并显式调用部署工作流。CI 不进行无人审阅的 AI 正文改写或事实核验升级；自动同步不等于内容已人工批准。
+
+维护命令与复核边界见 [维护规范](docs/MAINTENANCE.md) 和 [新鲜度维护流程](docs/FRESHNESS_MAINTENANCE.md)。版本由 Git 与双端一致索引追踪；线上回退仍需重新部署目标 ref 并核对版本与工具行为，不另建独立发布包目录。
 
 ---
 
@@ -234,6 +240,8 @@ Built upon **Obsidian Wikilinks**, a **Three-Tier Topology (Journeys - Atoms - E
 Choose **cloud** (recommended: complete Skill plus a remote SSE MCP connection) or **local** (complete Skill plus `mcp/server.py` and `mcp/data/wiki_graph.json`, Python 3.9+). Neither option requires cloning the repository or downloading Sources. Local refined knowledge is bundled; original upstream files may still require network access.
 
 Follow [INSTALL.md](INSTALL.md), the shared user and AI installation guide, and [install/manifest.json](install/manifest.json) for the exact files. Install the complete Skill and use your client's supported configuration format. The cloud endpoint is `https://mcp.yao1302.xyz/sse`; Skill and SSE support depend on the client and version.
+
+The Worker is the production service; Python is a standard-library mirror of the 7 core tools for local refined queries and CI. See [project plan v2.0](docs/PROJECT_PLAN.md): P0/P1 are complete; stages A/B cover self-describing responses, a stable lightweight Skill, source review and query-driven evaluation. `build_meta`, `/health`, `agent_notice` and the Skill freeze remain planned. Company hosting and RAG start only when their prerequisites are ready.
 
 ---
 

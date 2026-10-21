@@ -3,7 +3,7 @@ type: vault_agent
 title: "Spacemit LLM Wiki Agent 入口"
 status: needs_review
 created: 2026-06-29
-updated: 2026-10-20
+updated: 2026-10-21
 aliases: [Agent, Agent.md, AGENTS, AGENTS.md, 运行与协作规范]
 ---
 
@@ -27,5 +27,7 @@ aliases: [Agent, Agent.md, AGENTS, AGENTS.md, 运行与协作规范]
 ## 维护
 
 仅在编辑、录入、同步或审计时按需读取 [维护规范](docs/MAINTENANCE.md)。问答不自动写库、提交或推送；维护按用户授权执行。
+
+阶段范围与验收以 [项目计划](docs/PROJECT_PLAN.md) 为准。P0/P1 已完成，阶段 A/B 待执行；计划中的 `build_meta`、`/health`、`agent_notice` 和 Skill 冻结不能当作已上线能力。用户 Skill 承载稳定查询规则，维护命令留在仓库内部；Worker 负责生产运营，Python 保持 7 核心工具契约镜像。
 
 知识正文以中文为主，新增或修改后标记 `needs_review`。链接方向：Journey → Atom/Evidence；Atom → Atom/Evidence；Evidence 不向上引用，普通知识节点不引用 Journey。重大更新同步索引和日志，并执行相关检查。
