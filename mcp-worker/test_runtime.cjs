@@ -30,7 +30,7 @@ async function call(name, args, expectError = false) {
   for (const id of ["incidental", "needle_second", "needle_first"]) data.nodes[id] = node(id);
   let result = await call("search_wiki", { query: "needle" });
   assert.deepEqual(result.map(x => x.id), ["needle_second", "needle_first", "incidental"]);
-  assert.deepEqual(result.map(x => x.score), [13, 13, 3]);
+  assert.deepEqual(result.map(x => x.score), [29.4, 29.4, 5.3]);
   for (const name of ["incidental", "needle_second", "needle_first"]) data.raw_sources.push({ submodule: "docs-chip", file_name: name, rel_path: name, repo_path: name, title: name, headers: [], summary: "needle", raw_url: name });
   result = await call("search_raw_sources", { query: "needle" });
   assert.deepEqual(result.map(x => x.file_path), ["needle_second", "needle_first", "incidental"]);
@@ -46,9 +46,22 @@ async function call(name, args, expectError = false) {
   for (const id of Object.keys(data.nodes)) delete data.nodes[id];
   const metadata = { verification_status: "unverified", external_use: false, source_file: ["Sources/docs-chip/example.md"], source_commit: "abc", source_section: "voltage", source_locator: "example.md:10-20", source_resolution: "partial", source_note: "measurement conditions need review", source_checked_at: "2026-10-13", source_related_file: "Sources/docs-chip/related.md", source_related_commit: "def", freshness: "stale", stale_paths: ["Sources/docs-chip/example.md"], unknown_paths: [], checked_against_commit: { "docs-chip": "new" }, source_freshness: [{ freshness: "stale" }], metric_source_resolution: "unresolved", thermal_source_resolution: "unresolved", chip: "K3", product: "test board", verified_at: "2026-10-01", conflicts: ["needs review"], source_origin: "GitHub", source_tier: "tier_1", effective_until: "2026-12-01" };
   data.nodes.fact = node("fact", "evidence", metadata);
-  for (const result of [await call("get_evidence_fact", { spec_name: "fact" }), (await call("search_wiki", { query: "fact" }))[0]]) {
-    for (const [key, value] of Object.entries({ ...metadata, status: "needs_review" })) assert.deepEqual(result[key], value);
+  const factRes = await call("get_evidence_fact", { spec_name: "fact" });
+  for (const [key, value] of Object.entries({ ...metadata, status: "needs_review" })) assert.deepEqual(factRes[key], value);
+  const searchRes = (await call("search_wiki", { query: "fact" }))[0];
+  for (const key of ["id", "title", "type", "domain", "score", "status", "freshness", "verification_status", "summary", "hint"]) {
+    assert.ok(key in searchRes, `missing ${key}`);
   }
+  assert.equal(searchRes.freshness, "stale");
+  assert.equal(searchRes.source_freshness, undefined);
+  assert.equal(searchRes.metric_source_resolution, undefined);
+  assert.equal(searchRes.source_file, undefined);
+
+  for (const id of Object.keys(data.nodes)) delete data.nodes[id];
+  data.nodes.k3_strap = node("k3_strap", "evidence", { title: "K3 启动模式与 Strap 管脚配置", chip: "K3" });
+  data.nodes.k1_strap = node("k1_strap", "evidence", { title: "K1 启动模式与 Strap 管脚配置", chip: "K1" });
+  assert.equal((await call("search_wiki", { query: "K3 Strap 启动" }))[0].id, "k3_strap");
+  assert.equal((await call("search_wiki", { query: "K1 启动模式" }))[0].id, "k1_strap");
 
   const noticeCases = JSON.parse(fs.readFileSync(path.join(__dirname, "../mcp/notice_cases.json"), "utf8"));
   for (const test of noticeCases) {

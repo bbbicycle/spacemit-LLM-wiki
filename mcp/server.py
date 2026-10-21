@@ -9,6 +9,7 @@ Spacemit LLM Wiki - 本地标准 MCP Stdio Server (零依赖，支持 Antigravit
 import sys
 import json
 import os
+import re
 import subprocess
 import urllib.parse
 import urllib.request
@@ -139,6 +140,93 @@ def raw_read_options(args):
     return values
 
 
+STOPWORDS = {"的", "与", "和", "及", "在", "是", "怎么", "如何", "什么", "哪些", "指南", "专题", "档案", "向导", "配置", "说明"}
+GENERATION_TOKENS = {"k1", "k3", "v100", "p1", "p3", "muse_pi", "muse-pi", "m1", "com260"}
+
+
+def tokenize_query(query: str) -> list[str]:
+    """中英文/数字混合分词，兼顾型号词保护与轻量 2-gram 回退。"""
+    q = query.lower().strip()
+    if not q:
+        return []
+    raw_chunks = re.findall(r"[a-z0-9_.-]+|[\u4e00-\u9fff]+", q)
+    tokens = []
+    for chunk in raw_chunks:
+        if chunk in STOPWORDS:
+            continue
+        tokens.append(chunk)
+        if re.match(r"^[\u4e00-\u9fff]+$", chunk) and len(chunk) >= 4:
+            for i in range(len(chunk) - 1):
+                bi = chunk[i:i+2]
+                if bi not in STOPWORDS:
+                    tokens.append(bi)
+    return list(dict.fromkeys(tokens)) or [q]
+
+
+def score_node_match(query: str, tokens: list[str], node_id: str, node: dict) -> float:
+    """计算节点匹配得分：具备代际隔离保护、字段互斥与覆盖率加权。"""
+    q = query.lower().strip()
+    title_l = node["title"].lower()
+    id_l = node_id.lower()
+    aliases_l = [a.lower() for a in node.get("aliases", [])]
+    summary_l = node.get("summary", "").lower()
+    content_l = node.get("content", "").lower()
+    chip_l = node.get("chip", "").lower()
+    product_l = node.get("product", "").lower()
+
+    score = 0.0
+
+    # 1. 整串精确/包含匹配
+    if q == title_l or q == id_l:
+        score += 30.0
+    elif q in title_l or q in id_l:
+        score += 15.0
+    if any(q == a for a in aliases_l):
+        score += 25.0
+    elif any(q in a for a in aliases_l):
+        score += 12.0
+    if q in content_l:
+        score += 4.0
+
+    # 2. 芯片代际硬锚点保护（防代际混淆）
+    target_ident = f"{id_l} {title_l} {chip_l} {product_l} {' '.join(aliases_l)}"
+    query_generations = [t for t in tokens if t in GENERATION_TOKENS]
+    for gen in query_generations:
+        if gen in target_ident:
+            score += 25.0
+        else:
+            other_gens = GENERATION_TOKENS - {gen}
+            if any(og in target_ident for og in other_gens):
+                score -= 20.0
+
+    # 3. 逐词加权打分（互斥阶梯，防止单词多处累加失控）
+    matched_count = 0
+    token_score = 0.0
+    for tok in tokens:
+        hit = False
+        if tok in title_l or tok in id_l:
+            token_score += 8.0
+            hit = True
+        elif any(tok in a for a in aliases_l):
+            token_score += 6.0
+            hit = True
+        elif tok in summary_l:
+            token_score += 3.0
+            hit = True
+        elif tok in content_l:
+            token_score += 1.0
+            hit = True
+        if hit:
+            matched_count += 1
+
+    if tokens and matched_count > 0:
+        coverage = matched_count / len(tokens)
+        multiplier = 1.3 if coverage >= 0.8 else (0.6 + 0.4 * coverage)
+        score += token_score * multiplier
+
+    return round(score, 2)
+
+
 def node_metadata(node):
     fields = ("id", "type", "status", "verification_status", "external_use", "publication", "source_file", "source_commit", "source_section", "source_locator", "source_resolution", "source_note", "source_checked_at", "source_related_file", "source_related_commit", "freshness", "stale_paths", "unknown_paths", "checked_against_commit", "source_freshness", "metric_source_resolution", "thermal_source_resolution", "chip", "product", "verified_at", "conflicts", "source_origin", "source_tier", "effective_until", "superseded_by", "updated")
     return {field: node[field] for field in fields if field in node}
@@ -243,30 +331,25 @@ class SpacemitMCPServer:
 
     def _handle_tool_call(self, name: str, args: dict):
         if name == "search_wiki":
-            q = required_text(args.get("query"), "query").lower()
+            query_str = required_text(args.get("query"), "query")
+            tokens = tokenize_query(query_str)
             domain = args.get("domain")
             results = []
             for node_id, node in self.nodes.items():
                 if domain and node.get("domain") != domain:
                     continue
-                score = 0
-                if q in node["title"].lower() or q in node_id.lower():
-                    score += 10
-                for a in node.get("aliases", []):
-                    if q in a.lower():
-                        score += 8
-                        break
-                if q in node.get("content", "").lower():
-                    score += 3
+                score = score_node_match(query_str, tokens, node_id, node)
                 if score > 0:
                     results.append({
-                        **node_metadata(node),
-                        "score": score,
                         "id": node_id,
                         "title": node["title"],
                         "type": node["type"],
                         "domain": node["domain"],
-                        "summary": node["summary"][:150] + "...",
+                        "score": score,
+                        "status": node.get("status", "needs_review"),
+                        "freshness": node.get("freshness", "unknown"),
+                        "verification_status": node.get("verification_status", "unverified"),
+                        "summary": node["summary"][:150] + ("..." if len(node["summary"]) > 150 else ""),
                         "hint": search_hint(node)
                     })
             results.sort(key=lambda result: result["score"], reverse=True)
@@ -331,26 +414,57 @@ class SpacemitMCPServer:
             }, ensure_ascii=False, indent=2)}]}
 
         if name == "search_raw_sources":
-            q = required_text(args.get("query"), "query").lower()
+            query_str = required_text(args.get("query"), "query")
+            q = query_str.lower()
+            tokens = tokenize_query(query_str)
             sub = args.get("submodule")
             matches = []
             for item in self.raw_sources:
                 if sub and item["submodule"] != sub:
                     continue
-                score = 0
-                if q in item["title"].lower() or q in item["file_name"].lower():
-                    score += 10
-                if q in item["rel_path"].lower():
-                    score += 6
-                for h in item["headers"]:
-                    if q in h.lower():
-                        score += 5
-                        break
-                if q in item.get("summary", "").lower():
-                    score += 2
+                score = 0.0
+                t_l = item["title"].lower()
+                f_l = item["file_name"].lower()
+                p_l = item["rel_path"].lower()
+                s_l = item.get("summary", "").lower()
+                h_l = [h.lower() for h in item.get("headers", [])]
+
+                # 1. 整串精确/包含匹配
+                if q in t_l or q in f_l:
+                    score += 15.0
+                if q in p_l:
+                    score += 8.0
+                if any(q in h for h in h_l):
+                    score += 6.0
+                if q in s_l:
+                    score += 3.0
+
+                # 2. 分词加权
+                matched_count = 0
+                tok_score = 0.0
+                for tok in tokens:
+                    hit = False
+                    if tok in t_l or tok in f_l:
+                        tok_score += 8.0
+                        hit = True
+                    elif tok in p_l:
+                        tok_score += 5.0
+                        hit = True
+                    elif any(tok in h for h in h_l):
+                        tok_score += 4.0
+                        hit = True
+                    elif tok in s_l:
+                        tok_score += 1.0
+                        hit = True
+                    if hit:
+                        matched_count += 1
+                if tokens and matched_count > 0:
+                    coverage = matched_count / len(tokens)
+                    score += tok_score * (0.6 + 0.4 * coverage)
+
                 if score > 0:
                     matches.append({
-                        "score": score,
+                        "score": round(score, 2),
                         "submodule": item["submodule"],
                         "file_path": item["rel_path"],
                         "title": item["title"],

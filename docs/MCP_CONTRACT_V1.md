@@ -54,7 +54,7 @@
     "required": ["query"]
   }
   ```
-* **响应格式**：返回得分 Top 5 的节点数组，每个节点包含基础信息、摘要及元数据。
+* **响应格式**：返回得分 Top 5 的轻量定位节点数组（单条瘦身设计，平均单次搜索 < 400 tokens，杜绝冗余元数据膨胀）：仅包含 `id`、`title`、`type`、`domain`、`score`、`status`、`freshness`、`verification_status`、`summary` 与 `hint` 必备字段。深入的完整证据来源与审计链元数据（如 `source_file`、`source_freshness`、`agent_notice` 等）在调用对应详情工具（`get_developer_journey`、`read_knowledge_atom`、`get_evidence_fact`）时完整返回。
 
 #### 2. `get_developer_journey`（上手动线整篇读取）
 * **定位**：获取特定开发板或任务的极简上手向导（线），包含任务顺序、关键步骤及专题双链。

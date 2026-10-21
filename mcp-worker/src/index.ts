@@ -13,6 +13,7 @@ import wikiData from "./data/wiki_graph.json";
 export interface Env {
   DB?: D1Database;
   DEPLOYMENT_REF?: string;
+  STATS_TOKEN?: string;
 }
 
 export interface ExecutionContext {
@@ -218,6 +219,112 @@ function rawReadOptions(args: any) {
   return options;
 }
 
+const STOPWORDS = new Set(["的", "与", "和", "及", "在", "是", "怎么", "如何", "什么", "哪些", "指南", "专题", "档案", "向导", "配置", "说明"]);
+const GENERATION_TOKENS = new Set(["k1", "k3", "v100", "p1", "p3", "muse_pi", "muse-pi", "m1", "com260"]);
+
+function tokenizeQuery(query: string): string[] {
+  const q = query.toLowerCase().trim();
+  if (!q) return [];
+  const rawChunks = q.match(/[a-z0-9_.-]+|[\u4e00-\u9fff]+/g) || [];
+  const tokens: string[] = [];
+  for (const chunk of rawChunks) {
+    if (STOPWORDS.has(chunk)) continue;
+    tokens.push(chunk);
+    if (/^[\u4e00-\u9fff]+$/.test(chunk) && chunk.length >= 4) {
+      for (let i = 0; i < chunk.length - 1; i++) {
+        const bi = chunk.slice(i, i + 2);
+        if (!STOPWORDS.has(bi)) tokens.push(bi);
+      }
+    }
+  }
+  return Array.from(new Set(tokens.length ? tokens : [q]));
+}
+
+function scoreNodeMatch(query: string, tokens: string[], nodeId: string, node: WikiNode): number {
+  const q = query.toLowerCase().trim();
+  const titleL = node.title.toLowerCase();
+  const idL = nodeId.toLowerCase();
+  const aliasesL = (node.aliases || []).map(a => a.toLowerCase());
+  const summaryL = (node.summary || "").toLowerCase();
+  const contentL = (node.content || "").toLowerCase();
+  const chipL = ((node as any).chip || "").toLowerCase();
+  const productL = ((node as any).product || "").toLowerCase();
+
+  let score = 0;
+
+  // 1. 整串精确/包含匹配
+  if (q === titleL || q === idL) {
+    score += 30.0;
+  } else if (titleL.includes(q) || idL.includes(q)) {
+    score += 15.0;
+  }
+  if (aliasesL.some(a => a === q)) {
+    score += 25.0;
+  } else if (aliasesL.some(a => a.includes(q))) {
+    score += 12.0;
+  }
+  if (contentL.includes(q)) {
+    score += 4.0;
+  }
+
+  // 2. 芯片代际硬锚点保护（防代际混淆）
+  const targetIdent = `${idL} ${titleL} ${chipL} ${productL} ${aliasesL.join(" ")}`;
+  const queryGenerations = tokens.filter(t => GENERATION_TOKENS.has(t));
+  for (const gen of queryGenerations) {
+    if (targetIdent.includes(gen)) {
+      score += 25.0;
+    } else {
+      const otherGens = Array.from(GENERATION_TOKENS).filter(og => og !== gen);
+      if (otherGens.some(og => targetIdent.includes(og))) {
+        score -= 20.0;
+      }
+    }
+  }
+
+  // 3. 逐词加权打分（互斥阶梯，防止单词多处累加失控）
+  let matchedCount = 0;
+  let tokenScore = 0;
+  for (const tok of tokens) {
+    let hit = false;
+    if (titleL.includes(tok) || idL.includes(tok)) {
+      tokenScore += 8.0;
+      hit = true;
+    } else if (aliasesL.some(a => a.includes(tok))) {
+      tokenScore += 6.0;
+      hit = true;
+    } else if (summaryL.includes(tok)) {
+      tokenScore += 3.0;
+      hit = true;
+    } else if (contentL.includes(tok)) {
+      tokenScore += 1.0;
+      hit = true;
+    }
+    if (hit) matchedCount++;
+  }
+
+  if (tokens.length && matchedCount > 0) {
+    const coverage = matchedCount / tokens.length;
+    const multiplier = coverage >= 0.8 ? 1.3 : (0.6 + 0.4 * coverage);
+    score += tokenScore * multiplier;
+  }
+
+  return Math.round(score * 100) / 100;
+}
+
+function escapeHtml(value: unknown): string {
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function clampText(value: unknown, maxLen = 300): string {
+  const s = String(value ?? "").trim();
+  return s.length > maxLen ? s.slice(0, maxLen) + "...[truncated]" : s;
+}
+
 function nodeMetadata(node: WikiNode) {
   const fields = ["id", "type", "status", "verification_status", "external_use", "publication", "source_file", "source_commit", "source_section", "source_locator", "source_resolution", "source_note", "source_checked_at", "source_related_file", "source_related_commit", "freshness", "stale_paths", "unknown_paths", "checked_against_commit", "source_freshness", "metric_source_resolution", "thermal_source_resolution", "chip", "product", "verified_at", "conflicts", "source_origin", "source_tier", "effective_until", "superseded_by", "updated"];
   return Object.fromEntries(fields.filter(field => field in node).map(field => [field, (node as any)[field]]));
@@ -348,14 +455,14 @@ async function logQueryToD1(env: Env, log: {
       `INSERT INTO mcp_query_logs (tool_name, query_text, category, status, matched_id, error_message, client_country, client_city)
        VALUES (?, ?, ?, ?, ?, ?, ?, ?)`
     ).bind(
-      log.tool_name,
-      log.query_text || "",
-      log.category,
-      log.status,
-      log.matched_id || "",
-      log.error_message || "",
-      log.country || "Unknown",
-      log.city || "Unknown"
+      clampText(log.tool_name, 100),
+      clampText(log.query_text || "", 300),
+      clampText(log.category, 100),
+      clampText(log.status, 50),
+      clampText(log.matched_id || "", 200),
+      clampText(log.error_message || "", 300),
+      clampText(log.country || "Unknown", 50),
+      clampText(log.city || "Unknown", 50)
     ).run();
   } catch (err) {
     console.error("D1 log error:", err);
@@ -380,28 +487,26 @@ async function handleToolCall(name: string, args: any, env: Env, cfData?: any, c
   try {
     if (!args || typeof args !== "object" || Array.isArray(args)) throw new Error("工具参数必须是对象");
     if (name === "search_wiki") {
-      const q = requiredText(args.query, "query").toLowerCase();
+      const queryStr = requiredText(args.query, "query");
+      const tokens = tokenizeQuery(queryStr);
       const domain = args.domain;
       const results = [];
 
       for (const [nodeId, node] of Object.entries(nodes)) {
         if (domain && node.domain !== domain) continue;
-        let score = 0;
-        if (node.title.toLowerCase().includes(q) || nodeId.toLowerCase().includes(q)) score += 10;
-        for (const a of node.aliases || []) {
-          if (a.toLowerCase().includes(q)) { score += 8; break; }
-        }
-        if (node.content.toLowerCase().includes(q)) score += 3;
+        const score = scoreNodeMatch(queryStr, tokens, nodeId, node);
 
         if (score > 0) {
           results.push({
-            ...nodeMetadata(node),
-            score,
             id: nodeId,
             title: node.title,
             type: node.type,
             domain: node.domain,
-            summary: Array.from(node.summary).slice(0, 150).join("") + "...",
+            score,
+            status: node.status || "needs_review",
+            freshness: (node as any).freshness || "unknown",
+            verification_status: (node as any).verification_status || "unverified",
+            summary: Array.from(node.summary).slice(0, 150).join("") + (node.summary.length > 150 ? "..." : ""),
             hint: searchHint(node)
           });
         }
@@ -414,7 +519,7 @@ async function handleToolCall(name: string, args: any, env: Env, cfData?: any, c
         matchedId = results[0].id;
       }
 
-      recordQueryLog(env, { tool_name: name, query_text: args.query, category, status, matched_id: matchedId, country: cfData?.country, city: cfData?.city }, ctx);
+      recordQueryLog(env, { tool_name: name, query_text: clampText(args.query), category, status, matched_id: matchedId, country: cfData?.country, city: cfData?.city }, ctx);
       return { content: [{ type: "text", text: JSON.stringify(results.slice(0, 5), null, 2) }] };
     }
 
@@ -520,23 +625,55 @@ async function handleToolCall(name: string, args: any, env: Env, cfData?: any, c
     }
 
     if (name === "search_raw_sources") {
-      const q = requiredText(args.query, "query").toLowerCase();
+      const queryStr = requiredText(args.query, "query");
+      const q = queryStr.toLowerCase();
+      const tokens = tokenizeQuery(queryStr);
       const sub = args.submodule;
       const matches = [];
 
       for (const item of rawSources) {
         if (sub && item.submodule !== sub) continue;
         let score = 0;
-        if (item.title.toLowerCase().includes(q) || item.file_name.toLowerCase().includes(q)) score += 10;
-        if (item.rel_path.toLowerCase().includes(q)) score += 6;
-        for (const h of item.headers) {
-          if (h.toLowerCase().includes(q)) { score += 5; break; }
+        const tL = item.title.toLowerCase();
+        const fL = item.file_name.toLowerCase();
+        const pL = item.rel_path.toLowerCase();
+        const sL = (item.summary || "").toLowerCase();
+        const hL = (item.headers || []).map(h => h.toLowerCase());
+
+        // 1. 整串精确/包含匹配
+        if (tL.includes(q) || fL.includes(q)) score += 15.0;
+        if (pL.includes(q)) score += 8.0;
+        if (hL.some(h => h.includes(q))) score += 6.0;
+        if (sL.includes(q)) score += 3.0;
+
+        // 2. 分词加权
+        let matchedCount = 0;
+        let tokScore = 0;
+        for (const tok of tokens) {
+          let hit = false;
+          if (tL.includes(tok) || fL.includes(tok)) {
+            tokScore += 8.0;
+            hit = true;
+          } else if (pL.includes(tok)) {
+            tokScore += 5.0;
+            hit = true;
+          } else if (hL.some(h => h.includes(tok))) {
+            tokScore += 4.0;
+            hit = true;
+          } else if (sL.includes(tok)) {
+            tokScore += 1.0;
+            hit = true;
+          }
+          if (hit) matchedCount++;
         }
-        if (item.summary.toLowerCase().includes(q)) score += 2;
+        if (tokens.length && matchedCount > 0) {
+          const coverage = matchedCount / tokens.length;
+          score += tokScore * (0.6 + 0.4 * coverage);
+        }
 
         if (score > 0) {
           matches.push({
-            score,
+            score: Math.round(score * 100) / 100,
             submodule: item.submodule,
             file_path: item.rel_path,
             title: item.title,
@@ -551,7 +688,7 @@ async function handleToolCall(name: string, args: any, env: Env, cfData?: any, c
       if (matches.length === 0) status = "MISS_NO_RESULT";
       else matchedId = matches[0].file_path;
 
-      recordQueryLog(env, { tool_name: name, query_text: args.query, category, status, matched_id: matchedId, country: cfData?.country, city: cfData?.city }, ctx);
+      recordQueryLog(env, { tool_name: name, query_text: clampText(args.query), category, status, matched_id: matchedId, country: cfData?.country, city: cfData?.city }, ctx);
       return { content: [{ type: "text", text: JSON.stringify(matches.slice(0, 8), null, 2) }] };
     }
 
@@ -598,9 +735,9 @@ async function handleToolCall(name: string, args: any, env: Env, cfData?: any, c
 
     // 8. report_wiki_issue (主动反馈)
     if (name === "report_wiki_issue") {
-      const topic = args.topic || "General";
-      const issueType = args.issue_type || "MISSING_DOC";
-      const desc = args.description || "";
+      const topic = clampText(args.topic || "General", 100);
+      const issueType = clampText(args.issue_type || "MISSING_DOC", 50);
+      const desc = clampText(args.description || "", 1000);
 
       if (env.DB) {
         const issuePromise = env.DB.prepare(
@@ -672,7 +809,13 @@ async function handleJsonRpc(body: any, env: Env, cfData?: any, ctx?: ExecutionC
 }
 
 // 渲染可视化统计与错误监控看板 (/stats)
-async function renderStatsDashboard(env: Env): Promise<Response> {
+async function renderStatsDashboard(env: Env, isAuthorized = false): Promise<Response> {
+  const securityHeaders = {
+    "Content-Type": "text/html; charset=utf-8",
+    "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline';",
+    "X-Content-Type-Options": "nosniff"
+  };
+
   if (!env.DB) {
     return new Response(`
       <html><head><meta charset="utf-8"><title>Spacemit MCP Stats</title></head>
@@ -680,7 +823,7 @@ async function renderStatsDashboard(env: Env): Promise<Response> {
         <h2>📊 Spacemit MCP 监控看板</h2>
         <p style="color: #666;">Cloudflare D1 数据库尚未绑定。绑定后即可查看实时问题统计与错误盲区监控。</p>
       </body></html>
-    `, { headers: { "Content-Type": "text/html; charset=utf-8" } });
+    `, { headers: securityHeaders });
   }
 
   // 1. 统计总数与成功率
@@ -694,14 +837,18 @@ async function renderStatsDashboard(env: Env): Promise<Response> {
   ).all<any>();
 
   // 3. 错误与未命中盲区 Top 10 (核心价值)
-  const missedQueries = await env.DB.prepare(
-    "SELECT query_text, tool_name, status, error_message, timestamp FROM mcp_query_logs WHERE status != 'SUCCESS' ORDER BY id DESC LIMIT 15"
-  ).all<any>();
+  const missedQueries = isAuthorized
+    ? await env.DB.prepare(
+        "SELECT query_text, tool_name, status, error_message, timestamp FROM mcp_query_logs WHERE status != 'SUCCESS' ORDER BY id DESC LIMIT 15"
+      ).all<any>()
+    : { results: [] };
 
   // 4. 用户/AI 主动反馈列表
-  const issues = await env.DB.prepare(
-    "SELECT topic, issue_type, description, timestamp FROM mcp_issue_reports ORDER BY id DESC LIMIT 10"
-  ).all<any>();
+  const issues = isAuthorized
+    ? await env.DB.prepare(
+        "SELECT topic, issue_type, description, timestamp FROM mcp_issue_reports ORDER BY id DESC LIMIT 10"
+      ).all<any>()
+    : { results: [] };
 
   const html = `
   <!DOCTYPE html>
@@ -729,6 +876,7 @@ async function renderStatsDashboard(env: Env): Promise<Response> {
       .tag-error { background: #fef3c7; color: #92400e; }
       .tag-cat { background: #e0f2fe; color: #0369a1; }
       .footer { margin-top: 40px; text-align: center; font-size: 13px; color: #94a3b8; }
+      .auth-notice { background: #f1f5f9; border: 1px dashed #cbd5e1; border-radius: 8px; padding: 16px; text-align: center; color: #64748b; font-size: 14px; }
     </style>
   </head>
   <body>
@@ -736,7 +884,7 @@ async function renderStatsDashboard(env: Env): Promise<Response> {
       <div class="header">
         <div>
           <div class="title">🚀 Spacemit LLM Wiki - MCP 实时监控与错误反馈</div>
-          <div style="color: #64748b; font-size: 14px; margin-top: 4px;">双层知识图谱 (mcp.yao1302.xyz) 运行分析</div>
+          <div style="color: #64748b; font-size: 14px; margin-top: 4px;">双层知识图谱运行分析</div>
         </div>
         <div style="font-size: 13px; background: #dcfce7; color: #166534; padding: 6px 12px; border-radius: 20px; font-weight: 600;">● 服务在线</div>
       </div>
@@ -744,15 +892,15 @@ async function renderStatsDashboard(env: Env): Promise<Response> {
       <div class="grid">
         <div class="card">
           <div class="metric-title">总查询调用次数</div>
-          <div class="metric-value" style="color: var(--primary);">${totalQueries?.count || 0}</div>
+          <div class="metric-value" style="color: var(--primary);">${Number(totalQueries?.count || 0)}</div>
         </div>
         <div class="card">
           <div class="metric-title">错误与未命中盲区数</div>
-          <div class="metric-value" style="color: var(--danger);">${missCount?.count || 0}</div>
+          <div class="metric-value" style="color: var(--danger);">${Number(missCount?.count || 0)}</div>
         </div>
         <div class="card">
           <div class="metric-title">待处理反馈与纠错</div>
-          <div class="metric-value" style="color: var(--warning);">${pendingIssues?.count || 0}</div>
+          <div class="metric-value" style="color: var(--warning);">${Number(pendingIssues?.count || 0)}</div>
         </div>
       </div>
 
@@ -762,42 +910,54 @@ async function renderStatsDashboard(env: Env): Promise<Response> {
         <tbody>
           ${(categories.results || []).map((c: any) => `
             <tr>
-              <td><span class="tag tag-cat">${c.category}</span></td>
-              <td><strong>${c.count}</strong> 次</td>
+              <td><span class="tag tag-cat">${escapeHtml(c.category)}</span></td>
+              <td><strong>${Number(c.count || 0)}</strong> 次</td>
             </tr>
           `).join('') || '<tr><td colspan="2" style="text-align:center; color:#94a3b8;">暂无数据</td></tr>'}
         </tbody>
       </table>
 
       <div class="section-title" style="color: #b91c1c;">🚨 错误与未命中盲区记录 (知识库反哺依据)</div>
+      ${isAuthorized ? `
       <table>
         <thead><tr><th>时间</th><th>搜索关键词 / 目标</th><th>调用工具</th><th>状态与原因</th></tr></thead>
         <tbody>
           ${(missedQueries.results || []).map((m: any) => `
             <tr>
-              <td style="color:#64748b;">${m.timestamp}</td>
-              <td><code>${m.query_text || '无参数'}</code></td>
-              <td>${m.tool_name}</td>
-              <td><span class="tag ${m.status === 'ERROR' ? 'tag-error' : 'tag-miss'}">${m.status}: ${m.error_message || '无搜索结果'}</span></td>
+              <td style="color:#64748b;">${escapeHtml(m.timestamp)}</td>
+              <td><code>${escapeHtml(m.query_text || '无参数')}</code></td>
+              <td>${escapeHtml(m.tool_name)}</td>
+              <td><span class="tag ${m.status === 'ERROR' ? 'tag-error' : 'tag-miss'}">${escapeHtml(m.status)}: ${escapeHtml(m.error_message || '无搜索结果')}</span></td>
             </tr>
           `).join('') || '<tr><td colspan="4" style="text-align:center; color:#94a3b8;">暂无错误记录，知识库运行良好！</td></tr>'}
         </tbody>
       </table>
+      ` : `
+      <div class="auth-notice">
+        🔒 明细查询日志已保护。请在 URL 后附加 <code>?token=&lt;STATS_TOKEN&gt;</code> 查看完整查询关键词与未命中明细。
+      </div>
+      `}
 
       <div class="section-title" style="color: #0369a1;">💡 开发者与 AI 主动上报的反馈/纠错</div>
+      ${isAuthorized ? `
       <table>
         <thead><tr><th>时间</th><th>主题</th><th>分类</th><th>具体反馈内容</th></tr></thead>
         <tbody>
           ${(issues.results || []).map((i: any) => `
             <tr>
-              <td style="color:#64748b;">${i.timestamp}</td>
-              <td><strong>${i.topic}</strong></td>
-              <td><span class="tag tag-cat">${i.issue_type}</span></td>
-              <td>${i.description}</td>
+              <td style="color:#64748b;">${escapeHtml(i.timestamp)}</td>
+              <td><strong>${escapeHtml(i.topic)}</strong></td>
+              <td><span class="tag tag-cat">${escapeHtml(i.issue_type)}</span></td>
+              <td>${escapeHtml(i.description)}</td>
             </tr>
           `).join('') || '<tr><td colspan="4" style="text-align:center; color:#94a3b8;">暂无主动反馈记录</td></tr>'}
         </tbody>
       </table>
+      ` : `
+      <div class="auth-notice">
+        🔒 反馈明细已保护。请在 URL 后附加 <code>?token=&lt;STATS_TOKEN&gt;</code> 查看具体反馈描述。
+      </div>
+      `}
 
       <div class="footer">Spacemit LLM Wiki · Powered by Cloudflare Workers & D1</div>
     </div>
@@ -805,9 +965,7 @@ async function renderStatsDashboard(env: Env): Promise<Response> {
   </html>
   `;
 
-  return new Response(html, {
-    headers: { "Content-Type": "text/html; charset=utf-8" }
-  });
+  return new Response(html, { headers: securityHeaders });
 }
 
 export default {
@@ -848,7 +1006,9 @@ export default {
 
     // 访问可视化监控看板 /stats
     if (url.pathname === "/stats") {
-      return renderStatsDashboard(env);
+      const token = url.searchParams.get("token");
+      const isAuthorized = !env.STATS_TOKEN || (token === env.STATS_TOKEN);
+      return renderStatsDashboard(env, isAuthorized);
     }
 
     // 1. GET /sse：建立标准 SSE 长连接

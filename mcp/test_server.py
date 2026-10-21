@@ -16,9 +16,11 @@ SPEC.loader.exec_module(server)
 
 
 def node(node_id, kind="evidence", **metadata):
-    return dict(id=node_id, title=node_id, type=kind, domain="test", status="needs_review",
+    base = dict(id=node_id, title=node_id, type=kind, domain="test", status="needs_review",
                 aliases=[], content="needle", summary="summary", outlinks=[], backlinks=[],
-                target_audience=[], **metadata)
+                target_audience=[])
+    base.update(metadata)
+    return base
 
 
 class RuntimeTests(unittest.TestCase):
@@ -34,7 +36,7 @@ class RuntimeTests(unittest.TestCase):
         self.wiki.nodes = {key: node(key) for key in ["incidental", "needle_second", "needle_first"]}
         result = self.call("search_wiki", {"query": "needle"})
         self.assertEqual([x["id"] for x in result], ["needle_second", "needle_first", "incidental"])
-        self.assertEqual([x["score"] for x in result], [13, 13, 3])
+        self.assertEqual([x["score"] for x in result], [29.4, 29.4, 5.3])
 
     def test_raw_ranking_and_stable_ties(self):
         self.wiki.raw_sources = [dict(submodule="docs-chip", file_name=name, rel_path=name,
@@ -67,11 +69,29 @@ class RuntimeTests(unittest.TestCase):
                         chip="K3", product="test board", verified_at="2026-10-01", conflicts=["needs review"],
                         source_origin="GitHub", source_tier="tier_1", effective_until="2026-12-01")
         self.wiki.nodes = {"fact": node("fact", **metadata)}
-        results = [self.call("get_evidence_fact", {"spec_name": "fact"}),
-                   self.call("search_wiki", {"query": "fact"})[0]]
-        for result in results:
-            for key, value in dict(metadata, status="needs_review").items():
-                self.assertEqual(result[key], value)
+        fact_res = self.call("get_evidence_fact", {"spec_name": "fact"})
+        for key, value in dict(metadata, status="needs_review").items():
+            self.assertEqual(fact_res[key], value)
+
+        search_res = self.call("search_wiki", {"query": "fact"})[0]
+        for key in ("id", "title", "type", "domain", "score", "status", "freshness", "verification_status", "summary", "hint"):
+            self.assertIn(key, search_res)
+        self.assertEqual(search_res["freshness"], "stale")
+        self.assertEqual(search_res["verification_status"], "unverified")
+        self.assertNotIn("source_freshness", search_res)
+        self.assertNotIn("metric_source_resolution", search_res)
+        self.assertNotIn("source_file", search_res)
+
+    def test_multi_token_search_and_generation_anchor(self):
+        self.wiki.nodes = {
+            "k3_strap": node("k3_strap", title="K3 启动模式与 Strap 管脚配置", chip="K3"),
+            "k1_strap": node("k1_strap", title="K1 启动模式与 Strap 管脚配置", chip="K1")
+        }
+        res_k3 = self.call("search_wiki", {"query": "K3 Strap 启动"})
+        self.assertEqual(res_k3[0]["id"], "k3_strap")
+
+        res_k1 = self.call("search_wiki", {"query": "K1 启动模式"})
+        self.assertEqual(res_k1[0]["id"], "k1_strap")
 
     def test_self_describing_notices_and_search_hints_preserve_evidence(self):
         cases = json.loads((ROOT / "mcp/notice_cases.json").read_text())

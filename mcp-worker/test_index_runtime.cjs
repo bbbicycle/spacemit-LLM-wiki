@@ -25,7 +25,11 @@ const python = execFileSync('python3', ['-B', path.join(root, 'mcp/server.py')],
 const sandbox = { console, Request, Response, URL, crypto, TextEncoder, inputData: data, fetch: async url => {
   const item = data.raw_sources.find(x => new URL(x.raw_url).href === new URL(url).href);
   assert.ok(item, `unindexed fetch ${url}`);
-  return new Response(fs.readFileSync(path.join(root, 'Sources', item.rel_path), 'utf8'));
+  const localFile = path.join(root, 'Sources', item.rel_path);
+  if (fs.existsSync(localFile)) {
+    return new Response(fs.readFileSync(localFile, 'utf8'));
+  }
+  return globalThis.fetch(url, { headers: { "User-Agent": "Spacemit-MCP-Worker" } });
 }};
 vm.createContext(sandbox);
 let source = fs.readFileSync(path.join(__dirname, 'src/index.ts'), 'utf8').replace('import wikiData from "./data/wiki_graph.json";', 'const wikiData = globalThis.inputData;').replace('export default {', 'globalThis.worker = {');
