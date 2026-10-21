@@ -20,6 +20,8 @@ updated: 2026-10-21
 - Python 与 Worker 的三个正文工具新增一致 `agent_notice`，搜索新增短 `hint`；保留 stale、unknown、冲突、待终审、废弃、使用范围及代际边界，不写死硬件参数、不改变原文分页。
 - 用户 Skill v1 收敛为 3 个文件和 32 行主入口，移除维护指令、路径绑定和具体硬件答案；历史样例移至 `evals/legacy_skill_examples.json`，安装清单同步。Worker 保持生产运营端，Python 仍为标准库 7 核心工具镜像。
 - 部署工作流新增手动目标 `ref`、最小安装检查、部署 ref 注入与在线 SSE/检索/原文分页 smoke；维护规范记录同流程重新部署回退。阶段 B 的 12 stale / 7 unknown 保持真实待办，未升级事实核验状态。
+- 验证通过：双 lint、26 项构建器测试、6 项上游影响测试、11 项 Python 服务测试、4 项最小安装测试、Worker 运行回归、79 次真实索引跨端调用、7 组状态提示两端比较、TypeScript、Skill 格式校验、119 处本地 Markdown 链接与 diff 检查。正式输入提交后重建，索引提交后再次实际重建字节不变，`wiki_worktree_dirty:false`。
+- 发布验收基准 `dfb883481be8fa8661e1042115a3d72a056ab2eb`：[自动部署](https://github.com/bbbicycle/spacemit-LLM-wiki/actions/runs/39540028549) 与 [手动指定完整 ref 重部署](https://github.com/bbbicycle/spacemit-LLM-wiki/actions/runs/39540322273) 均成功。两次在线及独立 smoke 确认 v2.3.0、部署 ref、完整构建元数据与内容哈希一致，SSE、核心工具、搜索、事实及固定来源分页正常。已验证回退所用部署路径，未切回旧版。阶段 A 验收完成，当前线上 ref 以 `/health` 为准。
 
 ---
 

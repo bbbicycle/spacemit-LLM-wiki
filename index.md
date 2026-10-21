@@ -221,6 +221,6 @@ aliases: [index, index.md, 索引, 全局索引]
 *   [[Agent]] —— 知识库运行与 AI Agent 协作规范。
 *   [[log]] —— 重构与维护日志。
 
-*   [项目计划与阶段进度](docs/PROJECT_PLAN.md) —— v2.0：P0/P1 已完成，A 已实现、部署验收中，B 来源复核与查询驱动迭代待执行；公司部署/RAG 按需启动。
+*   [项目计划与阶段进度](docs/PROJECT_PLAN.md) —— v2.0：P0/P1 与阶段 A 已完成并通过部署验收，B 来源复核与查询驱动迭代待执行；公司部署/RAG 按需启动。
 *   [MCP 接口与目标元数据契约](docs/MCP_CONTRACT_V1.md) —— 7 核心工具兼容边界、Worker 运营扩展与未来 Gateway 模型。
 *   [新鲜度与维护闭环](docs/FRESHNESS_MAINTENANCE.md) —— P1 报告、来源字段、分页与 stale 复核流程。

@@ -51,7 +51,7 @@ P0 已完成的是接口与目标元数据模型定义，不表示未来 Gateway
 | :--- | :--- | :--- | :--- |
 | **P0** | 冻结目标与接口 | 明确三层拓扑、7 大核心 MCP 工具与来源元数据模型 | **DONE** |
 | **P1** | Wiki 新鲜度与自愈闭环 | 按文件路径检测 `stale`、固化上游影响基线与原文安全分页 | **DONE** |
-| **阶段 A（原第二步）** | **MCP 自解释改造与对外 Skill 瘦身** | 用“索引内嵌 `build_meta` + `/health` 自检 + 结果内联提示 + 极简 Skill 冻结”替代繁重的 P2 打包基建 | **实现完成，部署验收中** |
+| **阶段 A（原第二步）** | **MCP 自解释改造与对外 Skill 瘦身** | 用“索引内嵌 `build_meta` + `/health` 自检 + 结果内联提示 + 极简 Skill 冻结”替代繁重的 P2 打包基建 | **DONE（2026-10-21 部署验收通过）** |
 | **阶段 B（原第三步）** | **存量来源复核与查询驱动迭代** | 逐项复核首轮 12 个 `stale`、为 7 个 Journey 补来源，目标有据清零；利用 Cloudflare D1 真实查询日志驱动专题扩充与评测 | **当前待执行（日常核心闭环）** |
 | **P4** | 公司服务器承载 Wiki MCP | 在公司内部服务器运行独立 Wiki MCP 服务（灰度替代 Cloudflare） | 待公司服务器就绪后启动 |
 | **P5** | 接入公司 RAG 与混合编排 | 在服务端通过 MCP Gateway 编排 Wiki 精确检索与公司 RAG（含 ACL 权限过滤） | 待公司 RAG 接口就绪后启动 |
@@ -190,7 +190,14 @@ P0 已完成的是接口与目标元数据模型定义，不表示未来 Gateway
 - [x] `mcp-worker/src/index.ts` 已支持 `GET /health` 并返回已加载索引的 `build_meta` 与 `d1_bound`，明确绑定不等于 D1 可用。
 - [x] `mcp/server.py` 与 `mcp-worker/src/index.ts` 在返回节点时均已内联 `agent_notice`（覆盖 `stale`、`unverified/needs_review`、`conflicted` 与代际隔离提醒）。
 - [x] `skill/spacemit-wiki/` 已清理全部维护指令与易变硬编码事实，冻结为稳定版。
-- [ ] 双 lint、构建器、最小安装、Python/Worker 运行与跨端一致性回归及类型检查通过；部署后完成版本核对、核心搜索/事实读取及原文分页 smoke test，验证按 Git ref 重新部署的回退步骤。
+- [x] 双 lint、构建器、最小安装、Python/Worker 运行与跨端一致性回归及类型检查通过；部署后完成版本核对、核心搜索/事实读取及原文分页 smoke test，验证按 Git ref 重新部署的回退步骤。
+
+### 阶段 A 验收记录（2026-10-21）
+
+- 双 lint、26 项构建器测试、6 项上游影响测试、11 项 Python 服务测试、4 项最小安装测试、Worker 运行回归、79 次真实索引跨端调用与类型检查通过；7 组状态场景逐项比较两端提示。Skill 主入口 32 行、安装清单 3 个文件，Skill 格式校验通过。
+- 正式索引来源为 `8d7bae80e22cdd782f4269ae819afc838a903cb9`，`wiki_worktree_dirty:false`；重复构建及索引提交后重建均保持字节一致，`--check` 通过。内容 SHA-256：`362db39d8dea57e44bdf577547ade952d32833560b7d05f5b0842f5b404e52af`。
+- 发布验收基准 `dfb883481be8fa8661e1042115a3d72a056ab2eb` 的 [自动部署与在线检查](https://github.com/bbbicycle/spacemit-LLM-wiki/actions/runs/39540028549) 通过；独立请求确认线上 v2.3.0、部署 ref、完整 `build_meta` 一致，SSE、核心工具清单、搜索 hint、事实 notice、固定来源默认 200 行及最大 500 行窗口均通过。
+- 以同一完整 SHA 作为手动 `ref` 入参执行 [指定版本重部署演练](https://github.com/bbbicycle/spacemit-LLM-wiki/actions/runs/39540322273)，重建、部署及部署后 smoke 全部通过，再次独立检查版本与哈希一致。已验证回退所用的指定 ref 部署路径；本次未切回缺少新健康接口的旧服务。当前实际部署 ref 继续以 [线上健康接口](https://mcp.yao1302.xyz/health) 为准。阶段 B 的 12 个 stale / 7 个 unknown 仍待逐项来源复核。
 
 ## 4. 阶段 B（原第三步详细计划）：存量来源复核与查询驱动的内容迭代
 

@@ -9,7 +9,7 @@
 
 Worker 是生产端，除 7 核心检索工具外，已提供 D1 异步日志、`/stats` 和用户授权反馈 `report_wiki_issue`。Python 是纯标准库的 stdio 契约镜像，用于精炼查询离线兜底与 CI，不复制 Worker 的运营端点和 D1 功能；原文仍可能需要联网。
 
-[项目计划 v2.0](../docs/PROJECT_PLAN.md) 已将旧 P2/P3 近期范围收敛为 A/B。当前索引 v2.3.0；阶段 A 已实现确定性 `build_meta`、Worker `/health`、双端 `agent_notice` / 搜索 `hint` 与轻量 Skill v1；阶段 B 再复核存量来源与补充真实查询评测。核心工具兼容边界及未来字段见 [MCP 契约](../docs/MCP_CONTRACT_V1.md)。
+[项目计划 v2.0](../docs/PROJECT_PLAN.md) 已将旧 P2/P3 近期范围收敛为 A/B。当前索引 v2.3.0；阶段 A 的确定性 `build_meta`、Worker `/health`、双端 `agent_notice` / 搜索 `hint` 与轻量 Skill v1 已完成并通过部署验收；阶段 B 再复核存量来源与补充真实查询评测。核心工具兼容边界及未来字段见 [MCP 契约](../docs/MCP_CONTRACT_V1.md)。
 
 ---
 

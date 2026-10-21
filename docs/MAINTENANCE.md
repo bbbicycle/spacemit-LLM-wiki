@@ -10,7 +10,7 @@ updated: 2026-10-21
 
 仅在录入、编辑、同步或审计知识库时读取。普通问答遵循根目录 [Agent.md](../Agent.md)。本规范继承根入口的范围读取、证据核实和用户授权边界。
 
-阶段范围与验收以 [项目计划 v2.0](PROJECT_PLAN.md) 为准：P0/P1 已完成；近期为阶段 A（MCP 自解释与 Skill 瘦身）和阶段 B（存量来源复核与查询驱动迭代）；A 已实现并进入部署验收，B 待执行；公司服务器与 RAG 进入 P4/P5 前须满足环境条件。
+阶段范围与验收以 [项目计划 v2.0](PROJECT_PLAN.md) 为准：P0/P1 与阶段 A（MCP 自解释与 Skill 瘦身）已完成并通过部署验收，阶段 B（存量来源复核与查询驱动迭代）待执行；公司服务器与 RAG 进入 P4/P5 前须满足环境条件。
 
 ## 服务端、用户 Skill 与维护规范的分工
 
@@ -264,3 +264,5 @@ python3 -B scripts/smoke_mcp.py --url https://mcp.yao1302.xyz --expected-ref <�
 ```
 
 该检查建立 SSE，完成初始化与 7 工具清单核对，再检查搜索 hint、事实正文 notice、固定版本原文默认页/续读及 500 行窗口；不调用反馈工具或写入知识。Worker 可照常记录这些查询日志。
+
+2026-10-21 已以 `dfb883481be8fa8661e1042115a3d72a056ab2eb` 完成 [自动发布](https://github.com/bbbicycle/spacemit-LLM-wiki/actions/runs/39540028549) 与 [手动指定 ref 重部署演练](https://github.com/bbbicycle/spacemit-LLM-wiki/actions/runs/39540322273)，两次部署后的在线检查及独立 smoke 均通过，版本/来源/内容哈希一致。该演练验证指定版本部署路径，未将生产切回旧版；后续实际回退仍须验证目标版本。完整验收与测试数量见 [项目计划](PROJECT_PLAN.md)。

@@ -28,6 +28,6 @@ aliases: [Agent, Agent.md, AGENTS, AGENTS.md, 运行与协作规范]
 
 仅在编辑、录入、同步或审计时按需读取 [维护规范](docs/MAINTENANCE.md)。问答不自动写库、提交或推送；维护按用户授权执行。
 
-阶段范围与验收以 [项目计划](docs/PROJECT_PLAN.md) 为准。P0/P1 已完成；阶段 A 已实现确定性 `build_meta`、Worker `/health`、双端 `agent_notice` 和 Skill v1，阶段 B 待执行。线上状态以 `/health` 和部署验收为准。用户 Skill 承载稳定查询规则，维护命令留在仓库内部；Worker 负责生产运营，Python 保持 7 核心工具契约镜像。
+阶段范围与验收以 [项目计划](docs/PROJECT_PLAN.md) 为准。P0/P1 与阶段 A 已完成；确定性 `build_meta`、Worker `/health`、双端 `agent_notice` 和 Skill v1 已通过部署验收，阶段 B 待执行。线上状态以 `/health` 和部署验收为准。用户 Skill 承载稳定查询规则，维护命令留在仓库内部；Worker 负责生产运营，Python 保持 7 核心工具契约镜像。
 
 知识正文以中文为主，新增或修改后标记 `needs_review`。链接方向：Journey → Atom/Evidence；Atom → Atom/Evidence；Evidence 不向上引用，普通知识节点不引用 Journey。重大更新同步索引和日志，并执行相关检查。
