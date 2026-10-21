@@ -20,6 +20,7 @@ updated: 2026-10-21
 - 保存 `/stats` 首轮全保留数据快照（44 调用、2 非成功、1 反馈），根据真实 `P1 P3 PMIC` 未命中补别名并执行生产算法前后复现。唯一审计搜索实际落库后为45/3/1，人工流量单列；不把原文分类23次当回退率，不发送新反馈。I2C3 时序与内部流程仍保留授权资料缺口。
 - 新增 20 题固定来源评测与生产双端执行器，覆盖 6 个 domain、历史 stale/unknown 回放及当前冲突/待终审；每端42次、逐题2～3次调用，全部通过。验证工具证据与提示契约，未运行独立模型，不报告模型准确率。评测反查修正 Pi/Pro 旧规格表、MUSE Box误绑来源与 GPIO 版本过度结论；部署 CI 保存评测 artifact。
 - 更新项目计划、维护/每周30分钟流程、新鲜度说明、README、Agent、MCP说明及全局索引；用户 Skill 保持冻结。双 lint、26项构建器、6项影响分析、11项Python、4项最小安装、Worker回归、79次跨端调用、TypeScript与索引校验通过。
+- 发布输入 `0b68030`、双端索引 `b973a5c` 已推送。正式索引 wiki_worktree_dirty=false，内容哈希 `8151bfecd228497b37f39dd31276b6d9cea6e9b4ca96eadd119666d2212f6dca`；重复构建与索引提交后实际重建字节相同。[部署 Actions](https://github.com/bbbicycle/spacemit-LLM-wiki/actions/runs/39555907376) 与安装检查成功，独立线上 smoke 及 PMIC 别名/Strap 冲突核对通过；最终审计文档提交不改变此部署 ref。
 - 审计与开放事项见 [阶段 B 记录](docs/reviews/stage_b_2026-10-21/README.md)，正式发布与线上核对见其中发布记录。
 
 ---

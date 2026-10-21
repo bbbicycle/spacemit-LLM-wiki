@@ -1,5 +1,95 @@
 {
-  "status": "prepared_pending_publish",
-  "stage_acceptance": "B2/B3/B4 locally verified; B1 open for K3-STRAP-01; stage B not fully accepted",
-  "validation": "local checks passed; deployment not yet verified"
+  "status": "deployed_and_independently_verified",
+  "checked_at_utc": "2026-10-21T06:35:59.615961+00:00",
+  "stage_acceptance": "B2/B3/B4 verified; B1 remains open for K3-STRAP-01; stage B not fully accepted",
+  "source_commit": "0b680300a52fb57db8f64011f7f57156dcaca3c6",
+  "deployment_ref": "b973a5cb2f31a9cbe1b4640c21ee542559a348f9",
+  "build_meta": {
+    "wiki_commit": "0b680300a52fb57db8f64011f7f57156dcaca3c6",
+    "wiki_worktree_dirty": false,
+    "generated_at": "2026-10-21T06:30:15+00:00",
+    "sources_commits": {
+      "docs-chip": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "docs-buildroot": "163a8fccf8e7071f3177753d2e86e482e97970fe",
+      "docs-product": "bc640755145625cc20745f49861f82588863fca3",
+      "docs-ai": "2b3894e983a295ed0278bc625867e0c132e0e259",
+      "docs-ros": "808d02c1bd11cf0d4376555919bd61c90e38d853"
+    },
+    "content_sha256": "8151bfecd228497b37f39dd31276b6d9cea6e9b4ca96eadd119666d2212f6dca",
+    "counts": {
+      "total_nodes": 66,
+      "developer_journeys": 7,
+      "knowledge_atoms": 32,
+      "evidence": 27,
+      "raw_sources": 1231
+    },
+    "freshness_summary": {
+      "current": 66,
+      "stale": 0,
+      "unknown": 0
+    }
+  },
+  "index_sha256": "21f8108b9048035fec7507de3ac012cba9b9a83619d1b247641dd133048b70c7",
+  "determinism": {
+    "repeated_build_bytes_equal": true,
+    "actual_rebuild_after_index_commit_bytes_equal": true
+  },
+  "local_checks": {
+    "dual_lint": "passed",
+    "builder_tests": 26,
+    "upstream_impact_tests": 6,
+    "python_server_tests": 11,
+    "minimal_install_tests": 4,
+    "worker_runtime": "passed",
+    "production_parity_calls": 79,
+    "typescript": "passed",
+    "core_evaluation_cases": 20,
+    "core_evaluation_calls_per_backend": 42,
+    "fixed_source_excerpts": 23,
+    "markdown_local_links": 143,
+    "diff_check": "passed"
+  },
+  "github_actions": [
+    {
+      "id": 39555907376,
+      "name": "Auto Build & Deploy MCP to Cloudflare Workers",
+      "head_sha": "b973a5cb2f31a9cbe1b4640c21ee542559a348f9",
+      "conclusion": "success",
+      "url": "https://github.com/bbbicycle/spacemit-LLM-wiki/actions/runs/39555907376"
+    },
+    {
+      "id": 39555907519,
+      "name": "Check Minimal Installation",
+      "head_sha": "b973a5cb2f31a9cbe1b4640c21ee542559a348f9",
+      "conclusion": "success",
+      "url": "https://github.com/bbbicycle/spacemit-LLM-wiki/actions/runs/39555907519"
+    }
+  ],
+  "independent_smoke": {
+    "status": "passed",
+    "deployment_ref": "b973a5cb2f31a9cbe1b4640c21ee542559a348f9",
+    "version": "2.3.0",
+    "content_sha256": "8151bfecd228497b37f39dd31276b6d9cea6e9b4ca96eadd119666d2212f6dca",
+    "d1_bound": true,
+    "checks": "health/SSE/initialize/tools/search/fact/raw-pages"
+  },
+  "content_checks": {
+    "pmic_alias_first_hit": "SpacemiT生态板卡与PMIC电源配合专题档案",
+    "strap": {
+      "freshness": "current",
+      "verification_status": "conflicted",
+      "status": "needs_review",
+      "source_file": "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md",
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "conflicts": "固定来源 1.1.5 开头写 5 个 strap 并列 GPIO90；随后五张功能表却列 Strap0～5，包含 GPIO64 和 GPIO52。功能表可引用，完整管脚清单须人工确认。"
+    },
+    "strap_notice_codes": [
+      "CONFLICTED",
+      "NEEDS_REVIEW",
+      "EXTERNAL_USE_RESTRICTED",
+      "GENERATION_BOUNDARY"
+    ]
+  },
+  "traffic_note": "部署CI和两轮独立smoke及各2次内容查询均属维护流量，不计自然需求。首轮内容断言误将GPIO90完整字符串限定在正文，而正文以GPIO65/66/68/69/90缩写；修正为核对结构化conflicts字段后重跑通过。未发送反馈。",
+  "audit_commit_policy": "后续仅归档本发布证据的文档提交使用[skip ci]；线上部署ref保留上面已验证的代码/索引提交，构建来源和内容不变。"
 }

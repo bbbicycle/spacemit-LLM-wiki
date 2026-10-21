@@ -319,6 +319,7 @@ python3 scripts/build_mcp_index.py --check
 - 7 篇 Journey 补直接来源、范围与版本条件，纠正旧命令/产物名/平台组合；当前 freshness 为 **66 current / 0 stale / 0 unknown**。全部保留各自事实核验状态，未设置 approved 或伪造硬件实测。
 - `/stats` 首轮全保留数据为 44 调用、2 个非成功、1 反馈。根据真实 `P1 P3 PMIC` 未命中补别名并复现前后结果；唯一审计查询实际落库。原文分类 23 次不视为回退率，I2C3 时序和内部流程需求保留资料缺口。
 - [20 题评测](reviews/stage_b_2026-10-21/core_20_results.md)覆盖 6 个 domain、真实历史 stale/unknown 回放、当前 conflicted/needs_review；每端 42 次调用，逐题 2～3 次。验证工具检索证据、来源与提示契约及双端一致性，未调用独立问答模型，不能声称模型准确率。
+- 发布验收：部署 ref `b973a5cb2f31a9cbe1b4640c21ee542559a348f9` 的 [GitHub Actions](https://github.com/bbbicycle/spacemit-LLM-wiki/actions/runs/39555907376) 成功；独立 smoke 核对完整 build_meta、SSE、检索/事实/固定原文分页，并确认线上 PMIC 别名命中和 K3 Strap 冲突提示。详情见 [发布记录](reviews/stage_b_2026-10-21/release.json)。
 - **B1 保持未勾选**：K3 指南 1.1.5 概述列 5 脚且包含 GPIO90，功能表却含 GPIO64/52、Strap0～5，中英文均存在矛盾。两节点保持 `conflicted`。阻塞项 `K3-STRAP-01` 由维护者协调官方确认或提供对应板型经审定原理图；未获得依据前不能宣布完整管脚清单已确定，因此本阶段未全项收口。
 
 ## 5. 中远期储备阶段（P4 ~ P5：按需启动，当下不提前写代码）
