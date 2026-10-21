@@ -4,15 +4,17 @@ title: "K3 芯片 Strap Pins 启动与系统配置参数"
 claim_type: "parameter"
 status: needs_review
 verification_status: conflicted
-conflicts: "固定来源 1.1.5 开头写 5 个 strap 并列 GPIO90；随后五张功能表却列 Strap0～5，包含 GPIO64 和 GPIO52。功能表可引用，完整管脚清单须人工确认。"
+conflicts: "K3指南1.1.5概述列5脚含GPIO90，功能表却列Strap0～5含GPIO64/52；另与K3数据手册2.11.2的GPIO66/65启动选择冲突：指南10=SPI NOR、01=SPI NAND，数据手册10=SPI NAND、01=SPI NOR。00/11一致；SPI接线与完整管脚清单待官方确认。"
 external_use: false
 source_file: "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md"
 source_origin: "https://github.com/spacemit-com/docs-chip"
 source_commit: "2525ee3b68e0f4864f1bf12c8a59df040bf27e84"
-source_section: "1.1.5 硬件初始化系统配置电路"
+source_section: "硬件指南1.1.5；数据手册V1.9 2.11.2 启动模式映射"
 source_resolution: resolved
 source_checked_at: 2026-10-21
-source_note: "2026-10-21 阶段 B：K3 指南 1.1.5 五张功能表：启动顺序、下载、QSPI、LPDDR；发现开头声称五管脚且列 GPIO90，与六个 Strap 功能表矛盾，标 conflicted。 保留来源冲突并置 conflicted/needs_review；不表示全文事实通过。"
+source_note: "2026-10-21 阶段B再次定向对照指南1.1.5与数据手册2.11.2，发现SPI NOR/NAND选择电平互换；并列表格，不按文档日期自行裁决。来源定位成功不代表接线结论已确认，保持conflicted/needs_review。"
+source_related_file: ["Sources/docs-chip/zh/key_stone/k3/k3_docs/k3_ds.md"]
+source_related_commit: ["2525ee3b68e0f4864f1bf12c8a59df040bf27e84"]
 created: 2026-06-29
 updated: 2026-10-21
 aliases: ["K3 Strap管脚物理配置参数", "K3 Strap Pins Config Specs", "k3_strap_pins_config"]
@@ -22,23 +24,27 @@ target_audience: [硬件电路工程师, 驱动工程师]
 # K3 芯片 Strap Pins 启动与系统配置参数
 
 > [!TIP]
-> **💡 工程师导读与排坑焦点**：详细标注 K3 芯片 Strap 管脚配置阻值与启动介质引脚选择。
+> **💡 工程师导读与排坑焦点**：保留 K3 Strap 官方原表与冲突依据，接线前需确认具体板型与官方结论。
 > **目标读者**：`硬件电路工程师 / 驱动工程师` | **技术领域**：`hardware_schematic_design`
 
 本文件按 K3 指南 1.1.5 的功能表列出 Strap 0～5。
 
 > [!WARNING]
-> **来源内部冲突，待确认**：同节开头却写“共有 5 个 strap pin”，并列 GPIO65/66/68/69/90；后面的 QSPI 与 LPDDR 表分别写 GPIO64 和 GPIO52。以下保留各功能表原值，不能将其称为已确认的完整管脚清单；电阻、供电和实际接线须对照对应板型原理图及官方勘误。
+> **两类官方冲突，待确认**：指南开头写“共有 5 个 strap pin”，并列 GPIO65/66/68/69/90，后面的 QSPI 与 LPDDR 表却写 GPIO64 和 GPIO52；同时，指南与数据手册对 SPI NOR/NAND 的 GPIO66/65 组合相反。不能将任一单表作为已确认的完整接线依据；电阻、供电和实际接线须对照对应板型经审定原理图及官方勘误。
 
 ## 1. Boot 启动介质选择 (Strap 0 & 1)
-通过 **GPIO66 (Strap 1)** 与 **GPIO65 (Strap 0)** 的电平组合选择芯片引导介质：
+以下按相同的 **GPIO66 / GPIO65** 列顺序对照两份固定来源；正常启动对应 GPIO69=0。指南标注相关管脚 default down，数据手册表中的 x 表示不影响该启动模式选择。
 
-| 组合 | GPIO[66] (Strap 1)<br>[默认下拉] | GPIO[65] (Strap 0)<br>[默认下拉] | 启动顺序 / 引导功能 |
-| :--- | :---: | :---: | :--- |
-| **1** | 0 | 0 | **TF Card $\rightarrow$ eMMC [默认]** |
-| **2** | 1 | 0 | **TF Card $\rightarrow$ SPI NOR** |
-| **3** | 0 | 1 | **TF Card $\rightarrow$ SPI NAND** |
-| **4** | 1 | 1 | **TF Card $\rightarrow$ UFS** |
+| GPIO66 | GPIO65 | 硬件设计指南 V1.1 §1.1.5 | 数据手册 V1.9 §2.11.2 |
+| :---: | :---: | :--- | :--- |
+| 0 | 0 | TF Card → eMMC [默认] | SD Card → eMMC |
+| 1 | 0 | TF Card → SPI NOR | SD Card → SPI NAND |
+| 0 | 1 | TF Card → SPI NAND | SD Card → SPI NOR |
+| 1 | 1 | TF Card → UFS | SD Card → UFS |
+
+**SPI 选择冲突尚未裁决**：两份来源均先尝试 SD/TF，00 的次级介质为 eMMC、11 为 UFS；10/01 的 SPI NOR 与 SPI NAND 互换。不能仅凭文档日期、表格编号或文件名决定哪一套电平正确，也不能将本表用于直接选择 SPI 启动接线。
+
+来源：[硬件设计指南 §1.1.5](../Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md)与[数据手册 §2.11.2](../Sources/docs-chip/zh/key_stone/k3/k3_docs/k3_ds.md)，均固定于 `2525ee3b68e0f4864f1bf12c8a59df040bf27e84`。
 
 ## 2. Download sel 下载通道选择 (Strap 2)
 通过 **GPIO68 (Strap 2)** 选择系统烧录/下载接口：

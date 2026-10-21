@@ -47,10 +47,14 @@
         {
           "path": "Sources/docs-ai/zh/compute_stack/ai_compute_stack/llama.cpp.md",
           "commit": "2b3894e983a295ed0278bc625867e0c132e0e259"
+        },
+        {
+          "path": "Sources/docs-chip/zh/key_stone/k3/k3_docs/k3_ds.md",
+          "commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84"
         }
       ],
-      "scope": "SDK 概览；产品特性；硬件指南 1.1.5/1.2.5/1.2.6；Buglist 1/2；Llama.cpp 2",
-      "limits": "覆盖启动、供电修订、SDK 分流及 GGUF 路径；Strap 来源内部冲突与热学历史待核验项保留。",
+      "scope": "SDK 概览；产品特性；硬件指南 1.1.5/1.2.5/1.2.6；Buglist 1/2；Llama.cpp 2；数据手册2.11.2与指南1.1.5逐位比较",
+      "limits": "覆盖启动、供电修订、SDK 分流及 GGUF 路径；Strap 来源内部冲突与热学历史待核验项保留。 SPI NOR/NAND选择电平存在跨文档冲突，不按任一单表给接线结论。",
       "verification": "partial / unverified / needs_review; no hardware execution"
     },
     {

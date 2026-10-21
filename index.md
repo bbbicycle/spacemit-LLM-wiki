@@ -79,7 +79,7 @@ aliases: [index, index.md, 索引, 全局索引]
 
 ### 事实证据 (Evidence)
 *   [[Evidence/k1_strap_pins_config]] —— K1 芯片六类 Strap 管脚物理连接与 JTAG 路由组合。
-*   [[Evidence/k3_strap_pins_config]] —— K3 Strap 功能表与来源清单矛盾，完整接线清单待官方确认。
+*   [[Evidence/k3_strap_pins_config]] —— K3 Strap 清单与 SPI NOR/NAND 电平映射存在官方冲突，接线结论待确认。
 *   [[Evidence/p1_pmic_specs]] —— Power Stone P1 PMIC 芯片各电轨输出电压、电流极限及引脚定义。
 *   [[Evidence/p1s_pmic_specs]] —— Power Stone P1S PMIC 芯片电轨规格及精简引脚定义。
 *   [[Evidence/p3_pmic_specs]] —— 🆕 Power Stone P3 PMIC 四相 32A 大电流规格、相位组合与电气参数。
@@ -221,7 +221,7 @@ aliases: [index, index.md, 索引, 全局索引]
 *   [[Agent]] —— 知识库运行与 AI Agent 协作规范。
 *   [[log]] —— 重构与维护日志。
 
-*   [项目计划与阶段进度](docs/PROJECT_PLAN.md) —— v2.0：P0/P1 与阶段 A 已完成并通过部署验收，阶段 B 首轮复核、查询优化与 20 题工具评测已落地，B1 因 K3 Strap 官方清单矛盾保留未完成验收；公司部署/RAG 按需启动。
+*   [项目计划与阶段进度](docs/PROJECT_PLAN.md) —— v2.0：P0/P1 与阶段 A 已完成并通过部署验收，阶段 B 首轮复核、查询优化与 20 题工具评测已落地，B1 因 K3 Strap 清单与 SPI 启动选择的官方冲突保留未完成验收；公司部署/RAG 按需启动。
 *   [MCP 接口与目标元数据契约](docs/MCP_CONTRACT_V1.md) —— 7 核心工具兼容边界、Worker 运营扩展与未来 Gateway 模型。
 *   [阶段 B 首轮审计](docs/reviews/stage_b_2026-10-21/README.md) —— 12 项 diff、7 篇 Journey、真实查询与 20 题评测；保留阻塞事项。
 *   [新鲜度与维护闭环](docs/FRESHNESS_MAINTENANCE.md) —— P1 报告、来源字段、分页与 stale 复核流程。

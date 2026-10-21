@@ -300,10 +300,10 @@
     },
     {
       "id": "B06",
-      "question": "K3默认启动顺序及完整Strap管脚清单是什么？",
+      "question": "K3默认启动、SPI NOR/NAND电平与完整Strap管脚清单能否确定？",
       "domain": "hardware_schematic_design",
-      "product_version": "K3 指南V1.1，1.1.5存在内部矛盾",
-      "reference_answer": "表中GPIO66/65=0/0为TF Card→eMMC；概述称5个且列GPIO90，功能表却列GPIO64/52和Strap0～5。并列来源，完整清单未知，需官方/对应原理图确认，不能自行裁决。",
+      "product_version": "K3 指南V1.1 1.1.5 / 数据手册V1.9 2.11.2，固定docs-chip@2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "reference_answer": "GPIO66/65=00的TF/SD→eMMC与11的TF/SD→UFS一致；指南10=SPI NOR、01=SPI NAND，数据手册10=SPI NAND、01=SPI NOR，不能自行裁决SPI接线。指南概述5脚含GPIO90与功能表GPIO64/52、Strap0～5也矛盾，完整清单等待官方确认。",
       "citations": [
         {
           "path": "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md",
@@ -311,6 +311,13 @@
           "start_line": 243,
           "end_line": 283,
           "excerpt_sha256": "1b91ff5542f6ef9dcbf5f30926718a91818f5cf93b3b8214c5f775036455a6ab"
+        },
+        {
+          "path": "Sources/docs-chip/zh/key_stone/k3/k3_docs/k3_ds.md",
+          "commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+          "start_line": 1476,
+          "end_line": 1495,
+          "excerpt_sha256": "99e1305e1a00babc6fc539cd5a9266b6351b2067a54902eb74023b8da862e7e2"
         }
       ],
       "calls": [
@@ -324,7 +331,9 @@
               "GPIO90",
               "GPIO64",
               "GPIO52",
-              "TF Card"
+              "| 1 | 0 | TF Card → SPI NOR | SD Card → SPI NAND |",
+              "| 0 | 1 | TF Card → SPI NAND | SD Card → SPI NOR |",
+              "SPI 选择冲突尚未裁决"
             ],
             "notices": [
               "CONFLICTED",
@@ -351,6 +360,22 @@
             ],
             "source_file": "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md",
             "reference_excerpt_sha256": "1b91ff5542f6ef9dcbf5f30926718a91818f5cf93b3b8214c5f775036455a6ab"
+          }
+        },
+        {
+          "name": "read_raw_source_file",
+          "arguments": {
+            "file_path_or_url": "Sources/docs-chip/zh/key_stone/k3/k3_docs/k3_ds.md",
+            "start_line": 1476,
+            "end_line": 1495
+          },
+          "expect": {
+            "contains": [
+              "| 0 | x | 0 | 1 | SD Card → SPI NOR |",
+              "| 0 | x | 1 | 0 | SD Card → SPI NAND |"
+            ],
+            "source_file": "Sources/docs-chip/zh/key_stone/k3/k3_docs/k3_ds.md",
+            "reference_excerpt_sha256": "99e1305e1a00babc6fc539cd5a9266b6351b2067a54902eb74023b8da862e7e2"
           }
         }
       ]

@@ -1,0 +1,30 @@
+{
+  "checked_at_utc": "2026-10-21T06:41:47.772341+00:00",
+  "repository_head": "bfa37cffe9d0519bf6abad19bec9a0b912d23b21",
+  "upstream_fetch": {
+    "repository": "https://github.com/spacemit-com/docs-chip",
+    "branch": "main",
+    "local_head": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+    "fetched_head": "aae85ae4b2071543dfec41b533f97feefc303924",
+    "relevant_files_changed": false,
+    "checked_paths": [
+      "zh/key_stone/k3/k3_hw/k3_hw_design_guide.md",
+      "zh/key_stone/k3/k3_docs/k3_ds.md",
+      "en/key_stone/k3/k3_hw/k3_hw_design_guide.md"
+    ],
+    "note": "Fetched upstream has unrelated V100 edits; these K3 sources have no diff from the fixed index snapshot. Sources checkout and superproject pointers remain unchanged."
+  },
+  "completion_audit": {
+    "B1": "12 baseline stale IDs match all review records and reviewed SHAs; not accepted while K3-STRAP-01 remains unresolved",
+    "B2": "All 7 journey records and source SHA lists match indexed metadata; supplemental K3 datasheet source added in follow-up",
+    "B3": "First D1 snapshots, unique-row persistence, genuine misses and alias replay archived; no new feedback sent",
+    "B4": "Re-run after adding both conflicting SPI mappings; see updated core_20_results.json"
+  },
+  "new_finding": {
+    "guide": "V1.1 1.1.5: GPIO66/65=10 -> SPI NOR, 01 -> SPI NAND",
+    "datasheet": "V1.9 2.11.2: GPIO66/65=10 -> SPI NAND, 01 -> SPI NOR",
+    "common": "00 -> SD/TF then eMMC; 11 -> SD/TF then UFS",
+    "decision": "Preserve both exact tables; no official correction fetched, no unilateral wiring decision"
+  },
+  "required_external_evidence": "Official correction/clarification covering both pin list and SPI selection or a reviewed schematic explicitly bound to the target hardware revision."
+}

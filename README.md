@@ -10,7 +10,7 @@
 
 **接入 AI：[安装指南（云端 / 本地两种方式）](INSTALL.md)** · [AI 按需下载清单](install/manifest.json)。两种方式都安装完整 Skill，无需全量克隆仓库。
 
-**项目进度：[架构演进与近期执行计划 v2.0](docs/PROJECT_PLAN.md)**。P0/P1 与阶段 A 已完成；`build_meta`、`/health`、双端 `agent_notice` 和轻量 Skill v1 已通过部署验收。阶段 B 首轮复核、查询优化与 20 题工具评测已落地，B1 因 K3 Strap 官方清单矛盾保留未完成验收，记录见 [阶段 B 审计](docs/reviews/stage_b_2026-10-21/README.md)，公司服务器和 RAG 按进入条件启动；线上版本以 `/health` 为准。
+**项目进度：[架构演进与近期执行计划 v2.0](docs/PROJECT_PLAN.md)**。P0/P1 与阶段 A 已完成；`build_meta`、`/health`、双端 `agent_notice` 和轻量 Skill v1 已通过部署验收。阶段 B 首轮复核、查询优化与 20 题工具评测已落地，B1 因 K3 Strap 清单与 SPI 启动选择的官方冲突保留未完成验收，记录见 [阶段 B 审计](docs/reviews/stage_b_2026-10-21/README.md)，公司服务器和 RAG 按进入条件启动；线上版本以 `/health` 为准。
 
 ---
 

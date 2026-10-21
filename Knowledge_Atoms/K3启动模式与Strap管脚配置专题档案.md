@@ -9,15 +9,15 @@ domain: hardware_schematic_design
 target_audience: [硬件电路工程师, 嵌入式驱动]
 source_file: "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md"
 source_commit: "2525ee3b68e0f4864f1bf12c8a59df040bf27e84"
-source_locator: "K3 硬件设计指南和 Layout 指导手册；PDF 版本下载；版本；前言；1. 原理图设计"
+source_locator: "硬件设计指南 1.1.5/1.4.4；数据手册 V1.9 2.11.2；其他正文未全文核验"
 source_resolution: "partial"
 verification_status: conflicted
-conflicts: "K3 指南 1.1.5 的开头管脚列表与后续 Strap0～5 功能表不一致，详见 k3_strap_pins_config。"
+conflicts: "K3指南1.1.5的管脚概述与Strap0～5功能表不一致；该指南与数据手册2.11.2还将GPIO66/65的SPI NOR/NAND组合互换。SPI选择及完整管脚清单待官方裁决，详见k3_strap_pins_config。"
 source_checked_at: 2026-10-21
-source_note: "2026-10-21 阶段 B：K3 1.1.5 功能表、1.4.4 MMC；同步 Strap 来源内部矛盾，移除无依据的通用上拉阻值/悬空接线承诺，修正 MMC2 全面禁用 SD 的过度结论。 保留来源冲突并置 conflicted/needs_review；不表示全文事实通过。"
+source_note: "2026-10-21 阶段B复核指南1.1.5/1.4.4，并与数据手册2.11.2逐位比较启动映射；补SPI选择电平冲突，下载模式按GPIO69与GPIO68共同判断。其他正文未全文核验，保持conflicted/needs_review。"
 source_origin: "https://github.com/spacemit-com/docs-chip"
-source_related_file: ["Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_faq.md", "Sources/docs-chip/zh/key_stone/k3/k3_sw/k3_sdk_user_guide.md"]
-source_related_commit: ["15254b1cfe339c1863d8edf8137a337681fb2780", "15254b1cfe339c1863d8edf8137a337681fb2780"]
+source_related_file: ["Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_faq.md", "Sources/docs-chip/zh/key_stone/k3/k3_sw/k3_sdk_user_guide.md", "Sources/docs-chip/zh/key_stone/k3/k3_docs/k3_ds.md"]
+source_related_commit: ["15254b1cfe339c1863d8edf8137a337681fb2780", "15254b1cfe339c1863d8edf8137a337681fb2780", "2525ee3b68e0f4864f1bf12c8a59df040bf27e84"]
 ---
 # K3 启动模式与 Strap 管脚配置专题档案
 
@@ -41,17 +41,17 @@ K3 芯片在复位释放（Reset Release）的瞬间，会通过采样特定的�
 
 ## 2. 核心配置逻辑对照
 
-进行单板原理图设计时，必须严格对照以下底层参数表（详见事实证据 [[Evidence/k3_strap_pins_config]]）：
+进行单板原理图设计前，先阅读 [[Evidence/k3_strap_pins_config]] 的两份原表与冲突说明；争议项不能作为已确认的接线参数。
 
 ### 2.1 启动介质（Boot Mode）
-单板设计时，需通过拨码开关或强上拉电阻配置 **GPIO66** 和 **GPIO65**：
-*   功能表的 `GPIO66/GPIO65 = 0/0` 表示 **TF Card → eMMC**，不是无条件跳过 TF 卡直接启动 eMMC。
-*   `0/1` 表示 **TF Card → SPI NAND**。电平如何实现需按板型原理图确认，不指定无出处的上拉阻值。
+两份来源均通过 **GPIO66 / GPIO65** 配置次级启动介质，并优先尝试 SD/TF：
+*   `0/0` 对应 **TF/SD Card → eMMC**，`1/1` 对应 **TF/SD Card → UFS**。
+*   **SPI 选择冲突**：硬件指南 §1.1.5 写 `1/0 → SPI NOR`、`0/1 → SPI NAND`；数据手册 §2.11.2 写 `1/0 → SPI NAND`、`0/1 → SPI NOR`。不能单方面采用其中一套或按文档日期裁决；接线与电阻实现须等待官方确认或对应板型经审定原理图。
 
 ### 2.2 烧录与启动切换（Boot / Download）
 *   **GPIO69** 是决定单板是“正常工作”还是“进入烧录”的开关：
     *   **正常运行**：功能表 GPIO69 为 `0`，具体上下拉接线按原理图。
-    *   **出厂烧录**：将 GPIO69 上拉到高电平（`1`），芯片上电后将自动进入下载模式，等待通过 USB 接口烧录固件。
+    *   **出厂烧录**：GPIO69=`1` 进入下载模式，仍由 GPIO68 选择通道：`0` 为 USB、`1` 为 UART。GPIO69=`1` 本身不能保证一定走 USB；电平实现按板型原理图核对。
 
 ### 2.3 核心板强制刷机 (Recovery) 与升级限制
 对于基于 K3 核心板（如 CoM260）的设计：
@@ -82,4 +82,5 @@ K3 芯片的 GPIO 电平支持 1.8V 与 3.3V 自适应切换：
 
 关于具体的 Strap Pin 电阻选型、PMIC 上电时序以及烧录软件的操作，请进一步参阅：
 *   [K3 硬件设计指南 - 原始文档](../Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md)
+*   [K3 数据手册 §2.11.2 - SPI 启动选择冲突对照](../Sources/docs-chip/zh/key_stone/k3/k3_docs/k3_ds.md)
 *   [K3 SDK 使用指南 - 原始文档](../Sources/docs-chip/zh/key_stone/k3/k3_sw/k3_sdk_user_guide.md)

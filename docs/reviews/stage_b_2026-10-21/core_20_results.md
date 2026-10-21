@@ -1,6 +1,6 @@
 # 阶段 B：20 题工具与来源评测
 
-通过 20/20；覆盖 6 个 domain；每端 42 次工具调用。
+通过 20/20；覆盖 6 个 domain；每端 43 次工具调用。
 
 验证检索证据、固定来源、状态提示和双端一致性；参考答复是本轮 AI 的来源审核判据。未运行独立问答模型，不代表模型准确率，也未实物执行。stale/unknown 使用真实 Git 基线回放，不改变当前线上索引。
 
@@ -11,7 +11,7 @@
 | B03 | K3 跑30B-A3B是否等同于30B Dense，激活3B是否只占3B内存？ | chip_product_specs | 2 | 通过 |
 | B04 | MUSE Pi Pro与Pi的排针/网口是否相同，是否属于K3板？ | chip_product_specs | 2 | 通过 |
 | B05 | K1 QSPI_DATA3及启动介质选择能否直接照抄K3 GPIO表？ | hardware_schematic_design | 2 | 通过 |
-| B06 | K3默认启动顺序及完整Strap管脚清单是什么？ | hardware_schematic_design | 2 | 通过 |
+| B06 | K3默认启动、SPI NOR/NAND电平与完整Strap管脚清单能否确定？ | hardware_schematic_design | 3 | 通过 |
 | B07 | K3 VDD0V8_DDR还能按旧版用磁珠独立供电吗？ | hardware_schematic_design | 2 | 通过 |
 | B08 | 撤回K3热设计后，能否把0.23°C/W当θJC并保证PL1=15W？ | hardware_schematic_design | 2 | 通过 |
 | B09 | MUSE Pi 的26Pin JTAG能否照Pi Pro的40Pin接？ | hardware_schematic_design | 2 | 通过 |

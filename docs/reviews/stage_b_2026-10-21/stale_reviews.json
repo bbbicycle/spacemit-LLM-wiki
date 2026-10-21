@@ -125,7 +125,7 @@
         "K3启动模式与Strap管脚配置专题档案"
       ],
       "status": "reviewed_pending_human_approval",
-      "result": "保留概述5脚含GPIO90与功能表6脚含GPIO64/52的冲突；置conflicted，默认启动顺序为TF→eMMC。",
+      "result": "保留概述5脚含GPIO90与功能表6脚含GPIO64/52的冲突；置conflicted，默认启动顺序为TF→eMMC。 追加逐位对照数据手册2.11.2，发现GPIO66/65的10与01分别选择SPI NOR/NAND的映射与指南相反；并列两表，保留冲突。",
       "dependency_review": [
         {
           "node": "K3芯片开发快速上手向导",
@@ -136,7 +136,18 @@
           "result": "本轮对应Evidence/Atom的正文已同步，保留其各自needs_review及核验范围。"
         }
       ],
-      "remaining_issue": "K3-STRAP-01：官方清单矛盾，阻塞完整管脚清单作为已确定接线结论；等待官方确认。"
+      "remaining_issue": "K3-STRAP-01：官方管脚清单矛盾及SPI NOR/NAND电平映射相反，阻塞完整清单与SPI启动接线结论。",
+      "supplemental_reviewed_sources": [
+        {
+          "path": "Sources/docs-chip/zh/key_stone/k3/k3_docs/k3_ds.md",
+          "commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+          "section": "V1.9 2.11.2",
+          "line_range": [
+            1476,
+            1495
+          ]
+        }
+      ]
     },
     {
       "node": "K1_K3摄像系统与图像处理专题档案",
@@ -267,7 +278,7 @@
         "K3安全启动SecureBoot开发专题档案"
       ],
       "status": "reviewed_pending_human_approval",
-      "result": "同步Strap冲突，移除无源上拉阻值/悬空接线承诺；修正MMC2全面禁用SD的过度结论。",
+      "result": "同步Strap冲突，移除无源上拉阻值/悬空接线承诺；修正MMC2全面禁用SD的过度结论。 追加逐位对照数据手册2.11.2，发现GPIO66/65的10与01分别选择SPI NOR/NAND的映射与指南相反；并列两表，保留冲突。",
       "dependency_review": [
         {
           "node": "K3芯片开发快速上手向导",
@@ -278,7 +289,18 @@
           "result": "定向检查启动关联，无复述有争议的Strap完整管脚清单；eFuse与信任链仍按独立指南。"
         }
       ],
-      "remaining_issue": "K3-STRAP-01：官方清单矛盾，阻塞完整管脚清单作为已确定接线结论；等待官方确认。"
+      "remaining_issue": "K3-STRAP-01：官方管脚清单矛盾及SPI NOR/NAND电平映射相反，阻塞完整清单与SPI启动接线结论。",
+      "supplemental_reviewed_sources": [
+        {
+          "path": "Sources/docs-chip/zh/key_stone/k3/k3_docs/k3_ds.md",
+          "commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+          "section": "V1.9 2.11.2",
+          "line_range": [
+            1476,
+            1495
+          ]
+        }
+      ]
     },
     {
       "node": "SpacemiT生态板卡与PMIC电源配合专题档案",
@@ -326,8 +348,8 @@
         "k3_strap_pins_config",
         "K3启动模式与Strap管脚配置专题档案"
       ],
-      "evidence": "K3硬件设计指南@2525ee3，1.1.5概述/功能表内部矛盾",
-      "blocked_use": "将完整Strap清单、GPIO90/64/52关系作为已确定接线依据",
+      "evidence": "K3指南1.1.5概述/功能表内部矛盾；同一固定SHA的数据手册2.11.2与指南的GPIO66/65 SPI NOR/NAND映射相反",
+      "blocked_use": "将GPIO66/65的SPI NOR/NAND电平与完整Strap清单作为已确定接线依据",
       "next_action": "获取官方修订或具体板型经审定原理图后，逐项核对并由人工终审；不替官方自行裁决。"
     }
   ]
