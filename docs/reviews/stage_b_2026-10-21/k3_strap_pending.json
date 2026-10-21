@@ -1,0 +1,68 @@
+{
+  "id": "K3-STRAP-01",
+  "status": "awaiting_upstream_correction",
+  "fact_status": "conflicted",
+  "display_status": "待官方确认",
+  "reported_to_development": {
+    "reported_by": "repository maintainer (user)",
+    "date": "2026-10-21",
+    "statement": "用户表示已与开发同步要修改；尚未提供官方修正结论或已合并的修订。"
+  },
+  "stage_b_disposition": {
+    "date": "2026-10-21",
+    "basis": "explicit user instruction",
+    "user_instruction": "这两个问题现在相关的知识里标注待确定，然后我已经和开发同步要修改。等github上修正更新后，再帮我修正好wiki的内容。然后先继续处理 B1 验收",
+    "disposition": "单独跟踪两项官方勘误，继续本轮B1来源复核与处置验收；技术结论保持待确定。",
+    "blocks_review_workflow_acceptance": false,
+    "permits_unconfirmed_wiring_claims": false
+  },
+  "source_snapshot": {
+    "fixed_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+    "fetched_commit": "aae85ae4b2071543dfec41b533f97feefc303924",
+    "relevant_files_changed": false,
+    "checked_at_utc": "2026-10-21T07:30:43.816644+00:00"
+  },
+  "pending_questions": [
+    {
+      "id": "K3-STRAP-01-PINS",
+      "status": "awaiting_upstream_correction",
+      "question": "完整Strap清单及GPIO90/64/52的角色",
+      "observed_conflict": "指南1.1.5概述5脚GPIO65/66/68/69/90，功能表却列Strap0～5含GPIO64/52。",
+      "source_file": "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md",
+      "section": "1.1.5"
+    },
+    {
+      "id": "K3-STRAP-01-SPI",
+      "status": "awaiting_upstream_correction",
+      "question": "GPIO66/GPIO65=10或01究竟对应SPI NOR还是SPI NAND",
+      "observed_conflict": "指南10→SPI NOR、01→SPI NAND；数据手册10→SPI NAND、01→SPI NOR。",
+      "source_files": [
+        "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md",
+        "Sources/docs-chip/zh/key_stone/k3/k3_docs/k3_ds.md"
+      ],
+      "sections": [
+        "1.1.5",
+        "2.11.2"
+      ]
+    }
+  ],
+  "affected_files": [
+    "Evidence/k3_strap_pins_config.md",
+    "Knowledge_Atoms/K3启动模式与Strap管脚配置专题档案.md",
+    "Developer_Journeys/K3芯片开发快速上手向导.md"
+  ],
+  "update_procedure": [
+    "检查spacemit-com/docs-chip官方main中上述章节的实际diff，不能仅凭上游HEAD变化认为修复。",
+    "分别核对两项问题；只修复一项时保留另一项待确认状态。记录修订SHA、版本、芯片/板型适用范围与原文。",
+    "按修订同步Evidence、Atom、Journey及B06固定来源/预期；更新真正复核过的来源SHA，保持needs_review，不自动设approved。",
+    "运行维护规范要求的检查，先提交输入再重建双端索引；中文commit、推送GitHub、等待部署并实读线上内容后归档。",
+    "没有相关修订时保持知识正文和来源SHA不变，不发送反馈、不重复制造提交。"
+  ],
+  "automation": {
+    "id": "k3-strap-wiki",
+    "kind": "heartbeat",
+    "status": "ACTIVE",
+    "schedule": "每天10:00（Asia/Shanghai），在本聊天检查官方相关章节；无有效变更时保持安静。",
+    "stop_condition": "两项均按官方依据修正并发布验证后暂停任务"
+  }
+}

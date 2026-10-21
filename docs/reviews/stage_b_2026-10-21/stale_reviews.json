@@ -35,7 +35,8 @@
           "result": "本轮对应Evidence/Atom的正文已同步，保留其各自needs_review及核验范围。"
         }
       ],
-      "remaining_issue": "仍待人工终审；本轮未实测、不升级为approved。"
+      "remaining_issue": "仍待人工终审；本轮未实测、不升级为approved。",
+      "b1_disposition": "reviewed_pending_human_approval"
     },
     {
       "node": "k1_k3_camera_specs",
@@ -59,7 +60,8 @@
           "result": "本轮对应Evidence/Atom的正文已同步，保留其各自needs_review及核验范围。"
         }
       ],
-      "remaining_issue": "仍待人工终审；本轮未实测、不升级为approved。"
+      "remaining_issue": "仍待人工终审；本轮未实测、不升级为approved。",
+      "b1_disposition": "reviewed_pending_human_approval"
     },
     {
       "node": "k1_k3_network_specs",
@@ -83,7 +85,8 @@
           "result": "本轮对应Evidence/Atom的正文已同步，保留其各自needs_review及核验范围。"
         }
       ],
-      "remaining_issue": "仍待人工终审；本轮未实测、不升级为approved。"
+      "remaining_issue": "仍待人工终审；本轮未实测、不升级为approved。",
+      "b1_disposition": "reviewed_pending_human_approval"
     },
     {
       "node": "k1_k3_pcie_usb_specs",
@@ -107,7 +110,8 @@
           "result": "本轮对应Evidence/Atom的正文已同步，保留其各自needs_review及核验范围。"
         }
       ],
-      "remaining_issue": "仍待人工终审；本轮未实测、不升级为approved。"
+      "remaining_issue": "仍待人工终审；本轮未实测、不升级为approved。",
+      "b1_disposition": "reviewed_pending_human_approval"
     },
     {
       "node": "k3_strap_pins_config",
@@ -147,7 +151,8 @@
             1495
           ]
         }
-      ]
+      ],
+      "b1_disposition": "reviewed_with_deferred_official_correction"
     },
     {
       "node": "K1_K3摄像系统与图像处理专题档案",
@@ -171,7 +176,8 @@
           "result": "已对照产品用户指南5.4，明确载板仅引出两组4 Lane；不按SoC12Lane改成载板可用12Lane。"
         }
       ],
-      "remaining_issue": "仍待人工终审；本轮未实测、不升级为approved。"
+      "remaining_issue": "仍待人工终审；本轮未实测、不升级为approved。",
+      "b1_disposition": "reviewed_pending_human_approval"
     },
     {
       "node": "K1_K3网络通信与千兆网口专题档案",
@@ -195,7 +201,8 @@
           "result": "定向检索网络段落，RT24引出接口描述未将K3全芯片GMAC写为K1双GMAC；不扩大全文核验范围。"
         }
       ],
-      "remaining_issue": "仍待人工终审；本轮未实测、不升级为approved。"
+      "remaining_issue": "仍待人工终审；本轮未实测、不升级为approved。",
+      "b1_disposition": "reviewed_pending_human_approval"
     },
     {
       "node": "K1_K3高速外设接口专题档案",
@@ -212,7 +219,8 @@
       "status": "reviewed_pending_human_approval",
       "result": "USB/PCIe Combo与UFS2.2保持一致；历史其他桥接/布线断言仍待核验。",
       "dependency_review": [],
-      "remaining_issue": "仍待人工终审；本轮未实测、不升级为approved。"
+      "remaining_issue": "仍待人工终审；本轮未实测、不升级为approved。",
+      "b1_disposition": "reviewed_pending_human_approval"
     },
     {
       "node": "K1硬件外设接口与物理调试专题档案",
@@ -236,7 +244,8 @@
           "result": "定向检查UART/JTAG关联与用户指南原文，FAQ此次链接变更不影响物理26Pin映射。"
         }
       ],
-      "remaining_issue": "仍待人工终审；本轮未实测、不升级为approved。"
+      "remaining_issue": "仍待人工终审；本轮未实测、不升级为approved。",
+      "b1_disposition": "reviewed_pending_human_approval"
     },
     {
       "node": "K1系统启动与分区配置专题档案",
@@ -260,7 +269,8 @@
           "result": "已修正K1最终SD镜像名与K3时间戳/输出路径边界；只更新实际复读source.md的对应SHA。"
         }
       ],
-      "remaining_issue": "仍待人工终审；本轮未实测、不升级为approved。"
+      "remaining_issue": "仍待人工终审；本轮未实测、不升级为approved。",
+      "b1_disposition": "reviewed_pending_human_approval"
     },
     {
       "node": "K3启动模式与Strap管脚配置专题档案",
@@ -300,7 +310,8 @@
             1495
           ]
         }
-      ]
+      ],
+      "b1_disposition": "reviewed_with_deferred_official_correction"
     },
     {
       "node": "SpacemiT生态板卡与PMIC电源配合专题档案",
@@ -316,7 +327,8 @@
       "backlinks": [
         "Muse_Pi_板级硬件设计专题",
         "SpacemiT_P3_PMIC电源芯片专题档案",
-        "Spacemit_K1生态终端与教学实验套件专题档案"
+        "Spacemit_K1生态终端与教学实验套件专题档案",
+        "K3芯片开发快速上手向导"
       ],
       "status": "reviewed_pending_human_approval",
       "result": "新增当前Buglist来源；K3 X100/A100/VCC_SYS/VDD0V8_DDR合并供电与DDR共平面规则覆盖旧独立供电稿。",
@@ -332,9 +344,14 @@
         {
           "node": "Spacemit_K1生态终端与教学实验套件专题档案",
           "result": "定向检查PMIC关联，无复述K3 CPU/DDR独立供电；不将K3勘误套用K1产品。"
+        },
+        {
+          "node": "K3芯片开发快速上手向导",
+          "result": "补登记本轮Journey新增入链；其第2节已引用PMIC专题并正确说明V1.1与Buglist合并供电/DDR平面要求，未复制旧独立供电结论。"
         }
       ],
-      "remaining_issue": "仍待人工终审；本轮未实测、不升级为approved。"
+      "remaining_issue": "仍待人工终审；本轮未实测、不升级为approved。",
+      "b1_disposition": "reviewed_pending_human_approval"
     }
   ],
   "reviewed_count": 12,
@@ -343,14 +360,24 @@
     {
       "id": "K3-STRAP-01",
       "owner": "仓库维护者协调官方芯片硬件文档负责人",
-      "status": "awaiting_official_clarification",
+      "status": "awaiting_upstream_correction",
       "affected_nodes": [
         "k3_strap_pins_config",
         "K3启动模式与Strap管脚配置专题档案"
       ],
       "evidence": "K3指南1.1.5概述/功能表内部矛盾；同一固定SHA的数据手册2.11.2与指南的GPIO66/65 SPI NOR/NAND映射相反",
       "blocked_use": "将GPIO66/65的SPI NOR/NAND电平与完整Strap清单作为已确定接线依据",
-      "next_action": "获取官方修订或具体板型经审定原理图后，逐项核对并由人工终审；不替官方自行裁决。"
+      "next_action": "按用户安排标待确定并单独跟踪；GitHub相关章节修订后逐项核对两项问题、更新Wiki及评测并重新发布。争议接线结论保持禁用。",
+      "development_contact": "2026-10-21 用户表示已与开发同步修订；等待GitHub原文更正。",
+      "blocks_b1_review_acceptance": false,
+      "disposition_record": "k3_strap_pending.json"
     }
-  ]
+  ],
+  "acceptance_basis": {
+    "date": "2026-10-21",
+    "user_instruction": "这两个问题现在相关的知识里标注待确定，然后我已经和开发同步要修改。等github上修正更新后，再帮我修正好wiki的内容。然后先继续处理 B1 验收",
+    "pending_official_corrections": "k3_strap_pending.json",
+    "audit_record": "b1_acceptance.json",
+    "technical_facts_approved": false
+  }
 }

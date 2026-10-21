@@ -10,7 +10,7 @@
 
 **接入 AI：[安装指南（云端 / 本地两种方式）](INSTALL.md)** · [AI 按需下载清单](install/manifest.json)。两种方式都安装完整 Skill，无需全量克隆仓库。
 
-**项目进度：[架构演进与近期执行计划 v2.0](docs/PROJECT_PLAN.md)**。P0/P1 与阶段 A 已完成；`build_meta`、`/health`、双端 `agent_notice` 和轻量 Skill v1 已通过部署验收。阶段 B 首轮复核、查询优化与 20 题工具评测已落地，B1 因 K3 Strap 清单与 SPI 启动选择的官方冲突保留未完成验收，记录见 [阶段 B 审计](docs/reviews/stage_b_2026-10-21/README.md)，公司服务器和 RAG 按进入条件启动；线上版本以 `/health` 为准。
+**项目进度：[架构演进与近期执行计划 v2.0](docs/PROJECT_PLAN.md)**。P0/P1 与阶段 A 已完成；`build_meta`、`/health`、双端 `agent_notice` 和轻量 Skill v1 已通过部署验收。阶段 B 首轮复核、查询优化与 20 题工具评测已落地，B1 按 2026-10-21 用户安排完成来源复核与处置验收，两项 K3 Strap 官方勘误单独跟踪、技术结论仍待确定，记录见 [阶段 B 审计](docs/reviews/stage_b_2026-10-21/README.md)，公司服务器和 RAG 按进入条件启动；线上版本以 `/health` 为准。
 
 ---
 
@@ -241,7 +241,7 @@ Choose **cloud** (recommended: complete Skill plus a remote SSE MCP connection) 
 
 Follow [INSTALL.md](INSTALL.md), the shared user and AI installation guide, and [install/manifest.json](install/manifest.json) for the exact files. Install the complete Skill and use your client's supported configuration format. The cloud endpoint is `https://mcp.yao1302.xyz/sse`; Skill and SSE support depend on the client and version.
 
-The Worker is the production service; Python is a standard-library mirror of the 7 core tools for local refined queries and CI. See [project plan v2.0](docs/PROJECT_PLAN.md): P0/P1 and stage A are complete. Deterministic `build_meta`, Worker `/health`, matching response notices and lightweight Skill v1 have passed deployment validation, including redeployment of an explicit Git ref. Stage B has a first source review, query-driven fixes and a 20-case tool evaluation; B1 acceptance remains open for an official K3 Strap inconsistency. See the [review record](docs/reviews/stage_b_2026-10-21/README.md). Check `/health` for the deployed version. Company hosting and RAG start only when their prerequisites are ready.
+The Worker is the production service; Python is a standard-library mirror of the 7 core tools for local refined queries and CI. See [project plan v2.0](docs/PROJECT_PLAN.md): P0/P1 and stage A are complete. Deterministic `build_meta`, Worker `/health`, matching response notices and lightweight Skill v1 have passed deployment validation, including redeployment of an explicit Git ref. Stage B has a first source review, query-driven fixes and a 20-case tool evaluation; B1 source-review and disposition acceptance is complete under the maintainer’s 2026-10-21 instruction; two K3 Strap corrections remain pending upstream and the disputed facts remain conflicted. See the [review record](docs/reviews/stage_b_2026-10-21/README.md). Check `/health` for the deployed version. Company hosting and RAG start only when their prerequisites are ready.
 
 ---
 

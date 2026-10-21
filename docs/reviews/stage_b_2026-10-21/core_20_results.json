@@ -1,8 +1,8 @@
 {
   "evaluation": "retrieval evidence / metadata / notices / pinned sources / Python-Worker parity",
   "limitations": "No independent LLM answer generation or scoring; reference answers are AI source-review rubrics, not measured model accuracy. No hardware execution.",
-  "suite_sha256": "c27c5ea34c58adf56453c7ef869917b810201d672b463039f7d5d6dd36ce0c5d",
-  "content_sha256": "c5fb78dd402602513018828011dfa38d7f75e2c40b748da0628d12d0d7d99aaf",
+  "suite_sha256": "83be27ccd0f6d76d78b622f754c714a2a1ef79baa1fe1a33b90e777fb33abc20",
+  "content_sha256": "7161de67bfb8fe0313903f6ee71193f92393fa5bc4ab1017da9d893f200357f4",
   "replay_baseline": "7856b16de70df6e2d494bb09acb93529063c3206",
   "domains": [
     "bianbu_os_distribution",
@@ -120,7 +120,7 @@
             "GENERATION_BOUNDARY"
           ],
           "empty": false,
-          "response_sha256": "d5983174875551886f36365fd1348be2bc95000407a6abd6d72dbb6ebd44419f",
+          "response_sha256": "88da456156b06a92945a6f3bea002f48768fb3d80cecc9831682022b98713cb4",
           "metadata": {
             "freshness": "current",
             "verification_status": "unverified",
@@ -630,7 +630,10 @@
               "GPIO52",
               "| 1 | 0 | TF Card → SPI NOR | SD Card → SPI NAND |",
               "| 0 | 1 | TF Card → SPI NAND | SD Card → SPI NOR |",
-              "SPI 选择冲突尚未裁决"
+              "SPI 选择冲突尚未裁决",
+              "待官方确认（2026-10-21）",
+              "维护者已与开发同步修订",
+              "争议接线结论尚未确定"
             ],
             "notices": [
               "CONFLICTED",
@@ -690,7 +693,10 @@
             "GPIO52",
             "| 1 | 0 | TF Card → SPI NOR | SD Card → SPI NAND |",
             "| 0 | 1 | TF Card → SPI NAND | SD Card → SPI NOR |",
-            "SPI 选择冲突尚未裁决"
+            "SPI 选择冲突尚未裁决",
+            "待官方确认（2026-10-21）",
+            "维护者已与开发同步修订",
+            "争议接线结论尚未确定"
           ],
           "notice_codes": [
             "CONFLICTED",
@@ -699,7 +705,7 @@
             "GENERATION_BOUNDARY"
           ],
           "empty": false,
-          "response_sha256": "459f8c8bf70558319d48369d59cca55311a73b7030d5f83c77e1a9b0375dcd72",
+          "response_sha256": "c6d3f8b2c904e4d0bddb16446bb54a315cea08fc7e7f33ec3a111c09c335c555",
           "metadata": {
             "freshness": "current",
             "verification_status": "conflicted",

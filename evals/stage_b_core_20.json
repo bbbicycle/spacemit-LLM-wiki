@@ -333,7 +333,10 @@
               "GPIO52",
               "| 1 | 0 | TF Card → SPI NOR | SD Card → SPI NAND |",
               "| 0 | 1 | TF Card → SPI NAND | SD Card → SPI NOR |",
-              "SPI 选择冲突尚未裁决"
+              "SPI 选择冲突尚未裁决",
+              "待官方确认（2026-10-21）",
+              "维护者已与开发同步修订",
+              "争议接线结论尚未确定"
             ],
             "notices": [
               "CONFLICTED",

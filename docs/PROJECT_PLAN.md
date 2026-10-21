@@ -52,7 +52,7 @@ P0 已完成的是接口与目标元数据模型定义，不表示未来 Gateway
 | **P0** | 冻结目标与接口 | 明确三层拓扑、7 大核心 MCP 工具与来源元数据模型 | **DONE** |
 | **P1** | Wiki 新鲜度与自愈闭环 | 按文件路径检测 `stale`、固化上游影响基线与原文安全分页 | **DONE** |
 | **阶段 A（原第二步）** | **MCP 自解释改造与对外 Skill 瘦身** | 用“索引内嵌 `build_meta` + `/health` 自检 + 结果内联提示 + 极简 Skill 冻结”替代繁重的 P2 打包基建 | **DONE（2026-10-21 部署验收通过）** |
-| **阶段 B（原第三步）** | **存量来源复核与查询驱动迭代** | 逐项复核首轮 12 个 `stale`、为 7 个 Journey 补来源，目标有据清零；利用 Cloudflare D1 真实查询日志驱动专题扩充与评测 | **首轮已执行；B1 官方 Strap 冲突阻塞验收** |
+| **阶段 B（原第三步）** | **存量来源复核与查询驱动迭代** | 逐项复核首轮 12 个 `stale`、为 7 个 Journey 补来源，目标有据清零；利用 Cloudflare D1 真实查询日志驱动专题扩充与评测 | **DONE（本轮来源复核与处置验收；两项官方勘误待确定并单独跟踪）** |
 | **P4** | 公司服务器承载 Wiki MCP | 在公司内部服务器运行独立 Wiki MCP 服务（灰度替代 Cloudflare） | 待公司服务器就绪后启动 |
 | **P5** | 接入公司 RAG 与混合编排 | 在服务端通过 MCP Gateway 编排 Wiki 精确检索与公司 RAG（含 ACL 权限过滤） | 待公司 RAG 接口就绪后启动 |
 
@@ -252,7 +252,7 @@ python3 scripts/lint_wiki_integrity.py
 python3 scripts/build_mcp_index.py --if-changed --freshness-report reports/freshness.json
 python3 scripts/build_mcp_index.py --check
 ```
-按 [新鲜度维护流程](FRESHNESS_MAINTENANCE.md) 完成对应回归与 diff 审阅。目标是 `stale` 从 12 降为 0；无法解决的项须逐条记录原因、负责人/后续动作，保留真实状态。存在阻塞时该验收项保持未完成，不把“计数清零”当作事实已审核。
+按 [新鲜度维护流程](FRESHNESS_MAINTENANCE.md) 完成对应回归与 diff 审阅。目标是 `stale` 从 12 降为 0；无法解决的项须逐条记录原因、负责人/后续动作，保留真实状态。未经维护者明确安排的阻塞保持未完成，不把“计数清零”当作事实已审核。2026-10-21 用户已明确将两项 K3 Strap 问题标待确定、同步开发并继续 B1 验收，本轮按此安排完成来源复核与处置验收；这项具体处置不授权忽略其他阻塞或将技术事实改为已确认。
 
 ### B2. 为 7 篇 `Developer_Journeys` 补齐核心来源锚点
 
@@ -308,7 +308,7 @@ python3 scripts/build_mcp_index.py --check
 
 ### 阶段 B 验收清单（完成后逐项打勾）
 
-- [ ] 当前 12 个 `stale` 均有逐项 diff 复核记录；有据修正后目标为 0。未解决项明确列入阻塞清单，不能以批量刷新 SHA 通过验收。
+- [x] 首轮 12 个 `stale` 均有逐项 diff、修正与依赖复核记录，当前为 0；按用户 2026-10-21 安排，两项 K3 Strap 官方勘误标待确定并单独跟踪，本轮来源复核与处置验收通过，不表示争议事实已确认。详见 [B1 验收记录](reviews/stage_b_2026-10-21/b1_acceptance.json)。
 - [x] 7 篇 Journey 已补齐适用的直接来源与核验范围；目标 `unknown: 0`，不能据此宣称全库全文受监控或所有事实已审核。
 - [x] 已核查 `/stats` 或 D1 首轮真实数据并保留时间窗口、统计口径及维护依据，据此完成至少一轮 aliases 补充或节点优化。
 - [x] 20 题覆盖 6 个 domain，记录准确出处、适用边界、状态与诚实降级；普通问题以 1~3 次调用为目标，证据不足允许继续必要核查，不能为调用上限牺牲正确性。
@@ -321,7 +321,7 @@ python3 scripts/build_mcp_index.py --check
 - [20 题评测](reviews/stage_b_2026-10-21/core_20_results.md)覆盖 6 个 domain、真实历史 stale/unknown 回放、当前 conflicted/needs_review；每端 43 次调用、24 个固定来源片段，逐题 2～3 次（B06 已补两份 SPI 映射对照）。验证工具检索证据、来源与提示契约及双端一致性，未调用独立问答模型，不能声称模型准确率。
 - 首轮发布验收：部署 ref `b973a5cb2f31a9cbe1b4640c21ee542559a348f9` 的 [GitHub Actions](https://github.com/bbbicycle/spacemit-LLM-wiki/actions/runs/39555907376) 成功；独立 smoke 核对完整 build_meta、SSE、检索/事实/固定原文分页，并确认线上 PMIC 别名命中和 K3 Strap 冲突提示。详情见 [发布记录](reviews/stage_b_2026-10-21/release.json)。
 - 追加修正发布：部署 ref `d1b177725a221b77af1208de48310a19819b9580` 的 [GitHub Actions](https://github.com/bbbicycle/spacemit-LLM-wiki/actions/runs/39557662169) 与最小安装检查成功；独立 smoke 核对完整 build_meta，并实读两份固定原表，确认相反的 SPI 映射、关联来源与 conflicted 提示均在线生效。详情见 [最新发布记录](reviews/stage_b_2026-10-21/release_strap_followup.json)，首轮记录保留历史版本。
-- **B1 保持未勾选**：K3 指南 1.1.5 概述列 5 脚且包含 GPIO90，功能表却含 GPIO64/52、Strap0～5，中英文均存在矛盾；同一固定 SHA 的硬件指南与数据手册 2.11.2 还将 GPIO66/65 的 `10/01` 所选 SPI NOR/NAND 对调。两节点并列两份原表并保持 `conflicted`，不能据单表给出 SPI 接线。追加检查见 [复核记录](reviews/stage_b_2026-10-21/completion_audit_followup.json)。阻塞项 `K3-STRAP-01` 由维护者协调官方确认或提供对应板型经审定原理图；未获得依据前不能宣布完整管脚清单已确定，因此本阶段未全项收口。
+- **B1 处置安排（2026-10-21）**：用户明确要求两项问题标待确定，表示已与开发同步修改，并要求继续 B1 验收。12 项逐项 diff、正文及依赖复核与回归按 [B1 验收记录](reviews/stage_b_2026-10-21/b1_acceptance.json)收口；两篇 Strap 节点仍为 `conflicted / needs_review`，K3 Journey 保留待确认提示。两项问题及 GitHub 修订后的核对步骤见 [后续勘误记录](reviews/stage_b_2026-10-21/k3_strap_pending.json)。只在原文实际修订且适用范围明确后修正争议结论，不视为已获官方确认。
 
 ## 5. 中远期储备阶段（P4 ~ P5：按需启动，当下不提前写代码）
 

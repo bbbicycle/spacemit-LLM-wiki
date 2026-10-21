@@ -2,7 +2,7 @@
 
 来源版本、新鲜度和事实核验是三个独立维度。构建与查询不会自动改写知识正文或把事实升级为已核验；维护者根据报告定向复核，再按授权提交和发布。
 
-P1 工具链已完成；当前 [项目计划 v2.0](PROJECT_PLAN.md) 的阶段 B 已完成首轮 12 项来源 diff 复核、7 篇 Journey 补来源与查询评测；K3 Strap 清单与 SPI NOR/NAND 电平映射的官方冲突仍阻塞 B1 验收，见 [审计记录](reviews/stage_b_2026-10-21/README.md)。阶段 A 的响应提示与 Worker 健康接口已完成并通过部署验收；提示用于解释状态，不替代本页的事实复核流程，线上版本以 `/health` 为准。
+P1 工具链已完成；当前 [项目计划 v2.0](PROJECT_PLAN.md) 的阶段 B 已完成首轮 12 项来源 diff 复核、7 篇 Journey 补来源与查询评测；B1 按用户 2026-10-21 安排完成来源复核与处置验收，K3 Strap 两项官方勘误仍待确定并单独跟踪，见 [审计记录](reviews/stage_b_2026-10-21/README.md)。阶段 A 的响应提示与 Worker 健康接口已完成并通过部署验收；提示用于解释状态，不替代本页的事实复核流程，线上版本以 `/health` 为准。
 
 ## 来源记录
 
@@ -96,7 +96,7 @@ JSON 包含 `submodules`（old/new SHA）、`changed_files`（状态、完整路
 | 参数、接线、命令或适用条件变化 | 阅读新旧章节上下文，修正正文并检查依赖节点与 Journey，保留勘误和未解决冲突；按实际复核范围更新核验记录，等待人工终审。 |
 | 删除、拆分、迁移或撤回 | 用历史 diff/log 定位；新路径须确认产品、版本及语义对应，再改路径/SHA。无可用替代时保留历史来源与撤回警告，将事项列为阻塞。 |
 
-P1 历史基线为 47 current、12 stale、7 unknown；本轮逐项复核后为 66 current、0 stale、0 unknown。K3 Strap 两节点保持 conflicted，B1 验收仍未完成；不能把 freshness 清零当作冲突消失。无法判定的项保持真实状态并记录原因、负责人/后续动作；不能批量刷新 SHA 使报告清零。`stale: 0 / unknown: 0` 仅说明声明来源在该构建快照下可判定，不代表全文正确或 `status: approved`。`check_upstream_impact.py --cached` 比较持久基线，不一定保留所有旧 stale 的变化，逐条复核仍须使用节点自己的历史 `source_commit`。
+P1 历史基线为 47 current、12 stale、7 unknown；本轮逐项复核后为 66 current、0 stale、0 unknown。K3 Strap 两节点保持 conflicted；用户于 2026-10-21 明确将两项问题标待确定、已同步开发，要求继续 B1 验收，因此本轮来源复核与处置按[验收记录](reviews/stage_b_2026-10-21/b1_acceptance.json)收口，两项[官方勘误](reviews/stage_b_2026-10-21/k3_strap_pending.json)继续跟踪。不能把本轮验收或 freshness 清零当作冲突消失。无法判定的项保持真实状态并记录原因、负责人/后续动作；不能批量刷新 SHA 使报告清零。`stale: 0 / unknown: 0` 仅说明声明来源在该构建快照下可判定，不代表全文正确或 `status: approved`。`check_upstream_impact.py --cached` 比较持久基线，不一定保留所有旧 stale 的变化，逐条复核仍须使用节点自己的历史 `source_commit`。
 
 ```bash
 python3 vault_linker_lint.py

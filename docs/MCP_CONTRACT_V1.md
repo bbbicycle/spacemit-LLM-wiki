@@ -3,7 +3,7 @@
 > 状态：**7 核心工具兼容契约与目标元数据模型已冻结** · 版本：**v1.0** · 更新：**2026-10-21**
 > 关联主计划：[docs/PROJECT_PLAN.md](PROJECT_PLAN.md) · 新鲜度维护：[docs/FRESHNESS_MAINTENANCE.md](FRESHNESS_MAINTENANCE.md)
 
-冻结的是工具语义与演进边界，不表示未来字段均已实现。阶段 A 的 `build_meta`、`/health`、`agent_notice` / `hint` 与轻量 Skill v1 已完成并通过部署验收；线上以健康接口验证，阶段 B 首轮复核、查询优化与 20 题工具评测已落地，B1 因 K3 Strap 清单与 SPI 启动选择的官方冲突保留未完成验收，工具契约未扩展。
+冻结的是工具语义与演进边界，不表示未来字段均已实现。阶段 A 的 `build_meta`、`/health`、`agent_notice` / `hint` 与轻量 Skill v1 已完成并通过部署验收；线上以健康接口验证，阶段 B 首轮复核、查询优化与 20 题工具评测已落地，B1 按 2026-10-21 用户安排完成来源复核与处置验收，两项 K3 Strap 官方勘误单独跟踪、技术结论仍待确定，工具契约未扩展。
 
 ---
 

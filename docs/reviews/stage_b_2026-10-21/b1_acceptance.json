@@ -1,0 +1,257 @@
+{
+  "status": "accepted_source_review_and_disposition",
+  "checked_at_utc": "2026-10-21T07:34:54.113514+00:00",
+  "scope": "本轮B1来源diff复核、正文修正、依赖检查和回归的工作流验收；依据用户2026-10-21明确安排，两项官方勘误待确定并单独跟踪。",
+  "fact_approval": false,
+  "hardware_execution": false,
+  "basis_commit": "7856b16de70df6e2d494bb09acb93529063c3206",
+  "acceptance_basis": {
+    "date": "2026-10-21",
+    "user_instruction": "这两个问题现在相关的知识里标注待确定，然后我已经和开发同步要修改。等github上修正更新后，再帮我修正好wiki的内容。然后先继续处理 B1 验收",
+    "pending_official_corrections": "k3_strap_pending.json",
+    "audit_record": "b1_acceptance.json",
+    "technical_facts_approved": false
+  },
+  "evaluated_content_sha256": "7161de67bfb8fe0313903f6ee71193f92393fa5bc4ab1017da9d893f200357f4",
+  "requirements": {
+    "B1_step_1_baseline_queue": {
+      "passed": true,
+      "exact_stale_id_count": 12
+    },
+    "B1_step_2_old_new_source_diff": {
+      "passed": true,
+      "unique_source_diffs": 2,
+      "archive_matches_recreated_git_diff": true,
+      "source_diffs_sha256": "73ffe3dfb7e492cec5a56093fc92833c9ecc8170b158d65c6b2d653360d1e54c",
+      "item_records": "stale_reviews.json"
+    },
+    "B1_step_2_content_and_dependencies": {
+      "passed": true,
+      "nodes_reviewed": 12,
+      "backlink_review_count": 18,
+      "missing_backlink_reviews": [],
+      "correction_this_round": "补登记PMIC专题→K3上手向导入链；Journey供电说明已与V1.1/Buglist一致。"
+    },
+    "B1_step_3_rebuild_and_regression": {
+      "passed": true,
+      "freshness": {
+        "current": 66,
+        "stale": 0,
+        "unknown": 0
+      },
+      "dual_indexes_byte_equal": true,
+      "source_files_and_pointers_unchanged": true
+    },
+    "explicit_user_disposition_for_two_official_corrections": {
+      "passed": true,
+      "record": "k3_strap_pending.json",
+      "pending_questions": 2,
+      "conflicted_nodes_retained": 2,
+      "affected_files_marked_pending": 3
+    }
+  },
+  "local_checks": {
+    "dual_lint": "passed",
+    "builder_tests": 26,
+    "upstream_impact_tests": 6,
+    "python_server_tests": 11,
+    "minimal_install_tests": 4,
+    "worker_runtime": "passed",
+    "production_parity_calls": 79,
+    "typescript": "passed",
+    "index_check": "passed",
+    "cached_upstream_impact": "passed; no local Sources changes",
+    "core_evaluation_cases": 20,
+    "core_evaluation_calls_per_backend": 43,
+    "pinned_excerpts": 24,
+    "markdown_links": {
+      "checked": 252,
+      "existing": 251,
+      "explicitly_withdrawn_historical_links": [
+        [
+          "Knowledge_Atoms/K3热设计与散热专题档案.md",
+          "../Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_thermal_design.md"
+        ]
+      ],
+      "unexpected_missing": []
+    },
+    "diff_check": "passed"
+  },
+  "items": [
+    {
+      "node": "k1_hardware_debug_parameters",
+      "baseline_was_stale": true,
+      "reviewed_old_new_shas_match_metadata": true,
+      "review_scope_and_result_recorded": true,
+      "freshness": "current",
+      "status": "needs_review",
+      "verification_status": "unverified",
+      "all_current_backlinks_reviewed": true,
+      "reviewed_backlinks": [
+        "K1硬件外设接口与物理调试专题档案",
+        "K1系统启动与分区配置专题档案",
+        "SpacemiT生态板卡与PMIC电源配合专题档案"
+      ],
+      "disposition": "reviewed_pending_human_approval"
+    },
+    {
+      "node": "k1_k3_camera_specs",
+      "baseline_was_stale": true,
+      "reviewed_old_new_shas_match_metadata": true,
+      "review_scope_and_result_recorded": true,
+      "freshness": "current",
+      "status": "needs_review",
+      "verification_status": "unverified",
+      "all_current_backlinks_reviewed": true,
+      "reviewed_backlinks": [
+        "K1_K3摄像系统与图像处理专题档案"
+      ],
+      "disposition": "reviewed_pending_human_approval"
+    },
+    {
+      "node": "k1_k3_network_specs",
+      "baseline_was_stale": true,
+      "reviewed_old_new_shas_match_metadata": true,
+      "review_scope_and_result_recorded": true,
+      "freshness": "current",
+      "status": "needs_review",
+      "verification_status": "unverified",
+      "all_current_backlinks_reviewed": true,
+      "reviewed_backlinks": [
+        "K1_K3网络通信与千兆网口专题档案"
+      ],
+      "disposition": "reviewed_pending_human_approval"
+    },
+    {
+      "node": "k1_k3_pcie_usb_specs",
+      "baseline_was_stale": true,
+      "reviewed_old_new_shas_match_metadata": true,
+      "review_scope_and_result_recorded": true,
+      "freshness": "current",
+      "status": "needs_review",
+      "verification_status": "unverified",
+      "all_current_backlinks_reviewed": true,
+      "reviewed_backlinks": [
+        "K1_K3高速外设接口专题档案"
+      ],
+      "disposition": "reviewed_pending_human_approval"
+    },
+    {
+      "node": "k3_strap_pins_config",
+      "baseline_was_stale": true,
+      "reviewed_old_new_shas_match_metadata": true,
+      "review_scope_and_result_recorded": true,
+      "freshness": "current",
+      "status": "needs_review",
+      "verification_status": "conflicted",
+      "all_current_backlinks_reviewed": true,
+      "reviewed_backlinks": [
+        "K3启动模式与Strap管脚配置专题档案",
+        "K3芯片开发快速上手向导"
+      ],
+      "disposition": "reviewed_with_deferred_official_correction"
+    },
+    {
+      "node": "K1_K3摄像系统与图像处理专题档案",
+      "baseline_was_stale": true,
+      "reviewed_old_new_shas_match_metadata": true,
+      "review_scope_and_result_recorded": true,
+      "freshness": "current",
+      "status": "needs_review",
+      "verification_status": "unverified",
+      "all_current_backlinks_reviewed": true,
+      "reviewed_backlinks": [
+        "K3_COM260_板级硬件设计专题"
+      ],
+      "disposition": "reviewed_pending_human_approval"
+    },
+    {
+      "node": "K1_K3网络通信与千兆网口专题档案",
+      "baseline_was_stale": true,
+      "reviewed_old_new_shas_match_metadata": true,
+      "review_scope_and_result_recorded": true,
+      "freshness": "current",
+      "status": "needs_review",
+      "verification_status": "unverified",
+      "all_current_backlinks_reviewed": true,
+      "reviewed_backlinks": [
+        "K3_Pico_板级硬件设计专题"
+      ],
+      "disposition": "reviewed_pending_human_approval"
+    },
+    {
+      "node": "K1_K3高速外设接口专题档案",
+      "baseline_was_stale": true,
+      "reviewed_old_new_shas_match_metadata": true,
+      "review_scope_and_result_recorded": true,
+      "freshness": "current",
+      "status": "needs_review",
+      "verification_status": "unverified",
+      "all_current_backlinks_reviewed": true,
+      "reviewed_backlinks": [],
+      "disposition": "reviewed_pending_human_approval"
+    },
+    {
+      "node": "K1硬件外设接口与物理调试专题档案",
+      "baseline_was_stale": true,
+      "reviewed_old_new_shas_match_metadata": true,
+      "review_scope_and_result_recorded": true,
+      "freshness": "current",
+      "status": "needs_review",
+      "verification_status": "unverified",
+      "all_current_backlinks_reviewed": true,
+      "reviewed_backlinks": [
+        "MUSE_Pi_26Pin_IOMAP管脚映射专题"
+      ],
+      "disposition": "reviewed_pending_human_approval"
+    },
+    {
+      "node": "K1系统启动与分区配置专题档案",
+      "baseline_was_stale": true,
+      "reviewed_old_new_shas_match_metadata": true,
+      "review_scope_and_result_recorded": true,
+      "freshness": "current",
+      "status": "needs_review",
+      "verification_status": "unverified",
+      "all_current_backlinks_reviewed": true,
+      "reviewed_backlinks": [
+        "Buildroot_嵌入式系统定制与内核编译专题档案"
+      ],
+      "disposition": "reviewed_pending_human_approval"
+    },
+    {
+      "node": "K3启动模式与Strap管脚配置专题档案",
+      "baseline_was_stale": true,
+      "reviewed_old_new_shas_match_metadata": true,
+      "review_scope_and_result_recorded": true,
+      "freshness": "current",
+      "status": "needs_review",
+      "verification_status": "conflicted",
+      "all_current_backlinks_reviewed": true,
+      "reviewed_backlinks": [
+        "K3安全启动SecureBoot开发专题档案",
+        "K3芯片开发快速上手向导"
+      ],
+      "disposition": "reviewed_with_deferred_official_correction"
+    },
+    {
+      "node": "SpacemiT生态板卡与PMIC电源配合专题档案",
+      "baseline_was_stale": true,
+      "reviewed_old_new_shas_match_metadata": true,
+      "review_scope_and_result_recorded": true,
+      "freshness": "current",
+      "status": "needs_review",
+      "verification_status": "unverified",
+      "all_current_backlinks_reviewed": true,
+      "reviewed_backlinks": [
+        "K3芯片开发快速上手向导",
+        "Muse_Pi_板级硬件设计专题",
+        "SpacemiT_P3_PMIC电源芯片专题档案",
+        "Spacemit_K1生态终端与教学实验套件专题档案"
+      ],
+      "disposition": "reviewed_pending_human_approval"
+    }
+  ],
+  "follow_up": "k3_strap_pending.json",
+  "publication": "Code/index commit, Actions and independent online checks are recorded separately after deployment."
+}
