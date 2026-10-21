@@ -1,8 +1,8 @@
 {
   "version": "2.3.0",
-  "wiki_commit": "8d7bae80e22cdd782f4269ae819afc838a903cb9",
-  "generated_at": "2026-10-21T03:40:24+00:00",
-  "wiki_worktree_dirty": true,
+  "wiki_commit": "0b680300a52fb57db8f64011f7f57156dcaca3c6",
+  "generated_at": "2026-10-21T06:30:15+00:00",
+  "wiki_worktree_dirty": false,
   "source_versions": {
     "docs-chip": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
     "docs-buildroot": "163a8fccf8e7071f3177753d2e86e482e97970fe",
@@ -31,15 +31,45 @@
         "Muse_Pi_板级硬件设计专题"
       ],
       "backlinks": [],
-      "summary": "# Buildroot SDK 快速编译与镜像生成向导  本上手向导提供从环境配置、源码获取、工程编译到烧录镜像生成的极简通关动线，帮助开发者快速在 SpacemiT K1 / K3 芯片与生态开发板上跑通基于 Buildroot 的 Linux 操作系统。  ---  ## 🗺️ 通关路线图  ```mermaid graph LR     Step1[1. 环境准备] --> Step2[2. 源码与依赖同步]     Step2 --> Step3[3. 方案配置与编译]     Step3 --> Step4[4. 镜像生成与烧录] ```  ---  ## 步骤 1：准备开发环境与安",
-      "content": "# Buildroot SDK 快速编译与镜像生成向导\n\n本上手向导提供从环境配置、源码获取、工程编译到烧录镜像生成的极简通关动线，帮助开发者快速在 SpacemiT K1 / K3 芯片与生态开发板上跑通基于 Buildroot 的 Linux 操作系统。\n\n---\n\n## 🗺️ 通关路线图\n\n```mermaid\ngraph LR\n    Step1[1. 环境准备] --> Step2[2. 源码与依赖同步]\n    Step2 --> Step3[3. 方案配置与编译]\n    Step3 --> Step4[4. 镜像生成与烧录]\n```\n\n---\n\n## 步骤 1：准备开发环境与安装依赖\n\n推荐使用 **Ubuntu 20.04 / 22.04 LTS**，或任何已安装 Docker CE 的 Linux 系统。\n\n```bash\n# 安装基础构建依赖项\nsudo apt-get update\nsudo apt-get install -y git build-essential cpio unzip rsync file bc wget python3 python-is-python3 libncurses5-dev libssl-dev dosfstools mtools u-boot-tools flex bison python3-pip\nsudo pip3 install pyyaml\n```\n\n详细环境依赖与 Docker 容器要求请参考 [[Evidence/buildroot_bsp_specs|Buildroot 宿主机与容器依赖规格]]。\n\n---\n\n## 步骤 2：使用 Repo 同步 SDK 源码\n\n获取 Google `repo` 工具并完成拉取（以 K1 v2.2 及 K3 v1.0 分支为例）：\n\n```bash\n# 1. 初始化工作目录\nmkdir ~/buildroot-sdk && cd ~/buildroot-sdk\n\n# 2. 从 GitHub 拉取 Manifest 源码清单\nrepo init -u git@github.com:spacemit-com/manifests.git -b main -m k1-bl-v2.2.y.xml\n\n# 3. 同步全量源码\nrepo sync\nrepo start k1-bl-v2.2.y --all\n\n# 4. (可选) 预下载第三方依赖包加速编译\nwget -c -r -nv -np -nH -R \"index.html*\" http://archive.spacemit.com/buildroot/dl/\n```\n\n源码分支与版本对应关系请查阅 [[Evidence/buildroot_bsp_specs|Repo 版本分支映射表]]。\n\n---\n\n## 步骤 3：选择方案并开始交叉编译\n\n进入 SDK 根目录，使用配置菜单或快捷命令开始构建：\n\n### 方式 A：交互式选择编译（推荐首次使用）\n\n```bash\nmake envconfig\n```\n* **针对 K1 全功能开发板**：输入 `5` (`spacemit_k1_v2_defconfig`) 并回车。\n* **针对 K1 硬实时控制**：输入 `4` (`spacemit_k1_rt_defconfig`) 并回车。\n* **针对 K3 开发板**：输入 `2` (`spacemit_k3_defconfig`) 并回车。\n\n### 方式 B：无交互命令行快捷构建\n\n```bash\n# 直接编译 K1 v2 全功能方案\nmake k1_v2-build\n\n# 直接编译 K3 方案\nmake k3-build\n```\n\n更多内核 `menuconfig` 及单包重编译指令请查阅 [[Evidence/buildroot_compilation_parameters|Make 快捷编译指令表]] 与 [[Knowledge_Atoms/Buildroot_嵌入式系统定制与内核编译专题档案|Buildroot 嵌入式系统定制与内核编译专题档案]]。\n\n---\n\n## 步骤 4：镜像产物获取与烧录\n\n编译完成后，构建系统会自动生成刷机镜像并输出到 `output/<solution>/images/` 目录：\n\n1. **Titan Flasher 固件刷写**：\n   定位至 `output/k1_v2/images/buildroot-k1_v2.zip` 压缩包，使用 SpacemiT 官方 Titan Flasher 工具解压或直接连接线刷。\n2. **MicroSD 卡直接刻录**：\n   定位至 `output/k1_v2/images/sdcard.img`，在 Linux 宿主机上执行 `dd` 命令：\n   ```bash\n   sudo dd if=output/k1_v2/images/sdcard.img of=/dev/sdX bs=1M status=progress conv=fsync\n   ```\n\n硬件引脚复用与线刷/卡刷调试步骤请参阅 [[Knowledge_Atoms/Muse_Pi_板级硬件设计专题|Muse Pi 板级硬件设计专题]]。",
+      "summary": "# Buildroot SDK 快速编译与镜像生成向导  先选择 K1 或 K3，使用各自的 [K1 源码指南](../Sources/docs-buildroot/zh/k1_buildroot/source.md) / [K3 源码指南](../Sources/docs-buildroot/zh/k3_buildroot/source.md)。以下示例绑定 K1 v2.2 与 K3 v1.0，不跨版本套用。  ## 1. 准备环境  官方推荐 Ubuntu 20.04 或更新 LTS，以及足够的内存/SSD。K1 Buildroot 2.2.7 起与 K3 SDK 默认在容器构建，按原文安",
+      "content": "# Buildroot SDK 快速编译与镜像生成向导\n\n先选择 K1 或 K3，使用各自的 [K1 源码指南](../Sources/docs-buildroot/zh/k1_buildroot/source.md) / [K3 源码指南](../Sources/docs-buildroot/zh/k3_buildroot/source.md)。以下示例绑定 K1 v2.2 与 K3 v1.0，不跨版本套用。\n\n## 1. 准备环境\n\n官方推荐 Ubuntu 20.04 或更新 LTS，以及足够的内存/SSD。K1 Buildroot 2.2.7 起与 K3 SDK 默认在容器构建，按原文安装 Docker CE；选择宿主机构建时才按对应系统安装原文依赖。不要把旧版 `sudo pip3` 示例当作所有新版 Ubuntu 的通用安装方式。\n\n## 2. 获取对应清单\n\n安装 repo 并配置 GitHub SSH 后，分别在独立工作目录执行相应示例：\n\n```bash\n# K1 v2.2\nrepo init -u git@github.com:spacemit-com/manifests.git -b main -m k1-bl-v2.2.y.xml\nrepo sync\nrepo start k1-bl-v2.2.y --all\n```\n\n```bash\n# K3 v1.0：不要复用 K1 清单\nrepo init -u git@github.com:spacemit-com/manifests.git -b main -m k3-br-v1.0.y.xml\nrepo sync\nrepo start k3-br-v1.0.y --all\n```\n\n版本矩阵参见 [[Evidence/buildroot_bsp_specs]]，实际清单以所选 SDK 发布版本为准。\n\n## 3. 方案选择与编译\n\n首次执行 `make envconfig`，按显示的名称选择：K1 示例 `spacemit_k1_v2_defconfig`，K3 示例 `spacemit_k3_defconfig`。菜单编号随版本变化，不能只记固定编号。支持新命令的分支可查 `make help` 后使用 `make k1_v2-build` / `make k3-build`；旧命令环境与新命令不兼容时按原文迁移。\n\n内核、U-Boot、单包和打包参数参见 [[Evidence/buildroot_compilation_parameters]] 与 [[Knowledge_Atoms/Buildroot_嵌入式系统定制与内核编译专题档案]]，不要把两代快捷命令混用。\n\n当前两份源码指南的已选方案示例使用 `make linux-menuconfig` 配置内核，`make linux-update-defconfig` 保存；U-Boot 对应 `make uboot-menuconfig` 与 `make uboot-update-defconfig`。带 `<solution>-` 前缀的快捷形式和单包命令须以该分支 `make help` 为准，配置完成仍需重新构建和打包，不能把打开菜单当作镜像已生成。\n\n## 4. 检查产物再烧录\n\nK1 示例输出 `output/k1_v2/images/buildroot-k1_v2.zip` 和 `buildroot-k1_v2-sdcard.img`；旧稿笼统的 `sdcard.img` 不是该日志中的最终文件名。K3 官方日志示例为 `/k3/images/Buildroot-k3-20260425142457-sdcard.img` 及对应 ZIP；实际输出目录、时间戳与大小写以该次打包日志为准。\n\nzip 按 Titan/fastboot 指南使用；SD 镜像按所选板型烧录，确认设备名、介质和备份后操作。先检查目标板的启动与供电条件，参见 [[Knowledge_Atoms/Muse_Pi_板级硬件设计专题]]；本次文档复核没有执行刷写。",
       "created": "2026-08-10",
-      "updated": "2026-08-10",
-      "freshness": "unknown",
+      "updated": "2026-10-21",
+      "source_file": "Sources/docs-buildroot/zh/k1_buildroot/source.md",
+      "source_commit": "163a8fccf8e7071f3177753d2e86e482e97970fe",
+      "source_section": "K1/K3 源码指南 开发环境/版本分支/下载代码/交叉编译/打包产物",
+      "source_resolution": "partial",
+      "verification_status": "unverified",
+      "source_checked_at": "2026-10-21",
+      "source_note": "覆盖两代 manifest、容器构建、方案选择与产物名；未实际下载 SDK、编译或刷写硬件。 本轮为来源与关键步骤定向核对，未在实物执行；关联节点保留各自核验状态。",
+      "source_related_file": [
+        "Sources/docs-buildroot/zh/k3_buildroot/source.md"
+      ],
+      "source_related_commit": [
+        "163a8fccf8e7071f3177753d2e86e482e97970fe"
+      ],
+      "freshness": "current",
       "stale_paths": [],
       "unknown_paths": [],
-      "checked_against_commit": {},
-      "source_freshness": []
+      "checked_against_commit": {
+        "docs-buildroot": "163a8fccf8e7071f3177753d2e86e482e97970fe"
+      },
+      "source_freshness": [
+        {
+          "source_file": "Sources/docs-buildroot/zh/k1_buildroot/source.md",
+          "source_commit": "163a8fccf8e7071f3177753d2e86e482e97970fe",
+          "checked_against_commit": "163a8fccf8e7071f3177753d2e86e482e97970fe",
+          "freshness": "current",
+          "reason": "source_file_unchanged"
+        },
+        {
+          "source_file": "Sources/docs-buildroot/zh/k3_buildroot/source.md",
+          "source_commit": "163a8fccf8e7071f3177753d2e86e482e97970fe",
+          "checked_against_commit": "163a8fccf8e7071f3177753d2e86e482e97970fe",
+          "freshness": "current",
+          "reason": "source_file_unchanged"
+        }
+      ]
     },
     "K1芯片开发快速上手向导": {
       "id": "K1芯片开发快速上手向导",
@@ -62,15 +92,64 @@
         "k1_ai_performance_data"
       ],
       "backlinks": [],
-      "summary": "# K1 芯片开发快速上手向导  本向导为开发者提供一条从零开始熟悉 K1 芯片、进行单板硬件电源/功耗评估、配置上电启动模式、选择合适的系统 SDK、到最终在板端跑通本地 1B 大模型的**极简任务动线**。  ---  ## 🏁 开发者通关动线  ```mermaid graph TD     Step1[第一步: 熟悉 K1 规格指标] --> Step2[第二步: 评估功耗与散热设计]     Step2 --> Step3[第三步: 配置上电启动模式]     Step3 --> Step4[第四步: 选择与编译 SDK]     Step4 --> Step5[第五步: 部署本地",
-      "content": "# K1 芯片开发快速上手向导\n\n本向导为开发者提供一条从零开始熟悉 K1 芯片、进行单板硬件电源/功耗评估、配置上电启动模式、选择合适的系统 SDK、到最终在板端跑通本地 1B 大模型的**极简任务动线**。\n\n---\n\n## 🏁 开发者通关动线\n\n```mermaid\ngraph TD\n    Step1[第一步: 熟悉 K1 规格指标] --> Step2[第二步: 评估功耗与散热设计]\n    Step2 --> Step3[第三步: 配置上电启动模式]\n    Step3 --> Step4[第四步: 选择与编译 SDK]\n    Step4 --> Step5[第五步: 部署本地 1B 大模型]\n```\n\n### 1. 第一步：熟悉 K1 规格指标\n*   **目标**：快速了解 K1 芯片的计算架构与基本接口能力。\n*   **行动**：阅读 [K1 产品简介（原始文件）](../Sources/docs-chip/zh/key_stone/k1/k1_docs/root_overview.md)，重点关注通用计算性能与 X60 双簇核心（Cluster 0 集成 AI 算力，Cluster 1 为通用计算）。\n\n### 2. 第二步：评估功耗与散热设计\n*   **目标**：根据 K1 的超低功耗指标进行系统供电与被动散热方案设计。\n*   **行动**：\n    *   阅读 **[[Knowledge_Atoms/K1热设计与功耗专题档案]]**。\n    *   K1 的 TDP 仅为 **3W ~ 5W**（参见 [[Evidence/k1_thermal_specs]]）。在一般智能硬件场景下，评估仅需极简的鳍片被动散热或金属外壳导热。\n\n### 3. 第三步：配置上电启动模式\n*   **目标**：设计开发板的 Strap Pins 阻值，确保芯片能正确从目标介质（eMMC/SD/Flash）引导或进入 USB 烧录。\n*   **行动**：\n    *   阅读 **[[Knowledge_Atoms/K1启动模式与Strap管脚配置专题档案]]**。\n    *   对照配置管脚电平表（参见 [[Evidence/k1_strap_pins_config]]），检查硬件原理图上 QSPI_DATA0~3 信号的数据线上下拉电阻。注意：QSPI_DATA3/Strap3 上拉为下载模式，默认下拉（悬空）为正常启动。\n\n### 4. 第四步：选择与编译系统 SDK\n*   **目标**：根据产品形态（嵌入式、网络、通用、机器人），选择对应的软件开发套件。\n*   **行动**：\n    *   参考 [K1 SDK 使用指南（原始文件）](../Sources/docs-chip/zh/key_stone/k1/k1_sw/k1_sdk_user_guide.md)，明确各种 SDK 的应用场景：\n        *   **软路由/NAS**：选择 *OpenWrt SDK*。\n        *   **定制嵌入式**：选择 *Buildroot SDK*。\n        *   **通用Linux开发**：选择基于 Ubuntu 的 *Bianbu SDK*。\n        *   **鸿蒙生态**：选择全球首个原生鸿蒙 RISC-V 方案 *K1 OH5.0*。\n        *   **AI 智能机器人**：选择集成 ROS2 的 *AI Robot 方案*。\n\n### 5. 第五步：部署本地 1B 大模型\n*   **目标**：利用 K1 AP-CPU 融合的 2.0 TOPS AI 算力，在本地流畅运行 1B 大语言模型。\n*   **行动**：\n    *   阅读 **[[Knowledge_Atoms/K1大模型本地推理与AI算力专题档案]]**。\n    *   了解 X60 处理器的 AI 扩展指令与 512KB TCM 硬件加速（参见 [[Evidence/k1_ai_performance_data]]）。\n    *   使用 AI 编译工具链，将 ONNX 模型编译为定制 IME 矩阵指令，并部署在板端，体验端侧 > 10 Tokens/s 的本地大模型流畅生成。",
+      "summary": "# K1 芯片开发快速上手向导  适用于 K1 及对应板卡。先确认板型、内存、系统和 SDK 版本，再沿下列步骤开展开发。  ## 1. 确认规格和供电条件  阅读 [K1 产品简介](../Sources/docs-chip/zh/key_stone/k1/k1_docs/root_overview.md)：8 核 X60、RVA22 与 RVV 1.0；不要套用 K3 的 X100/A100 或模型规模。供电、功耗与散热参考 [[Knowledge_Atoms/K1热设计与功耗专题档案]] 和 [[Evidence/k1_thermal_specs]]，保留其未核验项和测量条件，不用单一历",
+      "content": "# K1 芯片开发快速上手向导\n\n适用于 K1 及对应板卡。先确认板型、内存、系统和 SDK 版本，再沿下列步骤开展开发。\n\n## 1. 确认规格和供电条件\n\n阅读 [K1 产品简介](../Sources/docs-chip/zh/key_stone/k1/k1_docs/root_overview.md)：8 核 X60、RVA22 与 RVV 1.0；不要套用 K3 的 X100/A100 或模型规模。供电、功耗与散热参考 [[Knowledge_Atoms/K1热设计与功耗专题档案]] 和 [[Evidence/k1_thermal_specs]]，保留其未核验项和测量条件，不用单一历史 TDP 推定散热器。\n\n## 2. 核对启动与烧录配置\n\n按 [K1 硬件设计指南 1.1.5](../Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_design_guide.md) 与对应板型原理图核对 Strap。QSPI_DATA3/Strap3 为 Boot/Download：0 启动、1 下载；板上拨码与芯片电平不是同一种编号。配置前读 [[Knowledge_Atoms/K1启动模式与Strap管脚配置专题档案]] 和 [[Evidence/k1_strap_pins_config]]，核对 IO 电压和复用条件。\n\n## 3. 按用途选择 SDK\n\n[K1 SDK 概览](../Sources/docs-chip/zh/key_stone/k1/k1_sw/k1_sdk_user_guide.md) 分别提供 Buildroot（定制嵌入式）、OpenWrt（软路由/NAS）、Bianbu（通用 Linux）、K1 OH5.0 和 AI Robot。源码分支、构建与烧录按所选 SDK 的指南执行，不能把一种系统的命令用于另一种系统。\n\n## 4. 先跑通固定模型，再测性能\n\n读 [[Knowledge_Atoms/K1大模型本地推理与AI算力专题档案]] 与 [[Evidence/k1_ai_performance_data]]。当前固定 [Llama.cpp 指南](../Sources/docs-ai/zh/compute_stack/ai_compute_stack/llama.cpp.md) 为 K1 推荐 Qwen3-0.6B GGUF；Bianbu 包安装入口为：\n\n```bash\nsudo apt update\nsudo apt install llama.cpp-tools-spacemit\n```\n\n旧固件未提供此包时，原文另列 `llama-server` 路径，先确认实际仓库版本。下载指南中的模型，按其 K1 线程条件（不超过 4）和本机 `--help` 运行、记录内存与生成速度。ONNX 视觉模型与 GGUF LLM 使用不同路径，不能将 ONNX 编译流程一概用于大语言模型，也不承诺任意配置均超过 10 tokens/s。",
       "created": "2026-06-29",
-      "updated": "2026-06-29",
-      "freshness": "unknown",
+      "updated": "2026-10-21",
+      "source_file": "Sources/docs-chip/zh/key_stone/k1/k1_sw/k1_sdk_user_guide.md",
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "source_section": "SDK 概览；产品特性；硬件指南 1.1.5；Llama.cpp 2.1～2.3",
+      "source_resolution": "partial",
+      "verification_status": "unverified",
+      "source_checked_at": "2026-10-21",
+      "source_note": "覆盖 SDK 选择、Strap 来源和 LLM 运行路径；热设计和性能条件沿引用证据核查，不把旧 TDP/速度作为保证。 本轮为来源与关键步骤定向核对，未在实物执行；关联节点保留各自核验状态。",
+      "source_related_file": [
+        "Sources/docs-chip/zh/key_stone/k1/k1_docs/root_overview.md",
+        "Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_design_guide.md",
+        "Sources/docs-ai/zh/compute_stack/ai_compute_stack/llama.cpp.md"
+      ],
+      "source_related_commit": [
+        "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+        "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+        "2b3894e983a295ed0278bc625867e0c132e0e259"
+      ],
+      "freshness": "current",
       "stale_paths": [],
       "unknown_paths": [],
-      "checked_against_commit": {},
-      "source_freshness": []
+      "checked_against_commit": {
+        "docs-chip": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+        "docs-ai": "2b3894e983a295ed0278bc625867e0c132e0e259"
+      },
+      "source_freshness": [
+        {
+          "source_file": "Sources/docs-chip/zh/key_stone/k1/k1_sw/k1_sdk_user_guide.md",
+          "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+          "freshness": "current",
+          "reason": "source_file_unchanged"
+        },
+        {
+          "source_file": "Sources/docs-chip/zh/key_stone/k1/k1_docs/root_overview.md",
+          "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+          "freshness": "current",
+          "reason": "source_file_unchanged"
+        },
+        {
+          "source_file": "Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_design_guide.md",
+          "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+          "freshness": "current",
+          "reason": "source_file_unchanged"
+        },
+        {
+          "source_file": "Sources/docs-ai/zh/compute_stack/ai_compute_stack/llama.cpp.md",
+          "source_commit": "2b3894e983a295ed0278bc625867e0c132e0e259",
+          "checked_against_commit": "2b3894e983a295ed0278bc625867e0c132e0e259",
+          "freshness": "current",
+          "reason": "source_file_unchanged"
+        }
+      ]
     },
     "K3_Pico_开发板快速上手向导": {
       "id": "K3_Pico_开发板快速上手向导",
@@ -89,15 +168,46 @@
         "K3大模型本地推理与AI算力专题档案"
       ],
       "backlinks": [],
-      "summary": "# K3 Pico-ITX 开发板快速上手向导  本向导旨在帮助开发者快速熟悉 K3 Pico-ITX 迷你 AI 计算机，包括如何使用全功能 Type-C 单线点亮设备、烧录 Bianbu 3.0 系统、配置 UEFI 启动，并跑通 60 TOPS 算力的本地大语言模型。  ---  ## 阶段 1：点亮设备（推荐单线方案）  K3 Pico-ITX 支持极其简洁的**单线缆（Single-Cable）**启动方案： * **硬要求**：准备一台具备 **65W 或更大功率**、且支持 **Type-C 反向充电**的显示器。 * **连接步骤**：使用一根**全功能 Type-C 线缆**",
-      "content": "# K3 Pico-ITX 开发板快速上手向导\n\n本向导旨在帮助开发者快速熟悉 K3 Pico-ITX 迷你 AI 计算机，包括如何使用全功能 Type-C 单线点亮设备、烧录 Bianbu 3.0 系统、配置 UEFI 启动，并跑通 60 TOPS 算力的本地大语言模型。\n\n---\n\n## 阶段 1：点亮设备（推荐单线方案）\n\nK3 Pico-ITX 支持极其简洁的**单线缆（Single-Cable）**启动方案：\n* **硬要求**：准备一台具备 **65W 或更大功率**、且支持 **Type-C 反向充电**的显示器。\n* **连接步骤**：使用一根**全功能 Type-C 线缆**（必须支持高功率供电与 DP 替代模式），直接连接显示器与 K3 Pico-ITX 的 **全功能 Type-C 接口 (Pin 17)**。\n* **效果**：显示器将同时为板卡提供 65W 电源，并接收板卡输出的 4K@60Hz 视频信号，一屏一板一线即可点亮算力。\n\n> [!NOTE]\n> 若显示器不支持反向供电，请通过扩展坞接入全功能 Type-C 口，并在扩展坞上接入 PD 65W 电源与 HDMI/DP 线。或者，使用 2-Pin ATX 接口提供 12V @ 5A~7A 直流供电。\n\n---\n\n## 阶段 2：烧录操作系统 (Bianbu 3.0)\n\nK3 Pico-ITX 预装了 Bianbu 操作系统。如果需要重装系统（支持 U-Boot 版本或 UEFI 体验版）：\n\n### 步骤 1：准备烧录接口\n1. 准备一根支持高速数据通讯的 Type-C 线。\n2. 将线的一端连接到主板的 **DRD Type-C 烧录接口 (Pin 18)**，另一端连接至上位机电脑。\n   > [!WARNING]\n   > 烧录接口（Pin 18）**不可向内供电**。烧录过程中，必须保持全功能 Type-C 口或 ATX 口处于正常供电状态。\n\n### 步骤 2：进入烧录模式\n* **若设备处于关机状态**：按住主板侧边的 **FDL 烧录键** 不松开 ➡️ 插入电源上电 ➡️ 松开 **FDL 键**。\n* **若设备处于开机状态**：按住 **FDL 键** 不松开 ➡️ 短按一下 **RST 复位键** ➡️ 松开 **FDL 键**。\n\n### 步骤 3：执行烧录\n在上位机上使用进迭时空官方刷机工具 **Titan** 或通过终端执行 `fastboot` 刷机命令，将系统镜像烧录至板载 UFS2.2 本地存储或 M.2 NVMe SSD。\n\n---\n\n## 阶段 3：UEFI 启动与配置体验\n\nK3 Pico-ITX 提供了完整的 UEFI 体验版：\n1. **进入设置**：在上电开机 3 秒内，按下键盘上的 **F2** 键，即可进入 UEFI 蓝底配置界面。\n2. **启动介质管理 (Boot Manager)**：可在此菜单中自由选择从 `NVMe SSD`、`USB 外部硬盘` 或 `UFS 闪存` 启动。\n3. **更改启动顺序**：在 `Boot Maintenance Manager` ➡️ `Boot Options` ➡️ `Change Boot Order` 中，使用 `<+>` 和 `<->` 调整介质优先级，按 `<F10>` 保存。\n\n---\n\n## 阶段 4：跑通 60 TOPS 本地大模型\n\nK3 Pico-ITX 具备 60 TOPS 的通用 AI 算力与计算-智算统一内存架构，最高支持 **300 亿 (30B) 参数级别的 MoE 稀疏大模型**（如 Qwen3-30B-A3B，实际激活约 3B）或 8B 稠密大模型在本地流畅部署。\n\n### 步骤 1：更新 Bianbu 软件源\n```bash\nsudo apt update\nsudo apt install python3-onnxruntime-k3 llama.cpp -y\n```\n\n### 步骤 2：下载并部署 Llama-3-8B-GGUF\n利用统一内存架构，大模型推理不会因为显存不足而受限。我们可以直接使用 `llama.cpp` 加载 **Llama-3-8B (INT4)** 模型：\n```bash\nllama-cli -m ./Meta-Llama-3-8B-Instruct-Q4_K_M.gguf -p \"介绍一下 RISC-V 架构\" -n 128\n```\n系统将自动调度 K3 内部的 A100 智算核，结合 64-bit LPDDR5 的高带宽，实现极速流畅的本地对话。\n\n---\n\n## 5. 关联技术专题与规格\n\n* 硬件避坑与优先级：[[Knowledge_Atoms/K3_Pico_板级硬件设计专题|K3 Pico-ITX 板级硬件设计与调试专题]]\n* 芯片级 AI 部署指南：[[Knowledge_Atoms/K3大模型本地推理与AI算力专题档案|K3 大模型本地推理与 AI 算力专题]]\n* 官方完整指南：[K3 Pico 使用指南（原始文件）](../Sources/docs-product/zh/k3_pico/pico_user_guide.md)",
+      "summary": "# K3 Pico-ITX 开发板快速上手向导  按 [K3 Pico-ITX 用户指南](../Sources/docs-product/zh/k3_series/k3_pico/pico_user_guide.md) 确认单板/机箱套餐和 U-Boot/UEFI 镜像。源文不同段落提到 Bianbu 3.0 与 4.0 UEFI 镜像，不能据本页指定所有设备的预装版本。  ## 1. 上电与显示  可用具备 **65W 或更大 Type-C 反向供电能力**的显示器和全功能线连接图示 **No.17** 接口；No.17 是图中位置编号，不是物理针脚。也可用带 PD 的扩展坞或 ATX-2",
+      "content": "# K3 Pico-ITX 开发板快速上手向导\n\n按 [K3 Pico-ITX 用户指南](../Sources/docs-product/zh/k3_series/k3_pico/pico_user_guide.md) 确认单板/机箱套餐和 U-Boot/UEFI 镜像。源文不同段落提到 Bianbu 3.0 与 4.0 UEFI 镜像，不能据本页指定所有设备的预装版本。\n\n## 1. 上电与显示\n\n可用具备 **65W 或更大 Type-C 反向供电能力**的显示器和全功能线连接图示 **No.17** 接口；No.17 是图中位置编号，不是物理针脚。也可用带 PD 的扩展坞或 ATX-2 Pin 供电，按指南核对额定档位和原装散热器。ATX 与 PD 不支持 1+1 热冗余，切换按指南关机处理。\n\n## 2. 进入烧录模式\n\n图示 **No.18 烧录口仅传数据、不能向板内供电**，须保持其他电源口供电并使用数据线：\n\n1. 关机时按住 FDL，上电后松开；开机时按住 FDL，短按 Reset 后松开。\n2. 将烧录数据口接至上位机，使用 Titan 或对应固件的 fastboot 流程。\n3. 核对目标介质和镜像适用板型后烧录，具体命令以固件说明为准。\n\n## 3. UEFI 体验版\n\n仅在对应 UEFI 镜像下，上电 3 秒内按 F2 进入设置；通过 Boot Manager 选择介质。更改启动顺序后按原文 Commit Change and Exit 与 F10 保存。不要将 UEFI 菜单步骤套用于 U-Boot 镜像。\n\n## 4. 跑通本地 LLM\n\n按 [Llama.cpp 指南](../Sources/docs-ai/zh/compute_stack/ai_compute_stack/llama.cpp.md) 安装 `llama.cpp-tools-spacemit`（旧固件另查 `llama-server`），下载匹配的 GGUF，先检查可用内存再运行 `llama-cli` 或 `llama-bench`。统一内存仍受总容量、权重、KV cache 和运行时开销约束，不代表没有内存上限。Qwen3-30B-A3B 的总参数与激活量、量化格式及测量条件分别记录。\n\n- 板级设计：[[Knowledge_Atoms/K3_Pico_板级硬件设计专题]]。\n- 芯片代际与模型边界：[[Knowledge_Atoms/K3大模型本地推理与AI算力专题档案]]。",
       "created": "2026-06-30",
-      "updated": "2026-10-20",
-      "freshness": "unknown",
+      "updated": "2026-10-21",
+      "source_file": "Sources/docs-product/zh/k3_series/k3_pico/pico_user_guide.md",
+      "source_commit": "bc640755145625cc20745f49861f82588863fca3",
+      "source_section": "Pico 指南 1/2.3.1～2.3.3/3.1；Llama.cpp 2",
+      "source_resolution": "partial",
+      "verification_status": "unverified",
+      "source_checked_at": "2026-10-21",
+      "source_note": "覆盖供电、烧录、UEFI 与 LLM 包名；镜像版本、实际性能和所有板载外设未实测。 本轮为来源与关键步骤定向核对，未在实物执行；关联节点保留各自核验状态。",
+      "source_related_file": [
+        "Sources/docs-ai/zh/compute_stack/ai_compute_stack/llama.cpp.md"
+      ],
+      "source_related_commit": [
+        "2b3894e983a295ed0278bc625867e0c132e0e259"
+      ],
+      "freshness": "current",
       "stale_paths": [],
       "unknown_paths": [],
-      "checked_against_commit": {},
-      "source_freshness": []
+      "checked_against_commit": {
+        "docs-product": "bc640755145625cc20745f49861f82588863fca3",
+        "docs-ai": "2b3894e983a295ed0278bc625867e0c132e0e259"
+      },
+      "source_freshness": [
+        {
+          "source_file": "Sources/docs-product/zh/k3_series/k3_pico/pico_user_guide.md",
+          "source_commit": "bc640755145625cc20745f49861f82588863fca3",
+          "checked_against_commit": "bc640755145625cc20745f49861f82588863fca3",
+          "freshness": "current",
+          "reason": "source_file_unchanged"
+        },
+        {
+          "source_file": "Sources/docs-ai/zh/compute_stack/ai_compute_stack/llama.cpp.md",
+          "source_commit": "2b3894e983a295ed0278bc625867e0c132e0e259",
+          "checked_against_commit": "2b3894e983a295ed0278bc625867e0c132e0e259",
+          "freshness": "current",
+          "reason": "source_file_unchanged"
+        }
+      ]
     },
     "K3芯片开发快速上手向导": {
       "id": "K3芯片开发快速上手向导",
@@ -112,6 +222,7 @@
       ],
       "target_audience": [],
       "outlinks": [
+        "SpacemiT生态板卡与PMIC电源配合专题档案",
         "K3热设计与散热专题档案",
         "k3_thermal_specs",
         "K3启动模式与Strap管脚配置专题档案",
@@ -120,15 +231,73 @@
         "k3_ai_performance_data"
       ],
       "backlinks": [],
-      "summary": "# K3 芯片开发快速上手向导  本向导为开发者提供一条从零开始熟悉 K3 芯片、进行单板硬件散热设计、配置启动模式、到最终在板端跑通本地 30B MoE 稀疏大模型（如 Qwen3-30B-A3B）的**极简任务动线**。  ---  ## 🏁 开发者通关动线  ```mermaid graph TD     Step1[第一步: 熟悉 K3 规格指标] --> Step2[第二步: 进行系统散热设计]     Step2 --> Step3[第三步: 配置上电启动模式]     Step3 --> Step4[第四步: 编译与烧录 SDK]     Step4 --> Step5[第五步:",
-      "content": "# K3 芯片开发快速上手向导\n\n本向导为开发者提供一条从零开始熟悉 K3 芯片、进行单板硬件散热设计、配置启动模式、到最终在板端跑通本地 30B MoE 稀疏大模型（如 Qwen3-30B-A3B）的**极简任务动线**。\n\n---\n\n## 🏁 开发者通关动线\n\n```mermaid\ngraph TD\n    Step1[第一步: 熟悉 K3 规格指标] --> Step2[第二步: 进行系统散热设计]\n    Step2 --> Step3[第三步: 配置上电启动模式]\n    Step3 --> Step4[第四步: 编译与烧录 SDK]\n    Step4 --> Step5[第五步: 部署本地大模型]\n```\n\n### 1. 第一步：熟悉 K3 规格指标\n*   **目标**：快速了解 K3 芯片的计算架构与基本接口能力。\n*   **行动**：阅读 [K3 产品简介（原始文件）](../Sources/docs-chip/zh/key_stone/k3/k3_docs/root_overview.md)，重点关注通用 X100 计算核与 AI A100 核的数量与主频。\n\n### 2. 第二步：进行系统散热设计\n*   **目标**：设计符合 K3 热学指标的散热方案，避免满载过温降频。\n*   **行动**：\n    *   阅读 **[[Knowledge_Atoms/K3热设计与散热专题档案]]**。\n    *   根据其引用的物理热阻与 TDP 功耗限额（参见 [[Evidence/k3_thermal_specs]]），为你的开发板设计主动风冷或金属外壳被动散热。\n\n### 3. 第三步：配置上电启动模式\n*   **目标**：设计并检查开发板的 Strap Pins 上下拉电阻，确保芯片能正确从 eMMC/SD/Flash 引导或进入 USB 烧录。\n*   **行动**：\n    *   阅读 **[[Knowledge_Atoms/K3启动模式与Strap管脚配置专题档案]]**。\n    *   对照其中的电平组合表（参见 [[Evidence/k3_strap_pins_config]]），检查硬件原理图上 GPIO65、GPIO66、GPIO69 的电阻连接。\n\n### 4. 第四步：编译并烧录 SDK 系统\n*   **目标**：在宿主机上搭建开发环境，编译并烧录最小 Bianbu Linux 系统。\n*   **行动**：参考 [K3 SDK 使用指南（原始文件）](../Sources/docs-chip/zh/key_stone/k3/k3_sw/k3_sdk_user_guide.md)，下载源码，执行 `make` 编译出系统镜像，并使用烧录工具写入开发板。\n\n### 5. 第五步：部署本地大模型\n*   **目标**：利用 K3 的 60 TOPS AI 算力与 A100 智算核，在本地流畅运行大语言模型（如 30B MoE 稀疏大模型 Qwen3-30B-A3B）或 0.5B~4B 视觉多模态模型。\n*   **行动**：\n    *   阅读 **[[Knowledge_Atoms/K3大模型本地推理与AI算力专题档案]]**。\n    *   了解大模型量化格式（支持 FP8 原生推理，参见 [[Evidence/k3_ai_performance_data]]）。\n    *   使用 AI 工具链编译模型，并在开发板上加载运行，体验端侧 > 10 Tokens/s 的大模型推理。",
+      "summary": "# K3 芯片开发快速上手向导  先明确 K3 的板型、内存容量、系统镜像和 SDK 版本。30B-A3B 是 MoE 示例，总参数与激活参数分别记录，不能据激活量推定完整权重占用。  ## 1. 认识芯片与板卡边界  [K3 产品简介](../Sources/docs-chip/zh/key_stone/k3/k3_docs/root_overview.md) 列出 8 个 X100 计算核与 8 个 A100 智算核，支持 RVA23 Profile；K1 的 X60/RVA22 不能套用。SoC 能力、板卡引出接口和运行时支持分开核对；60 TOPS 不能直接换算成任何模型的生成速度。",
+      "content": "# K3 芯片开发快速上手向导\n\n先明确 K3 的板型、内存容量、系统镜像和 SDK 版本。30B-A3B 是 MoE 示例，总参数与激活参数分别记录，不能据激活量推定完整权重占用。\n\n## 1. 认识芯片与板卡边界\n\n[K3 产品简介](../Sources/docs-chip/zh/key_stone/k3/k3_docs/root_overview.md) 列出 8 个 X100 计算核与 8 个 A100 智算核，支持 RVA23 Profile；K1 的 X60/RVA22 不能套用。SoC 能力、板卡引出接口和运行时支持分开核对；60 TOPS 不能直接换算成任何模型的生成速度。\n\n## 2. 核对供电勘误与散热\n\nK3 指南 V1.1 的 1.2.5/1.2.6 与 [硬件设计 Buglist](../Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_buglist.md) 要求合并相关核心电源，并处理 VDD0V8_DDR 供电平面的专项勘误；读 [[Knowledge_Atoms/SpacemiT生态板卡与PMIC电源配合专题档案]]，不能复制旧独立供电方案。散热参考 [[Knowledge_Atoms/K3热设计与散热专题档案]] 和 [[Evidence/k3_thermal_specs]]：历史 θJC/PL1/PL2 缺少条件时不能作为已核验设计输入。\n\n## 3. 配置启动与烧录\n\n读 [[Knowledge_Atoms/K3启动模式与Strap管脚配置专题档案]] 与 [[Evidence/k3_strap_pins_config]]。保留指南 1.1.5 的管脚清单矛盾，按功能表与板型原理图核对；例如 GPIO66/65 的 0/0 是 TF Card → eMMC 顺序。不能从默认电平直接给出未核实的电阻/悬空接线。\n\n## 4. 选择系统路径\n\n[K3 SDK 概览](../Sources/docs-chip/zh/key_stone/k3/k3_sw/k3_sdk_user_guide.md) 区分 Buildroot、Bianbu、OpenHarmony 与 AI Robot。选择对应分支和板型镜像，再按该 SDK 编译/烧录；SDK 概览本身不支持用一条通用 `make` 命令构建所有系统。\n\n## 5. 运行并测量大模型\n\n读 [[Knowledge_Atoms/K3大模型本地推理与AI算力专题档案]] 与 [[Evidence/k3_ai_performance_data]]。当前 [Llama.cpp 指南](../Sources/docs-ai/zh/compute_stack/ai_compute_stack/llama.cpp.md) 的 Bianbu 路径安装 `llama.cpp-tools-spacemit`，以 Qwen3-30B-A3B-Instruct-2507-Q4_0 为例：\n\n```bash\nllama-bench -m Qwen3-30B-A3B-Instruct-2507-Q4_0.gguf -t 8 -p 64 -n 64 -mmp 0 -fa 1\n```\n\n模型需先按指南下载并确认内存足够；命令和参数绑定对应运行时版本。分别记录提示处理、生成速度、内存和上下文，不能把 FP8 硬件支持等同于所有框架已支持，也不能将单次实测推广为性能保证。",
       "created": "2026-06-29",
-      "updated": "2026-06-29",
-      "freshness": "unknown",
+      "updated": "2026-10-21",
+      "source_file": "Sources/docs-chip/zh/key_stone/k3/k3_sw/k3_sdk_user_guide.md",
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "source_section": "SDK 概览；产品特性；硬件指南 1.1.5/1.2.5/1.2.6；Buglist 1/2；Llama.cpp 2",
+      "source_resolution": "partial",
+      "verification_status": "unverified",
+      "source_checked_at": "2026-10-21",
+      "source_note": "覆盖启动、供电修订、SDK 分流及 GGUF 路径；Strap 来源内部冲突与热学历史待核验项保留。 本轮为来源与关键步骤定向核对，未在实物执行；关联节点保留各自核验状态。",
+      "source_related_file": [
+        "Sources/docs-chip/zh/key_stone/k3/k3_docs/root_overview.md",
+        "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md",
+        "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_buglist.md",
+        "Sources/docs-ai/zh/compute_stack/ai_compute_stack/llama.cpp.md"
+      ],
+      "source_related_commit": [
+        "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+        "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+        "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+        "2b3894e983a295ed0278bc625867e0c132e0e259"
+      ],
+      "freshness": "current",
       "stale_paths": [],
       "unknown_paths": [],
-      "checked_against_commit": {},
-      "source_freshness": []
+      "checked_against_commit": {
+        "docs-chip": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+        "docs-ai": "2b3894e983a295ed0278bc625867e0c132e0e259"
+      },
+      "source_freshness": [
+        {
+          "source_file": "Sources/docs-chip/zh/key_stone/k3/k3_sw/k3_sdk_user_guide.md",
+          "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+          "freshness": "current",
+          "reason": "source_file_unchanged"
+        },
+        {
+          "source_file": "Sources/docs-chip/zh/key_stone/k3/k3_docs/root_overview.md",
+          "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+          "freshness": "current",
+          "reason": "source_file_unchanged"
+        },
+        {
+          "source_file": "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md",
+          "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+          "freshness": "current",
+          "reason": "source_file_unchanged"
+        },
+        {
+          "source_file": "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_buglist.md",
+          "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+          "freshness": "current",
+          "reason": "source_file_unchanged"
+        },
+        {
+          "source_file": "Sources/docs-ai/zh/compute_stack/ai_compute_stack/llama.cpp.md",
+          "source_commit": "2b3894e983a295ed0278bc625867e0c132e0e259",
+          "checked_against_commit": "2b3894e983a295ed0278bc625867e0c132e0e259",
+          "freshness": "current",
+          "reason": "source_file_unchanged"
+        }
+      ]
     },
     "Muse_Pi_开发板快速上手向导": {
       "id": "Muse_Pi_开发板快速上手向导",
@@ -147,15 +316,46 @@
         "K1大模型本地推理与AI算力专题档案"
       ],
       "backlinks": [],
-      "summary": "# MUSE Pi 开发板快速上手向导  本向导旨在帮助开发者在最短时间内完成 K1 MUSE Pi 开发板的硬件连接、操作系统烧录、首次开机配置，并跑通本地大语言模型（LLM）。  ---  ## 阶段 1：硬件准备与连接  在上电前，请正确连接以下外设： 1. **显示器**：通过标准 HDMI 线缆连接至板载 `HDMI Type-A` 接口。 2. **输入设备**：插上 USB 键盘和鼠标。 3. **网络**：接入 RJ45 网线至千兆网口，或安装好随包装附赠的 Wi-Fi SMA 天线。 4. **启动拨码**：检查板载双位拨码开关是否处于默认的 **OFF + OFF** 位置",
-      "content": "# MUSE Pi 开发板快速上手向导\n\n本向导旨在帮助开发者在最短时间内完成 K1 MUSE Pi 开发板的硬件连接、操作系统烧录、首次开机配置，并跑通本地大语言模型（LLM）。\n\n---\n\n## 阶段 1：硬件准备与连接\n\n在上电前，请正确连接以下外设：\n1. **显示器**：通过标准 HDMI 线缆连接至板载 `HDMI Type-A` 接口。\n2. **输入设备**：插上 USB 键盘和鼠标。\n3. **网络**：接入 RJ45 网线至千兆网口，或安装好随包装附赠的 Wi-Fi SMA 天线。\n4. **启动拨码**：检查板载双位拨码开关是否处于默认的 **OFF + OFF** 位置（即从 TF 卡或 eMMC 启动）。\n\n---\n\n## 阶段 2：操作系统烧录 (Bianbu OS)\n\nMUSE Pi 预装或支持 Bianbu Desktop 桌面系统。若需要重新烧录：\n\n### 步骤 1：获取固件与工具\n* 下载最新的 [MUSE Pi Bianbu 镜像](https://spacemit.com/community/resources-download/)。\n* 在上位机（PC）上安装进迭时空官方刷机工具 **Titan**（支持 Windows/Linux/macOS）。\n\n### 步骤 2：进入刷机（FEL）模式\n1. **断电状态下**：按住板载侧边的 **Download 烧录按键 (FDL)** 不松开。\n2. **给设备上电**：使用 Type-C 供电线连接支持 **PD3.0 (12V/3A)** 的电源适配器。\n3. **连接电脑**：使用 Type-C 数据线将 MUSE Pi 的 Type-C 接口连接至上位机电脑。\n4. **松开按键**：松开 **FDL 按键**。此时电脑上的 Titan 工具应能识别到处于 FEL 模式的设备。\n\n### 步骤 3：执行烧录\n在 Titan 软件中加载下载好的 `.zip` 格式固件包，点击“开始烧录”，等待进度条完成至 100% 后设备会自动重启。\n\n---\n\n## 阶段 3：首次启动与系统配置\n\n系统首次开机后，显示器将输出 Bianbu Desktop 的配置向导：\n1. **语言与键盘**：选择“简体中文”与“标准美国英语键盘”。\n2. **时区**：选择 `Asia/Shanghai`。\n3. **网络连接**：若使用无线，在此步骤中连接您的 Wi-Fi 网络。\n4. **创建用户**：设置您的用户名和登录密码。\n5. **进入桌面**：配置完成后，系统将载入轻量级的 LXQt 桌面环境。\n\n---\n\n## 阶段 4：部署本地大语言模型 (LLM)\n\nMUSE Pi 搭载的 K1 芯片在 CPU 内融合了 2.0 TOPS 的 AI 算力，支持零成本部署 1B / 0.5B 参数级别的端侧模型。\n\n### 步骤 1：安装运行时环境\n在 Bianbu OS 终端中执行以下命令，安装进迭时空优化的 ONNX Runtime 与 Python 依赖：\n```bash\nsudo apt update\nsudo apt install python3-pip python3-onnxruntime -y\n```\n\n### 步骤 2：获取量化模型\n从官方社区或 HuggingFace 下载经过 `smt.vmadot` 指令集量化编译的 **Qwen-1.5-0.5B-Chat-INT8** 模型。\n\n### 步骤 3：运行推理\n使用 SDK 附带的极简推理脚本启动模型：\n```bash\npython3 chat_inference.py --model ./qwen1.5-0.5b-chat-int8.onnx\n```\n系统将直接利用 K1 芯片的 Cluster 0（带 AI 加速 TCM 缓存的 4 核）进行极速端侧推理，速度可达 **>10 Tokens/s**。\n\n---\n\n## 5. 关联技术专题与规格\n\n* 硬件避坑与调试：[[Knowledge_Atoms/Muse_Pi_板级硬件设计专题|MUSE Pi 板级硬件设计与调试专题]]\n* 芯片级 AI 部署指南：[[Knowledge_Atoms/K1大模型本地推理与AI算力专题档案|K1 大模型本地推理与 AI 算力专题]]\n* 官方完整指南：[MUSE Pi 使用指南（原始文件）](../Sources/docs-product/zh/k1_muse_pi/pi_user_guide.md)",
+      "summary": "# MUSE Pi 开发板快速上手向导  本页面向 **K1 MUSE Pi 标准板**，不是 Pi Pro。先确认板卡修订与镜像版本，按 [MUSE Pi 用户指南](../Sources/docs-product/zh/k1_series/k1_muse_pi/pi_user_guide.md) 的实物图定位接口。  ## 1. 硬件准备  连接 HDMI 显示器、USB 键鼠与网络。Type-C 供电要求匹配 PD3.0 的 12V 档位；拨码按该板 Boot Download Sel&JTAG Sel 表核对，不能把拨码 OFF/ON 直接等同于 SoC Strap 电平。排针与电平参",
+      "content": "# MUSE Pi 开发板快速上手向导\n\n本页面向 **K1 MUSE Pi 标准板**，不是 Pi Pro。先确认板卡修订与镜像版本，按 [MUSE Pi 用户指南](../Sources/docs-product/zh/k1_series/k1_muse_pi/pi_user_guide.md) 的实物图定位接口。\n\n## 1. 硬件准备\n\n连接 HDMI 显示器、USB 键鼠与网络。Type-C 供电要求匹配 PD3.0 的 12V 档位；拨码按该板 Boot Download Sel&JTAG Sel 表核对，不能把拨码 OFF/ON 直接等同于 SoC Strap 电平。排针与电平参考 [[Knowledge_Atoms/Muse_Pi_板级硬件设计专题]]。\n\n## 2. 烧录固件\n\n从官方发布渠道选择适用该板的 Bianbu Desktop/NAS 镜像，版本、烧录目标及工具按固件说明确认。\n\n1. 断电时按住 DOWNLOAD（FDL），插电后松开；已开机时按住 FDL，短按 Reset 后松开。\n2. 将支持数据通信的 USB 线接至刷机连接器，用 Titan 或固件对应的 fastboot 流程。\n3. 烧录前核对镜像适用板型；本页不提供未经对应版本确认的自动分区/擦除命令。\n\n## 3. 首次启动\n\n按实际镜像的屏幕向导设置语言、时区、网络及用户；桌面组件和预装包随镜像变化。无法启动时先核对供电、介质和串口日志，不仅根据现象推断芯片损坏。\n\n## 4. 运行本地模型\n\n按 [Llama.cpp 指南](../Sources/docs-ai/zh/compute_stack/ai_compute_stack/llama.cpp.md) 核对当前 Bianbu 包 `llama.cpp-tools-spacemit`，K1 示例为 Qwen3-0.6B GGUF，线程数按 K1 条件不超过 4。先下载适配的量化模型，再用所安装版本的 `llama-cli`/`llama-bench` 运行。\n\n旧固件或旧平台未提供该包时，原文另列 `llama-server` 包路径；先核对实际软件源和版本。\n\n旧稿中的 `chat_inference.py` 和通用 ONNX 0.5B 命令未在当前声明来源确认，不再作为可直接执行步骤；ONNX 视觉模型应走专用推理指南。结果记录模型、精度、固件、内存与速度，不承诺任意板卡均达到同一 tokens/s。\n\n- AI 架构与证据：[[Knowledge_Atoms/K1大模型本地推理与AI算力专题档案]]。",
       "created": "2026-06-30",
-      "updated": "2026-10-20",
-      "freshness": "unknown",
+      "updated": "2026-10-21",
+      "source_file": "Sources/docs-product/zh/k1_series/k1_muse_pi/pi_user_guide.md",
+      "source_commit": "bc640755145625cc20745f49861f82588863fca3",
+      "source_section": "MUSE Pi 指南 电源输入/Boot Download Sel/初次设置/刷入固件；Llama.cpp 2",
+      "source_resolution": "partial",
+      "verification_status": "unverified",
+      "source_checked_at": "2026-10-21",
+      "source_note": "覆盖标准 MUSE Pi 的连接与 FDL，LLM 使用当前官方 GGUF 路径；不把 Pro 的接口或旧演示脚本套入。 本轮为来源与关键步骤定向核对，未在实物执行；关联节点保留各自核验状态。",
+      "source_related_file": [
+        "Sources/docs-ai/zh/compute_stack/ai_compute_stack/llama.cpp.md"
+      ],
+      "source_related_commit": [
+        "2b3894e983a295ed0278bc625867e0c132e0e259"
+      ],
+      "freshness": "current",
       "stale_paths": [],
       "unknown_paths": [],
-      "checked_against_commit": {},
-      "source_freshness": []
+      "checked_against_commit": {
+        "docs-product": "bc640755145625cc20745f49861f82588863fca3",
+        "docs-ai": "2b3894e983a295ed0278bc625867e0c132e0e259"
+      },
+      "source_freshness": [
+        {
+          "source_file": "Sources/docs-product/zh/k1_series/k1_muse_pi/pi_user_guide.md",
+          "source_commit": "bc640755145625cc20745f49861f82588863fca3",
+          "checked_against_commit": "bc640755145625cc20745f49861f82588863fca3",
+          "freshness": "current",
+          "reason": "source_file_unchanged"
+        },
+        {
+          "source_file": "Sources/docs-ai/zh/compute_stack/ai_compute_stack/llama.cpp.md",
+          "source_commit": "2b3894e983a295ed0278bc625867e0c132e0e259",
+          "checked_against_commit": "2b3894e983a295ed0278bc625867e0c132e0e259",
+          "freshness": "current",
+          "reason": "source_file_unchanged"
+        }
+      ]
     },
     "ROS2_机器人与具身智能快速上手向导": {
       "id": "ROS2_机器人与具身智能快速上手向导",
@@ -175,15 +375,63 @@
         "SpacemiT_ROS2_机器人与具身智能专题档案"
       ],
       "backlinks": [],
-      "summary": "# ROS 2 机器人与具身智能快速上手向导  本向导提供从环境搭建、硬件连接、micro-ROS 节点启动到端侧模仿学习（ACT / SmolVLA）模型部署的极简通关动线，帮助开发者快速在 SpacemiT K1 / K3 芯片与生态板卡上开发具身智能机器人应用。  ---  ## 🗺️ 通关路线图  ```mermaid graph LR     Step1[1. 环境准备] --> Step2[2. 硬件连接与 micro-ROS]     Step2 --> Step3[3. ROS 2 驱动启动]     Step3 --> Step4[4. 具身 AI 模型部署] ```  --",
-      "content": "# ROS 2 机器人与具身智能快速上手向导\n\n本向导提供从环境搭建、硬件连接、micro-ROS 节点启动到端侧模仿学习（ACT / SmolVLA）模型部署的极简通关动线，帮助开发者快速在 SpacemiT K1 / K3 芯片与生态板卡上开发具身智能机器人应用。\n\n---\n\n## 🗺️ 通关路线图\n\n```mermaid\ngraph LR\n    Step1[1. 环境准备] --> Step2[2. 硬件连接与 micro-ROS]\n    Step2 --> Step3[3. ROS 2 驱动启动]\n    Step3 --> Step4[4. 具身 AI 模型部署]\n```\n\n---\n\n## 步骤 1：准备 ROS 2 开发环境\n\n推荐在 **Bianbu OS** 或 **Ubuntu 24.04** 上安装 ROS 2 Humble 或 Jazzy 环境：\n\n```bash\n# 1. 软件源与 ROS 2 基础环境安装\nsudo apt update && sudo apt install -y ros-humble-ros-base ros-humble-rviz2\n\n# 2. 设置 ROS 2 环境变量\nsource /opt/ros/humble/setup.bash\n\n# 3. 指定 Cyclone DDS 中间件\nexport RMW_IMPLEMENTATION=rmw_cyclonedds_cpp\n```\n\n详细环境依赖与节点消耗请参考 [[Evidence/ros2_platform_specs|SpacemiT ROS 2 平台规格表]]。\n\n---\n\n## 步骤 2：硬件接口连接与 micro-ROS Agent 启动\n\n将微控制器 / 机械臂舵机板通过 UART 串口线连接至主板（如 `/dev/ttyS1`）：\n\n```bash\n# 启动 micro-ROS 串口桥接节点\nros2 run micro_ros_agent micro_ros_agent serial --dev /dev/ttyS1 -b 115200\n```\n\n板级 JTAG / UART 调试排针规范参考 [[Knowledge_Atoms/Muse_Pi_板级硬件设计专题|Muse Pi 板级硬件设计专题]]。\n\n---\n\n## 步骤 3：部署 LeRobot 机械臂或 Reachy Mini 应用\n\n### 3.1 运行 SO101 机械臂模仿学习推理 (K1 / K3)\n\n使用已安装的 LeRobot 库与模型：\n* 在 **K1 (Muse Pi)** 平台上直接运行 **ACT** 轨迹预测模型驱动 SO101 6-DoF 机械臂（端侧实测 25 FPS）：\n  ```bash\n  python3 -m lerobot.scripts.control_robot --robot-type so101 --policy-type act --eval\n  ```\n* 在 **K3 (K3 Pico)** 平台上可通过 Robot SDK 运行 **SmolVLA** 多模态策略模型的 4 子图 ONNX 推理，实现端侧视觉-语言-动作闭环。\n\n### 3.2 运行 Reachy Mini 视线追踪与交互\n\n```bash\nros2 launch reachy_mini_bringup reachy_mini.launch.py\n```\n\n更多机械臂与具身智能模型规格详见 [[Evidence/robot_hardware_specs|SpacemiT 机器人硬件与具身 AI 模型参数规格]] 及 [[Knowledge_Atoms/SpacemiT_ROS2_机器人与具身智能专题档案|SpacemiT ROS 2 机器人与具身智能专题档案]]。",
+      "summary": "# ROS 2 机器人与具身智能快速上手向导  先确认板型、系统镜像、ROS 2 发行版，以及是否需要 Robot SDK。当前 [官方平台表](../Sources/docs-ros/zh/root_overview.md) 为 K1 推荐 Bianbu 2.3.x，K3 推荐 Bianbu 4.x（4.0.1 起），两代支持 Humble/Jazzy；**Lyrical 仅为 K3 计划支持**。  ## 1. 配置对应平台环境  - K1 按 [ROS2 安装指南](../Sources/docs-ros/zh/k1/06_Robot_development/6.1_OS_Prepara",
+      "content": "# ROS 2 机器人与具身智能快速上手向导\n\n先确认板型、系统镜像、ROS 2 发行版，以及是否需要 Robot SDK。当前 [官方平台表](../Sources/docs-ros/zh/root_overview.md) 为 K1 推荐 Bianbu 2.3.x，K3 推荐 Bianbu 4.x（4.0.1 起），两代支持 Humble/Jazzy；**Lyrical 仅为 K3 计划支持**。\n\n## 1. 配置对应平台环境\n\n- K1 按 [ROS2 安装指南](../Sources/docs-ros/zh/k1/06_Robot_development/6.1_OS_Preparation/6.1.2_ROS2_Installation.md) 确认 ROS2_LXQT 镜像与平台软件源，已预装时避免重复配置。\n- K3 Bianbu 4.0.1 起默认有 ROS 2 源，按 [K3 安装指南](../Sources/docs-ros/zh/k3/06-系统与平台/6.6-ROS2/6.6.1-ROS2-INSTALL.md) 核对；不要照抄通用 Ubuntu 源配置或把 Ubuntu 24.04 + Humble 当作本平台通用组合。\n\n在匹配的 K3 Bianbu 环境中，原文最小 Humble 示例为：\n\n```bash\nsudo apt update\nsudo apt install ros-dev-tools ros-humble-ros-base\nsource /opt/ros/humble/setup.sh\n```\n\nRViz、Nav2、MoveIt 和硬件驱动不是 ROS-Base 自动具备的能力。多机尽量同一 ROS 2 发行版，按实际示例核对中间件、网络和 ROS_DOMAIN_ID，不能保证跨发行版互通。平台表见 [[Evidence/ros2_platform_specs]]。\n\n## 2. 先验证基础通信，再接硬件\n\n按对应安装指南的发布/订阅示例确认 ROS 环境。连接 UART/传感器前核对板型排针、电平与串口是否被控制台占用；不能假定任何板都用 `/dev/ttyS1`。MUSE Pi 参考 [[Knowledge_Atoms/Muse_Pi_板级硬件设计专题]]。\n\n## 3. 按场景进入 Robot SDK\n\n[K3 构建编译指南](../Sources/docs-ros/zh/k3/02-快速入门/2.3-构建编译.md) 区分最小 ROS 2 环境与 SDK 流程，二者不必全量叠加执行。需 SDK 时再按目标板和方案取源码、配置与构建，不用一条未核实的 launch 命令代表所有机器人。\n\n## 4. 核对具身方案的适用范围\n\nACT、SmolVLA、Reachy 等方案按具体机器人、芯片与发布版本核对，历史 FPS、DOF、子图数量和演示命令不能作为所有设备的保证。先读取 [[Evidence/robot_hardware_specs]] 与 [[Knowledge_Atoms/SpacemiT_ROS2_机器人与具身智能专题档案]]，证据不足时说明缺口；本轮未做机器人实物测试。",
       "created": "2026-08-10",
-      "updated": "2026-08-10",
-      "freshness": "unknown",
+      "updated": "2026-10-21",
+      "source_file": "Sources/docs-ros/zh/root_overview.md",
+      "source_commit": "808d02c1bd11cf0d4376555919bd61c90e38d853",
+      "source_section": "平台支持列表；K1/K3 ROS2 安装 平台要求/软件源/ROS-Base；K3 构建编译 1.2/1.3",
+      "source_resolution": "partial",
+      "verification_status": "unverified",
+      "source_checked_at": "2026-10-21",
+      "source_note": "覆盖系统/发行版边界、最小环境和后续方案分流；传感器、micro-ROS、ACT/SmolVLA、Reachy 命令未在本轮实机验证。 本轮为来源与关键步骤定向核对，未在实物执行；关联节点保留各自核验状态。",
+      "source_related_file": [
+        "Sources/docs-ros/zh/k3/06-系统与平台/6.6-ROS2/6.6.1-ROS2-INSTALL.md",
+        "Sources/docs-ros/zh/k1/06_Robot_development/6.1_OS_Preparation/6.1.2_ROS2_Installation.md",
+        "Sources/docs-ros/zh/k3/02-快速入门/2.3-构建编译.md"
+      ],
+      "source_related_commit": [
+        "808d02c1bd11cf0d4376555919bd61c90e38d853",
+        "808d02c1bd11cf0d4376555919bd61c90e38d853",
+        "808d02c1bd11cf0d4376555919bd61c90e38d853"
+      ],
+      "freshness": "current",
       "stale_paths": [],
       "unknown_paths": [],
-      "checked_against_commit": {},
-      "source_freshness": []
+      "checked_against_commit": {
+        "docs-ros": "808d02c1bd11cf0d4376555919bd61c90e38d853"
+      },
+      "source_freshness": [
+        {
+          "source_file": "Sources/docs-ros/zh/root_overview.md",
+          "source_commit": "808d02c1bd11cf0d4376555919bd61c90e38d853",
+          "checked_against_commit": "808d02c1bd11cf0d4376555919bd61c90e38d853",
+          "freshness": "current",
+          "reason": "source_file_unchanged"
+        },
+        {
+          "source_file": "Sources/docs-ros/zh/k3/06-系统与平台/6.6-ROS2/6.6.1-ROS2-INSTALL.md",
+          "source_commit": "808d02c1bd11cf0d4376555919bd61c90e38d853",
+          "checked_against_commit": "808d02c1bd11cf0d4376555919bd61c90e38d853",
+          "freshness": "current",
+          "reason": "source_file_unchanged"
+        },
+        {
+          "source_file": "Sources/docs-ros/zh/k1/06_Robot_development/6.1_OS_Preparation/6.1.2_ROS2_Installation.md",
+          "source_commit": "808d02c1bd11cf0d4376555919bd61c90e38d853",
+          "checked_against_commit": "808d02c1bd11cf0d4376555919bd61c90e38d853",
+          "freshness": "current",
+          "reason": "source_file_unchanged"
+        },
+        {
+          "source_file": "Sources/docs-ros/zh/k3/02-快速入门/2.3-构建编译.md",
+          "source_commit": "808d02c1bd11cf0d4376555919bd61c90e38d853",
+          "checked_against_commit": "808d02c1bd11cf0d4376555919bd61c90e38d853",
+          "freshness": "current",
+          "reason": "source_file_unchanged"
+        }
+      ]
     },
     "SpaceAI_模型量化与端侧推理快速上手向导": {
       "id": "SpaceAI_模型量化与端侧推理快速上手向导",
@@ -205,15 +453,45 @@
         "SpaceAI_端侧大模型量化与部署专题档案"
       ],
       "backlinks": [],
-      "summary": "# SpaceAI 模型量化与端侧推理快速上手向导  > [!TIP] > **💡 工程师导读与排坑焦点**：帮助开发者从模型导出、XSlim 量化校准到使用 `SpaceMITExecutionProvider` 在 K1/K3 上跑通端侧 AI 加速。 > **目标读者**：`AI算法工程师 / 应用开发工程师` | **技术领域**：`edge_ai_robotics`  本向导提供从训练框架模型导出、XSlim 工具链量化校准到使用 ONNX Runtime 在 SpacemiT A60 智算核上执行硬件加速推理的极简通关路线。  ---  ## 🗺️ 通关路线图  ```mermai",
-      "content": "# SpaceAI 模型量化与端侧推理快速上手向导\n\n> [!TIP]\n> **💡 工程师导读与排坑焦点**：帮助开发者从模型导出、XSlim 量化校准到使用 `SpaceMITExecutionProvider` 在 K1/K3 上跑通端侧 AI 加速。\n> **目标读者**：`AI算法工程师 / 应用开发工程师` | **技术领域**：`edge_ai_robotics`\n\n本向导提供从训练框架模型导出、XSlim 工具链量化校准到使用 ONNX Runtime 在 SpacemiT A60 智算核上执行硬件加速推理的极简通关路线。\n\n---\n\n## 🗺️ 通关路线图\n\n```mermaid\ngraph LR\n    Step1[1. 导出 ONNX 模型] --> Step2[2. XSlim 量化校准]\n    Step2 --> Step3[3. 加载 SpaceMIT EP 推理]\n    Step3 --> Step4[4. 验证智算核 2.0 TOPS 加速]\n```\n\n---\n\n## 步骤 1：从 PyTorch 导出 ONNX 基础模型\n\n在主机（Host）开发环境中将模型导出为标准 `.onnx` 格式：\n\n```python\nimport torch\n\nmodel = MyVisionModel().eval()\ndummy_input = torch.randn(1, 3, 224, 224)\ntorch.onnx.export(model, dummy_input, \"base_model.onnx\", input_names=[\"input\"], output_names=[\"output\"])\n```\n\n---\n\n## 步骤 2：使用 XSlim 工具链进行模型量化\n\n使用 SpacemiT 官方 **XSlim** 工具对模型进行静态量化与算子融合：\n\n```bash\n# 运行 XSlim 量化命令\nxslim convert \\\n    --model base_model.onnx \\\n    --output quantized_model.onnx \\\n    --quant-config int8_calib.json \\\n    --dataset /path/to/calibration_images\n```\n\n详细量化配置选项请参考 [[Evidence/space_ai_software_stack_specs|SpaceAI 软件栈与 XSlim 规格]]。\n\n---\n\n## 步骤 3：在 K1/K3 上通过 ONNX Runtime 执行硬件推理\n\n将 `quantized_model.onnx` 拷贝至 K1/K3 开发板（运行 Bianbu OS / Buildroot），调用 `SpaceMITExecutionProvider` 启动硬件加速：\n\n```python\nimport onnxruntime as ort\n\n# 创建推理 Session 并指定 SpaceMIT 专属 Execution Provider\nsession = ort.InferenceSession(\n    \"quantized_model.onnx\",\n    providers=[\"SpaceMITExecutionProvider\"]\n)\n\n# 执行推理\noutputs = session.run(None, {\"input\": input_data})\n```\n\n更详细的 AI CPU 智算核同构原理与架构请参阅 [[Evidence/space_ai_architecture_specs|A60 AI CPU 智算核规格]] 与 [[Knowledge_Atoms/SpaceAI_端侧大模型量化与部署专题档案|SpaceAI 端侧大模型量化与部署专题档案]]。",
+      "summary": "# SpaceAI 模型量化与端侧推理快速上手向导  本页以官方 [快速入门](../Sources/docs-ai/zh/compute_stack/ai_compute_stack/quick_start.md) 的 **YOLOv8 ONNX 视觉模型**为例。确认芯片、运行库版本、支持算子与输入后再复现；K1 与 K3 的智算核/精度能力分别核对，不把 K1 A60/2 TOPS 标成两代共用指标。  ## 1. 导出模型  在已配置 ultralytics 的主机环境按原文导出：  ```python from ultralytics import YOLO model = YOLO",
+      "content": "# SpaceAI 模型量化与端侧推理快速上手向导\n\n本页以官方 [快速入门](../Sources/docs-ai/zh/compute_stack/ai_compute_stack/quick_start.md) 的 **YOLOv8 ONNX 视觉模型**为例。确认芯片、运行库版本、支持算子与输入后再复现；K1 与 K3 的智算核/精度能力分别核对，不把 K1 A60/2 TOPS 标成两代共用指标。\n\n## 1. 导出模型\n\n在已配置 ultralytics 的主机环境按原文导出：\n\n```python\nfrom ultralytics import YOLO\nmodel = YOLO(\"yolov8n.pt\")\nmodel.export(format=\"onnx\", imgsz=(640, 640), opset=17)\n```\n\n已有兼容 ONNX 可跳过。模型来源、opset、输入布局与预处理必须和实际任务一致。\n\n## 2. XSlim 量化\n\n按 [XSlim QuickStart 与配置说明](../Sources/docs-ai/zh/compute_stack/ai_compute_stack/xslim.md) 安装工具，准备实际的校准数据和 `yolov8n.json`，然后执行：\n\n```bash\npython -m xslim -c ./yolov8n.json -i yolov8n.onnx -o yolov8n.q.onnx\n```\n\n配置文件和校准集不是工具自动提供的通用占位文件；先完成配置再执行。当前官方 CLI 是 `python -m xslim`，旧稿 `xslim convert --quant-config --dataset` 未在此版本确认。选项与软件栈见 [[Evidence/space_ai_software_stack_specs]]。\n\n## 3. 在匹配的板端运行库测试\n\n以下取自官方示例 `spacemit-ort.riscv64.2.0.1` 目录，须先部署匹配运行库和模型：\n\n```bash\nexport LD_LIBRARY_PATH=./lib\n./bin/onnxruntime_perf_test yolov8n.q.onnx -e spacemit -r 10 -x 4 -S 1 -s -I -c 1\n```\n\n检查实际输出是否使用 SpaceMITExecutionProvider，再记录初始化、首帧、平均延迟、精度与内存。原文 K1 YOLOv8n 的示例结果不是所有模型/板型的保证；本次未执行这些硬件操作。\n\n## 4. 应用集成与 LLM 分流\n\n按原文“推理应用集成”配置 C++ Session 与运行库，先验证量化前后精度。架构与后续路径见 [[Evidence/space_ai_architecture_specs]]、[[Knowledge_Atoms/SpaceAI_端侧大模型量化与部署专题档案]]。GGUF LLM 应按对应 llama.cpp 文档处理，不能由此视觉演示推断所有框架、精度或模型均可直接运行。",
       "created": "2026-08-10",
-      "updated": "2026-08-10",
-      "freshness": "unknown",
+      "updated": "2026-10-21",
+      "source_file": "Sources/docs-ai/zh/compute_stack/ai_compute_stack/quick_start.md",
+      "source_commit": "2b3894e983a295ed0278bc625867e0c132e0e259",
+      "source_section": "快速入门 模型转换与量化/模型性能测试/推理应用集成；XSlim QuickStart/量化参数配置",
+      "source_resolution": "partial",
+      "verification_status": "unverified",
+      "source_checked_at": "2026-10-21",
+      "source_note": "本页为 YOLOv8 ONNX 视觉演示，非所有 LLM 通用编译路径；未运行量化、精度评测和板端性能测试。 本轮为来源与关键步骤定向核对，未在实物执行；关联节点保留各自核验状态。",
+      "source_related_file": [
+        "Sources/docs-ai/zh/compute_stack/ai_compute_stack/xslim.md"
+      ],
+      "source_related_commit": [
+        "2b3894e983a295ed0278bc625867e0c132e0e259"
+      ],
+      "freshness": "current",
       "stale_paths": [],
       "unknown_paths": [],
-      "checked_against_commit": {},
-      "source_freshness": []
+      "checked_against_commit": {
+        "docs-ai": "2b3894e983a295ed0278bc625867e0c132e0e259"
+      },
+      "source_freshness": [
+        {
+          "source_file": "Sources/docs-ai/zh/compute_stack/ai_compute_stack/quick_start.md",
+          "source_commit": "2b3894e983a295ed0278bc625867e0c132e0e259",
+          "checked_against_commit": "2b3894e983a295ed0278bc625867e0c132e0e259",
+          "freshness": "current",
+          "reason": "source_file_unchanged"
+        },
+        {
+          "source_file": "Sources/docs-ai/zh/compute_stack/ai_compute_stack/xslim.md",
+          "source_commit": "2b3894e983a295ed0278bc625867e0c132e0e259",
+          "checked_against_commit": "2b3894e983a295ed0278bc625867e0c132e0e259",
+          "freshness": "current",
+          "reason": "source_file_unchanged"
+        }
+      ]
     },
     "Buildroot_嵌入式系统定制与内核编译专题档案": {
       "id": "Buildroot_嵌入式系统定制与内核编译专题档案",
@@ -243,16 +521,16 @@
         "K3安全启动SecureBoot开发专题档案"
       ],
       "summary": "# Buildroot 嵌入式系统定制与内核编译专题档案  > [!TIP] > **💡 工程师导读与排坑焦点**：详解 SDK 目录架构、Docker/宿主机编译、linux-menuconfig 与 esos.elf 依赖。 > **目标读者**：`BSP 工程师 / 驱动工程师` | **技术领域**：`bsp_kernel_drivers`  本专题档案解构基于 SpacemiT K1 与 K3 RISC-V 芯片的 Buildroot SDK 体系架构。涵盖代码获取 (Repo)、Docker/宿主机编译环境配置、方案选项配置 (`defconfig`)、内核与 Bootloader",
-      "content": "# Buildroot 嵌入式系统定制与内核编译专题档案\n\n> [!TIP]\n> **💡 工程师导读与排坑焦点**：详解 SDK 目录架构、Docker/宿主机编译、linux-menuconfig 与 esos.elf 依赖。\n> **目标读者**：`BSP 工程师 / 驱动工程师` | **技术领域**：`bsp_kernel_drivers`\n\n本专题档案解构基于 SpacemiT K1 与 K3 RISC-V 芯片的 Buildroot SDK 体系架构。涵盖代码获取 (Repo)、Docker/宿主机编译环境配置、方案选项配置 (`defconfig`)、内核与 Bootloader 选项微调 (`linux-menuconfig` / `uboot-menuconfig`)、GPU/VPU/RCPU 多媒体中间件集成，以及镜像输出与卡刻刷机。\n\n---\n\n## 1. SDK 系统架构与核心组件解构\n\nSpacemiT Buildroot SDK 是专为 K 系列 RISC-V SoC 打造的底层 Linux 支持包（BSP）。系统采用了典型的分层引导与中间件框架：\n\n```mermaid\ngraph TD\n    Hardware[SpacemiT K1 / K3 SoC] --> OpenSBI[OpenSBI - M-Mode 机器模式固件]\n    OpenSBI --> UBoot[U-Boot 2022.10 - 引导加载程序]\n    UBoot --> LinuxKernel[Linux Kernel 6.6 / 6.18 - 系统内核]\n    \n    subgraph CoreFirmware [硬性引导依赖]\n        RCPU[RCPU 固件 - K1 esos.elf / K3 rt24_os0及os1] -->|中断转发/硬件初始化| LinuxKernel\n    end\n\n    subgraph UserSpace [用户空间 & 硬件加速]\n        LinuxKernel --> BuildrootRootfs[Buildroot 根文件系统]\n        BuildrootRootfs --> GPU[PowerVR GPU DDK & Mesa3D]\n        BuildrootRootfs --> VPU[VPU/JPU 硬件编解码 API & MPP]\n        BuildrootRootfs --> Media[FFmpeg / GStreamer 硬件加速]\n        BuildrootRootfs --> AI[onnxruntime / ai-support]\n    end\n```\n\n详细的各组件版本及文件路径分配请参考 [[Evidence/buildroot_bsp_specs|SpacemiT Buildroot BSP 规格表]]。\n\n---\n\n## 2. 源码下载与仓库结构管理\n\n### 2.1 Repo 清单下载与版本分支选择\n\nBuildroot 代码由多个独立的 Git 存储库组成，统一使用 Google `repo` 工具进行同步管理。根据开发的目标芯片与分支要求选择对应的 `manifest.xml`：\n\n* **K1 平台**：主推 `k1-bl-v2.2.y.xml`（发布于 GitHub/Gitee）。\n* **K3 平台**：主推 `k3-br-v1.0.y.xml`（发布于 GitHub/Gitee）。\n\n具体的版本切换与离线依赖加速拉取命令请查阅 [[Evidence/buildroot_compilation_parameters|Buildroot 编译指令与离线包下载参数]]。\n\n### 2.2 SDK 源码目录拓扑\n\n```shell\nbuildroot-sdk/\n├── bsp-src/               # 核心 BSP 源码 (linux-6.6/6.18, opensbi, uboot-2022.10)\n├── buildroot/             # 上游 Buildroot 主框架\n├── buildroot-ext/         # SpacemiT 扩展 (board, configs, package, patches)\n├── package-src/           # 硬件加速 API 源码 (drm-test, esos, mpp, vpu-firmware, mesa3d)\n├── Makefile               # 顶层构建入口\n└── scripts/               # 自动构建辅助脚本\n```\n\n---\n\n## 3. 开发环境配置与 Docker 容器构建\n\n### 3.1 容器化构建模式（推荐）\n\n自 Buildroot 2.2.7 (K1) 及 1.0 (K3) 起，SDK 引入了预构建 Docker 容器支持。\n* **好处**：无需在宿主机配置复杂且易冲突的 Python/Toolchain 交叉编译依赖，保证团队构建环境的 100% 一致。\n* **用法**：安装好 Docker CE 后直接执行 Makefile 构建命令，脚本会自动拉取并进入构建容器。\n\n### 3.2 宿主机直接编译模式\n\n如需在 Host 主机上直接编译，必须显式导出环境变量：\n```bash\nexport DIRECT_BUILD=1\n```\n详细的 Ubuntu 依赖软件包列表详见 [[Evidence/buildroot_bsp_specs|Buildroot 宿主机依赖规格]]。\n\n---\n\n## 4. 交叉编译与方案配置 (`defconfig`)\n\n### 4.1 方案选择与第一次编译 (`make envconfig`)\n\n首次构建项目，推荐通过交互式菜单配置方案：\n```bash\ncd ~/buildroot-sdk\nmake envconfig\n```\n预置方案选择说明：\n* **K1 完整方案**：选择 `spacemit_k1_v2_defconfig` (索引 `5`)，集成 GPU/VPU/QT5 全套多媒体。\n* **K1 硬实时方案**：选择 `spacemit_k1_rt_defconfig` (索引 `4`)，启用 PREEMPT_RT 实时内核补丁。\n* **K3 方案**：选择 `spacemit_k3_defconfig` (索引 `2`) 或 `spacemit_k3_rt_defconfig` (索引 `4`)。\n\n### 4.2 快捷 Make 命令行集\n\n新版 SDK 提倡使用单行无交互命令进行项目编译与菜单微调：\n\n* **单行编译全套镜像**：`make k1_v2-build` 或 `make k3-build`\n* **图形化定制 Linux 内核**：`make k1_v2-linux-menuconfig`\n* **图形化定制 U-Boot**：`make k1_v2-uboot-menuconfig`\n* **重新编译单一模块**：`make k1_v2-pkg PKG=mpp`\n\n所有的 Make 完整指令列表详见 [[Evidence/buildroot_compilation_parameters|Buildroot Make 快捷指令表]]。\n\n---\n\n## 5. RCPU ESOS 实时固件与系统启动红线\n\n> [!WARNING]\n> 制作自定义系统时，需把对应代际的 RCPU 固件安装到 initramfs `/lib/firmware/`：**K1 为 `esos.elf`；K3 为 `rt24_os0_rcpu.elf` 和 `rt24_os1_rcpu.elf`**。\n\n官方 FAQ 说明 RCPU 固件负责部分硬件模块初始化及 HDMI Audio 中断转发，Linux 内核依赖它，缺失会无法启动；该 FAQ 没有给出具体死锁机制。\n硬件与启动红线规范细节请参考 [[Evidence/esos_rcpu_firmware_specs|SpacemiT RCPU (ESOS) 固件与启动依赖硬规范]] 以及 [[Knowledge_Atoms/K1系统启动与分区配置专题档案|K1 系统启动与分区配置专题]]。\n\n---\n\n## 6. 生态板卡部署与镜像输出\n\n编译成功后，产物保存在 `output/<solution>/images/` 目录下：\n\n1. **Titan Flasher 线刷**：使用 `buildroot-<solution>.zip` 镜像。\n2. **SD 卡本地刻录**：使用 `sdcard.img`，利用 `dd` 命令刻录至 TF/SD 卡并设置 Strap 引脚选通启动。\n\n开发板板级硬件与 Strap 拨码开关设计请参考 [[Knowledge_Atoms/Muse_Pi_板级硬件设计专题|Muse Pi 板级硬件设计专题]] 及 [[Knowledge_Atoms/K1启动模式与Strap管脚配置专题档案|K1 启动模式与 Strap 管脚配置专题]]。",
+      "content": "# Buildroot 嵌入式系统定制与内核编译专题档案\n\n> [!TIP]\n> **💡 工程师导读与排坑焦点**：详解 SDK 目录架构、Docker/宿主机编译、linux-menuconfig 与 esos.elf 依赖。\n> **目标读者**：`BSP 工程师 / 驱动工程师` | **技术领域**：`bsp_kernel_drivers`\n\n本专题档案解构基于 SpacemiT K1 与 K3 RISC-V 芯片的 Buildroot SDK 体系架构。涵盖代码获取 (Repo)、Docker/宿主机编译环境配置、方案选项配置 (`defconfig`)、内核与 Bootloader 选项微调 (`linux-menuconfig` / `uboot-menuconfig`)、GPU/VPU/RCPU 多媒体中间件集成，以及镜像输出与卡刻刷机。\n\n---\n\n## 1. SDK 系统架构与核心组件解构\n\nSpacemiT Buildroot SDK 是专为 K 系列 RISC-V SoC 打造的底层 Linux 支持包（BSP）。系统采用了典型的分层引导与中间件框架：\n\n```mermaid\ngraph TD\n    Hardware[SpacemiT K1 / K3 SoC] --> OpenSBI[OpenSBI - M-Mode 机器模式固件]\n    OpenSBI --> UBoot[U-Boot 2022.10 - 引导加载程序]\n    UBoot --> LinuxKernel[Linux Kernel 6.6 / 6.18 - 系统内核]\n    \n    subgraph CoreFirmware [硬性引导依赖]\n        RCPU[RCPU 固件 - K1 esos.elf / K3 rt24_os0及os1] -->|中断转发/硬件初始化| LinuxKernel\n    end\n\n    subgraph UserSpace [用户空间 & 硬件加速]\n        LinuxKernel --> BuildrootRootfs[Buildroot 根文件系统]\n        BuildrootRootfs --> GPU[PowerVR GPU DDK & Mesa3D]\n        BuildrootRootfs --> VPU[VPU/JPU 硬件编解码 API & MPP]\n        BuildrootRootfs --> Media[FFmpeg / GStreamer 硬件加速]\n        BuildrootRootfs --> AI[onnxruntime / ai-support]\n    end\n```\n\n详细的各组件版本及文件路径分配请参考 [[Evidence/buildroot_bsp_specs|SpacemiT Buildroot BSP 规格表]]。\n\n---\n\n## 2. 源码下载与仓库结构管理\n\n### 2.1 Repo 清单下载与版本分支选择\n\nBuildroot 代码由多个独立的 Git 存储库组成，统一使用 Google `repo` 工具进行同步管理。根据开发的目标芯片与分支要求选择对应的 `manifest.xml`：\n\n* **K1 平台**：主推 `k1-bl-v2.2.y.xml`（发布于 GitHub/Gitee）。\n* **K3 平台**：主推 `k3-br-v1.0.y.xml`（发布于 GitHub/Gitee）。\n\n具体的版本切换与离线依赖加速拉取命令请查阅 [[Evidence/buildroot_compilation_parameters|Buildroot 编译指令与离线包下载参数]]。\n\n### 2.2 SDK 源码目录拓扑\n\n```shell\nbuildroot-sdk/\n├── bsp-src/               # 核心 BSP 源码 (linux-6.6/6.18, opensbi, uboot-2022.10)\n├── buildroot/             # 上游 Buildroot 主框架\n├── buildroot-ext/         # SpacemiT 扩展 (board, configs, package, patches)\n├── package-src/           # 硬件加速 API 源码 (drm-test, esos, mpp, vpu-firmware, mesa3d)\n├── Makefile               # 顶层构建入口\n└── scripts/               # 自动构建辅助脚本\n```\n\n---\n\n## 3. 开发环境配置与 Docker 容器构建\n\n### 3.1 容器化构建模式（推荐）\n\n自 Buildroot 2.2.7 (K1) 及 1.0 (K3) 起，SDK 引入了预构建 Docker 容器支持。\n* **好处**：无需在宿主机配置复杂且易冲突的 Python/Toolchain 交叉编译依赖，保证团队构建环境的 100% 一致。\n* **用法**：安装好 Docker CE 后直接执行 Makefile 构建命令，脚本会自动拉取并进入构建容器。\n\n### 3.2 宿主机直接编译模式\n\n如需在 Host 主机上直接编译，必须显式导出环境变量：\n```bash\nexport DIRECT_BUILD=1\n```\n详细的 Ubuntu 依赖软件包列表详见 [[Evidence/buildroot_bsp_specs|Buildroot 宿主机依赖规格]]。\n\n---\n\n## 4. 交叉编译与方案配置 (`defconfig`)\n\n### 4.1 方案选择与第一次编译 (`make envconfig`)\n\n首次构建项目，推荐通过交互式菜单配置方案：\n```bash\ncd ~/buildroot-sdk\nmake envconfig\n```\n预置方案选择说明：\n* **K1 完整方案**：选择 `spacemit_k1_v2_defconfig` (索引 `5`)，集成 GPU/VPU/QT5 全套多媒体。\n* **K1 硬实时方案**：选择 `spacemit_k1_rt_defconfig` (索引 `4`)，启用 PREEMPT_RT 实时内核补丁。\n* **K3 方案**：选择 `spacemit_k3_defconfig` (索引 `2`) 或 `spacemit_k3_rt_defconfig` (索引 `4`)。\n\n### 4.2 快捷 Make 命令行集\n\n新版 SDK 提倡使用单行无交互命令进行项目编译与菜单微调：\n\n* **单行编译全套镜像**：`make k1_v2-build` 或 `make k3-build`\n* **图形化定制 Linux 内核**：`make k1_v2-linux-menuconfig`\n* **图形化定制 U-Boot**：`make k1_v2-uboot-menuconfig`\n* **重新编译单一模块**：`make k1_v2-pkg PKG=mpp`\n\n所有的 Make 完整指令列表详见 [[Evidence/buildroot_compilation_parameters|Buildroot Make 快捷指令表]]。\n\n---\n\n## 5. RCPU ESOS 实时固件与系统启动红线\n\n> [!WARNING]\n> 制作自定义系统时，需把对应代际的 RCPU 固件安装到 initramfs `/lib/firmware/`：**K1 为 `esos.elf`；K3 为 `rt24_os0_rcpu.elf` 和 `rt24_os1_rcpu.elf`**。\n\n官方 FAQ 说明 RCPU 固件负责部分硬件模块初始化及 HDMI Audio 中断转发，Linux 内核依赖它，缺失会无法启动；该 FAQ 没有给出具体死锁机制。\n硬件与启动红线规范细节请参考 [[Evidence/esos_rcpu_firmware_specs|SpacemiT RCPU (ESOS) 固件与启动依赖硬规范]] 以及 [[Knowledge_Atoms/K1系统启动与分区配置专题档案|K1 系统启动与分区配置专题]]。\n\n---\n\n## 6. 生态板卡部署与镜像输出\n\nK1 当前官方示例的最终产物位于 `output/k1_v2/images/`：线刷用 `buildroot-k1_v2.zip`，SD 卡镜像为 `buildroot-k1_v2-sdcard.img`。日志中的 `sdcard.img` 是生成过程名称，不能代替最终文件名。\n\nK3 示例输出为 `/k3/images/Buildroot-k3-20260425142457-sdcard.img` 及对应 ZIP；时间戳、大小写和输出目录以所选 SDK 的实际日志为准，不将 K1 的目录模板强套到 K3。烧录前先确认板型、镜像版本和目标存储设备。\n\n开发板板级硬件与 Strap 拨码开关设计请参考 [[Knowledge_Atoms/Muse_Pi_板级硬件设计专题|Muse Pi 板级硬件设计专题]] 及 [[Knowledge_Atoms/K1启动模式与Strap管脚配置专题档案|K1 启动模式与 Strap 管脚配置专题]]。",
       "created": "2026-08-10",
-      "updated": "2026-10-20",
+      "updated": "2026-10-21",
       "source_file": "Sources/docs-buildroot/zh/k1_buildroot/source.md",
-      "source_commit": "6d4c2a65989f0b61819bebfbc85f77d72732745e",
+      "source_commit": "163a8fccf8e7071f3177753d2e86e482e97970fe",
       "source_locator": "源码；开发环境；硬件配置；操作系统；安装依赖",
       "source_resolution": "partial",
       "verification_status": "unverified",
-      "source_checked_at": "2026-10-20",
-      "source_note": "本次仅定位已有引用对应的文件与章节，未对正文全部事实逐项复核；引用的 Evidence 保留各自历史版本与核验状态。",
+      "source_checked_at": "2026-10-21",
+      "source_note": "2026-10-21 定向复核 K1/K3 source.md 的镜像输出段落，修正最终 SD 镜像名称与 K3 路径边界；其他章节未全文复核，引用的 Evidence 保留各自核验状态。",
       "source_origin": "https://github.com/spacemit-com/docs-buildroot",
       "source_related_file": [
         "Sources/docs-buildroot/zh/k3_buildroot/source.md",
@@ -260,7 +538,7 @@
         "Sources/docs-buildroot/zh/k3_buildroot/faqs.md"
       ],
       "source_related_commit": [
-        "6d4c2a65989f0b61819bebfbc85f77d72732745e",
+        "163a8fccf8e7071f3177753d2e86e482e97970fe",
         "6d4c2a65989f0b61819bebfbc85f77d72732745e",
         "6d4c2a65989f0b61819bebfbc85f77d72732745e"
       ],
@@ -273,14 +551,14 @@
       "source_freshness": [
         {
           "source_file": "Sources/docs-buildroot/zh/k1_buildroot/source.md",
-          "source_commit": "6d4c2a65989f0b61819bebfbc85f77d72732745e",
+          "source_commit": "163a8fccf8e7071f3177753d2e86e482e97970fe",
           "checked_against_commit": "163a8fccf8e7071f3177753d2e86e482e97970fe",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-buildroot/zh/k3_buildroot/source.md",
-          "source_commit": "6d4c2a65989f0b61819bebfbc85f77d72732745e",
+          "source_commit": "163a8fccf8e7071f3177753d2e86e482e97970fe",
           "checked_against_commit": "163a8fccf8e7071f3177753d2e86e482e97970fe",
           "freshness": "current",
           "reason": "source_file_unchanged"
@@ -367,27 +645,25 @@
         "K3_COM260_板级硬件设计专题"
       ],
       "summary": "# K1/K3 摄像系统与图像处理专题档案  > [!TIP] > **💡 工程师导读与排坑焦点**：指导 MIPI CSI 100Ω 差分走线等长、三摄/四摄 Lane 拆分与 DTS 通道绑定。 > **目标读者**：`PCB Layout / ISP 调试` | **技术领域**：`hardware_schematic_design`  本专题档案汇总了 SpacemiT K1 和 K3 处理器在多路摄像头差分输入（MIPI CSI RX）、图像信号处理器（ISP）分配以及板级高速走线阻抗控制方面的设计要点。  ---  ## 1. MIPI CSI 通道与并发调试 (软硬协同)  ##",
-      "content": "# K1/K3 摄像系统与图像处理专题档案\n\n> [!TIP]\n> **💡 工程师导读与排坑焦点**：指导 MIPI CSI 100Ω 差分走线等长、三摄/四摄 Lane 拆分与 DTS 通道绑定。\n> **目标读者**：`PCB Layout / ISP 调试` | **技术领域**：`hardware_schematic_design`\n\n本专题档案汇总了 SpacemiT K1 和 K3 处理器在多路摄像头差分输入（MIPI CSI RX）、图像信号处理器（ISP）分配以及板级高速走线阻抗控制方面的设计要点。\n\n---\n\n## 1. MIPI CSI 通道与并发调试 (软硬协同)\n\n### 1.1 K1 芯片三摄方案限值\nK1 芯片物理上支持 `4 Lanes + 2 Lanes + 2 Lanes` 的三摄像头输入组合（参见 [[Evidence/k1_k3_camera_specs]]）。但在软件和 ISP 调度上存在硬性限制：\n*   **ISP 管道限制**：SoC 内置的图像信号处理器（ISP）只能同时硬加速处理 **2 路图像**。\n*   **第三路 DMA 绕行设计**：第 3 路摄像头输入不能经过 ISP，必须是已由摄像头模组自身处理完毕的 `YUV` 格式，或者直接使用 SoC 的 **CCIC DMA** 模块，将 `RAW` 原始数据绕过 ISP 直接写回 DDR 内存，再由软件进行异步处理。\n\n### 1.2 K3 芯片多通道拆分与并发模式 (CoM260 实践)\nK3 芯片在摄像系统上进行了升级，物理上支持最多 **4 个摄像头输入**，并提供灵活的物理 Lane 拆分模式：\n* **支持模式矩阵**：`4 Lanes + 4 Lanes`（双路 4-Lane 高清模组）、`4 Lanes + 2 Lanes + 2 Lanes`（三摄）或 `2 Lanes * 4`（四摄并发）。\n* **DTS 设备树配置与排坑**：在修改 Device Tree（`.dts`）绑定 CSI 节点时，CSI3 接口与 CSI0/CSI1 共享部分 PHY 时钟线。配置 DTS 时须显式对齐 `data-lanes` 索引与 `clock-lanes` 时钟对复用，避免在驱动 Probe 阶段出现 `mipi_csi2_rx: phy lock timeout` 挂起错误。\n\n\n---\n\n## 2. 摄像接口板级 PCB 走线规范\n\n*   **阻抗控制**：MIPI CSI 的差分信号线必须严格控制在 **100 Ω**（部分单板可放宽至 90Ω ~ 100Ω）。\n*   **等长约束**：差分对内（P 与 N）的走线长度误差必须小于 **0.3 mm**；差分对之间（时钟对与数据对之间）的走线长度误差必须小于 **0.8 mm**。\n*   **模拟电源隔离**：CSI 的模拟电源（`AVDD09_CSI`、`AVDD18_CSI`）必须使用磁珠（如 120Ω@100MHz）与数字地和数字电源网络进行物理隔离，并在靠近芯片引脚端放置 1uF 和 0.1uF 滤波电容。\n\n---\n\n## 3. 关联事实证据与参考源\n\n*   物理通道数据参见：[[Evidence/k1_k3_camera_specs]] (CSI Lane 数量与 ISP 限制)\n*   [K1 硬件设计指南 - 原始文档](../Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_design_guide.md)\n*   [K3 硬件设计指南 - 原始文档](../Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md)",
+      "content": "# K1/K3 摄像系统与图像处理专题档案\n\n> [!TIP]\n> **💡 工程师导读与排坑焦点**：指导 MIPI CSI 100Ω 差分走线等长、三摄/四摄 Lane 拆分与 DTS 通道绑定。\n> **目标读者**：`PCB Layout / ISP 调试` | **技术领域**：`hardware_schematic_design`\n\n本专题档案汇总了 SpacemiT K1 和 K3 处理器在多路摄像头差分输入（MIPI CSI RX）、图像信号处理器（ISP）分配以及板级高速走线阻抗控制方面的设计要点。\n\n---\n\n## 1. MIPI CSI 通道与并发调试 (软硬协同)\n\n### 1.1 K1 芯片三摄方案限值\nK1 芯片物理上支持 `4 Lanes + 2 Lanes + 2 Lanes` 的三摄像头输入组合（参见 [[Evidence/k1_k3_camera_specs]]）。但在软件和 ISP 调度上存在硬性限制：\n*   **ISP 管道限制**：SoC 内置的图像信号处理器（ISP）只能同时硬加速处理 **2 路图像**。\n*   **第三路 DMA 绕行设计**：第 3 路摄像头输入不能经过 ISP，必须是已由摄像头模组自身处理完毕的 `YUV` 格式，或者直接使用 SoC 的 **CCIC DMA** 模块，将 `RAW` 原始数据绕过 ISP 直接写回 DDR 内存，再由软件进行异步处理。\n\n### 1.2 K3 芯片多通道拆分与并发模式 (CoM260 实践)\nK3 芯片在摄像系统上进行了升级，物理上支持最多 **4 个摄像头输入**，并提供灵活的物理 Lane 拆分模式：\n* **支持模式矩阵**：按 K3 硬件设计指南 1.3.2，为 **12 Lanes** 的 `4+4+4` 或 `4+4+2+2`；旧稿的 8-Lane 矩阵不能用于 K3 布线。\n* **时钟与软件边界**：CSI2 的 D2/D3 在 2-Lane 模式参考 CSI3 时钟，D0/D1 参考 CSI2 时钟；4-Lane 模式统一参考 CSI2 时钟。设备树配置还须按实际板卡和驱动绑定核实，不能把物理输入数当作 ISP 并发数，也不能据此断言某个未实测的 Probe 错误。\n\n\n---\n\n## 2. 摄像接口板级 PCB 走线规范\n\n> [!WARNING]\n> 下列历史等长、磁珠及电容数值尚未逐项定位到对应产品与参考设计，不作为已核验的布线规范。实施前必须核对 K1/K3 各自的原理图、设计指南与板卡版本。\n\n*   **阻抗控制**：MIPI CSI 的差分信号线必须严格控制在 **100 Ω**（部分单板可放宽至 90Ω ~ 100Ω）。\n*   **等长约束**：差分对内（P 与 N）的走线长度误差必须小于 **0.3 mm**；差分对之间（时钟对与数据对之间）的走线长度误差必须小于 **0.8 mm**。\n*   **模拟电源隔离**：CSI 的模拟电源（`AVDD09_CSI`、`AVDD18_CSI`）必须使用磁珠（如 120Ω@100MHz）与数字地和数字电源网络进行物理隔离，并在靠近芯片引脚端放置 1uF 和 0.1uF 滤波电容。\n\n---\n\n## 3. 关联事实证据与参考源\n\n*   物理通道数据参见：[[Evidence/k1_k3_camera_specs]] (CSI Lane 数量与 ISP 限制)\n*   [K1 硬件设计指南 - 原始文档](../Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_design_guide.md)\n*   [K3 硬件设计指南 - 原始文档](../Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md)",
       "created": "2026-06-29",
-      "updated": "2026-10-20",
+      "updated": "2026-10-21",
       "source_file": "Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_design_guide.md",
       "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc",
       "source_locator": "K1 硬件设计指南；PDF 版本下载；版本；1. 原理图设计；1.1 小系统外部电路要求",
       "source_resolution": "partial",
       "verification_status": "unverified",
-      "source_checked_at": "2026-10-20",
-      "source_note": "本次仅定位已有引用对应的文件与章节，未对正文全部事实逐项复核；引用的 Evidence 保留各自历史版本与核验状态。",
+      "source_checked_at": "2026-10-21",
+      "source_note": "2026-10-21 阶段 B：K3 指南 1.3.2 与下游摄像 Evidence；修正 Lane 矩阵与 CSI2/CSI3 时钟关系，未证实的 DTS 错误/走线数值不作已核验规范。 保持 unverified/needs_review；不表示全文事实通过。",
       "source_origin": "https://github.com/spacemit-com/docs-chip",
       "source_related_file": [
         "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md"
       ],
       "source_related_commit": [
-        "1ea15a766287024a5bb7b548850826e3525a80dc"
+        "2525ee3b68e0f4864f1bf12c8a59df040bf27e84"
       ],
-      "freshness": "stale",
-      "stale_paths": [
-        "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md"
-      ],
+      "freshness": "current",
+      "stale_paths": [],
       "unknown_paths": [],
       "checked_against_commit": {
         "docs-chip": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84"
@@ -402,10 +678,10 @@
         },
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md",
-          "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc",
+          "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
-          "freshness": "stale",
-          "reason": "source_file_changed"
+          "freshness": "current",
+          "reason": "source_file_unchanged"
         }
       ]
     },
@@ -539,31 +815,31 @@
         "K3_Pico_板级硬件设计专题"
       ],
       "summary": "# K1/K3 网络通信与千兆网口专题档案  > [!TIP] > **💡 工程师导读与排坑焦点**：指导双 GMAC 千兆网口电路、百兆 PHY 兼容避坑、无线 SDIO 联调、K3 GMAC DPDK 用户态旁路与 EtherCAT 工业实时总线驱动热切换。 > **目标读者**：`硬件电路工程师 / 网口驱动 / 高性能网络工程师` | **技术领域**：`hardware_schematic_design`  本专题档案汇总了 SpacemiT K1 和 K3 芯片在双路以太网控制器（GMAC）、板级 PHY 芯片选型、无线 Wi-Fi/BT 模组接口联调、K3 GMAC DPDK 高",
-      "content": "# K1/K3 网络通信与千兆网口专题档案\n\n> [!TIP]\n> **💡 工程师导读与排坑焦点**：指导双 GMAC 千兆网口电路、百兆 PHY 兼容避坑、无线 SDIO 联调、K3 GMAC DPDK 用户态旁路与 EtherCAT 工业实时总线驱动热切换。\n> **目标读者**：`硬件电路工程师 / 网口驱动 / 高性能网络工程师` | **技术领域**：`hardware_schematic_design`\n\n本专题档案汇总了 SpacemiT K1 和 K3 芯片在双路以太网控制器（GMAC）、板级 PHY 芯片选型、无线 Wi-Fi/BT 模组接口联调、K3 GMAC DPDK 高性能网络加速方案，以及 K3 EtherCAT 工业以太网实时主站的核心规范。\n\n---\n\n## 1. 千兆以太网 (GMAC) 硬件选型避坑\n\n在进行 K1 或 K3 开发板设计时，网络 PHY 芯片的选型至关重要：\n*   **不支持纯百兆 PHY**：\n    *   **红线警告**：K1/K3 的 GMAC 控制器在物理设计上**不兼容百兆（100M）以太网 PHY 芯片**（即使在实际使用中只需要 100M 带宽，外围也必须配置千兆级以太网 PHY 芯片）。\n    *   接口仅支持千兆级 `RGMII` 协议规范。\n*   **单网口与双网口设计**：\n    *   K1/K3 内部拥有两路独立的千兆以太网 MAC（`GMAC0` 和 `GMAC1`）。\n    *   若硬件为了控制成本或减小体积，设计为单网口产品（例如 Muse Pi 仅引出 GMAC0 对应的网口），在 BSP 软件端配置正确的设备树（DTS）后，**完全不会影响操作系统的网络功能或导致底层驱动报错**。\n\n---\n\n## 2. 无线模组接口联调 (Wi-Fi / BT)\n\n*   **SDIO 3.0 通道**：用于 Wi-Fi 模组的数据传输。由于 SDIO 3.0 的高速率（最高 104MB/s），PCB 走线必须控制在 **50 Ω** 单端阻抗，且时钟线与数据线等长必须严格控制在 1mm 以内。\n*   **电平匹配**：Wi-Fi 模组引脚通常工作在 1.8V 逻辑电平，若选用 3.3V 的模组，必须在 SDIO 通道上增加高速电平转换芯片，或配置芯片内对应的 `VCC1833_MMC` 电源轨。\n\n---\n\n## 3. K3 GMAC DPDK 高性能用户态数据平面加速\n\n针对边缘网关、网络流量监测与 RISC-V 软路由等高性能数据包吞吐场景，SpacemiT 在 K3 平台提供了官方 **DPDK (Data Plane Development Kit)** 支持：\n\n*   **架构优势（Kernel Bypass）**：传统 Linux 内核协议栈存在中断开销、多次内存复制（sk_buff）及进程上下文切换。DPDK 采用用户态轮询模式驱动（PMD），直接接管 GMAC 硬件收发队列，极大压降网络延迟。\n*   **核心组件分工**：\n    *   **EAL (环境抽象层)**：完成大页内存（Hugepages）分配、CPU 亲和性核心绑定与 PCIe/GMAC 硬件抽象。\n    *   **Ring & Mempool**：无锁多生产者/多消费者 FIFO 队列管理数据包包头与缓冲区释放。\n    *   **PMD 驱动**：K3 GMAC 轮询模式驱动直接在用户空间与网卡 DMA 交互。\n*   **工程编译配置**：在 Buildroot 编译配置中启用 `BR2_PACKAGE_DPDK=y`，并在系统引导后通过驱动解绑脚本将目标 GMAC 从标准内核驱动切换至用户态框架。\n\n---\n\n## 4. K3 EtherCAT 工业以太网主站与实时总线方案\n\n在工业自动化控制与具身关节伺服通信场景中，SpacemiT 在 K3 平台上提供了原生的 **IgH EtherCAT Master** 实时协议栈集成：\n\n*   **核心技术指标**：\n    *   **高实时性**：支持 500 µs DC 周期，满足高端工业伺服闭环控制要求。\n    *   **纳秒级时钟同步**：实现小于 **1 µs** 精度的分布式时钟（Distributed Clocks, DC）同步。\n    *   **协议兼容性**：全面支持 CoE (CANopen over EtherCAT)、SoE、FoE 等工业总线协议。\n*   **DTS 极简配置规范**：\n    *   K3 平台内核已默认开启 `EC_MASTER`、`EC_DEVICE`、`EC_K3_GMAC` 与 `EC_MASTER_OF` 支持。\n    *   对于已支持的官方板型，用户**无需修改网口 compatible**，仅需在板级 DTS 中使能主站节点即可直接使用：\n        ```c\n        &ec_master {\n            status = \"okay\";\n        };\n        ```\n*   **GMAC 驱动热切换机制 (Driver Override)**：\n    K3 GMAC 默认加载标准 Linux 以太网驱动，支持在系统运行状态下通过 sysfs 无缝切换至 EtherCAT 实时网卡驱动（以 `cac80000.ethernet` 为例）：\n    ```bash\n    # 1. 指定 EtherCAT 驱动目标\n    echo dwmac-spacemit-ethqos-ethercat > /sys/bus/platform/devices/cac80000.ethernet/driver_override\n    # 2. 解绑标准网络驱动\n    echo cac80000.ethernet > /sys/bus/platform/drivers/dwmac-spacemit-ethqos/unbind\n    # 3. 动态绑定 EtherCAT 实时驱动\n    echo cac80000.ethernet > /sys/bus/platform/drivers/dwmac-spacemit-ethqos-ethercat/bind\n    ```\n*   **RT 实时内核支持**：为了压降内核调度抖动，官方推荐部署 `linux-image-6.18.3-rt` PREEMPT_RT 实时内核，并通过 systemd 单元服务实现开机全自动绑定 EtherCAT 驱动。\n\n---\n\n## 5. 关联事实证据与参考源\n\n*   物理网络指标参见：[[Evidence/k1_k3_network_specs]] (千兆 GMAC 速率与 PHY 电压)\n*   [K3 EtherCAT 驱动与开发指南（官方原始文档）](../Sources/docs-buildroot/zh/k3_buildroot/device/peripheral_driver/22-EtherCAT.md)\n*   [K3 GMAC DPDK 用户使用指南（官方原始文档）](../Sources/docs-buildroot/zh/k3_buildroot/dpdk/k3_GMAC_DPDK_user_guide.md)\n*   [K1 硬件常见问题 FAQ - 原始文档](../Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_faq.md)\n*   [K1 SDK 使用指南 - 原始文档](../Sources/docs-chip/zh/key_stone/k1/k1_sw/k1_sdk_user_guide.md)",
+      "content": "# K1/K3 网络通信与千兆网口专题档案\n\n> [!TIP]\n> **💡 工程师导读与排坑焦点**：指导双 GMAC 千兆网口电路、百兆 PHY 兼容避坑、无线 SDIO 联调、K3 GMAC DPDK 用户态旁路与 EtherCAT 工业实时总线驱动热切换。\n> **目标读者**：`硬件电路工程师 / 网口驱动 / 高性能网络工程师` | **技术领域**：`hardware_schematic_design`\n\n本专题档案汇总了 SpacemiT K1 和 K3 芯片在双路以太网控制器（GMAC）、板级 PHY 芯片选型、无线 Wi-Fi/BT 模组接口联调、K3 GMAC DPDK 高性能网络加速方案，以及 K3 EtherCAT 工业以太网实时主站的核心规范。\n\n---\n\n## 1. 千兆以太网 (GMAC) 硬件选型避坑\n\n在进行 K1 或 K3 开发板设计时，网络 PHY 芯片的选型至关重要：\n*   **不支持纯百兆 PHY**：\n    *   **K1 限制**：K1 FAQ 记录不支持纯百兆 PHY，即使只使用 100M 速率也需核对千兆 PHY 方案。\n    *   **K3 独立核对**：K3 具有 4 个 GMAC，支持 RMII/RGMII，GMAC0/1 还支持 MII；不能将 K1 的 PHY 限制或两路 MAC 数套用到 K3。具体出处见 [[Evidence/k1_k3_network_specs]]。\n*   **单网口与双网口设计**：\n    *   K1 有两路 GMAC；K3 有四路。SoC 的控制器数量与开发板实际 RJ45 数量分别核对。\n    *   若硬件为了控制成本或减小体积，设计为单网口产品（例如 Muse Pi 仅引出 GMAC0 对应的网口），在 BSP 软件端配置正确的设备树（DTS）后，**完全不会影响操作系统的网络功能或导致底层驱动报错**。\n\n---\n\n## 2. 无线模组接口联调 (Wi-Fi / BT)\n\n*   **SDIO 3.0 通道**：用于 Wi-Fi 模组的数据传输。由于 SDIO 3.0 的高速率（最高 104MB/s），PCB 走线必须控制在 **50 Ω** 单端阻抗，且时钟线与数据线等长必须严格控制在 1mm 以内。\n*   **电平匹配**：Wi-Fi 模组引脚通常工作在 1.8V 逻辑电平，若选用 3.3V 的模组，必须在 SDIO 通道上增加高速电平转换芯片，或配置芯片内对应的 `VCC1833_MMC` 电源轨。\n\n---\n\n## 3. K3 GMAC DPDK 高性能用户态数据平面加速\n\n针对边缘网关、网络流量监测与 RISC-V 软路由等高性能数据包吞吐场景，SpacemiT 在 K3 平台提供了官方 **DPDK (Data Plane Development Kit)** 支持：\n\n*   **架构优势（Kernel Bypass）**：传统 Linux 内核协议栈存在中断开销、多次内存复制（sk_buff）及进程上下文切换。DPDK 采用用户态轮询模式驱动（PMD），直接接管 GMAC 硬件收发队列，极大压降网络延迟。\n*   **核心组件分工**：\n    *   **EAL (环境抽象层)**：完成大页内存（Hugepages）分配、CPU 亲和性核心绑定与 PCIe/GMAC 硬件抽象。\n    *   **Ring & Mempool**：无锁多生产者/多消费者 FIFO 队列管理数据包包头与缓冲区释放。\n    *   **PMD 驱动**：K3 GMAC 轮询模式驱动直接在用户空间与网卡 DMA 交互。\n*   **工程编译配置**：在 Buildroot 编译配置中启用 `BR2_PACKAGE_DPDK=y`，并在系统引导后通过驱动解绑脚本将目标 GMAC 从标准内核驱动切换至用户态框架。\n\n---\n\n## 4. K3 EtherCAT 工业以太网主站与实时总线方案\n\n在工业自动化控制与具身关节伺服通信场景中，SpacemiT 在 K3 平台上提供了原生的 **IgH EtherCAT Master** 实时协议栈集成：\n\n*   **核心技术指标**：\n    *   **高实时性**：支持 500 µs DC 周期，满足高端工业伺服闭环控制要求。\n    *   **纳秒级时钟同步**：实现小于 **1 µs** 精度的分布式时钟（Distributed Clocks, DC）同步。\n    *   **协议兼容性**：全面支持 CoE (CANopen over EtherCAT)、SoE、FoE 等工业总线协议。\n*   **DTS 极简配置规范**：\n    *   K3 平台内核已默认开启 `EC_MASTER`、`EC_DEVICE`、`EC_K3_GMAC` 与 `EC_MASTER_OF` 支持。\n    *   对于已支持的官方板型，用户**无需修改网口 compatible**，仅需在板级 DTS 中使能主站节点即可直接使用：\n        ```c\n        &ec_master {\n            status = \"okay\";\n        };\n        ```\n*   **GMAC 驱动热切换机制 (Driver Override)**：\n    K3 GMAC 默认加载标准 Linux 以太网驱动，支持在系统运行状态下通过 sysfs 无缝切换至 EtherCAT 实时网卡驱动（以 `cac80000.ethernet` 为例）：\n    ```bash\n    # 1. 指定 EtherCAT 驱动目标\n    echo dwmac-spacemit-ethqos-ethercat > /sys/bus/platform/devices/cac80000.ethernet/driver_override\n    # 2. 解绑标准网络驱动\n    echo cac80000.ethernet > /sys/bus/platform/drivers/dwmac-spacemit-ethqos/unbind\n    # 3. 动态绑定 EtherCAT 实时驱动\n    echo cac80000.ethernet > /sys/bus/platform/drivers/dwmac-spacemit-ethqos-ethercat/bind\n    ```\n*   **RT 实时内核支持**：为了压降内核调度抖动，官方推荐部署 `linux-image-6.18.3-rt` PREEMPT_RT 实时内核，并通过 systemd 单元服务实现开机全自动绑定 EtherCAT 驱动。\n\n---\n\n## 5. 关联事实证据与参考源\n\n*   物理网络指标参见：[[Evidence/k1_k3_network_specs]] (千兆 GMAC 速率与 PHY 电压)\n*   [K3 EtherCAT 驱动与开发指南（官方原始文档）](../Sources/docs-buildroot/zh/k3_buildroot/device/peripheral_driver/22-EtherCAT.md)\n*   [K3 GMAC DPDK 用户使用指南（官方原始文档）](../Sources/docs-buildroot/zh/k3_buildroot/dpdk/k3_GMAC_DPDK_user_guide.md)\n*   [K1 硬件常见问题 FAQ - 原始文档](../Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_faq.md)\n*   [K1 SDK 使用指南 - 原始文档](../Sources/docs-chip/zh/key_stone/k1/k1_sw/k1_sdk_user_guide.md)",
       "created": "2026-06-29",
-      "updated": "2026-10-20",
+      "updated": "2026-10-21",
       "source_file": "Sources/docs-buildroot/zh/k3_buildroot/device/peripheral_driver/22-EtherCAT.md",
       "source_commit": "163a8fccf8e7071f3177753d2e86e482e97970fe",
       "source_locator": "EtherCAT；模块介绍；功能介绍；源码结构介绍；关键特性",
       "source_resolution": "partial",
       "verification_status": "unverified",
-      "source_checked_at": "2026-10-20",
-      "source_note": "本次仅定位已有引用对应的文件与章节，未对正文全部事实逐项复核；引用的 Evidence 保留各自历史版本与核验状态。",
+      "source_checked_at": "2026-10-21",
+      "source_note": "2026-10-21 阶段 B：K1 FAQ 网络系统；修正 K1 百兆 PHY 限制被推广至 K3 的表述，与 K3 1.4.5 对齐。DPDK/EtherCAT 不是本次历史 diff 的变更。 保持 unverified/needs_review；不表示全文事实通过。",
       "source_origin": "https://github.com/spacemit-com/docs-buildroot",
       "source_related_file": [
         "Sources/docs-buildroot/zh/k3_buildroot/dpdk/k3_GMAC_DPDK_user_guide.md",
         "Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_faq.md",
-        "Sources/docs-chip/zh/key_stone/k1/k1_sw/k1_sdk_user_guide.md"
+        "Sources/docs-chip/zh/key_stone/k1/k1_sw/k1_sdk_user_guide.md",
+        "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md"
       ],
       "source_related_commit": [
         "163a8fccf8e7071f3177753d2e86e482e97970fe",
-        "1ea15a766287024a5bb7b548850826e3525a80dc",
-        "15254b1cfe339c1863d8edf8137a337681fb2780"
+        "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+        "15254b1cfe339c1863d8edf8137a337681fb2780",
+        "2525ee3b68e0f4864f1bf12c8a59df040bf27e84"
       ],
-      "freshness": "stale",
-      "stale_paths": [
-        "Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_faq.md"
-      ],
+      "freshness": "current",
+      "stale_paths": [],
       "unknown_paths": [],
       "checked_against_commit": {
         "docs-buildroot": "163a8fccf8e7071f3177753d2e86e482e97970fe",
@@ -586,14 +862,21 @@
         },
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_faq.md",
-          "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc",
+          "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
-          "freshness": "stale",
-          "reason": "source_file_changed"
+          "freshness": "current",
+          "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k1/k1_sw/k1_sdk_user_guide.md",
           "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+          "freshness": "current",
+          "reason": "source_file_unchanged"
+        },
+        {
+          "source_file": "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md",
+          "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "current",
           "reason": "source_file_unchanged"
@@ -622,14 +905,14 @@
       "summary": "# K1/K3 高速外设接口专题档案  > [!TIP] > **💡 工程师导读与排坑焦点**：指导 PCIe 拆分红线、USB OTG 切换与免驱 SATA 桥接芯片配置。 > **目标读者**：`硬件电路工程师 / PCB Layout` | **技术领域**：`hardware_schematic_design`  本专题档案汇总了 SpacemiT K1 和 K3 芯片在 PCIe 高速链路拆分、USB 接口主从（OTG）模式设计以及外部固态存储（SATA/NVMe）扩展方面的硬件指南与联调技术。  ---  ## 1. PCIe 2.1 / PCIe 3.0 链路拆分与布线  ###",
       "content": "# K1/K3 高速外设接口专题档案\n\n> [!TIP]\n> **💡 工程师导读与排坑焦点**：指导 PCIe 拆分红线、USB OTG 切换与免驱 SATA 桥接芯片配置。\n> **目标读者**：`硬件电路工程师 / PCB Layout` | **技术领域**：`hardware_schematic_design`\n\n本专题档案汇总了 SpacemiT K1 和 K3 芯片在 PCIe 高速链路拆分、USB 接口主从（OTG）模式设计以及外部固态存储（SATA/NVMe）扩展方面的硬件指南与联调技术。\n\n---\n\n## 1. PCIe 2.1 / PCIe 3.0 链路拆分与布线\n\n### 1.1 K1 芯片 PCIe 2.1 链路拆分\nK1 芯片提供最多 5 Lanes 的 PCIe 2.1 物理通道（参见 [[Evidence/k1_k3_pcie_usb_specs]]）。\n*   **硬件通道拆分规则**：支持 `x2 + x2 + x1` 拆分模式。\n*   **单 Lane 选择红线**：若项目只使用 1 个 Lane 时，**必须使用 `TX0N/P` 和 `RX0N/P` 通道**。其余通道（如 TX1/RX1 等）不能单独作为 PCIe 的首通道，否则芯片在复位扫描时将无法识别设备。\n\n### 1.2 K3 芯片 PCIe 3.0 升级\nK3 芯片全面升级了 **PCIe 3.0** 接口，拥有更宽的带宽，支持通过 x4 通道直接对接高带宽的 NVMe M.2 固态硬盘，或通过高性能 PCIe 桥接千兆/万兆网卡。\n\nK3 的部分 PCIe 与 USB 3.0 使用 Combo 复用：4 个 USB 3.0 中有 3 个与 PCIe 复用，不能按全部接口独立同时可用来设计。UFS 版本为 **2.2**。对应接口数与限制参见 [[Evidence/k1_k3_pcie_usb_specs|K1/K3 高速外设规格]] 及 K3 硬件设计指南 1.1.9、1.4.1。\n\n### 1.3 K3 PCIe 16-bit MSI 中断兼容性避坑\n\n> [!WARNING]\n> **2026-08 官方更新**：Spacemit 官方在 `docs-buildroot` 仓库的 `11-PCIe.md` 中新增了关于 K3 PCIe **不支持 16 位 MSI 消息中断** 的重要说明。\n\n*   **原理说明**：Spacemit K3 遵循 RISC-V AIA 协议规范，其内部 MSI 控制器（IMSIC）仅接收 **32 位**的配置写入。\n*   **故障表现**：部分老旧 PCIe 外设默认发起的是 16 位传统 MSI 消息，会导致 K3 IMSIC 直接丢弃该数据。系统能正常识别 PCI 设备并为其分配中断号，但运行期间**完全接收不到硬件中断响应**。\n*   **排查方法**：将 PCIe EP 的 MSI 中断消息写入地址修改为 DDR 某个地址，通过读取该 DDR 地址的值检查 EP 发送的 MSI 消息是否为 16-bit。\n*   详细 Patch 及调试方法参考：[K3 PCIe 驱动说明](../Sources/docs-buildroot/zh/k3_buildroot/device/peripheral_driver/11-PCIe.md)\n\n---\n\n## 2. USB 3.0 与 USB 2.0 接口设计\n\n### 2.1 K1 的引脚复用限制\n*   **USB 3.0 与 PCIe 复用**：K1 的 1 个 USB 3.0 接口是与 PCIe 2.1 的第 5 个 Lane 进行引脚复用的（即在原理图设计上，要么使用 5 槽全速 PCIe，要么使用 USB 3.0 接口，二者不可同时工作）。\n*   **USB2.0 OTG/Host 区分**：\n    *   `USB0`：上电时默认作为 Device，专门用于烧录系统固件。\n    *   `USB2`：支持 OTG 主从切换，可以用作外设 Host 或从设备数据传输，但**不支持固件烧录**。\n\n---\n\n## 3. SATA 固态硬盘桥接方案\n\n由于 K1/K3 芯片内部均未集成原生 SATA 控制器，在需要连接机械硬盘或标准 SATA 固态硬盘时，通常采用 **PCIe 转 SATA** 方案。\n*   **兼容性保障**：进迭时空官方 BSP 内核中已默认集成了 **ASMedia ASM1061** 和 **JMicron JMB582** 两种 PCIe-to-SATA 桥接芯片的驱动，可以直接进行免驱扩展。\n\n---\n\n## 4. 关联事实证据与参考源\n\n*   物理高速接口数据参见：[[Evidence/k1_k3_pcie_usb_specs]] (PCIe Lane 拆分与 USB 复用)\n*   [K1 硬件常见问题 FAQ - 原始文档](../Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_faq.md)\n*   [K1 硬件设计指南 - 原始文档](../Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_design_guide.md)\n*   [K3 硬件设计指南 - 原始文档](../Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md)",
       "created": "2026-06-29",
-      "updated": "2026-10-20",
+      "updated": "2026-10-21",
       "source_file": "Sources/docs-buildroot/zh/k3_buildroot/device/peripheral_driver/11-PCIe.md",
       "source_commit": "163a8fccf8e7071f3177753d2e86e482e97970fe",
       "source_locator": "PCIe；模块介绍；功能介绍；源码结构介绍；关键特性",
       "source_resolution": "partial",
       "verification_status": "unverified",
-      "source_checked_at": "2026-10-20",
-      "source_note": "本次仅定位已有引用对应的文件与章节，未对正文全部事实逐项复核；引用的 Evidence 保留各自历史版本与核验状态。",
+      "source_checked_at": "2026-10-21",
+      "source_note": "2026-10-21 阶段 B：K3 1.1.9、1.4.1 与高速接口 Evidence；CPU/DDR 修订不改变 Combo/UFS 范围。 保持 unverified/needs_review；不表示全文事实通过。",
       "source_origin": "https://github.com/spacemit-com/docs-buildroot",
       "source_related_file": [
         "Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_design_guide.md",
@@ -640,13 +923,11 @@
       "source_related_commit": [
         "15254b1cfe339c1863d8edf8137a337681fb2780",
         "15254b1cfe339c1863d8edf8137a337681fb2780",
-        "1ea15a766287024a5bb7b548850826e3525a80dc",
+        "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
         "1ea15a766287024a5bb7b548850826e3525a80dc"
       ],
-      "freshness": "stale",
-      "stale_paths": [
-        "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md"
-      ],
+      "freshness": "current",
+      "stale_paths": [],
       "unknown_paths": [],
       "checked_against_commit": {
         "docs-buildroot": "163a8fccf8e7071f3177753d2e86e482e97970fe",
@@ -676,10 +957,10 @@
         },
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md",
-          "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc",
+          "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
-          "freshness": "stale",
-          "reason": "source_file_changed"
+          "freshness": "current",
+          "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k1/k1_docs/root_overview.md",
@@ -912,14 +1193,14 @@
       "summary": "# K1 硬件外设接口与物理调试专题档案  > [!TIP] > **💡 工程师导读与排坑焦点**：详解 K1 串口/JTAG 物理引脚定义、官方 TF 卡扩展调试子板用法、K1 与 K3 JTAG 线序相反避坑红线及供电设计准则。 > **目标读者**：`硬件调试工程师 / 嵌入式工程师` | **技术领域**：`toolchain_debug_tools`  本专题档案汇总了 K1 芯片板级硬件原理图设计、PCB 走线阻抗以及物理调试（串口/JTAG/TF卡转接）的实用技术指导。  ---  ## 1. 物理调试接口设计与官方 TF 卡调试子板  在进行 K1 单板调试时，串口与 JTAG",
       "content": "# K1 硬件外设接口与物理调试专题档案\n\n> [!TIP]\n> **💡 工程师导读与排坑焦点**：详解 K1 串口/JTAG 物理引脚定义、官方 TF 卡扩展调试子板用法、K1 与 K3 JTAG 线序相反避坑红线及供电设计准则。\n> **目标读者**：`硬件调试工程师 / 嵌入式工程师` | **技术领域**：`toolchain_debug_tools`\n\n本专题档案汇总了 K1 芯片板级硬件原理图设计、PCB 走线阻抗以及物理调试（串口/JTAG/TF卡转接）的实用技术指导。\n\n---\n\n## 1. 物理调试接口设计与官方 TF 卡调试子板\n\n在进行 K1 单板调试时，串口与 JTAG 是最核心的底层通道：\n\n### 1.1 调试串口设计\n*   **物理连接**：调试串口通常设计为 3 Pin 插针（如 Muse Pi 位于 Wi-Fi 模组旁）。连接时，单板 TX 需与串口板 RX 交叉相连，RX 与 TX 交叉。\n*   **电气规范**：必须采用 3.3V 电平串口线，波特率固定为 115200（底层事实参见 [[Evidence/k1_hardware_debug_parameters]]）。\n\n### 1.2 JTAG 调试路由与官方 TF 卡调试子板\nK1 支持两套 JTAG 接口（通过 `JTAG_SEL` 管脚切换，参见 [[Evidence/k1_strap_pins_config]]）：\n*   **PRI JTAG (主调试口)**：位于 26 Pin 插针的 7, 11, 13, 15 号引脚（分别对应 `TDI`, `TMS`, `TCK`, `TDO`），可以直接使用 J-Link 仿真器连接调试。\n*   **SEC JTAG (辅助调试口)**：复用了 SD 卡槽的 CLK 与 DATA0~3 管脚。官方已推出 **TF 卡扩展调试子板（TF Card Debug Board）**，可直接插入 MicroSD 卡槽，引出 20-pin 标准 J-Link 牛角座与 XH2.54-4P 3.3V 串口座。\n\n> [!CAUTION]\n> **⚠️ 跨代排坑红线：K1 与 K3 的 TF 调试子板 JTAG 线序相反！**\n> 当使用官方 TF 卡扩展调试子板连接 J-Link 时，请注意牛角座管脚定义在两代芯片上存在关键硬件差异：\n> *   **K1 系列**：Pin 5 为 **`TDI`**，Pin 7 为 **`TMS`**（通过调整子板 J3/J4/J5 跳线配置 JTAG 模式或 RCPU 小核串口）。\n> *   **K3 系列**：Pin 5 为 **`TMS`**，Pin 7 为 **`TDI`**（两脚信号物理反转！若按 K1 线序直连会导致 JTAG 识别超时挂死）。\n\n---\n\n## 2. 电源与高速信号设计避坑\n\n### 2.1 模拟供电与磁珠隔离\n*   **红线警告**：K1 各模拟 PHY 模块（如 PLL、Audio、CSI/DSI、HDMI 等）的供电磁珠**绝对不能省略**。磁珠（推荐 120Ω@100MHz）能有效隔离模拟电源与数字电源的杂讯，省略会导致信号完整性变差，甚至导致外设无法初始化。\n\n### 2.2 闲置外设的供电原则\n*   **设计规则**：即使在项目中**不用** HDMI、PCIe、MIPI CSI、MIPI DSI、eMMC 或 USB2.0 等模块，**其对应的芯片引脚电源域也必须正常供电**，不能悬空或断电。否则会引起 SoC 内部漏电或逻辑异常。\n\n### 2.3 GPIO90 的复用机制\n*   **Strap复用**：`GPIO_90` 在系统上电复位瞬间作为 `Strap 4` 采样以配置 QSPI 的工作电压（1.8V 或 3.3V，参见 [[Evidence/k1_strap_pins_config]]）。在系统启动完成后，该管脚完全可以作为普通 GPIO 使用，无需闲置。\n\n---\n\n## 3. 关联原始参考文档\n\n*   [TF 卡扩展调试子板使用说明（官方原始文档）](../Sources/docs-product/zh/hw_accessories/tf_card_debug_board.md)\n*   [K1 硬件设计指南 - 原始文档](../Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_design_guide.md)\n*   [K1 硬件常见问题 FAQ - 原始文档](../Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_faq.md)\n*   [K1 硬件参考资源 - 原始文档](../Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_resources.md)",
       "created": "2026-06-29",
-      "updated": "2026-10-20",
+      "updated": "2026-10-21",
       "source_file": "Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_design_guide.md",
       "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc",
       "source_locator": "K1 硬件设计指南；PDF 版本下载；版本；1. 原理图设计；1.1 小系统外部电路要求",
       "source_resolution": "partial",
       "verification_status": "unverified",
-      "source_checked_at": "2026-10-20",
-      "source_note": "本次仅定位已有引用对应的文件与章节，未对正文全部事实逐项复核；引用的 Evidence 保留各自历史版本与核验状态。",
+      "source_checked_at": "2026-10-21",
+      "source_note": "2026-10-21 阶段 B：K1 FAQ 开发调试与 TF 子板来源：FAQ 两处链接迁移不改串口/JTAG；依赖的调试 Evidence 仍未终审。 保持 unverified/needs_review；不表示全文事实通过。",
       "source_origin": "https://github.com/spacemit-com/docs-chip",
       "source_related_file": [
         "Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_faq.md",
@@ -927,14 +1208,12 @@
         "Sources/docs-product/zh/hw_accessories/tf_card_debug_board.md"
       ],
       "source_related_commit": [
-        "1ea15a766287024a5bb7b548850826e3525a80dc",
+        "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
         "15254b1cfe339c1863d8edf8137a337681fb2780",
         "bc640755145625cc20745f49861f82588863fca3"
       ],
-      "freshness": "stale",
-      "stale_paths": [
-        "Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_faq.md"
-      ],
+      "freshness": "current",
+      "stale_paths": [],
       "unknown_paths": [],
       "checked_against_commit": {
         "docs-chip": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
@@ -950,10 +1229,10 @@
         },
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_faq.md",
-          "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc",
+          "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
-          "freshness": "stale",
-          "reason": "source_file_changed"
+          "freshness": "current",
+          "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_resources.md",
@@ -995,14 +1274,14 @@
       "summary": "# K1 系统启动与分区配置专题档案  > [!TIP] > **💡 工程师导读与排坑焦点**：详解 Ramfs 调试启动、自启脚本、U-Boot 与 OpenSBI 固件合并及隐藏分区。 > **目标读者**：`BSP 工程师 / 系统移植` | **技术领域**：`bsp_kernel_drivers`  本专题档案详细记录了 K1 芯片的系统启动流程控制、固件合并生成（U-Boot + OpenSBI）以及板级 GPT 分区的高级配置。  ---  ## 1. 系统启动深度定制  ### 1.1 使用指定 ramfs 快速启动 在开发调试阶段，可以使用 PC 端的 `fastboot`",
       "content": "# K1 系统启动与分区配置专题档案\n\n> [!TIP]\n> **💡 工程师导读与排坑焦点**：详解 Ramfs 调试启动、自启脚本、U-Boot 与 OpenSBI 固件合并及隐藏分区。\n> **目标读者**：`BSP 工程师 / 系统移植` | **技术领域**：`bsp_kernel_drivers`\n\n本专题档案详细记录了 K1 芯片的系统启动流程控制、固件合并生成（U-Boot + OpenSBI）以及板级 GPT 分区的高级配置。\n\n---\n\n## 1. 系统启动深度定制\n\n### 1.1 使用指定 ramfs 快速启动\n在开发调试阶段，可以使用 PC 端的 `fastboot` 配合 U-Boot 命令行，无需烧录即可加载指定的 ramfs 进行系统验证：\n1. **PC 端推送镜像**：\n   ```bash\n   fastboot stage vmlinuz-6.6.36\n   fastboot stage k1-x_FusionOne.dtb\n   fastboot stage rootfs.cpio.gz\n   ```\n2. **U-Boot 端映射地址并引导**（地址及大小可根据实际微调，底层参数参见 [[Evidence/k1_hardware_debug_parameters]]）：\n   ```c\n   fastboot -l 0x20000000 0\n   fastboot -l 0x30000000 0\n   fastboot -l 0x32000000 0\n   bootm 0x20000000 0x32000000:0x1251000 0x30000000\n   ```\n\n### 1.2 修改默认加载的 dtb 方案\nK1 启动时默认从板载 EEPROM 读取 `product_name` 来自动选择匹配的 dtb 设备树。\n*   **无 EEPROM 场景**：若板卡未贴 EEPROM，或者需要强制指定默认 dtb，可在 U-Boot 头文件 `uboot/include/configs/k1-x.h` 中修改默认宏：\n    ```c\n    #define DEFAULT_PRODUCT_NAME \"k1-x_deb1\"\n    ```\n    重新编译部署后，系统在未读取到 EEPROM 时将默认使用该宏定义的 dtb。\n\n### 1.3 自定义开机自启脚本\n添加开机脚本的方法取决于目标文件系统的类型：\n*   **基于 Bianbu OS**：\n    在 `/etc/init.d/` 目录下创建脚本（例如 `S50_testscript`），通过文件名开头的数字决定上电启动的先后顺序。必须使用 `chmod a+x /etc/init.d/S50_testscript` 赋予执行权限。\n*   **基于 Bianbu Minimal**：\n    直接在根目录下创建或编辑 `/etc/rc.local` 写入自定义命令，并执行 `chmod a+x /etc/rc.local` 确保其在开机时被加载。\n\n### 1.4 长按 Power 键触发自定义行为\n在产品设计中，常需要通过长按电源键执行关机或启动自定义脚本（如 `power_off.sh`）。\n1.  **按键消抖策略**：\n    为避免机械抖动，需修改内核驱动 `drivers/input/misc/spacemit-pwrkey.c`，利用软件延时过滤高频抖动：\n    ```c\n    // 记录按下与释放的 cycles\n    cycles_t fall_cycle;\n    cycles_t rise_cycle;\n    \n    // 在 pwrkey_fall_irq 中判定间隔\n    fall_cycle = get_cycles();\n    if (fall_cycle - rise_cycle > 150000) {\n        input_report_key(pwr, KEY_POWER, 1);\n        input_sync(pwr);\n        fall_triggered = 1;\n    }\n    ```\n2.  **长按检测脚本 (Shell 方案)**：\n    利用 `evtest` 后台监控 `/dev/input/event0` 节点，当检测到按键按下（`value 1`）累计达到设定阈值（如 30 次，约 3 秒）且未释放时，执行目标脚本：\n    ```bash\n    evtest /dev/input/event0 > /root/tmp_event_info.txt &\n    # 在循环中判断 count_num 并清空临时事件文件\n    ```\n3.  **系统级按键屏蔽**：\n    若使用自定义按键服务，需在 `/etc/systemd/logind.conf` 中屏蔽系统默认的按键响应，防止冲突：\n    ```text\n    HandlePowerKey=ignore\n    HandlePowerKeyLongPress=ignore\n    ```\n\n---\n\n## 2. 固件合并与隐藏分区配置\n\n### 2.1 将 U-Boot 与 OpenSBI 合并为单一 itb\n为了简化烧录固件的分区管理，可将 U-Boot 和 OpenSBI 编译合并为一个 FIT Image（`.itb`）：\n1. **取消 U-Boot 原有分区限制**：在 U-Boot `menuconfig` 中取消选中 *\"Second partition to use to load U-Boot from\"*，将分区名改为 `opensbi-uboot`。\n2. **编写 ITS 描述文件**：创建 `uboot-opensbi.its`，在 `images` 节点下同时声明 `uboot`、`opensbi` 和目标板 `fdt` 的加载地址（如 U-Boot 的 `load = <0x0 0x00200000>`），在 `configurations` 节点中将 `firmware` 设为 `opensbi`，`loadables` 设为 `uboot`。\n3. **生成 ITB 镜像**：\n   ```bash\n   mkimage -f uboot-opensbi.its -r u-boot-opensbi.itb\n   ```\n4. **修改 GPT 分区表**：修改 `partition_universal.json`，删除原 `uboot` 分区，将 `opensbi` 分区更名为 `opensbi-uboot`，大小调整为两者之和（如 3MB），并烧录该 `.itb`。\n\n### 2.2 配置隐藏分区\n为了保护系统底层的关键数据（如 `bootinfo`、`fsbl`、`env`）免受最终用户或外部应用意外读写，可以在分区表配置文件 `partition_universal.json` 中配置 `\"hidden\": true` 属性：\n```json\n{\n  \"name\": \"fsbl\",\n  \"hidden\": true,\n  \"offset\": \"128K\",\n  \"size\": \"256K\",\n  \"image\": \"factory/FSBL.bin\"\n}\n```\n配置为隐藏的分区在 GPT 分区列表中将默认不予显示，提供了额外的系统安全保障。\n\n### 2.3 U-Boot 阶段通过 DTS 预启电源轨\n某些关键外设（如板载以太网 Switch 芯片）要求在 U-Boot 甚至 SPL 阶段就必须上电。此时可通过修改 PMIC 伴随电源的设备树引脚配置来实现：\n*   **编辑设备树** `arch/riscv/dts/k1-x_spm8821.dtsi`，在目标电源轨节点下添加 `regulator-boot-on` 属性：\n    ```c\n    // 以使能外设 Switch 供电为例\n    sw_2: SWITCH_REG1 {\n        regulator-boot-on;             // 开机时自动开启电源\n        regulator-name = \"switch1\";\n        regulator-state-mem {\n            regulator-off-in-suspend;  // 在 suspend 状态下关闭电源\n        };\n    };\n    ```\n    重新编译部署 U-Boot 后，系统将在引导的最早期自动开启该路供电。\n\n---\n\n## 3. 关联原始参考文档\n\n关于 U-Boot 详细配置宏与分区烧录的命令行参数，请参阅：\n*   [K1 SDK 使用指南 - 原始文档](../Sources/docs-chip/zh/key_stone/k1/k1_sw/k1_sdk_user_guide.md)\n*   [K1 软件常见问题 FAQ - 原始文档](../Sources/docs-chip/zh/key_stone/k1/k1_sw/k1_sw_faq.md)\n*   [刷机工具使用手册 - 官方社区文档](https://spacemit.com/community/document/info?lang=zh&nodepath=tools/user_guide/flasher_user_guide.md)",
       "created": "2026-06-29",
-      "updated": "2026-10-20",
+      "updated": "2026-10-21",
       "source_file": "Sources/docs-chip/zh/key_stone/k1/k1_sw/k1_sdk_user_guide.md",
       "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
       "source_locator": "K1 SDK 概览；Buildroot SDK  ；OpenWrt SDK  ；Bianbu SDK  ；OpenHarmony（K1 OH5.0）  ",
       "source_resolution": "partial",
       "verification_status": "unverified",
-      "source_checked_at": "2026-10-20",
-      "source_note": "本次仅定位已有引用对应的文件与章节，未对正文全部事实逐项复核；引用的 Evidence 保留各自历史版本与核验状态。",
+      "source_checked_at": "2026-10-21",
+      "source_note": "2026-10-21 阶段 B：K1 FAQ 存储/接口启动限制与电源系统；FAQ 链接迁移不改节点启动/分区范围，保留其余来源原 SHA。 保持 unverified/needs_review；不表示全文事实通过。",
       "source_origin": "https://github.com/spacemit-com/docs-chip",
       "source_related_file": [
         "Sources/docs-chip/zh/key_stone/k1/k1_sw/k1_sw_faq.md",
@@ -1010,12 +1289,10 @@
       ],
       "source_related_commit": [
         "15254b1cfe339c1863d8edf8137a337681fb2780",
-        "1ea15a766287024a5bb7b548850826e3525a80dc"
+        "2525ee3b68e0f4864f1bf12c8a59df040bf27e84"
       ],
-      "freshness": "stale",
-      "stale_paths": [
-        "Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_faq.md"
-      ],
+      "freshness": "current",
+      "stale_paths": [],
       "unknown_paths": [],
       "checked_against_commit": {
         "docs-chip": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84"
@@ -1037,10 +1314,10 @@
         },
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_faq.md",
-          "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc",
+          "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
-          "freshness": "stale",
-          "reason": "source_file_changed"
+          "freshness": "current",
+          "reason": "source_file_unchanged"
         }
       ]
     },
@@ -1061,16 +1338,16 @@
       "outlinks": [],
       "backlinks": [],
       "summary": "# K1 软件开发与系统集成 FAQ 专题档案  > [!TIP] > **💡 工程师导读与排坑焦点**：汇总多媒体显示、无线网络栈部署、性能压测与 OTG 跨系统分区疑难解答。 > **目标读者**：`系统集成工程师 / 应用开发` | **技术领域**：`bianbu_os_distribution`  本专题档案系统化整理了 K1 芯片在 Linux 系统集成阶段的多媒体显示调试、网络与蓝牙软件栈部署、全系统性能压力测试，以及 USB 功能切换等高级应用开发方法。  > [!NOTE] > 原始技术细节主要来自于 [K1 软件常见问题](../Sources/docs-chip/zh/k",
-      "content": "# K1 软件开发与系统集成 FAQ 专题档案\n\n> [!TIP]\n> **💡 工程师导读与排坑焦点**：汇总多媒体显示、无线网络栈部署、性能压测与 OTG 跨系统分区疑难解答。\n> **目标读者**：`系统集成工程师 / 应用开发` | **技术领域**：`bianbu_os_distribution`\n\n本专题档案系统化整理了 K1 芯片在 Linux 系统集成阶段的多媒体显示调试、网络与蓝牙软件栈部署、全系统性能压力测试，以及 USB 功能切换等高级应用开发方法。\n\n> [!NOTE]\n> 原始技术细节主要来自于 [K1 软件常见问题](../Sources/docs-chip/zh/key_stone/k1/k1_sw/k1_sw_faq.md)，旨在为系统级开发者提供一站式集成指南。\n\n---\n\n## 1. 多媒体与图形显示调试\n\n### 1.1 HDMI 状态与显示控制\n*   **HDMI 连接状态检测**：\n    读取 DRM 驱动状态节点即可判定物理连接：\n    ```bash\n    cat /sys/class/drm/card1-HDMI-A-1/status\n    # 输出 connected 代表已连接；输出 disconnected 代表未连接\n    ```\n*   **关闭 tty1 登录界面与光标**：\n    在开发板作为专用显示终端时，需禁用控制台交互并隐藏闪烁的光标：\n    ```bash\n    systemctl stop getty@tty1 && systemctl disable getty@tty1  # 禁用 tty1 登录服务\n    echo -e \"\\033[?25l\" > /dev/tty1                            # 隐藏光标 (显示光标用 \\033[?25h)\n    ```\n*   **关闭 Weston 桌面**：\n    若需释放系统资源进行纯粹的命令行渲染：\n    *   临时关闭：`/etc/init.d/S30weston-setup.sh stop`\n    *   永久禁用：`rm /etc/init.d/S30weston-setup.sh`（重启后不再自启）\n*   **监控 GPU 使用率**：\n    ```bash\n    cat /sys/kernel/debug/pvr/status\n    ```\n\n### 1.2 命令行多媒体与视频播放\nK1 平台集成硬解码 VPU 与 PowerVR GPU，可执行高效视频解码：\n*   **图形界面播放 (GStreamer)**：\n    仅支持在桌面环境中运行，无法在纯串口下使用：\n    ```bash\n    gst-launch-1.0 playbin uri=file:/root/video.mp4 video-sink='waylandsink render-rectangle=\"<0,0,1920,1080>\"'\n    ```\n*   **帧缓冲区直接刷图 (dd)**：\n    在没有图形服务器的极简系统（如串口终端）下，直接将原始 ARGB 像素流写入帧缓冲：\n    ```bash\n    dd if=argb.data of=\"/dev/fb0\" bs=1920 count=4320\n    ```\n*   **硬件加速播放 (ffplay / mpv)**：\n    在 `bianbu-minimal` 或 `bianbu-desktop` 下，需确保安装了 `k1x-vpu-firmware`、`mpp`（多媒体处理库）及 `img-gpu-powervr` 驱动。在命令行下显式覆盖 GPU 驱动：\n    ```bash\n    # 使用 ffplay 播放\n    WAYLAND_DISPLAY=wayland-1 SDL_VIDEODRIVER=wayland MESA_LOADER_DRIVER_OVERRIDE=pvr ffplay video.mp4\n    \n    # 使用 mpv 播放\n    SDL_VIDEODRIVER=wayland MESA_LOADER_DRIVER_OVERRIDE=pvr mpv video.mp4\n    ```\n\n---\n\n## 2. 网络与通信软件栈部署\n\n### 2.1 无线网络 (Wi-Fi) 栈与 AP 热点\n*   **Wi-Fi 客户端连接 (Netplan)**：\n    1. 安装工具包：`apt install -y spacemit-modules-usrload wpasupplicant`\n    2. 配置 `/etc/netplan/01-netcfg.yaml`：\n       ```yaml\n       wifis:\n           wlan0:\n               dhcp4: true\n               access-points:\n                   \"WIFI_SSID_NAME\":\n                       password: \"WIFI_PASSWORD\"\n       ```\n    3. 使配置生效：`netplan apply`\n*   **AP 无线热点配置 (hostapd)**：\n    1. 安装依赖：`apt install -y hostapd udhcpd`\n    2. 编写 `hostapd.conf` 定义热点参数（如 `ssid=test_ap`，`channel=6`，`wpa_passphrase=12345678`）。\n    3. 编写 `udhcpd.conf` 配置 DHCP 分配池（如 `start 192.168.1.2`）。\n    4. 启动 AP：\n       ```bash\n       ifconfig wlan0 192.168.1.1 up\n       udhcpd -fS udhcpd.conf &\n       hostapd -B -d /etc/hostapd.conf\n       ```\n\n### 2.2 蓝牙软件栈与音频输出\n在 `bianbu-minimal` 下搭建蓝牙调试环境：\n1. 安装协议栈：`apt install -y spacemit-uart-bt bluez rfkill`\n2. 启动核心服务：\n   ```bash\n   systemctl enable bluetooth.service && systemctl restart bluetooth.service\n   systemctl enable realtek-bt.service && systemctl restart realtek-bt.service\n   ./hci_init.sh start\n   ```\n3. 连接蓝牙音响设备：\n   ```bash\n   bluetoothctl\n   [bluetooth]# power on\n   [bluetooth]# agent on\n   [bluetooth]# scan on\n   [bluetooth]# pair <MAC_ADDRESS>\n   [bluetooth]# trust <MAC_ADDRESS>\n   [bluetooth]# connect <MAC_ADDRESS>\n   ```\n\n### 2.3 网络吞吐性能压测 (iperf3)\n测试设备与 PC 需在同一网段。\n*   **PC 端**启动服务端监听：`iperf3 -s -i 1`\n*   **设备端**执行吞吐量测试：\n    *   无线网络测试：`iperf3 -t 10 -c <PC_IP> -bidir --bind-dev wlan0`\n    *   千兆以太网测试：`iperf3 -c <PC_IP> -i 1 -t 10 -b 900M`\n\n---\n\n## 3. 全系统压力测试与集成高级配置\n\n### 3.1 系统压力测试矩阵\n为了验证系统在高温或满负载下的稳定性，可以同时对四大核心组件进行压测：\n*   **CPU 满载压测**：使用 `stress-ng` 对 8 个核心执行算法压测：\n    ```bash\n    stress-ng --cpu 8 --cpu-method all -t 1h\n    ```\n*   **GPU 图形压测**：使用 `glmark2` 在后台循环进行 OpenGL ES 渲染：\n    ```bash\n    XDG_RUNTIME_DIR=/root WAYLAND_DISPLAY=wayland-1 MESA_LOADER_DRIVER_OVERRIDE=pvr glmark2-es2-wayland --run-forever\n    ```\n*   **VPU 编解码压测**：执行官方解码压测脚本，对 1080p H.264 视频流进行持续解码：\n    ```bash\n    ./vpu.sh  # 会拉起循环硬解\n    ```\n*   **存储吞吐压测**：使用 `fio` 对 eMMC 进行大文件随机混合读写（带 CRC32 校验）：\n    ```bash\n    fio -name=rand-RW -direct=1 -iodepth=64 -rw=randrw -rwmixread=60 -rwmixwrite=40 -ioengine=libaio -bs=128k -size=1G -numjobs=1 -runtime=1h -time_based -directory=/root/ -filename=fio-rand-RW --verify=crc32\n    ```\n\n### 3.2 USB OTG 功能与兼容性配置\n*   **配置为 U 盘模式 (USB Gadget)**：\n    可将开发板的板载 NVMe SSD 或 eMMC 分区虚拟为标准 U 盘供外部 PC 识别：\n    1. 安装分区格式化工具：`apt install -y dosfstools`\n    2. 绑定目标物理接口控制器（如 `c0a00000.dwc3`）并指定虚拟挂载的块设备（如 `/dev/nvme0n1p1`）：\n       ```bash\n       USB_UDC=c0a00000.dwc3 ./gadget-setup.sh uas:/dev/nvme0n1p1\n       ```\n*   **跨系统 (Windows/Linux) U 盘分区兼容**：\n    若虚拟出的 U 盘需要同时被 Windows (识别 NTFS/exFAT) 和 Linux (识别 ext4) 读取，必须在 Linux 端安装完备的文件系统驱动：\n    ```bash\n    apt install -y ntfs-3g dosfstools exfatprogs exfat-fuse\n    ```\n    随后使用 `fdisk` 对存储器进行分区，分别格式化为 `ext4` 和 `ntfs`/`exfat` 格式。",
+      "content": "# K1 软件开发与系统集成 FAQ 专题档案\n\n> [!TIP]\n> **💡 工程师导读与排坑焦点**：汇总多媒体显示、无线网络栈部署、性能压测与 OTG 跨系统分区疑难解答。\n> **目标读者**：`系统集成工程师 / 应用开发` | **技术领域**：`bianbu_os_distribution`\n\n本专题档案系统化整理了 K1 芯片在 Linux 系统集成阶段的多媒体显示调试、网络与蓝牙软件栈部署、全系统性能压力测试，以及 USB 功能切换等高级应用开发方法。\n\n> [!NOTE]\n> 原始技术细节主要来自于 [K1 软件常见问题](../Sources/docs-chip/zh/key_stone/k1/k1_sw/k1_sw_faq.md)，旨在为系统级开发者提供一站式集成指南。\n\n---\n\n## 1. 多媒体与图形显示调试\n\n### 1.1 HDMI 状态与显示控制\n*   **HDMI 连接状态检测**：\n    官方示例读取以下 DRM 状态节点；实际 card 编号与接口名随硬件/驱动变化，先查 `/sys/class/drm/`：\n    ```bash\n    cat /sys/class/drm/card1-HDMI-A-1/status\n    # 输出 connected 代表已连接；输出 disconnected 代表未连接\n    ```\n*   **关闭 tty1 登录界面与光标**：\n    在开发板作为专用显示终端时，需禁用控制台交互并隐藏闪烁的光标：\n    ```bash\n    systemctl stop getty@tty1 && systemctl disable getty@tty1  # 禁用 tty1 登录服务\n    echo -e \"\\033[?25l\" > /dev/tty1                            # 隐藏光标 (显示光标用 \\033[?25h)\n    ```\n*   **关闭 Weston 桌面**：\n    若需释放系统资源进行纯粹的命令行渲染：\n    *   临时关闭：`/etc/init.d/S30weston-setup.sh stop`\n    *   永久禁用：`rm /etc/init.d/S30weston-setup.sh`（重启后不再自启）\n*   **监控 GPU 使用率**：\n    ```bash\n    cat /sys/kernel/debug/pvr/status\n    ```\n\n### 1.2 命令行多媒体与视频播放\nK1 平台集成硬解码 VPU 与 PowerVR GPU，可执行高效视频解码：\n*   **图形界面播放 (GStreamer)**：\n    仅支持在桌面环境中运行，无法在纯串口下使用：\n    ```bash\n    gst-launch-1.0 playbin uri=file:/root/video.mp4 video-sink='waylandsink render-rectangle=\"<0,0,1920,1080>\"'\n    ```\n*   **帧缓冲区直接刷图 (dd)**：\n    在没有图形服务器的极简系统（如串口终端）下，直接将原始 ARGB 像素流写入帧缓冲：\n    ```bash\n    dd if=argb.data of=\"/dev/fb0\" bs=1920 count=4320\n    ```\n*   **硬件加速播放 (ffplay / mpv)**：\n    在 `bianbu-minimal` 或 `bianbu-desktop` 下，需确保安装了 `k1x-vpu-firmware`、`mpp`（多媒体处理库）及 `img-gpu-powervr` 驱动。在命令行下显式覆盖 GPU 驱动：\n    ```bash\n    # 使用 ffplay 播放\n    WAYLAND_DISPLAY=wayland-1 SDL_VIDEODRIVER=wayland MESA_LOADER_DRIVER_OVERRIDE=pvr ffplay video.mp4\n    \n    # 使用 mpv 播放\n    SDL_VIDEODRIVER=wayland MESA_LOADER_DRIVER_OVERRIDE=pvr mpv video.mp4\n    ```\n\n---\n\n## 2. 网络与通信软件栈部署\n\n### 2.1 无线网络 (Wi-Fi) 栈与 AP 热点\n*   **Wi-Fi 客户端连接 (Netplan)**：\n    1. 安装工具包：`apt install -y spacemit-modules-usrload wpasupplicant`\n    2. 配置 `/etc/netplan/01-netcfg.yaml`：\n       ```yaml\n       wifis:\n           wlan0:\n               dhcp4: true\n               access-points:\n                   \"WIFI_SSID_NAME\":\n                       password: \"WIFI_PASSWORD\"\n       ```\n    3. 使配置生效：`netplan apply`\n*   **AP 无线热点配置 (hostapd)**：\n    1. 安装依赖：`apt install -y hostapd udhcpd`\n    2. 编写 `hostapd.conf` 定义热点参数（如 `ssid=test_ap`，`channel=6`，`wpa_passphrase=12345678`）。\n    3. 编写 `udhcpd.conf` 配置 DHCP 分配池（如 `start 192.168.1.2`）。\n    4. 启动 AP：\n       ```bash\n       ifconfig wlan0 192.168.1.1 up\n       udhcpd -fS udhcpd.conf &\n       hostapd -B -d /etc/hostapd.conf\n       ```\n\n### 2.2 蓝牙软件栈与音频输出\n在 `bianbu-minimal` 下搭建蓝牙调试环境：\n1. 安装协议栈：`apt install -y spacemit-uart-bt bluez rfkill`\n2. 启动核心服务：\n   ```bash\n   systemctl enable bluetooth.service && systemctl restart bluetooth.service\n   systemctl enable realtek-bt.service && systemctl restart realtek-bt.service\n   ./hci_init.sh start\n   ```\n3. 连接蓝牙音响设备：\n   ```bash\n   bluetoothctl\n   [bluetooth]# power on\n   [bluetooth]# agent on\n   [bluetooth]# scan on\n   [bluetooth]# pair <MAC_ADDRESS>\n   [bluetooth]# trust <MAC_ADDRESS>\n   [bluetooth]# connect <MAC_ADDRESS>\n   ```\n\n### 2.3 网络吞吐性能压测 (iperf3)\n测试设备与 PC 需在同一网段。\n*   **PC 端**启动服务端监听：`iperf3 -s -i 1`\n*   **设备端**执行吞吐量测试：\n    *   无线网络测试：`iperf3 -t 10 -c <PC_IP> -bidir --bind-dev wlan0`\n    *   千兆以太网测试：`iperf3 -c <PC_IP> -i 1 -t 10 -b 900M`\n\n---\n\n## 3. 全系统压力测试与集成高级配置\n\n### 3.0 GPIO 命令的环境与版本边界\n\nK1 软件 FAQ「如何通过命令行拉高 GPIO」分别给出 Kernel 下的 sysfs 示例（GPIO122：`export` → `direction=out` → `value=1`），以及 U-Boot 的 `gpio set 116`。两种编号不是扩展排针物理 Pin，不能交叉使用。\n\n该 FAQ 没有给出各 Bianbu 发行版与 libgpiod 1.x/2.x 的对应矩阵，也没有给出通用 `gpioset` 命令。因此不能保证这些 sysfs 步骤在任意新版系统仍适用，不能猜测工具参数。先确认板型、内核、`gpioinfo` / `gpioset --version` 和对应版本帮助，再按原理图、复用状态与电平核对目标引脚。本节仅核对文档示例，未在板端执行。\n\n### 3.1 系统压力测试矩阵\n为了验证系统在高温或满负载下的稳定性，可以同时对四大核心组件进行压测：\n*   **CPU 满载压测**：使用 `stress-ng` 对 8 个核心执行算法压测：\n    ```bash\n    stress-ng --cpu 8 --cpu-method all -t 1h\n    ```\n*   **GPU 图形压测**：使用 `glmark2` 在后台循环进行 OpenGL ES 渲染：\n    ```bash\n    XDG_RUNTIME_DIR=/root WAYLAND_DISPLAY=wayland-1 MESA_LOADER_DRIVER_OVERRIDE=pvr glmark2-es2-wayland --run-forever\n    ```\n*   **VPU 编解码压测**：执行官方解码压测脚本，对 1080p H.264 视频流进行持续解码：\n    ```bash\n    ./vpu.sh  # 会拉起循环硬解\n    ```\n*   **存储吞吐压测**：使用 `fio` 对 eMMC 进行大文件随机混合读写（带 CRC32 校验）：\n    ```bash\n    fio -name=rand-RW -direct=1 -iodepth=64 -rw=randrw -rwmixread=60 -rwmixwrite=40 -ioengine=libaio -bs=128k -size=1G -numjobs=1 -runtime=1h -time_based -directory=/root/ -filename=fio-rand-RW --verify=crc32\n    ```\n\n### 3.2 USB OTG 功能与兼容性配置\n*   **配置为 U 盘模式 (USB Gadget)**：\n    可将开发板的板载 NVMe SSD 或 eMMC 分区虚拟为标准 U 盘供外部 PC 识别：\n    1. 安装分区格式化工具：`apt install -y dosfstools`\n    2. 绑定目标物理接口控制器（如 `c0a00000.dwc3`）并指定虚拟挂载的块设备（如 `/dev/nvme0n1p1`）：\n       ```bash\n       USB_UDC=c0a00000.dwc3 ./gadget-setup.sh uas:/dev/nvme0n1p1\n       ```\n*   **跨系统 (Windows/Linux) U 盘分区兼容**：\n    若虚拟出的 U 盘需要同时被 Windows (识别 NTFS/exFAT) 和 Linux (识别 ext4) 读取，必须在 Linux 端安装完备的文件系统驱动：\n    ```bash\n    apt install -y ntfs-3g dosfstools exfatprogs exfat-fuse\n    ```\n    随后使用 `fdisk` 对存储器进行分区，分别格式化为 `ext4` 和 `ntfs`/`exfat` 格式。",
       "created": "2026-06-29",
-      "updated": "2026-10-20",
+      "updated": "2026-10-21",
       "source_file": "Sources/docs-chip/zh/key_stone/k1/k1_sw/k1_sw_faq.md",
-      "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
       "source_locator": "K1 软件常见问题；系统启动配置；SDK 编译打包；驱动调试与测试验证；OS 应用",
       "source_resolution": "partial",
       "verification_status": "unverified",
-      "source_checked_at": "2026-10-20",
-      "source_note": "本次仅定位已有引用对应的文件与章节，未对正文全部事实逐项复核；引用的 Evidence 保留各自历史版本与核验状态。",
+      "source_checked_at": "2026-10-21",
+      "source_note": "2026-10-21 定向复核 GPIO 命令、HDMI 路径与软件安装段落；补充环境/工具版本边界，其他正文未全文核验。",
       "source_origin": "https://github.com/spacemit-com/docs-chip",
       "freshness": "current",
       "stale_paths": [],
@@ -1081,7 +1358,7 @@
       "source_freshness": [
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k1/k1_sw/k1_sw_faq.md",
-          "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
+          "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "current",
           "reason": "source_file_unchanged"
@@ -1177,16 +1454,16 @@
         "Spacemit_产品矩阵与硬件生态全景档案"
       ],
       "summary": "# K3 CoM260 开发套件板级硬件设计与产品特点专题档案  > [!TIP] > **💡 工程师与架构师导读**： > 本文系统汇总了基于 SpacemiT K3 芯片的核心计算模组 **K3 CoM260** 及其开发套件的产品定位、模组特点、12-Pin 多功能调试接口、MIPI CSI 多链路复用与屏显接口设计。 > 快速掌握产品全貌请阅读第 0 节，深入硬件布线与引脚请阅读第 1~3 节。  ---  ## 0. 产品定位与计算模组核心特点 (Product Profile)  ### 0.1 一句话产品定位 > **K3 CoM260** 是一款专为**工业机器人、具身智能与高",
-      "content": "# K3 CoM260 开发套件板级硬件设计与产品特点专题档案\n\n> [!TIP]\n> **💡 工程师与架构师导读**：\n> 本文系统汇总了基于 SpacemiT K3 芯片的核心计算模组 **K3 CoM260** 及其开发套件的产品定位、模组特点、12-Pin 多功能调试接口、MIPI CSI 多链路复用与屏显接口设计。\n> 快速掌握产品全貌请阅读第 0 节，深入硬件布线与引脚请阅读第 1~3 节。\n\n---\n\n## 0. 产品定位与计算模组核心特点 (Product Profile)\n\n### 0.1 一句话产品定位\n> **K3 CoM260** 是一款专为**工业机器人、具身智能与高端嵌入式装备量产**打造的 RISC-V 核心计算模组（SoM）及开发套件。核心板高集成度封装了 60 TOPS 算力、LPDDR5 内存与电源系统，助力客户以极低成本定制专属载板。\n\n### 0.2 三大核心杀手级特点\n1. **核心计算模组与底板解耦设计 (Modular SoM Architecture)**：\n   * 采用高密连接器将 K3 芯片、高频 LPDDR5、UFS 本地存储及伴随 PMIC 全部集成在核心板上。终端客户仅需根据实际工业场景设计简单的双层或四层外设载板（引出所需接口），研发周期从半年缩短至数周，量产维护成本极低。\n2. **机器人全栈控制直出 (Robotics-Ready Control)**：\n   * 模组不仅具备 60 TOPS AI 视觉处理能力，更将芯片内部独立的实时微控制器 **RT24** 完整引出，原生支持 **EtherCAT、CAN-FD、多路 PWM**，实现从视觉感知、多模态决策到微秒级电机伺服驱动的“大脑+小脑”单模组闭环。\n3. **超灵活的多路 MIPI CSI 机器视觉复用**：\n   * 载板提供 2 路 22-Pin FPC 接口，出厂支持“4+4”、“4+2+2”或四路并发图像采集，满足工业巡检、无人机避障及多目立体相机视觉算法需求。\n\n### 0.3 选型建议：何时选 CoM260 而非单板电脑 (Pico)？\n* **选 K3 CoM260**：产品形态非标（如特殊外壳、导轨安装）、需要批量量产、需要引出自定义工业接口（如多路隔离 RS485、光电隔离 DI/DO）、或对接线接口位置有严格机械限制。\n* **选 K3 Pico**：需要开箱即用成品单板、追求极简单线 Type-C 供电、或需要板载万兆光口进行大带宽组网。\n\n---\n\n## 1. 12-Pin 多功能按键与调试接口\n\nK3 CoM260 参考载板上设计了一个高集成度的 **12-Pin 调试与控制排针**，汇总了状态显示、串口调试、启动控制与电源动作：\n\n| Pin 编号 | 信号名称 | 功能与硬件接法 |\n| :---: | :--- | :--- |\n| **1 / 2** | `PC_LED-` / `PC_LED+` | 外部状态指示灯（正负极），指示开机状态 |\n| **3 / 4** | `UART0_RXD` / `UART0_TXD` | **系统 DEBUG UART0 串口**，用于输出主控内核调试 Log |\n| **5 / 6** | `BMCU_ACOK` / `AUTO_ON_DIS` | **上电自启配置**：短接此二针可启用“上电自动开机”；断开则需通过按键手动开机 |\n| **7 / 9 / 11**| `GND` | 电源地 |\n| **8** | `PMIC_RST_OUTn` | 硬件复位引脚，短接至 GND 触发系统强制重启 |\n| **10** | `FORCE_RECOVERY` | 刷机/下载按键（FEL 模式），短接至 GND 并复位可进入烧录模式 |\n| **12** | `SLEEP/WAKE` | 开关机 / 休眠唤醒引脚，短接至 GND 触发电源动作 |\n\n---\n\n## 2. MIPI CSI 摄像头多链路复用配置\n\nK3 CoM260 载板提供 2 个 22-Pin MIPI CSI 摄像头 FPC 连接器，支持非常灵活的多路并发输入。\n\n### 2.1 链路复用机制\n核心板在出厂时，可通过**板载电阻配置**，实现以下三种 MIPI CSI 通道组合：\n* **“4 + 4” 模式**：CAM0 占用 4 lanes，CAM1 占用 4 lanes。适用于双路超高清图像并发输入。\n* **“4 + 2 + 2” 模式**：支持三路摄像头并发。\n* **“2 + 2 + 2 + 2” 模式**：支持四路摄像头并发。\n\n### 2.2 默认出厂配置 (Default)\n* **CAM0 连接器**：配置为 **2 lanes** 带宽。\n* **CAM1 连接器**：配置为 **2 + 2 lanes** 或 **4 lanes** 带宽。\n\n---\n\n## 3. MIPI DSI 屏接口设计与热插拔红线\n\n载板引出了一个 30-Pin 的 MIPI DSI 屏连接器，可完美适配树莓派标准的 4.3 英寸电容触摸显示屏（内置 I2C 触摸控制总线）：\n\n> [!CAUTION]\n> **MIPI DSI 显示接口与触控接口绝对不支持热插拔**。\n> 必须在**完全断电**的状态下连接好显示屏 FPC 线缆，然后再上电开机。在带电状态下插拔屏线极易导致 DSI PHY 或者是屏幕控制 IC 发生永久性静电击穿。\n\n---\n\n## 4. 关联事实证据与芯片专题\n\n> [!NOTE]\n> **2026-08 官方更新**：K3 硬件资源文件已更新至 **v2.1**，包括 `k3_pinlist_pinmux_v21.xlsx`、最小系统参考设计原理图 `k3-minisys-lp5-au4562-v2.1.DSN/PDF`。同时 eDP 信号命名已修正。请以最新硬件资源为准进行设计。\n\n* 物理规格数据：[[Evidence/k3_com260_specs|K3 CoM260 规格参数]]\n* 40-Pin 排针管脚映射：[[Knowledge_Atoms/K3_CoM260_40Pin_IOMAP管脚映射专题|K3 CoM260 40-Pin IOMAP 管脚映射专题]]\n* 摄像并发规范：[[Knowledge_Atoms/K1_K3摄像系统与图像处理专题档案|K1/K3 摄像系统与图像处理专题]]\n* 原始文档参考：[K3 CoM260 用户指南](../Sources/docs-product/zh/k3_series/k3_com260/com260_user_guide.md)",
+      "content": "# K3 CoM260 开发套件板级硬件设计与产品特点专题档案\n\n> [!TIP]\n> **💡 工程师与架构师导读**：\n> 本文系统汇总了基于 SpacemiT K3 芯片的核心计算模组 **K3 CoM260** 及其开发套件的产品定位、模组特点、12-Pin 多功能调试接口、MIPI CSI 多链路复用与屏显接口设计。\n> 快速掌握产品全貌请阅读第 0 节，深入硬件布线与引脚请阅读第 1~3 节。\n\n---\n\n## 0. 产品定位与计算模组核心特点 (Product Profile)\n\n### 0.1 一句话产品定位\n> **K3 CoM260** 是一款专为**工业机器人、具身智能与高端嵌入式装备量产**打造的 RISC-V 核心计算模组（SoM）及开发套件。核心板高集成度封装了 60 TOPS 算力、LPDDR5 内存与电源系统，助力客户以极低成本定制专属载板。\n\n### 0.2 三大核心杀手级特点\n1. **核心计算模组与底板解耦设计 (Modular SoM Architecture)**：\n   * 采用高密连接器将 K3 芯片、高频 LPDDR5、UFS 本地存储及伴随 PMIC 全部集成在核心板上。终端客户仅需根据实际工业场景设计简单的双层或四层外设载板（引出所需接口），研发周期从半年缩短至数周，量产维护成本极低。\n2. **机器人全栈控制直出 (Robotics-Ready Control)**：\n   * 模组不仅具备 60 TOPS AI 视觉处理能力，更将芯片内部独立的实时微控制器 **RT24** 完整引出，原生支持 **EtherCAT、CAN-FD、多路 PWM**，实现从视觉感知、多模态决策到微秒级电机伺服驱动的“大脑+小脑”单模组闭环。\n3. **超灵活的多路 MIPI CSI 机器视觉复用**：\n   * 载板提供 2 路 22-Pin FPC 接口，出厂支持“4+4”、“4+2+2”或四路并发图像采集，满足工业巡检、无人机避障及多目立体相机视觉算法需求。\n\n### 0.3 选型建议：何时选 CoM260 而非单板电脑 (Pico)？\n* **选 K3 CoM260**：产品形态非标（如特殊外壳、导轨安装）、需要批量量产、需要引出自定义工业接口（如多路隔离 RS485、光电隔离 DI/DO）、或对接线接口位置有严格机械限制。\n* **选 K3 Pico**：需要开箱即用成品单板、追求极简单线 Type-C 供电、或需要板载万兆光口进行大带宽组网。\n\n---\n\n## 1. 12-Pin 多功能按键与调试接口\n\nK3 CoM260 参考载板上设计了一个高集成度的 **12-Pin 调试与控制排针**，汇总了状态显示、串口调试、启动控制与电源动作：\n\n| Pin 编号 | 信号名称 | 功能与硬件接法 |\n| :---: | :--- | :--- |\n| **1 / 2** | `PC_LED-` / `PC_LED+` | 外部状态指示灯（正负极），指示开机状态 |\n| **3 / 4** | `UART0_RXD` / `UART0_TXD` | **系统 DEBUG UART0 串口**，用于输出主控内核调试 Log |\n| **5 / 6** | `BMCU_ACOK` / `AUTO_ON_DIS` | **上电自启配置**：短接此二针可启用“上电自动开机”；断开则需通过按键手动开机 |\n| **7 / 9 / 11**| `GND` | 电源地 |\n| **8** | `PMIC_RST_OUTn` | 硬件复位引脚，短接至 GND 触发系统强制重启 |\n| **10** | `FORCE_RECOVERY` | 刷机/下载按键（FEL 模式），短接至 GND 并复位可进入烧录模式 |\n| **12** | `SLEEP/WAKE` | 开关机 / 休眠唤醒引脚，短接至 GND 触发电源动作 |\n\n---\n\n## 2. MIPI CSI 摄像头多链路复用配置\n\nK3 CoM260 载板提供 2 个 22-Pin MIPI CSI 摄像头 FPC 连接器，支持非常灵活的多路并发输入。\n\n### 2.1 链路复用机制\n官方用户指南 5.4 说明高速连接器引出两组 4 Lane 信号，可通过模组电阻配置选择链路。这里描述的是 CoM260 载板引出的信号；K3 SoC 的 12 Lanes 总能力不能直接当作本载板可用接口。以下组合还需按模组电阻、转接板和驱动配置核对，不构成 ISP/AI 同时处理帧率保证：\n* **“4 + 4” 模式**：CAM0 占用 4 lanes，CAM1 占用 4 lanes。适用于双路超高清图像并发输入。\n* **“4 + 2 + 2” 模式**：支持三路摄像头并发。\n* **“2 + 2 + 2 + 2” 模式**：支持四路摄像头并发。\n\n### 2.2 默认出厂配置 (Default)\n* **CAM0 连接器**：配置为 **2 lanes** 带宽。\n* **CAM1 连接器**：配置为 **2 + 2 lanes** 或 **4 lanes** 带宽。\n\n---\n\n## 3. MIPI DSI 屏接口设计与热插拔红线\n\n载板引出了一个 30-Pin 的 MIPI DSI 屏连接器，可完美适配树莓派标准的 4.3 英寸电容触摸显示屏（内置 I2C 触摸控制总线）：\n\n> [!CAUTION]\n> **MIPI DSI 显示接口与触控接口绝对不支持热插拔**。\n> 必须在**完全断电**的状态下连接好显示屏 FPC 线缆，然后再上电开机。在带电状态下插拔屏线极易导致 DSI PHY 或者是屏幕控制 IC 发生永久性静电击穿。\n\n---\n\n## 4. 关联事实证据与芯片专题\n\n> [!NOTE]\n> **2026-08 官方更新**：K3 硬件资源文件已更新至 **v2.1**，包括 `k3_pinlist_pinmux_v21.xlsx`、最小系统参考设计原理图 `k3-minisys-lp5-au4562-v2.1.DSN/PDF`。同时 eDP 信号命名已修正。请以最新硬件资源为准进行设计。\n\n* 物理规格数据：[[Evidence/k3_com260_specs|K3 CoM260 规格参数]]\n* 40-Pin 排针管脚映射：[[Knowledge_Atoms/K3_CoM260_40Pin_IOMAP管脚映射专题|K3 CoM260 40-Pin IOMAP 管脚映射专题]]\n* 摄像并发规范：[[Knowledge_Atoms/K1_K3摄像系统与图像处理专题档案|K1/K3 摄像系统与图像处理专题]]\n* 原始文档参考：[K3 CoM260 用户指南](../Sources/docs-product/zh/k3_series/k3_com260/com260_user_guide.md)",
       "created": "2026-06-30",
-      "updated": "2026-10-20",
+      "updated": "2026-10-21",
       "source_file": "Sources/docs-product/zh/k3_series/k3_com260/com260_user_guide.md",
       "source_commit": "bc640755145625cc20745f49861f82588863fca3",
       "source_locator": "K3 CoM260 开发套件用户使用指南；PDF 版本下载；版本；1. 产品简介；1.1 概述",
       "source_resolution": "partial",
       "verification_status": "unverified",
-      "source_checked_at": "2026-10-20",
-      "source_note": "本次仅定位已有引用对应的文件与章节，未对正文全部事实逐项复核；引用的 Evidence 保留各自历史版本与核验状态。",
+      "source_checked_at": "2026-10-21",
+      "source_note": "2026-10-21 定向复核用户指南 5.4，区分载板引出两组 4 Lane 与 K3 SoC 总通道能力；其他正文未全核验。",
       "source_origin": "https://github.com/spacemit-com/docs-product",
       "source_related_file": [
         "Sources/docs-product/zh/k3_series/k3_com260/root_overview.md"
@@ -1564,16 +1841,17 @@
         "K3安全启动SecureBoot开发专题档案"
       ],
       "summary": "# K3 启动模式与 Strap 管脚配置专题档案  > [!TIP] > **💡 工程师导读与排坑焦点**：指导 K3 芯片 Strap Pins 硬件上下拉设计与物理启动介质配置。 > **目标读者**：`硬件电路工程师 / 嵌入式驱动` | **技术领域**：`hardware_schematic_design`  本专题档案汇总了关于 SpacemiT K3 芯片上电初始化、Strap 管脚硬件设计、以及系统启动/烧录模式的配置要点。  ---  ## 1. 硬件配置核心原则  K3 芯片在复位释放（Reset Release）的瞬间，会通过采样特定的配置管脚（Strap Pins）的",
-      "content": "# K3 启动模式与 Strap 管脚配置专题档案\n\n> [!TIP]\n> **💡 工程师导读与排坑焦点**：指导 K3 芯片 Strap Pins 硬件上下拉设计与物理启动介质配置。\n> **目标读者**：`硬件电路工程师 / 嵌入式驱动` | **技术领域**：`hardware_schematic_design`\n\n本专题档案汇总了关于 SpacemiT K3 芯片上电初始化、Strap 管脚硬件设计、以及系统启动/烧录模式的配置要点。\n\n---\n\n## 1. 硬件配置核心原则\n\nK3 芯片在复位释放（Reset Release）的瞬间，会通过采样特定的配置管脚（Strap Pins）的电平状态，来决定芯片的启动介质、烧录通道、内存类型和接口电压。\n\n*   **硬件连接要求**：\n    *   所有 Strap 管脚在芯片内部默认都有**弱下拉**电阻。因此，若需要配置为 `0`（默认值），在单板设计时该管脚可以**悬空**。\n    *   若需要配置为 `1`，必须通过 **4.7kΩ ~ 10kΩ 的强上拉电阻** 连接到对应的 IO 电源域（通常为 VCC18_PMIC 或 3.3V，根据管脚电压域而定）。\n    *   **警告**：切勿将 Strap 管脚直接硬连到电源或地，必须通过电阻进行隔离，否则会导致管脚在作为普通 GPIO 使用时发生短路损坏。\n\n---\n\n## 2. 核心配置逻辑对照\n\n进行单板原理图设计时，必须严格对照以下底层参数表（详见事实证据 [[Evidence/k3_strap_pins_config]]）：\n\n### 2.1 启动介质（Boot Mode）\n单板设计时，需通过拨码开关或强上拉电阻配置 **GPIO66** 和 **GPIO65**：\n*   若从内置的 **eMMC** 启动，双管脚保持悬空（`0 0`）即可。\n*   若设计为使用 **SPI NAND** 启动，必须在 **GPIO65** 上拉 10kΩ 电阻（`0 1`）。\n\n### 2.2 烧录与启动切换（Boot / Download）\n*   **GPIO69** 是决定单板是“正常工作”还是“进入烧录”的开关：\n    *   **正常运行**：GPIO69 保持悬空（`0`）。\n    *   **出厂烧录**：将 GPIO69 上拉到高电平（`1`），芯片上电后将自动进入下载模式，等待通过 USB 接口烧录固件。\n\n### 2.3 核心板强制刷机 (Recovery) 与升级限制\n对于基于 K3 核心板（如 CoM260）的设计：\n*   **强制刷机 (Recovery)**：核心板第 214 引脚为 `FORCE_RECOVERY`。在开发或量产时，将该引脚**下拉到 GND 状态后上电**，系统将强制进入 USB 刷机模式。\n*   **固件升级限制**：固件升级必须使用 **MMC1** 通道（核心板自带的 TF 卡接口），**MMC2 接口不支持 TF 卡固件升级**，亦不能作为普通 SD 卡存储引导接口。\n\n### 2.4 GPIO 双电压自适应设计\nK3 芯片的 GPIO 电平支持 1.8V 与 3.3V 自适应切换：\n*   **电压参考**：`VCC18_GPIOx` 是 IO 内部 LDO 的参考基准，固定为 1.8V。\n*   **工作电平**：GPIO 的实际工作电平由其供电引脚 `VCCxx_1833GPIOx` 决定。当其接入 1.8V 时，该组 GPIO 电平自动为 1.8V；当其接入 3.3V 时，电平自动为 3.3V。**该自适应电平切换完全由硬件决定，无需软件进行任何寄存器配置**。\n*   **中断输入限制**：并非所有 IO 都支持中断输入，**仅复用为 GPIO 属性的引脚**才具备中断输入和唤醒功能。\n\n### 2.5 LPDDR 64-bit 物理连线红线\n*   **设计红线**：K3 芯片支持 LPDDR5 和 LPDDR4x。当设计中采用 64-bit 位宽的 DDR 拓扑时，**绝对不能仅使用其中的 32-bit 而将另外 32-bit 悬空**。必须保证 64-bit 物理连线完整，否则内存控制器将无法正确初始化。\n\n### 2.6 JTAG 调试连接与 CoM260 交叉接线注意事项\n\n> [!WARNING]\n> **2026-08 官方更新**：Spacemit 官方在 `docs-chip` 仓库的 `k3_hw_faq.md` 中新增了 K3 Pico-ITX 和 K3 CoM260 的 JTAG 调试接线详细说明。\n\n*   **K3 Pico-ITX 调试**：串口线 TX 接 K3 Pico-ITX 的 RX，RX 接 TX。串口调试要求使用 **3.3V** 电平串口线。PRI JTAG 直接连接即可。\n*   **K3 CoM260 JTAG 调试红线**：CoM260 开发套件支持通过 TF 卡接口转 JTAG 进行调试。**特别注意：JTAG 调试器与转接子板的 TMS 和 TDI 需要交叉连接（TDO 直连）**。误接将导致 JTAG 完全无法通信。\n*   详细接线图片参考官方文档：[K3 硬件 FAQ - JTAG 调试图解](../Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_faq.md)（含 `com260_debug_00.png` 配图）\n\n---\n\n## 3. 关联原始参考文档\n\n关于具体的 Strap Pin 电阻选型、PMIC 上电时序以及烧录软件的操作，请进一步参阅：\n*   [K3 硬件设计指南 - 原始文档](../Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md)\n*   [K3 SDK 使用指南 - 原始文档](../Sources/docs-chip/zh/key_stone/k3/k3_sw/k3_sdk_user_guide.md)",
+      "content": "# K3 启动模式与 Strap 管脚配置专题档案\n\n> [!TIP]\n> **💡 工程师导读与排坑焦点**：指导 K3 芯片 Strap Pins 硬件上下拉设计与物理启动介质配置。\n> **目标读者**：`硬件电路工程师 / 嵌入式驱动` | **技术领域**：`hardware_schematic_design`\n\n本专题档案汇总了关于 SpacemiT K3 芯片上电初始化、Strap 管脚硬件设计、以及系统启动/烧录模式的配置要点。\n\n---\n\n## 1. 硬件配置核心原则\n\nK3 芯片在复位释放（Reset Release）的瞬间，会通过采样特定的配置管脚（Strap Pins）的电平状态，来决定芯片的启动介质、烧录通道、内存类型和接口电压。\n\n*   **硬件连接要求**：\n    *   功能表将相关项标为 default down，但同节的管脚数量/列表存在内部矛盾，必须同时保留 [[Evidence/k3_strap_pins_config]] 的冲突提示。\n    *   本轮未在声明来源中确认旧稿的通用 `4.7kΩ～10kΩ` 上拉范围或“默认可悬空”的板级接线保证。按对应版本原理图核对电阻、IO 电源域、采样与复用条件；不能照抄 K1 或其他板型的接线。\n\n---\n\n## 2. 核心配置逻辑对照\n\n进行单板原理图设计时，必须严格对照以下底层参数表（详见事实证据 [[Evidence/k3_strap_pins_config]]）：\n\n### 2.1 启动介质（Boot Mode）\n单板设计时，需通过拨码开关或强上拉电阻配置 **GPIO66** 和 **GPIO65**：\n*   功能表的 `GPIO66/GPIO65 = 0/0` 表示 **TF Card → eMMC**，不是无条件跳过 TF 卡直接启动 eMMC。\n*   `0/1` 表示 **TF Card → SPI NAND**。电平如何实现需按板型原理图确认，不指定无出处的上拉阻值。\n\n### 2.2 烧录与启动切换（Boot / Download）\n*   **GPIO69** 是决定单板是“正常工作”还是“进入烧录”的开关：\n    *   **正常运行**：功能表 GPIO69 为 `0`，具体上下拉接线按原理图。\n    *   **出厂烧录**：将 GPIO69 上拉到高电平（`1`），芯片上电后将自动进入下载模式，等待通过 USB 接口烧录固件。\n\n### 2.3 核心板强制刷机 (Recovery) 与升级限制\n对于基于 K3 核心板（如 CoM260）的设计：\n*   **强制刷机 (Recovery)**：核心板第 214 引脚为 `FORCE_RECOVERY`。在开发或量产时，将该引脚**下拉到 GND 状态后上电**，系统将强制进入 USB 刷机模式。\n*   **MMC 边界**：芯片指南 1.4.4 说明 MMC1 支持 SD 卡完整功能和动态电压切换；MMC2 只支持固定电平下的低速模式或仅 1.8V SD 卡。启动/升级还须核对核心板与 ROM 的支持，不能把该限制表述为 MMC2 完全不能接 SD 卡。\n\n### 2.4 GPIO 双电压自适应设计\nK3 芯片的 GPIO 电平支持 1.8V 与 3.3V 自适应切换：\n*   **电压参考**：`VCC18_GPIOx` 是 IO 内部 LDO 的参考基准，固定为 1.8V。\n*   **工作电平**：GPIO 的实际工作电平由其供电引脚 `VCCxx_1833GPIOx` 决定。当其接入 1.8V 时，该组 GPIO 电平自动为 1.8V；当其接入 3.3V 时，电平自动为 3.3V。**该自适应电平切换完全由硬件决定，无需软件进行任何寄存器配置**。\n*   **中断输入限制**：并非所有 IO 都支持中断输入，**仅复用为 GPIO 属性的引脚**才具备中断输入和唤醒功能。\n\n### 2.5 LPDDR 64-bit 物理连线红线\n*   **设计红线**：K3 芯片支持 LPDDR5 和 LPDDR4x。当设计中采用 64-bit 位宽的 DDR 拓扑时，**绝对不能仅使用其中的 32-bit 而将另外 32-bit 悬空**。必须保证 64-bit 物理连线完整，否则内存控制器将无法正确初始化。\n\n### 2.6 JTAG 调试连接与 CoM260 交叉接线注意事项\n\n> [!WARNING]\n> **2026-08 官方更新**：Spacemit 官方在 `docs-chip` 仓库的 `k3_hw_faq.md` 中新增了 K3 Pico-ITX 和 K3 CoM260 的 JTAG 调试接线详细说明。\n\n*   **K3 Pico-ITX 调试**：串口线 TX 接 K3 Pico-ITX 的 RX，RX 接 TX。串口调试要求使用 **3.3V** 电平串口线。PRI JTAG 直接连接即可。\n*   **K3 CoM260 JTAG 调试红线**：CoM260 开发套件支持通过 TF 卡接口转 JTAG 进行调试。**特别注意：JTAG 调试器与转接子板的 TMS 和 TDI 需要交叉连接（TDO 直连）**。误接将导致 JTAG 完全无法通信。\n*   详细接线图片参考官方文档：[K3 硬件 FAQ - JTAG 调试图解](../Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_faq.md)（含 `com260_debug_00.png` 配图）\n\n---\n\n## 3. 关联原始参考文档\n\n关于具体的 Strap Pin 电阻选型、PMIC 上电时序以及烧录软件的操作，请进一步参阅：\n*   [K3 硬件设计指南 - 原始文档](../Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md)\n*   [K3 SDK 使用指南 - 原始文档](../Sources/docs-chip/zh/key_stone/k3/k3_sw/k3_sdk_user_guide.md)",
       "created": "2026-06-29",
-      "updated": "2026-10-20",
+      "updated": "2026-10-21",
       "source_file": "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md",
-      "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc",
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
       "source_locator": "K3 硬件设计指南和 Layout 指导手册；PDF 版本下载；版本；前言；1. 原理图设计",
       "source_resolution": "partial",
-      "verification_status": "unverified",
-      "source_checked_at": "2026-10-20",
-      "source_note": "本次仅定位已有引用对应的文件与章节，未对正文全部事实逐项复核；引用的 Evidence 保留各自历史版本与核验状态。",
+      "verification_status": "conflicted",
+      "conflicts": "K3 指南 1.1.5 的开头管脚列表与后续 Strap0～5 功能表不一致，详见 k3_strap_pins_config。",
+      "source_checked_at": "2026-10-21",
+      "source_note": "2026-10-21 阶段 B：K3 1.1.5 功能表、1.4.4 MMC；同步 Strap 来源内部矛盾，移除无依据的通用上拉阻值/悬空接线承诺，修正 MMC2 全面禁用 SD 的过度结论。 保留来源冲突并置 conflicted/needs_review；不表示全文事实通过。",
       "source_origin": "https://github.com/spacemit-com/docs-chip",
       "source_related_file": [
         "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_faq.md",
@@ -1583,10 +1861,8 @@
         "15254b1cfe339c1863d8edf8137a337681fb2780",
         "15254b1cfe339c1863d8edf8137a337681fb2780"
       ],
-      "freshness": "stale",
-      "stale_paths": [
-        "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md"
-      ],
+      "freshness": "current",
+      "stale_paths": [],
       "unknown_paths": [],
       "checked_against_commit": {
         "docs-chip": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84"
@@ -1594,10 +1870,10 @@
       "source_freshness": [
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md",
-          "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc",
+          "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
-          "freshness": "stale",
-          "reason": "source_file_changed"
+          "freshness": "current",
+          "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_faq.md",
@@ -1896,20 +2172,25 @@
         "MUSE_Pi_26Pin_IOMAP管脚映射专题"
       ],
       "backlinks": [
-        "Muse_Pi_板级硬件设计专题",
         "Spacemit_产品矩阵与硬件生态全景档案"
       ],
       "summary": "# MUSE Pi Pro 40-Pin IOMAP 与外设管脚复用专题档案  > [!TIP] > **💡 工程师与 AI-Agent 导读**：本专题汇总了基于 SpacemiT K1 芯片的升级版生态开发板 **MUSE Pi Pro** 的 40-Pin 扩展双排插针定义。 > * **原始数据源**：[pi_pro_user_guide.md:L450-L485](../Sources/docs-product/en/k1_series/k1_muse_pi_pro/pi_pro_user_guide.md#L450-L485) > * **板级设计关联**：[[Knowledge_",
-      "content": "# MUSE Pi Pro 40-Pin IOMAP 与外设管脚复用专题档案\n\n> [!TIP]\n> **💡 工程师与 AI-Agent 导读**：本专题汇总了基于 SpacemiT K1 芯片的升级版生态开发板 **MUSE Pi Pro** 的 40-Pin 扩展双排插针定义。\n> * **原始数据源**：[pi_pro_user_guide.md:L450-L485](../Sources/docs-product/en/k1_series/k1_muse_pi_pro/pi_pro_user_guide.md#L450-L485)\n> * **板级设计关联**：[[Knowledge_Atoms/Muse_Pi_板级硬件设计专题|Muse Pi / Pro 板级硬件设计专题]]\n\n### 板卡物理排针与彩色功能映射图\n![MUSE Pi Pro 40-Pin 物理排针与彩色功能示意图](../static/k1_muse_pi_pro_40pin.png)\n\n---\n\n## 1. 40-Pin 扩展插针结构化映射总表\n\nMUSE Pi Pro 开发板将扩展排针升级为 40-Pin 兼容规范：\n\n| Pin (左) | 信号名称 / 默认功能 | Pin (右) | 信号名称 / 默认功能 | 复用与模块说明 | 电压等级 |\n| :---: | :--- | :---: | :--- | :--- | :---: |\n| **1** | `VCC3V3_SYS` (3.3V电源) | **2** | `VCC5V0_OUT` (5.0V电源) | 系统主电源输出 | 3.3V / 5.0V |\n| **3** | `AP_I2C4_SDA_3V3` | **4** | `VCC5V0_OUT` (5.0V电源) | I2C4 数据线 (Alt: PWM11) / 5V电源 | 3.3V / 5.0V |\n| **5** | `AP_I2C4_SCL_3V3` | **6** | `GND` (电源地) | I2C4 时钟线 (Alt: PWM10) / 参考地 | 3.3V / 0V |\n| **7** | `GPIO_70_3V3` | **8** | `UART0_TXD_3V3` | GPIO_70 (Alt: UART5_TXD) / X60 Debug TX | 3.3V |\n| **9** | `GND` (电源地) | **10** | `UART0_RXD_3V3` | 参考地 / X60 Debug RX | 0V / 3.3V |\n| **11** | `GPIO_71_3V3` | **12** | `GPIO_74_3V3` | GPIO_71 (Alt: UART5_RXD) / GPIO_74 | 3.3V |\n| **13** | `GPIO_72_3V3` | **14** | `GND` (电源地) | GPIO_72 (Alt: UART5_CTS_N) / 参考地 | 3.3V / 0V |\n| **15** | `GPIO_73_3V3` | **16** | `GPIO_91_3V3` | GPIO_73 (Alt: UART5_RTS_N) / GPIO_91 | 3.3V |\n| **17** | `VCC3V3_SYS` (3.3V电源) | **18** | `GPIO_92_3V3` | 3.3V电源 / GPIO_92 | 3.3V |\n| **19** | `SPI3_MOSI_3V3` | **20** | `GND` (电源地) | SPI3 MOSI (Alt: I2C3_SCL, UART8_CTS, R_PWM0) | 3.3V / 0V |\n| **21** | `SPI3_MISO_3V3` | **22** | `GPIO_49_3V3` | SPI3 MISO (Alt: I2C3_SDA, UART8_RTS) / R_SPI_SCLK | 3.3V |\n| **23** | `SPI3_SCLK_3V3` | **24** | `SPI3_CS_3V3` | SPI3 SCLK (Alt: CAN_TX0, SPI2_SCLK) / SPI3 CS | 3.3V |\n| **25** | `GND` (电源地) | **26** | `GPIO_50_3V3` | 参考地 / GPIO_50 (Alt: R_SPI_CS, R_PWM5) | 0V / 3.3V |\n| **27** | `AP_I2C3_SDA_3V3` | **28** | `AP_I2C3_SCL_3V3` | I2C3 数据线 (Alt: PWM9) / I2C3 时钟线 (Alt: PWM8) | 3.3V |\n| **29** | `GPIO_51_3V3` | **30** | `GND` (电源地) | GPIO_51 (Alt: R_SPI_TXD, R_PWM6) / 参考地 | 3.3V / 0V |\n| **31** | `GPIO_52_3V3` | **32** | `GPIO_34_3V3` | GPIO_52 (Alt: R_SPI_RXD) / GPIO_34 (Alt: UART4_RXD) | 3.3V |\n| **33** | `GPIO_47_3V3` | **34** | `GND` (电源地) | RCPU UART0 TX (Alt: R_CAN_TX0) / 参考地 | 3.3V / 0V |\n| **35** | `GPIO_48_3V3` | **36** | `GPIO_35_3V3` | RCPU UART0 RX (Alt: R_CAN_RX0) / GPIO_35 (Alt: PWM5) | 3.3V |\n| **37** | `GPIO_33_3V3` | **38** | `GPIO_46_3V3` | GPIO_33 (Alt: UART4_TXD, PWM3) / GPIO_46 (Alt: PWM16) | 3.3V |\n| **39** | `GND` (电源地) | **40** | `GPIO_37_3V3` | 参考地 / GPIO_37 (Alt: PWM7) | 0V / 3.3V |\n\n---\n\n## 2. 调试与多总线通道速查\n\n* **X60 主核 Console 调试串口**：Pin 8 (`UART0_TXD`), Pin 10 (`UART0_RXD`), Pin 6 (`GND`)。\n* **RCPU 实时核调试串口**：Pin 33 (`GPIO_47 / R_UART0_TX`), Pin 35 (`GPIO_48 / R_UART0_RX`)。\n* **SPI3 扩展接口**：Pin 19 (`MOSI`), Pin 21 (`MISO`), Pin 23 (`SCLK`), Pin 24 (`CS`)。\n* **CAN0 总线通道**：Pin 23 (`CAN_TX0`), Pin 24 (`CAN_RX0`)。\n\n---\n\n## 3. 关联知识节点\n\n* 板级硬件综合：[[Knowledge_Atoms/Muse_Pi_板级硬件设计专题|Muse Pi / Pro 板级硬件设计专题]]\n* Muse Pi 标准版：[[Knowledge_Atoms/MUSE_Pi_26Pin_IOMAP管脚映射专题|Muse Pi 26-Pin IOMAP 管脚映射专题]]",
+      "content": "# MUSE Pi Pro 40-Pin IOMAP 与外设管脚复用专题档案\n\n> [!TIP]\n> **💡 工程师与 AI-Agent 导读**：本专题汇总了基于 SpacemiT K1 芯片的升级版生态开发板 **MUSE Pi Pro** 的 40-Pin 扩展双排插针定义。\n> * **原始数据源**：[pi_pro_user_guide.md:L450-L485](../Sources/docs-product/en/k1_series/k1_muse_pi_pro/pi_pro_user_guide.md#L450-L485)\n> * **板级设计关联**：[[Knowledge_Atoms/Muse_Pi_板级硬件设计专题|Muse Pi / Pro 板级硬件设计专题]]\n\n### 板卡物理排针与彩色功能映射图\n![MUSE Pi Pro 40-Pin 物理排针与彩色功能示意图](../static/k1_muse_pi_pro_40pin.png)\n\n---\n\n## 1. 40-Pin 扩展插针结构化映射总表\n\nMUSE Pi Pro 开发板将扩展排针升级为 40-Pin 兼容规范：\n\n| Pin (左) | 信号名称 / 默认功能 | Pin (右) | 信号名称 / 默认功能 | 复用与模块说明 | 电压等级 |\n| :---: | :--- | :---: | :--- | :--- | :---: |\n| **1** | `VCC3V3_SYS` (3.3V电源) | **2** | `VCC5V0_OUT` (5.0V电源) | 系统主电源输出 | 3.3V / 5.0V |\n| **3** | `AP_I2C4_SDA_3V3` | **4** | `VCC5V0_OUT` (5.0V电源) | I2C4 数据线 (Alt: PWM11) / 5V电源 | 3.3V / 5.0V |\n| **5** | `AP_I2C4_SCL_3V3` | **6** | `GND` (电源地) | I2C4 时钟线 (Alt: PWM10) / 参考地 | 3.3V / 0V |\n| **7** | `GPIO_70_3V3` | **8** | `UART0_TXD_3V3` | GPIO_70 (Alt: UART5_TXD) / X60 Debug TX | 3.3V |\n| **9** | `GND` (电源地) | **10** | `UART0_RXD_3V3` | 参考地 / X60 Debug RX | 0V / 3.3V |\n| **11** | `GPIO_71_3V3` | **12** | `GPIO_74_3V3` | GPIO_71 (Alt: UART5_RXD) / GPIO_74 | 3.3V |\n| **13** | `GPIO_72_3V3` | **14** | `GND` (电源地) | GPIO_72 (Alt: UART5_CTS_N) / 参考地 | 3.3V / 0V |\n| **15** | `GPIO_73_3V3` | **16** | `GPIO_91_3V3` | GPIO_73 (Alt: UART5_RTS_N) / GPIO_91 | 3.3V |\n| **17** | `VCC3V3_SYS` (3.3V电源) | **18** | `GPIO_92_3V3` | 3.3V电源 / GPIO_92 | 3.3V |\n| **19** | `SPI3_MOSI_3V3` | **20** | `GND` (电源地) | SPI3 MOSI (Alt: I2C3_SCL, UART8_CTS, R_PWM0) | 3.3V / 0V |\n| **21** | `SPI3_MISO_3V3` | **22** | `GPIO_49_3V3` | SPI3 MISO (Alt: I2C3_SDA, UART8_RTS) / R_SPI_SCLK | 3.3V |\n| **23** | `SPI3_SCLK_3V3` | **24** | `SPI3_CS_3V3` | SPI3 SCLK (Alt: CAN_TX0, SPI2_SCLK) / SPI3 CS | 3.3V |\n| **25** | `GND` (电源地) | **26** | `GPIO_50_3V3` | 参考地 / GPIO_50 (Alt: R_SPI_CS, R_PWM5) | 0V / 3.3V |\n| **27** | `AP_I2C3_SDA_3V3` | **28** | `AP_I2C3_SCL_3V3` | I2C3 数据线 (Alt: PWM9) / I2C3 时钟线 (Alt: PWM8) | 3.3V |\n| **29** | `GPIO_51_3V3` | **30** | `GND` (电源地) | GPIO_51 (Alt: R_SPI_TXD, R_PWM6) / 参考地 | 3.3V / 0V |\n| **31** | `GPIO_52_3V3` | **32** | `GPIO_34_3V3` | GPIO_52 (Alt: R_SPI_RXD) / GPIO_34 (Alt: UART4_RXD) | 3.3V |\n| **33** | `GPIO_47_3V3` | **34** | `GND` (电源地) | RCPU UART0 TX (Alt: R_CAN_TX0) / 参考地 | 3.3V / 0V |\n| **35** | `GPIO_48_3V3` | **36** | `GPIO_35_3V3` | RCPU UART0 RX (Alt: R_CAN_RX0) / GPIO_35 (Alt: PWM5) | 3.3V |\n| **37** | `GPIO_33_3V3` | **38** | `GPIO_46_3V3` | GPIO_33 (Alt: UART4_TXD, PWM3) / GPIO_46 (Alt: PWM16) | 3.3V |\n| **39** | `GND` (电源地) | **40** | `GPIO_37_3V3` | 参考地 / GPIO_37 (Alt: PWM7) | 0V / 3.3V |\n\n---\n\n## 2. 调试与多总线通道速查\n\n> [!WARNING]\n> **I2C3 电气时序资料缺口（2026-10-21 反馈复核）**：当前中英文用户指南 7.3 仅给出排针表与示意图：Pin 27 为 `AP_I2C3_SDA_3V3`，Pin 28 为 `AP_I2C3_SCL_3V3`。该节没有板级上升/下降时间、建立/保持时间、上拉与总线电容测试条件，不能由排针名称推导时序图。连接前核对板卡硬件版本、原理图及对应 I2C 控制器规范；需官方补充资料或实测后再给板级时序结论。表中其他复用功能仍待逐项核验。\n\n* **X60 主核 Console 调试串口**：Pin 8 (`UART0_TXD`), Pin 10 (`UART0_RXD`), Pin 6 (`GND`)。\n* **RCPU 实时核调试串口**：Pin 33 (`GPIO_47 / R_UART0_TX`), Pin 35 (`GPIO_48 / R_UART0_RX`)。\n* **SPI3 扩展接口**：Pin 19 (`MOSI`), Pin 21 (`MISO`), Pin 23 (`SCLK`), Pin 24 (`CS`)。\n* **CAN0 总线通道**：Pin 23 (`CAN_TX0`), Pin 24 (`CAN_RX0`)。\n\n---\n\n## 3. 关联知识节点\n\n* 板级硬件综合：[[Knowledge_Atoms/Muse_Pi_板级硬件设计专题|Muse Pi / Pro 板级硬件设计专题]]\n* Muse Pi 标准版：[[Knowledge_Atoms/MUSE_Pi_26Pin_IOMAP管脚映射专题|Muse Pi 26-Pin IOMAP 管脚映射专题]]",
       "created": "2026-08-10",
-      "updated": "2026-10-20",
+      "updated": "2026-10-21",
       "source_file": "Sources/docs-product/en/k1_series/k1_muse_pi_pro/pi_pro_user_guide.md",
       "source_commit": "bc640755145625cc20745f49861f82588863fca3",
       "source_locator": "7.3 40pin Header，行 454–482",
       "source_resolution": "partial",
       "verification_status": "unverified",
-      "source_checked_at": "2026-10-20",
-      "source_note": "本次仅定位已有引用对应的文件与章节，未对正文全部事实逐项复核；引用的 Evidence 保留各自历史版本与核验状态。",
+      "source_checked_at": "2026-10-21",
+      "source_note": "2026-10-21 定向复核中英文用户指南 7.3 与 I2C3 反馈；仅确认 Pin 27/28 信号及板级时序资料缺口，其他复用待核验。",
+      "source_related_file": [
+        "Sources/docs-product/zh/k1_series/k1_muse_pi_pro/pi_pro_user_guide.md"
+      ],
+      "source_related_commit": [
+        "bc640755145625cc20745f49861f82588863fca3"
+      ],
       "source_origin": "https://github.com/spacemit-com/docs-product",
       "freshness": "current",
       "stale_paths": [],
@@ -1920,6 +2201,13 @@
       "source_freshness": [
         {
           "source_file": "Sources/docs-product/en/k1_series/k1_muse_pi_pro/pi_pro_user_guide.md",
+          "source_commit": "bc640755145625cc20745f49861f82588863fca3",
+          "checked_against_commit": "bc640755145625cc20745f49861f82588863fca3",
+          "freshness": "current",
+          "reason": "source_file_unchanged"
+        },
+        {
+          "source_file": "Sources/docs-product/zh/k1_series/k1_muse_pi_pro/pi_pro_user_guide.md",
           "source_commit": "bc640755145625cc20745f49861f82588863fca3",
           "checked_against_commit": "bc640755145625cc20745f49861f82588863fca3",
           "freshness": "current",
@@ -1948,10 +2236,9 @@
         "产品经理"
       ],
       "outlinks": [
-        "MUSE_Pi_26Pin_IOMAP管脚映射专题",
-        "MUSE_Pi_Pro_40Pin_IOMAP管脚映射专题",
         "muse_pi_vs_pi_pro_specs",
         "p1_pmic_specs",
+        "MUSE_Pi_26Pin_IOMAP管脚映射专题",
         "K1启动模式与Strap管脚配置专题档案",
         "SpacemiT生态板卡与PMIC电源配合专题档案"
       ],
@@ -1965,17 +2252,17 @@
         "SpacemiT_ROS2_机器人与具身智能专题档案",
         "Spacemit_产品矩阵与硬件生态全景档案"
       ],
-      "summary": "# MUSE Pi / Pro 板级硬件设计与产品特点专题档案  > [!TIP] > **💡 工程师与产品选型导读**： > 本文系统汇总了基于 SpacemiT K1 八核处理器的开源单板计算机 **MUSE Pi** 与 **MUSE Pi Pro** 的产品定位差异、选型决策、12V PD 供电规范、Strap 拨码启动以及调试引脚复用设计。 > 快速掌握选型区别请阅读第 0 节，深入硬件布线请阅读第 1~4 节。  ---  ## 0. 产品定位与 MUSE Pi vs Pro 差异化选型 (Product Profile)  ### 0.1 一句话产品定位 * **MUSE Pi",
-      "content": "# MUSE Pi / Pro 板级硬件设计与产品特点专题档案\n\n> [!TIP]\n> **💡 工程师与产品选型导读**：\n> 本文系统汇总了基于 SpacemiT K1 八核处理器的开源单板计算机 **MUSE Pi** 与 **MUSE Pi Pro** 的产品定位差异、选型决策、12V PD 供电规范、Strap 拨码启动以及调试引脚复用设计。\n> 快速掌握选型区别请阅读第 0 节，深入硬件布线请阅读第 1~4 节。\n\n---\n\n## 0. 产品定位与 MUSE Pi vs Pro 差异化选型 (Product Profile)\n\n### 0.1 一句话产品定位\n* **MUSE Pi (标准版)**：面向全球 RISC-V 创客、嵌入式学习者打造的**经典开源单板计算机 (SBC)**。名片大小，超低 3~5W 功耗，具备 2.0 TOPS AI 算力与 1080P 双屏异显能力。\n* **MUSE Pi Pro (增强版)**：面向**工业物联网与商业显示**打造的高阶单板计算机。保持紧凑尺寸的同时，全面兼容 **40-Pin 树莓派标准扩展插针**，并板载音频硬件功放与更多工业扩展总线。\n\n### 0.2 标准版 (Muse Pi) 与增强版 (Muse Pi Pro) 核心差异速查\n\n| 核心维度 | MUSE Pi (标准版) | MUSE Pi Pro (增强版) | 选型建议 / 场景决策 |\n| :--- | :--- | :--- | :--- |\n| **扩展插针规格** | **26-Pin** 双排插针 (2.54mm) | **40-Pin** 树莓派兼容彩色排针 | 需要接入成熟树莓派 HAT 扩展板或更多 GPIO 选 **Pro 版** |\n| **音频输出能力** | 仅支持 3.5mm 耳麦接口输出 | 3.5mm 耳麦口 + **板载 3W 喇叭功放 (PA)** | 需做智能音箱、交互商显、自动播报选 **Pro 版** (免外挂功放) |\n| **管脚映射定义** | [[Knowledge_Atoms/MUSE_Pi_26Pin_IOMAP管脚映射专题|26-Pin 引脚定义]] | [[Knowledge_Atoms/MUSE_Pi_Pro_40Pin_IOMAP管脚映射专题|40-Pin 引脚定义]] | Pro 版提供独立的 CAN、SPI 及更多 PWM/I2C 通道 |\n| **显示与相机** | 1×HDMI + 1×MIPI DSI, 2路 CSI | 1×HDMI + 1×MIPI DSI, 2路 CSI | 均支持 1080P 双屏独立异显，支持双摄并发采集 |\n| **典型适用客群** | 嵌入式教学、个人极客开源实验 | 工业数据采集网关、智能交互终端、商显设备 | 两者软件栈 100% 同源 (Bianbu OS / Linux 6.6) |\n\n> 💡 *详细物理规格与物料尺寸对比表参阅：[[Evidence/muse_pi_vs_pi_pro_specs|Muse Pi 与 Muse Pi Pro 规格比对表]]*\n\n---\n\n## 1. 电源输入与 PD 供电规范\n\nMUSE Pi 系列板卡采用 **USB Type-C 单电源输入**方案：\n* **供电协议**：必须使用支持 **USB PD 3.0** 协议的适配器。\n* **电压与电流**：输入电压默认通过前端协议芯片调节为 **12V**，额定电流需达到 **3A**（即 36W 及以上）。\n* **板级电源拓扑**：\n  * 12V 适配器输入首先经过前端降压变换器（Buck）转换为 `VCC5V0_SYS` 与 `VCC4V0`。\n  * `VCC4V0` 供给主 PMIC（[[Evidence/p1_pmic_specs|Power Stone P1]]）及外挂 DCDC。\n  * `VCC5V0_SYS` 负责给大电流外设（如 M.2 扩展槽的 3.3V 供电）提供前端降压。\n\n> [!WARNING]\n> 严禁使用普通 5V 手机充电器为 MUSE Pi 供电，否则会导致板载大功率外设（如 M.2 SSD 或 Wi-Fi 模组）满载时系统因欠压强行复位。\n\n---\n\n## 2. 启动模式配置 (Strap Pins)\n\nMUSE Pi 通过板载双位拨码开关（Strap Pins）选择上电时的第一启动介质。\n\n### 拨码配置与启动顺序：\n* **开关 1 (OFF) + 开关 2 (OFF)**：`TF Card` ➡️ `eMMC`（出厂默认配置，适合日常开发与Bianbu系统运行）。\n* **开关 1 (ON) + 开关 2 (OFF)**：`TF Card` ➡️ `SPI NOR Flash`（SPI NOR 默认配置为加载 SSD 上的内核）。\n\n### 启动避坑红线：\n1. **TF 卡优先权**：无论拨码开关处于何种状态，**只要设备中插入了写有引导固件的 TF 卡，系统一律强制优先从 TF 卡启动**。\n2. **刷机默认路径**：刷机时，固件会默认烧录到当前拨码开关所指向的介质中。例如：若拨码配置为从 SPI NOR 启动，则固件会被烧录到 SPI NOR 和 SSD（SSD 必须安装在 **M.2 一号槽位**）。\n\n---\n\n## 3. 调试与复用设计 (JTAG / UART)\n\n为了最大化利用 K1 芯片的管脚，MUSE Pi 采用了高度复用的调试设计。\n\n### 3.1 调试串口 (UART)\n* **X60 计算核调试**：引出于板载专属 **3-Pin 单排插针 (J25)**，引脚顺序为 `TX (GPIO68)`、`RX (GPIO69)`、`GND`。电平为 **3.3V**，波特率 **115200**。\n* **RCPU 实时核调试**：引出于 26-Pin 扩展排针的 **Pin 6 (GND)、Pin 8 (TX)、Pin 10 (RX)**。\n\n### 3.2 JTAG 调试复用\n* **Primary JTAG (主调试口)**：直接引出于 26-Pin 扩展排针，引脚为：\n  * Pin 7: `PRI_TDI`\n  * Pin 11: `PRI_TMS`\n  * Pin 13: `PRI_TCK`\n  * Pin 15: `PRI_TDO`\n* **Secondary JTAG (SEC2 调试口)**：与 **MMC1 (TF Card) 接口复用**。\n  * **启用方法**：当 `JTAG_SEL` 信号拉高，且 `MMC1_CMD` 拉低时，TF 卡插槽引脚将被重配置为 SEC2 JTAG 调试接口，用于调试 X60 核心。\n  * **引脚映射关系**：\n    * `MMC1_CLK` ➡️ `SEC2_TCK`\n    * `MMC1_DATA0` ➡️ `SEC2_TRSTn`\n    * `MMC1_DATA1` ➡️ `SEC2_TDO`\n    * `MMC1_DATA2` ➡️ `SEC2_TDI`\n    * `MMC1_DATA3` ➡️ `SEC2_TMS`\n\n---\n\n## 4. 关联事实证据与芯片专题\n\n> [!NOTE]\n> **2026-08 官方更新**：`docs-product` 仓库中 K1 Muse Box 产品简介页的 PDF 下载链接文件名已修正。若此前下载失败，请重新获取。\n\n* 物理规格对比：[[Evidence/muse_pi_vs_pi_pro_specs|Muse Pi 与 Muse Pi Pro 物理规格对比]]\n* 板级扩展管脚映射：[[Knowledge_Atoms/MUSE_Pi_26Pin_IOMAP管脚映射专题|MUSE Pi 26-Pin IOMAP 管脚映射专题]]\n* 芯片级启动机制：[[Knowledge_Atoms/K1启动模式与Strap管脚配置专题档案|K1 启动模式与 JTAG 路由专题]]\n* 板级供电配合：[[Knowledge_Atoms/SpacemiT生态板卡与PMIC电源配合专题档案|SpacemiT 生态板卡与 PMIC 电源配合专题]]\n* 原始文档参考：[MUSE Pi 用户指南](../Sources/docs-product/zh/k1_series/k1_muse_pi/pi_user_guide.md)\n* K1 Muse Box 参考：[Muse Box 产品简介](../Sources/docs-product/zh/k1_series/k1_muse_box/root_overview.md)",
+      "summary": "# MUSE Pi / Pro 板级硬件设计与产品特点专题档案  > [!TIP] > **💡 工程师与产品选型导读**： > 本文系统汇总了基于 SpacemiT K1 八核处理器的开源单板计算机 **MUSE Pi** 与 **MUSE Pi Pro** 的产品定位差异、选型决策、12V PD 供电规范、Strap 拨码启动以及调试引脚复用设计。 > 快速掌握选型区别请阅读第 0 节，深入硬件布线请阅读第 1~4 节。  ---  ## 0. 产品定位与 MUSE Pi vs Pro 差异化选型 (Product Profile)  ### 0.1 一句话产品定位 * **MUSE Pi*",
+      "content": "# MUSE Pi / Pro 板级硬件设计与产品特点专题档案\n\n> [!TIP]\n> **💡 工程师与产品选型导读**：\n> 本文系统汇总了基于 SpacemiT K1 八核处理器的开源单板计算机 **MUSE Pi** 与 **MUSE Pi Pro** 的产品定位差异、选型决策、12V PD 供电规范、Strap 拨码启动以及调试引脚复用设计。\n> 快速掌握选型区别请阅读第 0 节，深入硬件布线请阅读第 1~4 节。\n\n---\n\n## 0. 产品定位与 MUSE Pi vs Pro 差异化选型 (Product Profile)\n\n### 0.1 一句话产品定位\n* **MUSE Pi**：产品表列 129.45×80mm、双 RJ45 与双 M.2 2280，适用于按该板接口配置开展原型开发；芯片功耗不等同于整机功耗。\n* **MUSE Pi Pro**：产品表列 85×56mm、40-Pin、M.2 2230 与 miniPCIe。连接兼容扩展板前仍需逐针核对复用、电平及驱动，不将物理排针相似当作全面兼容。\n\n### 0.2 标准版 (Muse Pi) 与增强版 (Muse Pi Pro) 核心差异速查\n\n| 核心维度 | MUSE Pi (标准版) | MUSE Pi Pro (增强版) | 选型建议 / 场景决策 |\n| :--- | :--- | :--- | :--- |\n| **扩展插针规格** | **26-Pin** | **40-Pin** | 按各板用户指南接线 |\n| **处理器表述** | 产品表列 M1 | 产品表列 M1 | K1 MUSE 是产品系列名，芯片与板级规格分别确认 |\n| **以太网** | 2 路 RJ45 | 1 路 RJ45 | 不能按 Pro 名称推断双网口 |\n| **存储与 USB** | 双 M.2 2280；1×USB3.0 Type-A | M.2 2230；4×USB3.0 Type-A | 详细配置及 Type-C 角色见下方 Evidence |\n| **音频接口** | 3.5mm耳麦接口 | 3.5mm耳麦接口 | 当前产品表不足以确认旧稿“Pro板载3W功放” |\n| **显示与相机** | DSI 4lane、CSI 4+4/4+2+2 | DSI 2lane、CSI 4lane+2lane | 按板型核对连接器，不能套用 SoC 总能力 |\n| **系统与镜像** | 按 MUSE Pi 版本核对 | 按 MUSE Pi Pro 版本核对 | 不保证任意镜像或排针配置互换 |\n\n> 💡 *详细物理规格与物料尺寸对比表参阅：[[Evidence/muse_pi_vs_pi_pro_specs|Muse Pi 与 Muse Pi Pro 规格比对表]]*\n\n---\n\n## 1. 电源输入与 PD 供电规范\n\nMUSE Pi 系列板卡采用 **USB Type-C 单电源输入**方案：\n* **供电协议**：必须使用支持 **USB PD 3.0** 协议的适配器。\n* **电压与电流**：输入电压默认通过前端协议芯片调节为 **12V**，额定电流需达到 **3A**（即 36W 及以上）。\n* **板级电源拓扑**：\n  * 12V 适配器输入首先经过前端降压变换器（Buck）转换为 `VCC5V0_SYS` 与 `VCC4V0`。\n  * `VCC4V0` 供给主 PMIC（[[Evidence/p1_pmic_specs|Power Stone P1]]）及外挂 DCDC。\n  * `VCC5V0_SYS` 负责给大电流外设（如 M.2 扩展槽的 3.3V 供电）提供前端降压。\n\n> [!WARNING]\n> 严禁使用普通 5V 手机充电器为 MUSE Pi 供电，否则会导致板载大功率外设（如 M.2 SSD 或 Wi-Fi 模组）满载时系统因欠压强行复位。\n\n---\n\n## 2. 启动模式配置 (Strap Pins)\n\nMUSE Pi 通过板载双位拨码开关（Strap Pins）选择上电时的第一启动介质。\n\n### 拨码配置与启动顺序：\n* **开关 1 (OFF) + 开关 2 (OFF)**：`TF Card` ➡️ `eMMC`（出厂默认配置，适合日常开发与Bianbu系统运行）。\n* **开关 1 (ON) + 开关 2 (OFF)**：`TF Card` ➡️ `SPI NOR Flash`（SPI NOR 默认配置为加载 SSD 上的内核）。\n\n### 启动避坑红线：\n1. **TF 卡优先权**：无论拨码开关处于何种状态，**只要设备中插入了写有引导固件的 TF 卡，系统一律强制优先从 TF 卡启动**。\n2. **刷机默认路径**：刷机时，固件会默认烧录到当前拨码开关所指向的介质中。例如：若拨码配置为从 SPI NOR 启动，则固件会被烧录到 SPI NOR 和 SSD（SSD 必须安装在 **M.2 一号槽位**）。\n\n---\n\n## 3. 调试与复用设计 (JTAG / UART)\n\n为了最大化利用 K1 芯片的管脚，MUSE Pi 采用了高度复用的调试设计。\n\n### 3.1 调试串口 (UART)\n* **X60 计算核调试**：引出于板载专属 **3-Pin 单排插针 (J25)**，引脚顺序为 `TX (GPIO68)`、`RX (GPIO69)`、`GND`。电平为 **3.3V**，波特率 **115200**。\n* **RCPU 实时核调试**：引出于 26-Pin 扩展排针的 **Pin 6 (GND)、Pin 8 (TX)、Pin 10 (RX)**。\n\n### 3.2 JTAG 调试复用\n* **Primary JTAG (主调试口)**：直接引出于 26-Pin 扩展排针，引脚为：\n  * Pin 7: `PRI_TDI`\n  * Pin 11: `PRI_TMS`\n  * Pin 13: `PRI_TCK`\n  * Pin 15: `PRI_TDO`\n* **Secondary JTAG (SEC2 调试口)**：与 **MMC1 (TF Card) 接口复用**。\n  * **启用方法**：当 `JTAG_SEL` 信号拉高，且 `MMC1_CMD` 拉低时，TF 卡插槽引脚将被重配置为 SEC2 JTAG 调试接口，用于调试 X60 核心。\n  * **引脚映射关系**：\n    * `MMC1_CLK` ➡️ `SEC2_TCK`\n    * `MMC1_DATA0` ➡️ `SEC2_TRSTn`\n    * `MMC1_DATA1` ➡️ `SEC2_TDO`\n    * `MMC1_DATA2` ➡️ `SEC2_TDI`\n    * `MMC1_DATA3` ➡️ `SEC2_TMS`\n\n---\n\n## 4. 关联事实证据与芯片专题\n\n> [!NOTE]\n> **2026-08 官方更新**：`docs-product` 仓库中 K1 Muse Box 产品简介页的 PDF 下载链接文件名已修正。若此前下载失败，请重新获取。\n\n* 物理规格对比：[[Evidence/muse_pi_vs_pi_pro_specs|Muse Pi 与 Muse Pi Pro 物理规格对比]]\n* 板级扩展管脚映射：[[Knowledge_Atoms/MUSE_Pi_26Pin_IOMAP管脚映射专题|MUSE Pi 26-Pin IOMAP 管脚映射专题]]\n* 芯片级启动机制：[[Knowledge_Atoms/K1启动模式与Strap管脚配置专题档案|K1 启动模式与 JTAG 路由专题]]\n* 板级供电配合：[[Knowledge_Atoms/SpacemiT生态板卡与PMIC电源配合专题档案|SpacemiT 生态板卡与 PMIC 电源配合专题]]\n* 原始文档参考：[MUSE Pi 用户指南](../Sources/docs-product/zh/k1_series/k1_muse_pi/pi_user_guide.md)\n* K1 Muse Box 参考：[Muse Box 产品简介](../Sources/docs-product/zh/k1_series/k1_muse_box/root_overview.md)",
       "created": "2026-06-30",
-      "updated": "2026-10-20",
-      "source_file": "Sources/docs-product/zh/k1_series/k1_muse_box/root_overview.md",
+      "updated": "2026-10-21",
+      "source_file": "Sources/docs-product/zh/k1_series/k1_muse_pi/root_overview.md",
       "source_commit": "bc640755145625cc20745f49861f82588863fca3",
-      "source_locator": "K1 MUSE Box 简介；产品规格；合作与采购咨询",
+      "source_locator": "MUSE Pi/Pro 产品规格；Pi 用户指南硬件介绍；其他历史板级细节待复核",
       "source_resolution": "partial",
       "verification_status": "unverified",
-      "source_checked_at": "2026-10-20",
-      "source_note": "本次仅定位已有引用对应的文件与章节，未对正文全部事实逐项复核；引用的 Evidence 保留各自历史版本与核验状态。",
+      "source_checked_at": "2026-10-21",
+      "source_note": "2026-10-21 评测定向核对两份产品表，撤回旧稿功放与网口/排针错误；主来源由误绑MUSE Box改为MUSE Pi，供电拓扑及其他正文仍未全文核验。",
       "source_origin": "https://github.com/spacemit-com/docs-product",
       "source_related_file": [
         "Sources/docs-product/zh/k1_series/k1_muse_pi/pi_user_guide.md",
@@ -1985,8 +2272,8 @@
       ],
       "source_related_commit": [
         "bc640755145625cc20745f49861f82588863fca3",
-        "8c851807f2c54e8ba54d568b268100ca727d0777",
-        "8c851807f2c54e8ba54d568b268100ca727d0777",
+        "bc640755145625cc20745f49861f82588863fca3",
+        "bc640755145625cc20745f49861f82588863fca3",
         "1ea15a766287024a5bb7b548850826e3525a80dc"
       ],
       "freshness": "current",
@@ -1998,7 +2285,7 @@
       },
       "source_freshness": [
         {
-          "source_file": "Sources/docs-product/zh/k1_series/k1_muse_box/root_overview.md",
+          "source_file": "Sources/docs-product/zh/k1_series/k1_muse_pi/root_overview.md",
           "source_commit": "bc640755145625cc20745f49861f82588863fca3",
           "checked_against_commit": "bc640755145625cc20745f49861f82588863fca3",
           "freshness": "current",
@@ -2012,15 +2299,8 @@
           "reason": "source_file_unchanged"
         },
         {
-          "source_file": "Sources/docs-product/zh/k1_series/k1_muse_pi/root_overview.md",
-          "source_commit": "8c851807f2c54e8ba54d568b268100ca727d0777",
-          "checked_against_commit": "bc640755145625cc20745f49861f82588863fca3",
-          "freshness": "current",
-          "reason": "source_file_unchanged"
-        },
-        {
           "source_file": "Sources/docs-product/zh/k1_series/k1_muse_pi_pro/root_overview.md",
-          "source_commit": "8c851807f2c54e8ba54d568b268100ca727d0777",
+          "source_commit": "bc640755145625cc20745f49861f82588863fca3",
           "checked_against_commit": "bc640755145625cc20745f49861f82588863fca3",
           "freshness": "current",
           "reason": "source_file_unchanged"
@@ -2350,7 +2630,8 @@
       "aliases": [
         "SpacemiT生态板卡与PMIC电源配合专题",
         "SpacemiT Board and PMIC Power Matching Topic",
-        "spacemit_pmic_matching"
+        "spacemit_pmic_matching",
+        "P1 P3 PMIC"
       ],
       "target_audience": [
         "电源电路工程师",
@@ -2364,20 +2645,22 @@
         "p1s_pmic_specs"
       ],
       "backlinks": [
+        "K3芯片开发快速上手向导",
         "Muse_Pi_板级硬件设计专题",
         "SpacemiT_P3_PMIC电源芯片专题档案",
         "Spacemit_K1生态终端与教学实验套件专题档案"
       ],
       "summary": "# SpacemiT 生态板卡与 PMIC 电源配合专题档案  > [!TIP] > **💡 工程师导读与排坑焦点**：详解 K1/P1 与 K3/P1S 动态反馈 DVFS 调压、K3 16核多相供电拓扑、DDR 电源 Buglist 勘误、P3 高性能 32A Buck 拓扑、SW/FB 布线与闹钟开机避坑。 > **目标读者**：`电源电路工程师 / PCB Layout` | **技术领域**：`hardware_schematic_design`  本专题档案打破芯片与单板的边界，梳理了 K1 芯片与 PMIC P1、K3 芯片与 PMIC P1S/P3 的供电与上下电配合设计，并对",
-      "content": "# SpacemiT 生态板卡与 PMIC 电源配合专题档案\n\n> [!TIP]\n> **💡 工程师导读与排坑焦点**：详解 K1/P1 与 K3/P1S 动态反馈 DVFS 调压、K3 16核多相供电拓扑、DDR 电源 Buglist 勘误、P3 高性能 32A Buck 拓扑、SW/FB 布线与闹钟开机避坑。\n> **目标读者**：`电源电路工程师 / PCB Layout` | **技术领域**：`hardware_schematic_design`\n\n本专题档案打破芯片与单板的边界，梳理了 K1 芯片与 PMIC P1、K3 芯片与 PMIC P1S/P3 的供电与上下电配合设计，并对比了生态开发板 Muse Pi 与 Muse Pi Pro 的硬件设计差异。\n\n---\n\n## 1. 伴随电源管理 (PMIC P1/P1S/P3) 配合设计\n\n### 1.1 远端反馈动态调压 (DVFS)\n为了实现极佳的能效比，K1 的 `VDD09_CORE` 电源必须配合 PMIC P1 进行动态调压：\n*   **物理环路设计**：\n    *   反馈信号 `VDD09_CORE_B_FB` 必须直接从 K1 芯片主控球脚（Ball）引出，连接到 PMIC P1 的反馈端。\n    *   反馈地 `VDD09_CORE_B_FBGND` 必须从主控的 `VSS_FB` 引出，并在 PCB 走线时**严格远离高频干扰源**，以确保电压采样的精确性。\n*   **上下电时序控制**：Core 电源、DDR 电源与 GPIO IO 电源的上下电时序必须严格遵循 PMIC P1 的内部固化时序，外部无需分立延时电路。\n\n### 1.2 高性能大电流供电扩展（P3 PMIC）\n针对高算力芯片 Core 或大电流计算场景，SpacemiT 推出全新的四相降压 PMIC **P3**：\n*   **32 A 大电流支持**：支持 4+0、3+1、2+2 等 5 种相位组合，详情参阅知识档案 [[Knowledge_Atoms/SpacemiT_P3_PMIC电源芯片专题档案|SpacemiT P3 PMIC 电源芯片专题档案]]。\n\n### 1.3 K3 十六核 CPU 与 DDR 电源设计与避坑\n根据最新官方硬件设计指南（`Sources/docs-chip`）：\n*   **16 核 CPU 供电修订（V1.1，2026-10-16）**：\n    *   K3 包含 8 个 X100 核与 8 个 A100 核。固定来源版本的 1.2.5 节要求 **X100 / A100 / VCC_SYS / VDD0V8_DDR 合并供电**；滤波电容数量、容值和 Layout 按对应版本参考电路设计。\n    *   **冲突保留，待审核**：2026-10-16 的旧知识稿将双簇描述为独立供电、仅 A100 与 SYS 共电，与上述官方修订不一致。该旧描述不作当前设计依据；电路实施前须结合官方 Buglist 核对适用版本。\n*   **DDR 供电与 Buglist 勘误红线**：\n    *   K3 支持双通道 LPDDR5 / LPDDR4x，不同类型颗粒的电压轨（如 VDD1/VDD2/VDDQ）不一致，务必核对电路设计图纸。\n    *   > [!WARNING]\n        > **设计避坑**：官方在 2026 年 10 月更新中明确指出：**DDR 供电部分的参考设计存在 Buglist 勘误修改**。工程师在进行单板原理图与 PCB 设计时，必须严格对照官方发布的《K3 硬件设计 Buglist》核对滤波电容容值及布线要求，严禁直接复制早期未经勘误的参考原理图。\n\n### 1.4 PMIC P1 调压避坑\n*   **RTC 定时开机**：P1 PMIC 具备 RTC 闹钟自动开机功能（精度参见 [[Evidence/k1_hardware_debug_parameters]]）。当系统处于关机且电池有电的状态时，若定时时间到达，P1 会自动拉高启动，无需外部中断信号。\n*   **开关管未开启导通问题**：P1 集成的 SW 开关在未开启时，会通过内置 MOS管的体二极管微弱导通。这属于设计已知特性，通流极弱。为确保外设稳定工作，**在软件中必须显式写入寄存器开启该 SW**。\n\n### 1.5 PMIC P1/P1S PCB 布局布线规范\n为了保障高电流 BUCK 轨的输出电压稳定、降低高频电磁干扰，在 PCB 设计中必须严格遵守以下 Layout 规范：\n*   **输入滤波电容 (Cin) 摆放**：\n    *   **单面贴片**：Cin 必须与相应的 Vin 引脚**垂直放置**并尽量就近摆放，以使输入电流回路尽可能短。\n    *   **双面贴片**：若 Cin 放在底层，必须与相应的 Vin 引脚**平行放置**，且 Cin 的 GND 端必须**指向芯片的中心裸露焊盘 (EPAD)**。\n*   **BUCK VIN 轨隔离**：Buck1/Buck2、Buck3/Buck4、Buck5/Buck6 的 Vin 走线（铜箔）在顶层/底层必须完全分开，且其 Cin 电容必须各自独立，防止相间串扰。\n*   **SW 开关节点走线**：SW 走线**必须且只能在表层（顶层）进行**，严禁打过孔走内层。SW 电感下面表层铺铜应挖空，而内层（L2 地层）应保留。\n*   **电感与输出电容 (Cout)**：\n    *   电感应尽量**垂直摆放**（若平行摆放，间距需大于 2 mm），以减小相互磁场干扰。\n    *   Cout 应紧贴电感摆放，就近打孔（推荐每路各打 6 个及以上 0.25/0.5mm 过孔）至内层 GND。\n*   **远端反馈网络 (FB)**：反馈走线必须从**最外侧（靠近负载、远离芯片）**的 Cout 焊盘拉回至芯片引脚，严禁在电感下方或 SW 走线附近走反馈线，避免引入高频纹波干扰。\n*   **电源层设计**：PCB 第二层必须作为**完整地平面 (GND)**，不走任何信号线。第三层作为 VIN 输入层，Vin 铜箔应绕过芯片 EPAD 呈**环形铺铜**，为 Cin 提供完整的回流路径。EPAD 需打 7x7 的散热过孔。\n\n### 1.6 模拟供电磁珠隔离与测流电阻合并规则\n在设计芯片外围供电电路时，必须严格区分“功能滤波器（磁珠）”与“调试测流电阻”：\n*   **模拟与数字电源隔离**：原理图中为模拟 PHY（如 AVDD、PLL、Audio、CSI/DSI 等）与数字 IO 供电之间设计的**隔离磁珠（如 120Ω@100MHz）绝对不能省略或直接合并走线**。磁珠能阻断数字高频噪声耦合到敏感的模拟电路上。若省略，将直接导致外设性能下降甚至无法正常初始化。\n*   **测试测流电阻短接**：参考设计中为测量各路电源功耗而星形连接的多级测流电阻，在实际量产或无需测流的板卡设计中，**可以直接删除并进行短接合并**，直接连接到主电源层。\n*   **DSI / CSI 闲置供电要求**：即使单板设计中**完全不使用 DSI 显示或 CSI 摄像头**，SoC 上的 DSI/CSI 模块引脚电源域**仍然必须接通 1.8V 供电**，绝对不能悬空，否则会导致芯片内部产生漏电，影响整机功耗与可靠性。\n\n---\n\n## 2. 生态开发板对比与固件适配 (Muse Pi vs Muse Pi Pro)\n\n基于 K1 芯片开发的 Muse Pi 与 Muse Pi Pro 在接口设计上存在明确的硬件差异（参见 [[Evidence/muse_pi_vs_pi_pro_specs]]）：\n*   **双网口与 4G 扩展**：\n    *   `Muse Pi (标准版)`：仅引出了 1 个千兆网口，未板载任何通信插槽。\n    *   `Muse Pi Pro (高级版)`：引出了 **双千兆网口**，且板载了 **Mini PCIe 4G/5G 模组插槽与 Micro SIM 卡槽**，适合做软路由或边缘物联网关。\n*   **固件适配注意事项**：\n    *   由于两款开发板的外设配置不同，在编译 Linux/Bianbu OS 镜像时，必须在编译脚本或 U-Boot 阶段配置不同的 **DTB (设备树)** 文件（如 `k1-x_muse_pi.dtb` 或 `k1-x_muse_pi_pro.dtb`），否则双网口或 4G 模组将无法正常工作。\n\n---\n\n## 3. 关联事实证据与参考源\n\n> [!NOTE]\n> **2026-08 官方更新**：P1 Datasheet 已更新至 **V2.1**（2026.05.21），主要变更为“更新寄存器描述”。其中 5.3 节 `Digital I/O Electrical Characteristics` 详细列出了 I/O 输入/输出电气特性参数（包括 V(IH)/V(IL)/V(OH)/V(OL) 及弱上拉/下拉电阻值）。\n> **2026-08 官方新增**：Power Stone 系列新增高性能四相降压 PMIC P3 芯片，详见 [[Knowledge_Atoms/SpacemiT_P3_PMIC电源芯片专题档案]]。\n\n*   PMIC 芯片规格：[[Evidence/p1_pmic_specs|P1 PMIC 核心规格]]，[[Evidence/p1s_pmic_specs|P1S PMIC 核心规格]]\n*   物理参数对比表：[[Evidence/muse_pi_vs_pi_pro_specs|Muse Pi 与 Muse Pi Pro 对比表]]\n*   [K1 硬件常见问题 FAQ - 原始文档](../Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_faq.md)\n*   [P1 产品简介 - 原始文档](../Sources/docs-chip/zh/power_stone/p1/p1_docs/root_overview.md)\n*   [P1 硬件设计指南 - 原始文档](../Sources/docs-chip/zh/power_stone/p1/p1_hw/p1_pcb_guide.md)\n*   [P3 产品简介 - 原始文档](../Sources/docs-chip/zh/power_stone/p3/p3_docs/root_overview.md)",
+      "content": "# SpacemiT 生态板卡与 PMIC 电源配合专题档案\n\n> [!TIP]\n> **💡 工程师导读与排坑焦点**：详解 K1/P1 与 K3/P1S 动态反馈 DVFS 调压、K3 16核多相供电拓扑、DDR 电源 Buglist 勘误、P3 高性能 32A Buck 拓扑、SW/FB 布线与闹钟开机避坑。\n> **目标读者**：`电源电路工程师 / PCB Layout` | **技术领域**：`hardware_schematic_design`\n\n本专题档案打破芯片与单板的边界，梳理了 K1 芯片与 PMIC P1、K3 芯片与 PMIC P1S/P3 的供电与上下电配合设计，并对比了生态开发板 Muse Pi 与 Muse Pi Pro 的硬件设计差异。\n\n---\n\n## 1. 伴随电源管理 (PMIC P1/P1S/P3) 配合设计\n\n### 1.1 远端反馈动态调压 (DVFS)\n为了实现极佳的能效比，K1 的 `VDD09_CORE` 电源必须配合 PMIC P1 进行动态调压：\n*   **物理环路设计**：\n    *   反馈信号 `VDD09_CORE_B_FB` 必须直接从 K1 芯片主控球脚（Ball）引出，连接到 PMIC P1 的反馈端。\n    *   反馈地 `VDD09_CORE_B_FBGND` 必须从主控的 `VSS_FB` 引出，并在 PCB 走线时**严格远离高频干扰源**，以确保电压采样的精确性。\n*   **上下电时序控制**：Core 电源、DDR 电源与 GPIO IO 电源的上下电时序必须严格遵循 PMIC P1 的内部固化时序，外部无需分立延时电路。\n\n### 1.2 高性能大电流供电扩展（P3 PMIC）\n针对高算力芯片 Core 或大电流计算场景，SpacemiT 推出全新的四相降压 PMIC **P3**：\n*   **32 A 大电流支持**：支持 4+0、3+1、2+2 等 5 种相位组合，详情参阅知识档案 [[Knowledge_Atoms/SpacemiT_P3_PMIC电源芯片专题档案|SpacemiT P3 PMIC 电源芯片专题档案]]。\n\n### 1.3 K3 十六核 CPU 与 DDR 电源设计与避坑\n根据最新官方硬件设计指南（`Sources/docs-chip`）：\n*   **16 核 CPU 供电修订（V1.1，2026-10-16）**：\n    *   K3 包含 8 个 X100 核与 8 个 A100 核。固定来源版本的 1.2.5 节要求 **X100 / A100 / VCC_SYS / VDD0V8_DDR 合并供电**；滤波电容数量、容值和 Layout 按对应版本参考电路设计。\n    *   **冲突保留，待审核**：2026-10-16 的旧知识稿将双簇描述为独立供电、仅 A100 与 SYS 共电，与上述官方修订不一致。该旧描述不作当前设计依据；电路实施前须结合官方 Buglist 核对适用版本。\n*   **DDR 供电与 Buglist 勘误红线**：\n    *   K3 支持双通道 LPDDR5 / LPDDR4x，不同类型颗粒的电压轨（如 VDD1/VDD2/VDDQ）不一致，务必核对电路设计图纸。\n    *   > [!WARNING]\n        > **设计避坑**：官方在 2026 年 10 月更新中明确指出：**DDR 供电部分的参考设计存在 Buglist 勘误修改**。工程师在进行单板原理图与 PCB 设计时，必须严格对照官方发布的《K3 硬件设计 Buglist》核对供电拓扑、压降、纹波、滤波电容与布线要求，严禁直接复制早期未经勘误的参考原理图。\n\n> [!WARNING]\n> **K3 专项勘误不能套用 K1 通则**：当前 Buglist §1.2.2 要求 VCC_SYS 与 VDD0V8_DDR **直接共用电源平面，不使用磁珠隔离**；短接旧板磁珠只是文档描述的短期缓解，长期需按合并供电与 PI 设计整改。§2.2 要求 X100/A100 合并供电。Vripple-pp ≤70 mV 与 Vnoise-pp ≤140 mV 是该 DDR 电源设计要求，实际结果仍取决于 Layout、电源响应与电容，建议 PI 仿真。下文 K1 模拟 PHY 的磁珠隔离通则不能用于否定此 K3 特定勘误。\n\n### 1.4 PMIC P1 调压避坑\n*   **RTC 定时开机**：P1 PMIC 具备 RTC 闹钟自动开机功能（精度参见 [[Evidence/k1_hardware_debug_parameters]]）。当系统处于关机且电池有电的状态时，若定时时间到达，P1 会自动拉高启动，无需外部中断信号。\n*   **开关管未开启导通问题**：P1 集成的 SW 开关在未开启时，会通过内置 MOS管的体二极管微弱导通。这属于设计已知特性，通流极弱。为确保外设稳定工作，**在软件中必须显式写入寄存器开启该 SW**。\n\n### 1.5 PMIC P1/P1S PCB 布局布线规范\n为了保障高电流 BUCK 轨的输出电压稳定、降低高频电磁干扰，在 PCB 设计中必须严格遵守以下 Layout 规范：\n*   **输入滤波电容 (Cin) 摆放**：\n    *   **单面贴片**：Cin 必须与相应的 Vin 引脚**垂直放置**并尽量就近摆放，以使输入电流回路尽可能短。\n    *   **双面贴片**：若 Cin 放在底层，必须与相应的 Vin 引脚**平行放置**，且 Cin 的 GND 端必须**指向芯片的中心裸露焊盘 (EPAD)**。\n*   **BUCK VIN 轨隔离**：Buck1/Buck2、Buck3/Buck4、Buck5/Buck6 的 Vin 走线（铜箔）在顶层/底层必须完全分开，且其 Cin 电容必须各自独立，防止相间串扰。\n*   **SW 开关节点走线**：SW 走线**必须且只能在表层（顶层）进行**，严禁打过孔走内层。SW 电感下面表层铺铜应挖空，而内层（L2 地层）应保留。\n*   **电感与输出电容 (Cout)**：\n    *   电感应尽量**垂直摆放**（若平行摆放，间距需大于 2 mm），以减小相互磁场干扰。\n    *   Cout 应紧贴电感摆放，就近打孔（推荐每路各打 6 个及以上 0.25/0.5mm 过孔）至内层 GND。\n*   **远端反馈网络 (FB)**：反馈走线必须从**最外侧（靠近负载、远离芯片）**的 Cout 焊盘拉回至芯片引脚，严禁在电感下方或 SW 走线附近走反馈线，避免引入高频纹波干扰。\n*   **电源层设计**：PCB 第二层必须作为**完整地平面 (GND)**，不走任何信号线。第三层作为 VIN 输入层，Vin 铜箔应绕过芯片 EPAD 呈**环形铺铜**，为 Cin 提供完整的回流路径。EPAD 需打 7x7 的散热过孔。\n\n### 1.6 模拟供电磁珠隔离与测流电阻合并规则\n在设计芯片外围供电电路时，必须严格区分“功能滤波器（磁珠）”与“调试测流电阻”：\n*   **模拟与数字电源隔离**：原理图中为模拟 PHY（如 AVDD、PLL、Audio、CSI/DSI 等）与数字 IO 供电之间设计的**隔离磁珠（如 120Ω@100MHz）绝对不能省略或直接合并走线**。磁珠能阻断数字高频噪声耦合到敏感的模拟电路上。若省略，将直接导致外设性能下降甚至无法正常初始化。\n*   **测试测流电阻短接**：参考设计中为测量各路电源功耗而星形连接的多级测流电阻，在实际量产或无需测流的板卡设计中，**可以直接删除并进行短接合并**，直接连接到主电源层。\n*   **DSI / CSI 闲置供电要求**：即使单板设计中**完全不使用 DSI 显示或 CSI 摄像头**，SoC 上的 DSI/CSI 模块引脚电源域**仍然必须接通 1.8V 供电**，绝对不能悬空，否则会导致芯片内部产生漏电，影响整机功耗与可靠性。\n\n---\n\n## 2. 生态开发板对比与固件适配 (Muse Pi vs Muse Pi Pro)\n\n基于 K1 芯片开发的 Muse Pi 与 Muse Pi Pro 在接口设计上存在明确的硬件差异（参见 [[Evidence/muse_pi_vs_pi_pro_specs]]）：\n*   **双网口与 4G 扩展**：\n    *   `Muse Pi (标准版)`：仅引出了 1 个千兆网口，未板载任何通信插槽。\n    *   `Muse Pi Pro (高级版)`：引出了 **双千兆网口**，且板载了 **Mini PCIe 4G/5G 模组插槽与 Micro SIM 卡槽**，适合做软路由或边缘物联网关。\n*   **固件适配注意事项**：\n    *   由于两款开发板的外设配置不同，在编译 Linux/Bianbu OS 镜像时，必须在编译脚本或 U-Boot 阶段配置不同的 **DTB (设备树)** 文件（如 `k1-x_muse_pi.dtb` 或 `k1-x_muse_pi_pro.dtb`），否则双网口或 4G 模组将无法正常工作。\n\n---\n\n## 3. 关联事实证据与参考源\n\n> [!NOTE]\n> **2026-08 官方更新**：P1 Datasheet 已更新至 **V2.1**（2026.05.21），主要变更为“更新寄存器描述”。其中 5.3 节 `Digital I/O Electrical Characteristics` 详细列出了 I/O 输入/输出电气特性参数（包括 V(IH)/V(IL)/V(OH)/V(OL) 及弱上拉/下拉电阻值）。\n> **2026-08 官方新增**：Power Stone 系列新增高性能四相降压 PMIC P3 芯片，详见 [[Knowledge_Atoms/SpacemiT_P3_PMIC电源芯片专题档案]]。\n\n*   PMIC 芯片规格：[[Evidence/p1_pmic_specs|P1 PMIC 核心规格]]，[[Evidence/p1s_pmic_specs|P1S PMIC 核心规格]]\n*   物理参数对比表：[[Evidence/muse_pi_vs_pi_pro_specs|Muse Pi 与 Muse Pi Pro 对比表]]\n*   [K1 硬件常见问题 FAQ - 原始文档](../Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_faq.md)\n*   [P1 产品简介 - 原始文档](../Sources/docs-chip/zh/power_stone/p1/p1_docs/root_overview.md)\n*   [P1 硬件设计指南 - 原始文档](../Sources/docs-chip/zh/power_stone/p1/p1_hw/p1_pcb_guide.md)\n*   [P3 产品简介 - 原始文档](../Sources/docs-chip/zh/power_stone/p3/p3_docs/root_overview.md)",
       "created": "2026-06-29",
-      "updated": "2026-10-20",
+      "updated": "2026-10-21",
       "source_file": "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md",
       "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
       "source_section": "1.2.5 CPU 电源设计；1.2.6 DDR 电源设计",
       "source_resolution": "partial",
       "verification_status": "unverified",
-      "source_checked_at": "2026-10-19",
+      "source_checked_at": "2026-10-21",
+      "source_note": "2026-10-21 定向复核K1 FAQ链接迁移、K3指南1.2.5/1.2.6与Buglist1.2.2/2.2，补合并供电及共平面勘误；其余PMIC/布局历史断言未全文核验。",
       "conflicts": "旧同步稿称 X100/A100 独立供电，与官方 V1.1 合并供电修订冲突；保留勘误说明，待人工审核。",
       "source_origin": "https://github.com/spacemit-com/docs-chip",
       "source_related_file": [
@@ -2388,22 +2671,22 @@
         "Sources/docs-product/zh/k1_series/k1_muse_pi/root_overview.md",
         "Sources/docs-product/zh/k1_series/k1_muse_pi_pro/root_overview.md",
         "Sources/docs-chip/zh/power_stone/p1/p1_docs/p1_ds.md",
-        "Sources/docs-chip/zh/power_stone/p1s/p1s_docs/p1s_ds.md"
+        "Sources/docs-chip/zh/power_stone/p1s/p1s_docs/p1s_ds.md",
+        "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_buglist.md"
       ],
       "source_related_commit": [
-        "1ea15a766287024a5bb7b548850826e3525a80dc",
+        "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
         "15254b1cfe339c1863d8edf8137a337681fb2780",
         "15254b1cfe339c1863d8edf8137a337681fb2780",
         "15254b1cfe339c1863d8edf8137a337681fb2780",
         "8c851807f2c54e8ba54d568b268100ca727d0777",
         "8c851807f2c54e8ba54d568b268100ca727d0777",
         "1ea15a766287024a5bb7b548850826e3525a80dc",
-        "1ea15a766287024a5bb7b548850826e3525a80dc"
+        "1ea15a766287024a5bb7b548850826e3525a80dc",
+        "2525ee3b68e0f4864f1bf12c8a59df040bf27e84"
       ],
-      "freshness": "stale",
-      "stale_paths": [
-        "Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_faq.md"
-      ],
+      "freshness": "current",
+      "stale_paths": [],
       "unknown_paths": [],
       "checked_against_commit": {
         "docs-chip": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
@@ -2419,10 +2702,10 @@
         },
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_faq.md",
-          "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc",
+          "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
-          "freshness": "stale",
-          "reason": "source_file_changed"
+          "freshness": "current",
+          "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-chip/zh/power_stone/p1/p1_docs/root_overview.md",
@@ -2469,6 +2752,13 @@
         {
           "source_file": "Sources/docs-chip/zh/power_stone/p1s/p1s_docs/p1s_ds.md",
           "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+          "freshness": "current",
+          "reason": "source_file_unchanged"
+        },
+        {
+          "source_file": "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_buglist.md",
+          "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "freshness": "current",
           "reason": "source_file_unchanged"
@@ -3082,23 +3372,21 @@
         "SpacemiT生态板卡与PMIC电源配合专题档案"
       ],
       "summary": "# K1 芯片硬件调试与物理设计参数  > [!TIP] > **💡 工程师导读与排坑焦点**：存放 K1 芯片线刷阻抗要求、休眠功耗、RTC 精度与调试串口/JTAG 规范。 > **目标读者**：`硬件调试工程师 / 测试工程师` | **技术领域**：`toolchain_debug_tools`  本文件汇集了 K1 芯片在实际硬件单板调试、原理图设计与 PCB 走线时的关键物理与电气参数。  ## 1. 阻抗控制要求 *   **单端信号线阻抗**：**50 Ω** (单端走线阻抗控制标准) *   **差分信号线阻抗**：     *   **DDR 接口差分线**：必须严格控制在",
-      "content": "# K1 芯片硬件调试与物理设计参数\n\n> [!TIP]\n> **💡 工程师导读与排坑焦点**：存放 K1 芯片线刷阻抗要求、休眠功耗、RTC 精度与调试串口/JTAG 规范。\n> **目标读者**：`硬件调试工程师 / 测试工程师` | **技术领域**：`toolchain_debug_tools`\n\n本文件汇集了 K1 芯片在实际硬件单板调试、原理图设计与 PCB 走线时的关键物理与电气参数。\n\n## 1. 阻抗控制要求\n*   **单端信号线阻抗**：**50 Ω** (单端走线阻抗控制标准)\n*   **差分信号线阻抗**：\n    *   **DDR 接口差分线**：必须严格控制在 **90 Ω**。\n    *   **其他差分接口 (如 USB, PCIe, HDMI, MIPI)**：可控制在 **90 Ω ~ 100 Ω** 之间。\n\n## 2. 功耗与电源管理参数\n*   **整机休眠功耗**：最低可做到 **28 mW** (在合理的 PMIC 休眠状态电源轨裁剪下)。\n*   **PMIC (P1) 内置 RTC 精度**：**20 ppm** (用于关机闹钟开机等高精度定时场景)。\n*   **AONLDO (常开 LDO) 默认电压**：**1.8 V** (用于 PMIC 上电时直接输出供电)。\n*   **ALDO 快速配置耗时**：在启动的 **SPL 阶段**，将 ALDO 配置为 3.3V 输出约需 **490 ms**。\n\n## 3. 调试接口电气规范\n*   **调试串口波特率**：**115200 bps** (8N1 格式)。\n*   **调试串口电平**：必须使用 **3.3 V** 电平的串口线 (如 Muse Pi 板载调试端口)。\n\n## 4. 高速信号损耗\n*   **芯片片内高速接口损耗** (如 USB3.0, PCIe)：**< 1 dB** (板级设计需额外根据走线长度控制损耗)。",
+      "content": "# K1 芯片硬件调试与物理设计参数\n\n> [!TIP]\n> **💡 工程师导读与排坑焦点**：存放 K1 芯片线刷阻抗要求、休眠功耗、RTC 精度与调试串口/JTAG 规范。\n> **目标读者**：`硬件调试工程师 / 测试工程师` | **技术领域**：`toolchain_debug_tools`\n\n本文件汇集了 K1 芯片在实际硬件单板调试、原理图设计与 PCB 走线时的关键物理与电气参数。\n\n## 1. 阻抗控制要求\n*   **单端信号线阻抗**：**50 Ω** (单端走线阻抗控制标准)\n*   **差分信号线阻抗**：\n    *   **DDR 接口差分线**：必须严格控制在 **90 Ω**。\n    *   **其他差分接口 (如 USB, PCIe, HDMI, MIPI)**：可控制在 **90 Ω ~ 100 Ω** 之间。\n\n## 2. 功耗与电源管理参数\n*   **K1 休眠功耗参考**：FAQ 记录“目前可做到 **28 mW**”；未给出整板配置和测量条件，不能作为任意整机的保证值。\n*   **PMIC (P1) 内置 RTC 精度**：**20 ppm** (用于关机闹钟开机等高精度定时场景)。\n*   **AONLDO (常开 LDO) 默认电压**：**1.8 V** (用于 PMIC 上电时直接输出供电)。\n*   **ALDO 快速配置耗时**：在启动的 **SPL 阶段**，将 ALDO 配置为 3.3V 输出约需 **490 ms**。\n\n## 3. 调试接口电气规范\n*   **调试串口波特率**：**115200 bps** (8N1 格式)。\n*   **调试串口电平**：必须使用 **3.3 V** 电平的串口线 (如 Muse Pi 板载调试端口)。\n\n## 4. 高速信号损耗\n*   **芯片片内高速接口损耗** (如 USB3.0, PCIe)：**< 1 dB** (板级设计需额外根据走线长度控制损耗)。",
       "claim_type": "parameter",
       "verification_status": "unverified",
       "external_use": false,
       "source_file": "Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_faq.md",
       "source_origin": "https://github.com/spacemit-com/docs-chip",
-      "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc",
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
       "source_section": "电源系统；其他；开发调试",
       "source_resolution": "partial",
-      "source_checked_at": "2026-10-13",
-      "source_note": "休眠功耗、RTC、ALDO 和部分阻抗参数已定位；调试电平与高速损耗未逐项核验。",
+      "source_checked_at": "2026-10-21",
+      "source_note": "2026-10-21 阶段 B：FAQ 开发调试、电源系统、其他：串口 3.3V/115200、RTC/ALDO、K1 休眠指标；来源改动仅两处链接。其余历史参数继续未核验。 保持 unverified/needs_review；不表示全文事实通过。",
       "created": "2026-06-29",
-      "updated": "2026-10-13",
-      "freshness": "stale",
-      "stale_paths": [
-        "Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_faq.md"
-      ],
+      "updated": "2026-10-21",
+      "freshness": "current",
+      "stale_paths": [],
       "unknown_paths": [],
       "checked_against_commit": {
         "docs-chip": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84"
@@ -3106,10 +3394,10 @@
       "source_freshness": [
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_faq.md",
-          "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc",
+          "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
-          "freshness": "stale",
-          "reason": "source_file_changed"
+          "freshness": "current",
+          "reason": "source_file_unchanged"
         }
       ]
     },
@@ -3133,7 +3421,7 @@
         "K1_K3摄像系统与图像处理专题档案"
       ],
       "summary": "# K1/K3 摄像系统与图像输入物理规格  > [!TIP] > **💡 工程师导读与排坑焦点**：存放 K1/K3 MIPI CSI RX 通道组合及 ISP 并发硬加速处理限制。 > **目标读者**：`ISP图像工程师 / 硬件工程师` | **技术领域**：`chip_product_specs`  本文件汇集了 K1 和 K3 芯片在摄像头输入（MIPI CSI）以及图像信号处理器（ISP）方面的物理引脚组合与并发处理能力。  ## 1. 进迭时空 K1 芯片摄像规格 *   **MIPI CSI RX 通道**：共支持 **8 Lanes** 差分输入，硬件可灵活配置为：",
-      "content": "# K1/K3 摄像系统与图像输入物理规格\n\n> [!TIP]\n> **💡 工程师导读与排坑焦点**：存放 K1/K3 MIPI CSI RX 通道组合及 ISP 并发硬加速处理限制。\n> **目标读者**：`ISP图像工程师 / 硬件工程师` | **技术领域**：`chip_product_specs`\n\n本文件汇集了 K1 和 K3 芯片在摄像头输入（MIPI CSI）以及图像信号处理器（ISP）方面的物理引脚组合与并发处理能力。\n\n## 1. 进迭时空 K1 芯片摄像规格\n*   **MIPI CSI RX 通道**：共支持 **8 Lanes** 差分输入，硬件可灵活配置为：\n    *   `4 Lanes + 4 Lanes` 或 `4 Lanes + 2 Lanes + 2 Lanes`。\n*   **摄像头并发限制**：\n    *   在 `4+2+2` 模式下，**物理上支持三摄同时出图**。\n    *   **ISP 管道限制**：芯片内置 ISP **仅能同时处理两路图像**。\n    *   **第三路规避方案**：剩余的第 3 路摄像头必须为 `YUV` 或 `RAW` 格式，不能经过 ISP，只能通过内置的 **CCIC DMA** 模块将原始图像数据直接 dump 到 DDR 内存中。\n*   **单摄最高分辨率**：最大支持 **16 MP** 摄像头输入。\n\n## 2. 进迭时空 K3 芯片摄像规格\n*   **MIPI CSI RX 通道**：\n    *   支持多路 MIPI CSI 接口输入，典型配置为 **2 × MIPI CSI 4-Lanes** 与 **2 × MIPI CSI 2-Lanes**。\n*   **多摄像头支持**：\n    *   支持最多 **4 个摄像头（四摄）同时接入**。\n    *   升级版图像信号处理器（ISP）支持更强的多路并发实时处理与低延迟硬件降噪。\n*   **智能视觉硬件加速**：配合 256bit RVV 1.0 向量加速，可实时处理多路 AI 视觉算法。",
+      "content": "# K1/K3 摄像系统与图像输入物理规格\n\n> [!TIP]\n> **💡 工程师导读与排坑焦点**：存放 K1/K3 MIPI CSI RX 通道组合及 ISP 并发硬加速处理限制。\n> **目标读者**：`ISP图像工程师 / 硬件工程师` | **技术领域**：`chip_product_specs`\n\n本文件汇集了 K1 和 K3 芯片在摄像头输入（MIPI CSI）以及图像信号处理器（ISP）方面的物理引脚组合与并发处理能力。\n\n## 1. 进迭时空 K1 芯片摄像规格\n*   **MIPI CSI RX 通道**：共支持 **8 Lanes** 差分输入，硬件可灵活配置为：\n    *   `4 Lanes + 4 Lanes` 或 `4 Lanes + 2 Lanes + 2 Lanes`。\n*   **摄像头并发限制**：\n    *   在 `4+2+2` 模式下，**物理上支持三摄同时出图**。\n    *   **ISP 管道限制**：芯片内置 ISP **仅能同时处理两路图像**。\n    *   **第三路规避方案**：剩余的第 3 路摄像头必须为 `YUV` 或 `RAW` 格式，不能经过 ISP，只能通过内置的 **CCIC DMA** 模块将原始图像数据直接 dump 到 DDR 内存中。\n*   **单摄最高分辨率**：最大支持 **16 MP** 摄像头输入。\n\n## 2. 进迭时空 K3 芯片摄像规格\n*   **MIPI CSI RX 通道**：K3 硬件设计指南 1.3.2 给出 **12 Lanes**，支持 `4+4+4` 或 `4+4+2+2` 输入。\n*   **时钟关系**：CSI2 的 D2/D3 在 2-Lane 模式参考 CSI3 时钟，D0/D1 参考 CSI2 时钟；4-Lane 模式统一参考 CSI2 时钟。具体连接须核对该节原图。\n*   **边界**：四路物理输入不等于四路 ISP/AI 并发性能保证；本轮未定位此前“低延迟降噪”和具体 AI 并发指标的证据，不能从 Lane 数推导。K3 A100 的 RVV 位宽也不能套用 K1 X60 的值。",
       "claim_type": "parameter",
       "verification_status": "unverified",
       "external_use": false,
@@ -3142,20 +3430,18 @@
       "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc",
       "source_section": "1.3.3 MIPI CSI RX 配置接口设计",
       "source_resolution": "partial",
-      "source_checked_at": "2026-10-13",
-      "source_note": "已定位 K1 通道组合与 ISP 并发说明；K3 参数及全文残留占位符尚未核验。",
+      "source_checked_at": "2026-10-21",
+      "source_note": "2026-10-21 阶段 B：K3 指南 1.3.2 的 12 Lane 组合；修正物理输入与 ISP 软件并发的混用，不承诺未定位的降噪/低延迟指标。 保持 unverified/needs_review；不表示全文事实通过。",
       "source_related_file": [
         "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md"
       ],
       "source_related_commit": [
-        "1ea15a766287024a5bb7b548850826e3525a80dc"
+        "2525ee3b68e0f4864f1bf12c8a59df040bf27e84"
       ],
       "created": "2026-06-29",
-      "updated": "2026-10-20",
-      "freshness": "stale",
-      "stale_paths": [
-        "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md"
-      ],
+      "updated": "2026-10-21",
+      "freshness": "current",
+      "stale_paths": [],
       "unknown_paths": [],
       "checked_against_commit": {
         "docs-chip": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84"
@@ -3170,10 +3456,10 @@
         },
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md",
-          "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc",
+          "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
-          "freshness": "stale",
-          "reason": "source_file_changed"
+          "freshness": "current",
+          "reason": "source_file_unchanged"
         }
       ]
     },
@@ -3260,23 +3546,27 @@
         "K1_K3网络通信与千兆网口专题档案"
       ],
       "summary": "# K1/K3 网络通信与网口物理规格  > [!TIP] > **💡 工程师导读与排坑焦点**：存放双路 GMAC 百兆 PHY 兼容限值、SDIO 无线模组电气参数。 > **目标读者**：`网络驱动工程师 / 硬件工程师` | **技术领域**：`chip_product_specs`  本文件汇集了 K1 和 K3 芯片在以太网 MAC（GMAC）以及无线网络模组接口方面的电气规范与物理参数。  ## 1. 进迭时空 K1 芯片网络规格 *   **以太网控制器 (GMAC)**：集成 **2 路千兆 GMAC** 接口，支持 `RGMII` 物理连接，工作速率为 10/100/100",
-      "content": "# K1/K3 网络通信与网口物理规格\n\n> [!TIP]\n> **💡 工程师导读与排坑焦点**：存放双路 GMAC 百兆 PHY 兼容限值、SDIO 无线模组电气参数。\n> **目标读者**：`网络驱动工程师 / 硬件工程师` | **技术领域**：`chip_product_specs`\n\n本文件汇集了 K1 和 K3 芯片在以太网 MAC（GMAC）以及无线网络模组接口方面的电气规范与物理参数。\n\n## 1. 进迭时空 K1 芯片网络规格\n*   **以太网控制器 (GMAC)**：集成 **2 路千兆 GMAC** 接口，支持 `RGMII` 物理连接，工作速率为 10/100/1000M 自适应。\n*   **百兆 PHY 兼容限制**：\n    *   **物理红线**：K1 的 GMAC 控制器**不支持纯百兆以太网 PHY 芯片**（即使在 100M 速率下也必须使用千兆级 PHY 芯片）。\n    *   **供电要求**：PHY 芯片供电电压必须按其设计连接（通常为 3.3V/1.8V），GMAC0 和 GMAC1 均有独立的电源域控制。\n*   **单/双网口软件影响**：系统设计上使用单网口（仅启用 GMAC0 或仅启用 GMAC1）**不会对系统软件运行产生任何功能影响**。\n\n## 2. 进迭时空 K3 芯片网络规格\n*   **以太网控制器**：同样集成 **2 路千兆级以太网 MAC**，支持标准 `RGMII` 与外部 PHY 芯片进行对接。\n*   **无线连接接口 (Wi-Fi / BT)**：\n    *   内置高性能 **SDIO 3.0** 通道（用于高带宽 Wi-Fi 6 传输）以及 **UART/PCM** 接口（用于蓝牙音频与数据传输）。\n    *   支持通过 PCIe 扩展高性能工业级无线网卡。\n*   **网络数据硬加速**：支持以太网数据包硬件校验和分流，降低大流量下的 CPU 占用率。",
+      "content": "# K1/K3 网络通信与网口物理规格\n\n> [!TIP]\n> **💡 工程师导读与排坑焦点**：存放双路 GMAC 百兆 PHY 兼容限值、SDIO 无线模组电气参数。\n> **目标读者**：`网络驱动工程师 / 硬件工程师` | **技术领域**：`chip_product_specs`\n\n本文件汇集了 K1 和 K3 芯片在以太网 MAC（GMAC）以及无线网络模组接口方面的电气规范与物理参数。\n\n## 1. 进迭时空 K1 芯片网络规格\n*   **以太网控制器 (GMAC)**：集成 **2 路千兆 GMAC** 接口，支持 `RGMII` 物理连接，工作速率为 10/100/1000M 自适应。\n*   **百兆 PHY 兼容限制**：\n    *   **物理红线**：K1 的 GMAC 控制器**不支持纯百兆以太网 PHY 芯片**（即使在 100M 速率下也必须使用千兆级 PHY 芯片）。\n    *   **供电要求**：PHY 芯片供电电压必须按其设计连接（通常为 3.3V/1.8V），GMAC0 和 GMAC1 均有独立的电源域控制。\n*   **单/双网口软件影响**：系统设计上使用单网口（仅启用 GMAC0 或仅启用 GMAC1）**不会对系统软件运行产生任何功能影响**。\n\n## 2. 进迭时空 K3 芯片网络规格\n*   **以太网控制器**：K3 指南 1.4.5 明确为 **4 个 GMAC**，3 路在 ACPU、1 路在 RCPU。\n*   **接口组合**：GMAC0/GMAC1 支持 `RGMII / RMII / MII`；GMAC2/GMAC3 支持 `RGMII / RMII`，芯片可提供 25 MHz PHY 时钟。实际板卡引出数与 PHY 支持须按板型核对。\n*   **代际边界**：K1 FAQ 的“不能使用纯百兆 PHY”不能直接推广为 K3 的限制。\n*   **待核查**：无线模组代际、Wi-Fi 6 吞吐和硬件校验/分流能力未在本轮来源中逐项证实，不承诺上述功能或性能。",
       "claim_type": "parameter",
       "verification_status": "unverified",
       "external_use": false,
       "source_file": "Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_faq.md",
       "source_origin": "https://github.com/spacemit-com/docs-chip",
-      "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc",
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
       "source_section": "网络系统",
       "source_resolution": "partial",
-      "source_checked_at": "2026-10-13",
-      "source_note": "已定位 K1 百兆 PHY 限制；K3 PHY、无线和网络加速结论尚未定位验证。",
-      "created": "2026-06-29",
-      "updated": "2026-10-13",
-      "freshness": "stale",
-      "stale_paths": [
-        "Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_faq.md"
+      "source_checked_at": "2026-10-21",
+      "source_note": "2026-10-21 阶段 B：K1 FAQ 网络系统与 K3 指南 1.4.5：修正 K3 四路 GMAC，RMII/RGMII/MII 不沿用 K1 限制。无线/卸载结论证据不足。 保持 unverified/needs_review；不表示全文事实通过。",
+      "source_related_file": [
+        "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md"
       ],
+      "source_related_commit": [
+        "2525ee3b68e0f4864f1bf12c8a59df040bf27e84"
+      ],
+      "created": "2026-06-29",
+      "updated": "2026-10-21",
+      "freshness": "current",
+      "stale_paths": [],
       "unknown_paths": [],
       "checked_against_commit": {
         "docs-chip": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84"
@@ -3284,10 +3574,17 @@
       "source_freshness": [
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k1/k1_hw/k1_hw_faq.md",
-          "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc",
+          "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
-          "freshness": "stale",
-          "reason": "source_file_changed"
+          "freshness": "current",
+          "reason": "source_file_unchanged"
+        },
+        {
+          "source_file": "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md",
+          "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+          "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+          "freshness": "current",
+          "reason": "source_file_unchanged"
         }
       ]
     },
@@ -3320,20 +3617,18 @@
       "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc",
       "source_section": "特性",
       "source_resolution": "partial",
-      "source_checked_at": "2026-10-13",
-      "source_note": "K3 UFS 2.2 与 PCIe/USB Combo 已据补充来源的 1.1.9 和 1.4.1 修正；其余扩展芯片兼容细节尚未逐项核验。",
+      "source_checked_at": "2026-10-21",
+      "source_note": "2026-10-21 阶段 B：K3 指南 1.1.9 UFS 2.2、1.4.1 USB/PCIe Combo；CPU/DDR 修订不改变这两个章节。其他桥接兼容性未全测。 保持 unverified/needs_review；不表示全文事实通过。",
       "source_related_file": [
         "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md"
       ],
       "source_related_commit": [
-        "1ea15a766287024a5bb7b548850826e3525a80dc"
+        "2525ee3b68e0f4864f1bf12c8a59df040bf27e84"
       ],
       "created": "2026-06-29",
-      "updated": "2026-10-20",
-      "freshness": "stale",
-      "stale_paths": [
-        "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md"
-      ],
+      "updated": "2026-10-21",
+      "freshness": "current",
+      "stale_paths": [],
       "unknown_paths": [],
       "checked_against_commit": {
         "docs-chip": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84"
@@ -3348,10 +3643,10 @@
         },
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md",
-          "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc",
+          "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
-          "freshness": "stale",
-          "reason": "source_file_changed"
+          "freshness": "current",
+          "reason": "source_file_unchanged"
         }
       ]
     },
@@ -3843,24 +4138,23 @@
         "K3芯片开发快速上手向导",
         "K3启动模式与Strap管脚配置专题档案"
       ],
-      "summary": "# K3 芯片 Strap Pins 启动与系统配置参数  > [!TIP] > **💡 工程师导读与排坑焦点**：详细标注 K3 芯片 Strap 管脚配置阻值与启动介质引脚选择。 > **目标读者**：`硬件电路工程师 / 驱动工程师` | **技术领域**：`hardware_schematic_design`  本文件包含 K3 芯片级硬件初始化配置管脚（Strap Pins）的物理连接与功能组合。共有 6 个配置管脚（Strap 0 ~ 5）。  ## 1. Boot 启动介质选择 (Strap 0 & 1) 通过 **GPIO66 (Strap 1)** 与 **GPIO65 (S",
-      "content": "# K3 芯片 Strap Pins 启动与系统配置参数\n\n> [!TIP]\n> **💡 工程师导读与排坑焦点**：详细标注 K3 芯片 Strap 管脚配置阻值与启动介质引脚选择。\n> **目标读者**：`硬件电路工程师 / 驱动工程师` | **技术领域**：`hardware_schematic_design`\n\n本文件包含 K3 芯片级硬件初始化配置管脚（Strap Pins）的物理连接与功能组合。共有 6 个配置管脚（Strap 0 ~ 5）。\n\n## 1. Boot 启动介质选择 (Strap 0 & 1)\n通过 **GPIO66 (Strap 1)** 与 **GPIO65 (Strap 0)** 的电平组合选择芯片引导介质：\n\n| 组合 | GPIO[66] (Strap 1)<br>[默认下拉] | GPIO[65] (Strap 0)<br>[默认下拉] | 启动顺序 / 引导功能 |\n| :--- | :---: | :---: | :--- |\n| **1** | 0 | 0 | **TF Card $\\rightarrow$ eMMC [默认]** |\n| **2** | 1 | 0 | **TF Card $\\rightarrow$ SPI NOR** |\n| **3** | 0 | 1 | **TF Card $\\rightarrow$ SPI NAND** |\n| **4** | 1 | 1 | **TF Card $\\rightarrow$ UFS** |\n\n## 2. Download sel 下载通道选择 (Strap 2)\n通过 **GPIO68 (Strap 2)** 选择系统烧录/下载接口：\n\n| GPIO[68] (Strap 2)<br>[默认下拉] | 烧录/下载接口功能 | 备注 |\n| :---: | :--- | :--- |\n| **0** | **USB [默认]** | 使用 USB DRD 接口 / Type-C 进行系统烧录 |\n| **1** | **UART** | 使用串口进行下载/调试 |\n\n## 3. Boot/down_sel 启动与下载模式选择 (Strap 3)\n通过 **GPIO69 (Strap 3)** 选择芯片上电后的工作状态：\n\n| GPIO[69] (Strap 3)<br>[默认下拉] | 芯片上电状态 | 说明 |\n| :---: | :--- | :--- |\n| **0** | **启动模式 [默认]** | 芯片正常读取启动介质并引导系统 |\n| **1** | **下载/烧录模式** | 芯片进入烧录接收状态，等待主机写入固件 |\n\n## 4. QSPI 电压选择 (Strap 4)\n通过 **GPIO64 (Strap 4)** 决定 QSPI Flash 接口的 IO 电压域：\n\n| GPIO[64] (Strap 4)<br>[默认下拉] | QSPI 电压功能 | 备注 |\n| :---: | :--- | :--- |\n| **0** | **3.3V [默认]** | 适用于 3.3V 工作电压的 SPI Flash |\n| **1** | **1.8V** | 适用于 1.8V 工作电压的 SPI Flash |\n\n## 5. LPDDR 内存类型选择 (Strap 5)\n通过 **GPIO52 (Strap 5)** 决定 DDR 控制器初始化的物理内存类型：\n\n| GPIO[52] (Strap 5)<br>[默认下拉] | 适配内存类型 | 备注 |\n| :---: | :--- | :--- |\n| **0** | **LPDDR5 [默认]** | 初始化为 LPDDR5 模式 |\n| **1** | **LPDDR4x** | 初始化为 LPDDR4x 模式 |",
+      "summary": "# K3 芯片 Strap Pins 启动与系统配置参数  > [!TIP] > **💡 工程师导读与排坑焦点**：详细标注 K3 芯片 Strap 管脚配置阻值与启动介质引脚选择。 > **目标读者**：`硬件电路工程师 / 驱动工程师` | **技术领域**：`hardware_schematic_design`  本文件按 K3 指南 1.1.5 的功能表列出 Strap 0～5。  > [!WARNING] > **来源内部冲突，待确认**：同节开头却写“共有 5 个 strap pin”，并列 GPIO65/66/68/69/90；后面的 QSPI 与 LPDDR 表分别写 GPIO",
+      "content": "# K3 芯片 Strap Pins 启动与系统配置参数\n\n> [!TIP]\n> **💡 工程师导读与排坑焦点**：详细标注 K3 芯片 Strap 管脚配置阻值与启动介质引脚选择。\n> **目标读者**：`硬件电路工程师 / 驱动工程师` | **技术领域**：`hardware_schematic_design`\n\n本文件按 K3 指南 1.1.5 的功能表列出 Strap 0～5。\n\n> [!WARNING]\n> **来源内部冲突，待确认**：同节开头却写“共有 5 个 strap pin”，并列 GPIO65/66/68/69/90；后面的 QSPI 与 LPDDR 表分别写 GPIO64 和 GPIO52。以下保留各功能表原值，不能将其称为已确认的完整管脚清单；电阻、供电和实际接线须对照对应板型原理图及官方勘误。\n\n## 1. Boot 启动介质选择 (Strap 0 & 1)\n通过 **GPIO66 (Strap 1)** 与 **GPIO65 (Strap 0)** 的电平组合选择芯片引导介质：\n\n| 组合 | GPIO[66] (Strap 1)<br>[默认下拉] | GPIO[65] (Strap 0)<br>[默认下拉] | 启动顺序 / 引导功能 |\n| :--- | :---: | :---: | :--- |\n| **1** | 0 | 0 | **TF Card $\\rightarrow$ eMMC [默认]** |\n| **2** | 1 | 0 | **TF Card $\\rightarrow$ SPI NOR** |\n| **3** | 0 | 1 | **TF Card $\\rightarrow$ SPI NAND** |\n| **4** | 1 | 1 | **TF Card $\\rightarrow$ UFS** |\n\n## 2. Download sel 下载通道选择 (Strap 2)\n通过 **GPIO68 (Strap 2)** 选择系统烧录/下载接口：\n\n| GPIO[68] (Strap 2)<br>[默认下拉] | 烧录/下载接口功能 | 备注 |\n| :---: | :--- | :--- |\n| **0** | **USB [默认]** | 使用 USB DRD 接口 / Type-C 进行系统烧录 |\n| **1** | **UART** | 使用串口进行下载/调试 |\n\n## 3. Boot/down_sel 启动与下载模式选择 (Strap 3)\n通过 **GPIO69 (Strap 3)** 选择芯片上电后的工作状态：\n\n| GPIO[69] (Strap 3)<br>[默认下拉] | 芯片上电状态 | 说明 |\n| :---: | :--- | :--- |\n| **0** | **启动模式 [默认]** | 芯片正常读取启动介质并引导系统 |\n| **1** | **下载/烧录模式** | 芯片进入烧录接收状态，等待主机写入固件 |\n\n## 4. QSPI 电压选择 (Strap 4)\n通过 **GPIO64 (Strap 4)** 决定 QSPI Flash 接口的 IO 电压域：\n\n| GPIO[64] (Strap 4)<br>[默认下拉] | QSPI 电压功能 | 备注 |\n| :---: | :--- | :--- |\n| **0** | **3.3V [默认]** | 适用于 3.3V 工作电压的 SPI Flash |\n| **1** | **1.8V** | 适用于 1.8V 工作电压的 SPI Flash |\n\n## 5. LPDDR 内存类型选择 (Strap 5)\n通过 **GPIO52 (Strap 5)** 决定 DDR 控制器初始化的物理内存类型：\n\n| GPIO[52] (Strap 5)<br>[默认下拉] | 适配内存类型 | 备注 |\n| :---: | :--- | :--- |\n| **0** | **LPDDR5 [默认]** | 初始化为 LPDDR5 模式 |\n| **1** | **LPDDR4x** | 初始化为 LPDDR4x 模式 |",
       "claim_type": "parameter",
-      "verification_status": "unverified",
+      "verification_status": "conflicted",
+      "conflicts": "固定来源 1.1.5 开头写 5 个 strap 并列 GPIO90；随后五张功能表却列 Strap0～5，包含 GPIO64 和 GPIO52。功能表可引用，完整管脚清单须人工确认。",
       "external_use": false,
       "source_file": "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md",
       "source_origin": "https://github.com/spacemit-com/docs-chip",
-      "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc",
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
       "source_section": "1.1.5 硬件初始化系统配置电路",
       "source_resolution": "resolved",
-      "source_checked_at": "2026-10-13",
-      "source_note": "已定位 Strap 功能表；全部板级接线条件尚未逐项核验。",
+      "source_checked_at": "2026-10-21",
+      "source_note": "2026-10-21 阶段 B：K3 指南 1.1.5 五张功能表：启动顺序、下载、QSPI、LPDDR；发现开头声称五管脚且列 GPIO90，与六个 Strap 功能表矛盾，标 conflicted。 保留来源冲突并置 conflicted/needs_review；不表示全文事实通过。",
       "created": "2026-06-29",
-      "updated": "2026-10-13",
-      "freshness": "stale",
-      "stale_paths": [
-        "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md"
-      ],
+      "updated": "2026-10-21",
+      "freshness": "current",
+      "stale_paths": [],
       "unknown_paths": [],
       "checked_against_commit": {
         "docs-chip": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84"
@@ -3868,10 +4162,10 @@
       "source_freshness": [
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md",
-          "source_commit": "1ea15a766287024a5bb7b548850826e3525a80dc",
+          "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
           "checked_against_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
-          "freshness": "stale",
-          "reason": "source_file_changed"
+          "freshness": "current",
+          "reason": "source_file_unchanged"
         }
       ]
     },
@@ -3948,26 +4242,26 @@
         "SpacemiT生态板卡与PMIC电源配合专题档案",
         "Spacemit_产品矩阵与硬件生态全景档案"
       ],
-      "summary": "# SpacemiT 生态板卡 Muse Pi 与 Muse Pi Pro 物理规格对比  > [!TIP] > **💡 工程师导读与排坑焦点**：存放 Muse Pi 与 Muse Pi Pro 板级物理尺寸、电源与外设参数对比。 > **目标读者**：`系统选型工程师 / 硬件工程师` | **技术领域**：`chip_product_specs`  本文件汇总了基于进迭时空 K1 芯片开发的生态开发板 Muse Pi 与高级版 Muse Pi Pro 的硬件设计与物理规格差异。  | 规格维度 | Muse Pi (标准版) | Muse Pi Pro (高级版) | 备注 / 调试设计",
-      "content": "# SpacemiT 生态板卡 Muse Pi 与 Muse Pi Pro 物理规格对比\n\n> [!TIP]\n> **💡 工程师导读与排坑焦点**：存放 Muse Pi 与 Muse Pi Pro 板级物理尺寸、电源与外设参数对比。\n> **目标读者**：`系统选型工程师 / 硬件工程师` | **技术领域**：`chip_product_specs`\n\n本文件汇总了基于进迭时空 K1 芯片开发的生态开发板 Muse Pi 与高级版 Muse Pi Pro 的硬件设计与物理规格差异。\n\n| 规格维度 | Muse Pi (标准版) | Muse Pi Pro (高级版) | 备注 / 调试设计 |\n| :--- | :--- | :--- | :--- |\n| **主控 CPU** | SpacemiT Key Stone K1 (8核) | SpacemiT Key Stone K1 (8核) | 均符合 RVA22 / RVV 1.0 标准 |\n| **内存支持** | 最大 16GB LPDDR4/LPDDR4X | 最大 16GB LPDDR4/LPDDR4X | 速率高达 2666 Mbps，32-bit |\n| **4G / 5G 模块** | 不支持（无插槽） | **内置 Mini PCIe 4G/5G 模块插槽** | 带有板载 Micro SIM 卡槽 |\n| **以太网接口** | 1 × 千兆网口 (GMAC0) | **2 × 千兆网口 (GMAC0 & GMAC1)** | 均采用千兆 PHY 芯片 |\n| **USB 高速接口** | 2 × USB 3.0 (Type-A) + 2 × USB 2.0 | 2 × USB 3.0 + 2 × USB 2.0 (包含内置扩展) | 包含 1 个 Type-C 烧录/电源口 |\n| **音频功放 (PA)** | 仅有 Headphone 耳机口输出 | **集成板载 Speaker PA 功放输出** | 方便直接连接喇叭 |\n| **调试串口** | 3-Pin 单排插针 (TX/RX/GND) | 3-Pin 单排插针 (TX/RX/GND) | 电平限 **3.3 V**，波特率 115200 |\n| **JTAG 调试口** | PRI JTAG（26Pin排针引出） | PRI JTAG（26Pin排针引出） | SEC JTAG 复用 SD 卡引脚 |\n| **扩展排针** | 26-Pin 兼容树莓派排针 | 26-Pin 兼容树莓派排针 | 包含 I2C, SPI, UART, PWM, GPIO |",
+      "summary": "# Muse Pi 与 Muse Pi Pro 物理规格对比  适用于固定 docs-product 产品简介中的配置，不能由“Pro”命名推断接口更多或与 K3 同代。产品名 K1 MUSE 系列的两份规格表均将处理器写为 **SpacemiT M1**；具体芯片丝印、板卡版本与 SDK 要分别确认。  | 项目 | MUSE Pi | MUSE Pi Pro | | --- | --- | --- | | 处理器 | M1，8 核 64 位 RISC-V，融合 2 TOPS AI | M1，融合 2 TOPS AI | | 内存 | LPDDR4X 2400MT/s，8GB/16GB |",
+      "content": "# Muse Pi 与 Muse Pi Pro 物理规格对比\n\n适用于固定 docs-product 产品简介中的配置，不能由“Pro”命名推断接口更多或与 K3 同代。产品名 K1 MUSE 系列的两份规格表均将处理器写为 **SpacemiT M1**；具体芯片丝印、板卡版本与 SDK 要分别确认。\n\n| 项目 | MUSE Pi | MUSE Pi Pro |\n| --- | --- | --- |\n| 处理器 | M1，8 核 64 位 RISC-V，融合 2 TOPS AI | M1，融合 2 TOPS AI |\n| 内存 | LPDDR4X 2400MT/s，8GB/16GB | LPDDR4X 2400MT/s，8GB/16GB |\n| 板载存储 | eMMC 32GB/64GB | eMMC 64GB/128GB |\n| NVMe 扩展 | 2×M.2 2280 M-Key | M.2 M-Key，2230 尺寸 |\n| 网口 | 2 路 RJ45，1000M/100M | 1 路 RJ45，1000M/100M |\n| USB | 1×USB3.0 + 1×USB2.0 Type-A Host，1×USB2.0 Type-C OTG | 4×USB3.0 Type-A Host，1×USB2.0 Type-C Device |\n| 扩展排针 | 26-Pin | 40-Pin |\n| 无线扩展 | Wi-Fi6、BT5.2 | Wi-Fi6、BT5.2；标准 miniPCIe 支持 4G/5G 等扩展 |\n| MIPI | DSI 4lane；CSI 两路4lane，支持4+4/4+2+2 | DSI 2lane；CSI 一路4lane与一路2lane |\n| 尺寸 | 129.45×80mm | 85×56mm |\n| 供电入口 | USB PD3.0，Type-C OTG 表列12V/3A | USB-PD，5V/3A、9V/3A、12V/3A |\n\n旧表将 Pro 写成双网口/26Pin，以及将两者写成同一 USB 和存储配置，均已撤回。两份简介仅列3.5mm音频接口，不据此承诺 Pro 具有特定功率的板载喇叭功放。JTAG/UART 针脚以对应用户指南和原理图为准。\n\n**状态**：`partial / unverified / needs_review / external_use:false`，来源定位与本轮逐表比对不等于硬件实测或对外批准。",
       "claim_type": "parameter",
       "verification_status": "unverified",
       "external_use": false,
       "source_file": "Sources/docs-product/zh/k1_series/k1_muse_pi/root_overview.md",
       "source_origin": "https://github.com/spacemit-com/docs-product",
-      "source_commit": "8c851807f2c54e8ba54d568b268100ca727d0777",
+      "source_commit": "bc640755145625cc20745f49861f82588863fca3",
       "source_section": "产品规格",
       "source_resolution": "partial",
-      "source_checked_at": "2026-10-13",
-      "source_note": "已定位 Pi 与 Pi Pro 两个官方产品表；全文中的电源、模组和引脚差异尚未逐项核验。",
+      "source_checked_at": "2026-10-21",
+      "source_note": "2026-10-21 评测定向对照两份产品简介，修正旧表网口、排针、USB 与存储差异；用户指南另证实 Pro 40Pin。仍待人工终审，不保证所有可选配置。",
       "source_related_file": [
         "Sources/docs-product/zh/k1_series/k1_muse_pi_pro/root_overview.md"
       ],
       "source_related_commit": [
-        "8c851807f2c54e8ba54d568b268100ca727d0777"
+        "bc640755145625cc20745f49861f82588863fca3"
       ],
       "created": "2026-06-29",
-      "updated": "2026-10-20",
+      "updated": "2026-10-21",
       "freshness": "current",
       "stale_paths": [],
       "unknown_paths": [],
@@ -3977,14 +4271,14 @@
       "source_freshness": [
         {
           "source_file": "Sources/docs-product/zh/k1_series/k1_muse_pi/root_overview.md",
-          "source_commit": "8c851807f2c54e8ba54d568b268100ca727d0777",
+          "source_commit": "bc640755145625cc20745f49861f82588863fca3",
           "checked_against_commit": "bc640755145625cc20745f49861f82588863fca3",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-product/zh/k1_series/k1_muse_pi_pro/root_overview.md",
-          "source_commit": "8c851807f2c54e8ba54d568b268100ca727d0777",
+          "source_commit": "bc640755145625cc20745f49861f82588863fca3",
           "checked_against_commit": "bc640755145625cc20745f49861f82588863fca3",
           "freshness": "current",
           "reason": "source_file_unchanged"
@@ -4499,6 +4793,7 @@
     "spacemit生态板卡与pmic电源配合专题": "SpacemiT生态板卡与PMIC电源配合专题档案",
     "spacemit board and pmic power matching topic": "SpacemiT生态板卡与PMIC电源配合专题档案",
     "spacemit_pmic_matching": "SpacemiT生态板卡与PMIC电源配合专题档案",
+    "p1 p3 pmic": "SpacemiT生态板卡与PMIC电源配合专题档案",
     "k1生态终端": "Spacemit_K1生态终端与教学实验套件专题档案",
     "musebook": "Spacemit_K1生态终端与教学实验套件专题档案",
     "musebox": "Spacemit_K1生态终端与教学实验套件专题档案",
@@ -26280,11 +26575,11 @@
       "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/808d02c1bd11cf0d4376555919bd61c90e38d853/zh/k3/07-%E7%89%88%E6%9C%AC%E8%AF%B4%E6%98%8E/index.md"
     }
   ],
-  "content_sha256": "67d70524011d11e03d7dfc6132378302cd84b1ecff03ce9e084e51ea2a3a970b",
+  "content_sha256": "8151bfecd228497b37f39dd31276b6d9cea6e9b4ca96eadd119666d2212f6dca",
   "build_meta": {
-    "wiki_commit": "8d7bae80e22cdd782f4269ae819afc838a903cb9",
-    "wiki_worktree_dirty": true,
-    "generated_at": "2026-10-21T03:40:24+00:00",
+    "wiki_commit": "0b680300a52fb57db8f64011f7f57156dcaca3c6",
+    "wiki_worktree_dirty": false,
+    "generated_at": "2026-10-21T06:30:15+00:00",
     "sources_commits": {
       "docs-chip": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
       "docs-buildroot": "163a8fccf8e7071f3177753d2e86e482e97970fe",
@@ -26292,7 +26587,7 @@
       "docs-ai": "2b3894e983a295ed0278bc625867e0c132e0e259",
       "docs-ros": "808d02c1bd11cf0d4376555919bd61c90e38d853"
     },
-    "content_sha256": "67d70524011d11e03d7dfc6132378302cd84b1ecff03ce9e084e51ea2a3a970b",
+    "content_sha256": "8151bfecd228497b37f39dd31276b6d9cea6e9b4ca96eadd119666d2212f6dca",
     "counts": {
       "total_nodes": 66,
       "developer_journeys": 7,
@@ -26301,9 +26596,9 @@
       "raw_sources": 1231
     },
     "freshness_summary": {
-      "current": 47,
-      "stale": 12,
-      "unknown": 7
+      "current": 66,
+      "stale": 0,
+      "unknown": 0
     }
   }
 }
