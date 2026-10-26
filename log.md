@@ -13,6 +13,15 @@ updated: 2026-10-21
 
 ---
 
+## [2026-10-21] feat | 完成 V100 服务器处理器与机架式服务器整机“点-面-网”知识图谱体系重构与历史纠偏
+
+- **点 (Evidence) 全量补全**：新增 `Evidence/v100_chip_specs.md`（芯片46核=6香山+40自研、64MB SLC、8通道DDR5 4800 MT/s、52 PCIe 5.0、120W TDP、全栈虚拟化硬化参数）与 `Evidence/v100_servers_specs.md`（C2201 2U计算、S5236 4U存储、G5201 4U智算三款机架式服务器横向规格对比表）。
+- **面 (Knowledge Atoms) 解耦重构与纠偏**：新建 `Knowledge_Atoms/SpacemiT_V100服务器处理器芯片专题档案.md` 专述服务器处理器微架构、RVH/AIA/IOMMU 全栈硬件虚拟化、RAS 体系与安全引擎；将原包含“工业与边缘”旧名称的文件重构为 `Knowledge_Atoms/SpacemiT_V100系列机架式服务器专题档案.md`，彻底纠正早先将服务器误归类为工业边缘控制设备的历史偏差；旧文档平稳标记为 `deprecated` 并通过 `superseded_by` 维持死链安全。
+- **网 / 体 (Index & Product Matrix) 闭环**：更新 `Knowledge_Atoms/Spacemit_产品矩阵与硬件生态全景档案.md` 顶层选型决策树与产品全景表；更新 `index.md` 全栈索引，补齐 V100 模块 1 挂载以及 `Sources/docs-chip` 与 `Sources/docs-product` 原始官方参考源。
+- **构建与质量自检**：`vault_linker_lint.py` 拓扑检查 100% 通过（73篇物理文档、126条双链、0死链），`scripts/lint_wiki_integrity.py` 事实完整性检查 100% 通过，`scripts/build_mcp_index.py` 成功重构双端 70 语义原子与 1231 篇原始文档拓扑索引。
+
+---
+
 ## [2026-10-21] feat | 落地检索分词代际防混淆、搜索瘦身与看板安全加固
 
 - 落实同事 Review 反馈工程整改：在 `mcp/server.py` 与 `mcp-worker/src/index.ts` 双端实现零依赖中英数字混合分词及 2-gram 回退，强化 K1/K3/V100 芯片代际硬锚点加权与字段阶梯互斥打分，彻底杜绝长词多重累加导致的跨代际混淆；同步覆盖 `search_raw_sources`。

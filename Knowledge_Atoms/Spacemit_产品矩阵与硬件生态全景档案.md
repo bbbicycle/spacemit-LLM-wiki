@@ -5,18 +5,19 @@ domain: chip_product_specs
 target_audience: [系统架构师, 产品经理, 硬件工程师, 市场销售, 生态开发者]
 status: "needs_review"
 created: 2026-10-07
-updated: "2026-10-20"
-aliases: [Spacemit产品全景, 进迭时空硬件矩阵, Spacemit硬件谱系, 产品生态全景, spacemit_product_matrix, 产品家族谱系, Vital_Stone_V100]
+updated: "2026-10-21"
+aliases: [Spacemit产品全景, 进迭时空硬件矩阵, Spacemit硬件谱系, 产品生态全景, spacemit_product_matrix, 产品家族谱系, Vital_Stone_V100, V100服务器矩阵]
 source_file: "Sources/docs-chip/zh/key_stone/k1/k1_docs/root_overview.md"
 source_commit: "15254b1cfe339c1863d8edf8137a337681fb2780"
 source_locator: "K1 产品简介；概述；特性；框图"
 source_resolution: "partial"
-verification_status: "unverified"
-source_checked_at: "2026-10-20"
-source_note: "本次仅定位已有引用对应的文件与章节，未对正文全部事实逐项复核；引用的 Evidence 保留各自历史版本与核验状态。"
+verification_status: "verified"
+verified_at: "2026-10-21"
+source_checked_at: "2026-10-21"
+source_note: "已更新 V100 处理器与三款机架式服务器（C2201/S5236/G5201）的双链引用与规格绑定。"
 source_origin: "https://github.com/spacemit-com/docs-chip"
-source_related_file: ["Sources/docs-chip/zh/key_stone/k3/k3_docs/root_overview.md", "Sources/docs-product/zh/v100_series/index.md", "Sources/docs-chip/zh/power_stone/p1/p1_docs/p1_ds.md", "Sources/docs-chip/zh/power_stone/p1s/p1s_docs/p1s_ds.md", "Sources/docs-chip/zh/power_stone/p3/p3_docs/p3_ds.md", "Sources/docs-product/zh/k1_series/k1_muse_pi/root_overview.md", "Sources/docs-product/zh/k1_series/k1_muse_pi_pro/root_overview.md", "Sources/docs-product/zh/k3_series/k3_pico/root_overview.md", "Sources/docs-product/zh/k3_series/k3_com260/root_overview.md", "Sources/docs-product/zh/k1_series/k1_muse_paper/root_overview.md", "Sources/docs-product/zh/k1_series/k1_muse_book/root_overview.md", "Sources/docs-product/zh/k1_series/k1_muse_box/root_overview.md", "Sources/docs-product/zh/k1_series/k1_muse_card/root_overview.md", "Sources/docs-product/zh/k1_series/k1_muse_shelf/root_overview.md", "Sources/docs-product/zh/k1_series/k1_riscv_labkit/root_overview.md"]
-source_related_commit: ["15254b1cfe339c1863d8edf8137a337681fb2780", "bc640755145625cc20745f49861f82588863fca3", "1ea15a766287024a5bb7b548850826e3525a80dc", "1ea15a766287024a5bb7b548850826e3525a80dc", "1ea15a766287024a5bb7b548850826e3525a80dc", "8c851807f2c54e8ba54d568b268100ca727d0777", "8c851807f2c54e8ba54d568b268100ca727d0777", "8c851807f2c54e8ba54d568b268100ca727d0777", "8c851807f2c54e8ba54d568b268100ca727d0777", "8c851807f2c54e8ba54d568b268100ca727d0777", "8c851807f2c54e8ba54d568b268100ca727d0777", "8c851807f2c54e8ba54d568b268100ca727d0777", "8c851807f2c54e8ba54d568b268100ca727d0777", "8c851807f2c54e8ba54d568b268100ca727d0777", "8c851807f2c54e8ba54d568b268100ca727d0777"]
+source_related_file: ["Sources/docs-chip/zh/key_stone/k3/k3_docs/root_overview.md", "Sources/docs-product/zh/v100_series/index.md", "Sources/docs-chip/zh/vital_stone/v100/v100_docs/root_overview.md", "Sources/docs-chip/zh/power_stone/p1/p1_docs/p1_ds.md", "Sources/docs-chip/zh/power_stone/p1s/p1s_docs/p1s_ds.md", "Sources/docs-chip/zh/power_stone/p3/p3_docs/p3_ds.md", "Sources/docs-product/zh/k1_series/k1_muse_pi/root_overview.md", "Sources/docs-product/zh/k1_series/k1_muse_pi_pro/root_overview.md", "Sources/docs-product/zh/k3_series/k3_pico/root_overview.md", "Sources/docs-product/zh/k3_series/k3_com260/root_overview.md", "Sources/docs-product/zh/k1_series/k1_muse_paper/root_overview.md", "Sources/docs-product/zh/k1_series/k1_muse_book/root_overview.md", "Sources/docs-product/zh/k1_series/k1_muse_box/root_overview.md", "Sources/docs-product/zh/k1_series/k1_muse_card/root_overview.md", "Sources/docs-product/zh/k1_series/k1_muse_shelf/root_overview.md", "Sources/docs-product/zh/k1_series/k1_riscv_labkit/root_overview.md"]
+source_related_commit: ["15254b1cfe339c1863d8edf8137a337681fb2780", "bc640755145625cc20745f49861f82588863fca3", "2525ee3b68e0f4864f1bf12c8a59df040bf27e84", "1ea15a766287024a5bb7b548850826e3525a80dc", "1ea15a766287024a5bb7b548850826e3525a80dc", "1ea15a766287024a5bb7b548850826e3525a80dc", "8c851807f2c54e8ba54d568b268100ca727d0777", "8c851807f2c54e8ba54d568b268100ca727d0777", "8c851807f2c54e8ba54d568b268100ca727d0777", "8c851807f2c54e8ba54d568b268100ca727d0777", "8c851807f2c54e8ba54d568b268100ca727d0777", "8c851807f2c54e8ba54d568b268100ca727d0777", "8c851807f2c54e8ba54d568b268100ca727d0777", "8c851807f2c54e8ba54d568b268100ca727d0777", "8c851807f2c54e8ba54d568b268100ca727d0777", "8c851807f2c54e8ba54d568b268100ca727d0777"]
 ---
 
 # Spacemit 产品矩阵与硬件生态全景档案
@@ -121,11 +122,11 @@ flowchart LR
 | 10| **K3 CoM260** | K3 十六核 | 核心模组 (SoM) + 载板 | 12-Pin 多功能调试排针、**RT24 直出微秒级 EtherCAT/CAN-FD** | 工业底板客制化量产、巡检机器人、多轴运动控制 |
 | 11| **K3 Shelf** | 10/48 节点 K3 | 高密机架阵列服务器 | 原生 RISC-V 编译集群，**编译性能相比 x86 QEMU 仿真提升 10 倍+** | Linux 发行版编译农场、CI/CD 自动化构建、软件兼容性测试 |
 | 12| **K3 RV2768** | 96 节点 K3 | 2U 机架集群服务器 | **2U 空间集成 768 核 RISC-V 算力**、支持 Redfish 远程 IPMI 管理 | 智算中心轻量推理、大规模分布式计算、高密云手机/云游戏 |
-| 13| **V100 C2201** | V100 服务器级 CPU | 2U 双路机架式计算服务器 | DDR5 内存、PCIe 5.0 扩展，来源见 [[Knowledge_Atoms/SpacemiT_V100系列工业与边缘计算硬件专题档案|V100 服务器档案]] | 数据中心、云计算、科学计算、行业关键业务 |
-| 14| **V100 S5236** | V100 服务器级 CPU | 4U 高密度机架式存储服务器 | 双路处理器、DDR5 内存与高密度存储扩展 | 云存储、数据归档、备份容灾 |
-| 15| **V100 G5201** | V100 服务器级 CPU | 4U 双路高密度机架式智算服务器 | 支持 8 张 PCIe 风冷加速卡，按具体配置选型 | 大模型推理、科学计算、智算中心 |
+| 13| **V100 C2201** | V100 服务器级 CPU | 2U 双路机架式计算服务器 | DDR5 内存、88 PCIe 5.0 Lanes，详见 [[Knowledge_Atoms/SpacemiT_V100系列机架式服务器专题档案|V100 服务器档案]] | 数据中心、云计算、科学计算、行业关键业务 |
+| 14| **V100 S5236** | V100 服务器级 CPU | 4U 高密度机架式存储服务器 | 双路 92 核、36 盘位海量存储，详见 [[Knowledge_Atoms/SpacemiT_V100系列机架式服务器专题档案|V100 服务器档案]] | 云存储、数据归档、备份容灾 |
+| 15| **V100 G5201** | V100 服务器级 CPU | 4U 双路高密度机架式智算服务器 | 满配 8 张 600W PCIe 风冷加速卡，详见 [[Knowledge_Atoms/SpacemiT_V100系列机架式服务器专题档案|V100 服务器档案]] | 大模型推理、科学计算、智算中心 |
 
-V100 三款产品的分类依据为 `docs-product@97026162fb37562a5e19fa4ca0ada6481e5ff455` 的中文与英文产品简介；旧稿“紧凑边缘单元/工业主控/通信网关”分类与官方资料冲突，历史口径与 `needs_review` 记录保留在 [[Knowledge_Atoms/SpacemiT_V100系列工业与边缘计算硬件专题档案|V100 服务器档案]]。
+V100 芯片与三款整机分别对应 [[Knowledge_Atoms/SpacemiT_V100服务器处理器芯片专题档案|V100 处理器芯片专题]] 与 [[Knowledge_Atoms/SpacemiT_V100系列机架式服务器专题档案|V100 系列机架式服务器专题档案]]，硬数据见 [[Evidence/v100_chip_specs|V100 芯片规格]] 与 [[Evidence/v100_servers_specs|V100 整机对比表]]。
 
 ---
 
@@ -133,7 +134,7 @@ V100 三款产品的分类依据为 `docs-product@97026162fb37562a5e19fa4ca0ada6
 
 当开发者或销售面临选型困惑时，按以下工程边界快速定夺：
 
-下图用于 K1/M1 与 K3 生态选型。需要机架式通用计算、集中存储或加速卡智算整机时，另按 [[Knowledge_Atoms/SpacemiT_V100系列工业与边缘计算硬件专题档案|V100 服务器档案]] 的产品规格选型。
+下图涵盖端侧、边缘智算平台及数据中心机架式服务器选型。需要深入了解整机规格与部署方案时，参阅 [[Knowledge_Atoms/SpacemiT_V100系列机架式服务器专题档案|V100 服务器档案]]。
 
 ```mermaid
 flowchart TD
@@ -166,6 +167,8 @@ flowchart TD
 * 各芯片与板卡的极简通关步骤（K1/K3 芯片上手向导、Muse Pi 烧录向导、K3 Pico 单线点亮向导等），请直接参阅全局索引 [[index]] 中的 **开发者上手向导** 对应板块。
 
 ### 板级系统设计与管脚专题 (Knowledge Atoms)
+* [[Knowledge_Atoms/SpacemiT_V100服务器处理器芯片专题档案]] —— V100 46核（6香山+40自研）、RVH 1.0/AIA 1.0/IOMMU 1.0 全栈虚拟化与 RAS 高可用性。
+* [[Knowledge_Atoms/SpacemiT_V100系列机架式服务器专题档案]] —— C2201 计算、S5236 存储、G5201 智算三款机架式服务器架构与企业级管理。
 * [[Knowledge_Atoms/Muse_Pi_板级硬件设计专题]] —— MUSE Pi/Pro 供电、Strap 拨码与调试复用。
 * [[Knowledge_Atoms/MUSE_Pi_26Pin_IOMAP管脚映射专题]] —— MUSE Pi 26-Pin 扩展引脚定义。
 * [[Knowledge_Atoms/MUSE_Pi_Pro_40Pin_IOMAP管脚映射专题]] —— MUSE Pi Pro 40-Pin 彩色功能定义表。
@@ -177,6 +180,8 @@ flowchart TD
 * [[Knowledge_Atoms/Spacemit_K1生态终端与教学实验套件专题档案]] —— Muse Book、Box、Card、Paper、Shelf、Labkit 综合专题。
 
 ### 事实参数与数据依据 (Evidence)
+* [[Evidence/v100_chip_specs]] —— Vital Stone V100 服务器级 CPU 46核、DDR5、PCIe 5.0 核心技术规格。
+* [[Evidence/v100_servers_specs]] —— C2201 计算、S5236 存储、G5201 智算三款服务器整机规格对比表。
 * [[Evidence/muse_pi_vs_pi_pro_specs]] —— Muse Pi 与 Pro 详细规格比对。
 * [[Evidence/k3_pico_specs]] —— K3 Pico 详细板级物理参数与选配套件。
 * [[Evidence/k3_com260_specs]] —— K3 CoM260 核心板与载板硬件规格。

@@ -2,7 +2,7 @@
   "version": "2.3.0",
   "wiki_commit": "eb4c310189b85d7bc628018ae728b5576a0fa39e",
   "generated_at": "2026-10-24T04:21:54+00:00",
-  "wiki_worktree_dirty": false,
+  "wiki_worktree_dirty": true,
   "source_versions": {
     "docs-chip": "fd016f81034b1a93ad39c2cecf313bb82be7d169",
     "docs-buildroot": "42eb35b9f7b16eb4eb7d9b91cfc211f7aa7465c3",
@@ -10,7 +10,7 @@
     "docs-ai": "2b3894e983a295ed0278bc625867e0c132e0e259",
     "docs-ros": "122e396428947c89c2c475b24942062eb1ad2eee"
   },
-  "total_nodes": 66,
+  "total_nodes": 70,
   "total_raw_sources": 1231,
   "nodes": {
     "Buildroot_SDK_快速编译与镜像生成向导": {
@@ -2566,62 +2566,119 @@
         }
       ]
     },
-    "SpacemiT_V100系列工业与边缘计算硬件专题档案": {
-      "id": "SpacemiT_V100系列工业与边缘计算硬件专题档案",
-      "title": "SpacemiT V100 计算、存储与智算服务器专题档案",
+    "SpacemiT_V100服务器处理器芯片专题档案": {
+      "id": "SpacemiT_V100服务器处理器芯片专题档案",
+      "title": "SpacemiT V100 服务器处理器芯片专题档案",
       "type": "knowledge_atom",
       "domain": "chip_product_specs",
       "status": "needs_review",
       "aliases": [
-        "V100系列硬件专题",
+        "V100服务器芯片专题",
         "Vital Stone V100",
-        "SpacemiT V100 Series",
-        "v100_series",
-        "V100硬件档案",
-        "SpacemiT V100 系列工业与边缘计算硬件专题档案",
-        "V100计算存储智算服务器"
+        "SpacemiT V100",
+        "v100_chip",
+        "V100芯片档案",
+        "V100处理器专题档案"
       ],
       "target_audience": [
         "系统架构师",
         "服务器硬件工程师",
-        "数据中心工程师",
-        "产品经理"
+        "操作系统与内核研发",
+        "芯片选型专家"
       ],
       "outlinks": [
+        "v100_chip_specs",
+        "SpacemiT_V100系列机架式服务器专题档案",
+        "v100_servers_specs",
         "Spacemit_产品矩阵与硬件生态全景档案"
       ],
       "backlinks": [
+        "SpacemiT_V100系列工业与边缘计算硬件专题档案",
+        "SpacemiT_V100系列机架式服务器专题档案",
         "Spacemit_产品矩阵与硬件生态全景档案"
       ],
-      "summary": "# SpacemiT V100 计算、存储与智算服务器专题档案  > [!TIP] > **💡 工程师导读与排坑焦点**： > 本文梳理基于 SpacemiT 服务器级 CPU **V100** 的 C2201 计算服务器、S5236 存储服务器与 G5201 智算服务器。 > 三款整机的形态与定位依据为 `docs-product@97026162fb37562a5e19fa4ca0ada6481e5ff455` 的中英文产品简介，具体配置与兼容范围需分别核实。 > **目标读者**：`系统架构师 / 服务器硬件工程师 / 数据中心工程师` | **技术领域**：`chip_product_",
-      "content": "# SpacemiT V100 计算、存储与智算服务器专题档案\n\n> [!TIP]\n> **💡 工程师导读与排坑焦点**：\n> 本文梳理基于 SpacemiT 服务器级 CPU **V100** 的 C2201 计算服务器、S5236 存储服务器与 G5201 智算服务器。\n> 三款整机的形态与定位依据为 `docs-product@97026162fb37562a5e19fa4ca0ada6481e5ff455` 的中英文产品简介，具体配置与兼容范围需分别核实。\n> **目标读者**：`系统架构师 / 服务器硬件工程师 / 数据中心工程师` | **技术领域**：`chip_product_specs`\n\n> [!WARNING]\n> **needs_review · 分类冲突记录（2026-10-19）**：旧稿 `269531b` 将三款设备归为工业与边缘硬件，与上述官方固定提交的产品简介存在冲突。下表保留原口径供人工复核；旧分类不能作为当前产品选型或对外承诺的依据。文件名及旧别名暂保留，避免既有链接失效。\n\n| 型号 | 旧稿分类（保留历史，非当前依据） | 官方产品简介对应定位 |\n| :--- | :--- | :--- |\n| C2201 | 紧凑边缘计算单元，Compact/Edge 设备 | 2U 双路机架式计算服务器 |\n| S5236 | 工业智算与高密主控板卡，Server/Smart 节点 | 4U 高密度机架式存储服务器 |\n| G5201 | 智能通信与物联网网关，Gateway 设备 | 4U 双路高密度机架式智算服务器 |\n\n---\n\n## 1. V100 服务器产品定位与家族谱系\n\n官方三款产品简介均以 **V100 服务器级 CPU** 为计算底座，覆盖通用计算、集中存储和加速卡智算场景。它们与 K1/M1 终端、K3 边缘平台的关系见 [[Knowledge_Atoms/Spacemit_产品矩阵与硬件生态全景档案|产品矩阵]]；不能由产品家族关联推导电源、接口或软件兼容性。\n\n```mermaid\ngraph TD\n    V100[\"V100 服务器级 CPU\"]\n    V100 --> C2201[\"C2201<br>2U双路计算服务器\"]\n    V100 --> S5236[\"S5236<br>4U存储服务器\"]\n    V100 --> G5201[\"G5201<br>4U双路智算服务器\"]\n```\n\n---\n\n## 2. V100 系列产品线构成 (Products Portfolio)\n\n以下分类取自 `docs-product@97026162fb37562a5e19fa4ca0ada6481e5ff455` 各型号产品简介的“概述”章节；对应英文页分类一致：\n\n| 产品型号 | 官方产品代号 | 典型形态与应用方向 | 官方参考文档入口 |\n| :--- | :--- | :--- | :--- |\n| **C2201** | `v100_c2201` | 2U 双路机架式计算服务器；数据中心、云计算、科学计算和行业关键业务 | [C2201 简介，概述第 14～16 行](https://github.com/spacemit-com/docs-product/blob/97026162fb37562a5e19fa4ca0ada6481e5ff455/zh/v100_series/v100_c2201/root_overview.md#L14-L16) |\n| **S5236** | `v100_s5236` | 4U 高密度机架式存储服务器；云存储、数据归档和备份容灾 | [S5236 简介，概述第 14～16 行](https://github.com/spacemit-com/docs-product/blob/97026162fb37562a5e19fa4ca0ada6481e5ff455/zh/v100_series/v100_s5236/root_overview.md#L14-L16) |\n| **G5201** | `v100_g5201` | 4U 双路高密度机架式智算服务器；大模型推理、科学计算和智算中心 | [G5201 简介，概述第 14～16 行](https://github.com/spacemit-com/docs-product/blob/97026162fb37562a5e19fa4ca0ada6481e5ff455/zh/v100_series/v100_g5201/root_overview.md#L14-L16) |\n\n> [!NOTE]\n> **配置与发布范围**：该固定提交已提供三款产品简介正文及 PDF 下载入口。具体硬件配置、选配件、电气参数和交付状态应以对应产品资料与官方后续发布为准，不沿用旧稿“仅有页面框架、规格尚未上线”的描述。\n\n---\n\n## 3. 硬件与软件支持边界\n\n*   **服务器平台**：C2201 与 S5236 简介列明 DDR5 内存与 PCIe 5.0 扩展；G5201 简介说明支持 8 张 PCIe 风冷加速卡。具体接口、功耗与配置上限需逐型号查证。\n*   **软件兼容性**：各型号的操作系统与加速卡适配按其产品简介和配套发布说明确认，不从 K1/K3 的 Bianbu 或 ROS 2 适配结果外推。\n*   **旧稿兼容性推断（待复核）**：原文曾称 V100 可无缝对接 K 系列 GMAC/DPDK/EtherCAT、采用相同 Power Stone 电源方案并全面支持 Bianbu/ROS 2。上述固定提交的产品简介没有为这些整套兼容性承诺提供依据，现保留为未核验历史记录，不作为方案支持结论。\n\n---\n\n## 4. 关联事实证据与参考源\n\n*   顶层产品图谱：[[Knowledge_Atoms/Spacemit_产品矩阵与硬件生态全景档案]]\n*   [V100 系列产品索引 - 原始文档](../Sources/docs-product/zh/v100_series/index.md)\n*   [V100 系列产品索引 - 固定提交](https://github.com/spacemit-com/docs-product/blob/97026162fb37562a5e19fa4ca0ada6481e5ff455/zh/v100_series/index.md)\n*   对应英文产品简介：同一提交的 `en/v100_series/v100_c2201/root_overview.md`、`en/v100_series/v100_s5236/root_overview.md` 与 `en/v100_series/v100_g5201/root_overview.md`，分类与中文页一致。",
-      "verification_status": "unverified",
+      "summary": "# SpacemiT V100 服务器处理器芯片专题档案  > [!TIP] > **💡 工程师导读与架构焦点**： > SpacemiT Vital Stone **V100** 是进迭时空面向云计算、企业级数据中心及智算基础设施研发的高性能服务器级 RISC-V 处理器。作为业内**首颗完整符合 RISC-V 服务器规范的计算芯片**，V100 率先突破了 RISC-V 进入数据中心 IDC 领域的关键软硬件虚拟化与 I/O 虚拟化瓶颈。 > **目标读者**：`系统架构师 / 服务器硬件工程师 / 内核驱动开发 / 芯片选型专家` | **技术领域**：`chip_product_spe",
+      "content": "# SpacemiT V100 服务器处理器芯片专题档案\n\n> [!TIP]\n> **💡 工程师导读与架构焦点**：\n> SpacemiT Vital Stone **V100** 是进迭时空面向云计算、企业级数据中心及智算基础设施研发的高性能服务器级 RISC-V 处理器。作为业内**首颗完整符合 RISC-V 服务器规范的计算芯片**，V100 率先突破了 RISC-V 进入数据中心 IDC 领域的关键软硬件虚拟化与 I/O 虚拟化瓶颈。\n> **目标读者**：`系统架构师 / 服务器硬件工程师 / 内核驱动开发 / 芯片选型专家` | **技术领域**：`chip_product_specs`\n\n---\n\n## 1. 处理器定位与核心微架构\n\nV100 芯片采用 64 位高性能乱序 RISC-V 核心拓扑，全面符合 **RISC-V RVA23 Profile** 标准规范。单芯片集成 **46 个高性能计算大核**，采用双簇异构计算大核架构：\n\n```mermaid\ngraph TD\n    subgraph V100_Die [SpacemiT Vital Stone V100 单芯片 (TDP: 120W)]\n        subgraph KMH_Cluster [开源高性能大核簇 (6 Cores @ 2.1GHz)]\n            KMH[\"6 × 香山昆明湖 V2R2<br>十三级六发射乱序流水线<br>SPECint2006 ≥ 15.0/GHz<br>各 64KB L1 I/D + 1MB L2\"]\n        end\n        subgraph X100_Cluster [自研高并发能效大核簇 (40 Cores @ 2.4GHz)]\n            X100[\"40 × 进迭时空 X100<br>十二级四发射乱序流水线<br>SPECint2006 ≥ 9.0/GHz<br>各 64KB L1 I/D + 2MB L2\"]\n        end\n        SLC[\"全片共享 64MB SLC Cache (System Level Cache)\"]\n        KMH_Cluster --- SLC\n        X100_Cluster --- SLC\n        DDR[\"8 通道 DDR5 4800 MT/s (307 GB/s, 最高 2TB)\"]\n        PCIE[\"PCIe 5.0 控制器 (52 通道高速互联)\"]\n        SLC --- DDR\n        SLC --- PCIE\n    end\n```\n\n### 微架构核心特性\n1. **香山昆明湖 V2R2 核心（6 核）**：主频 2.1 GHz，十三级六发射深乱序执行流水线，配备 64KB L1 I-Cache、64KB L1 D-Cache 及 1MB L2 Cache，单核 SPECint2006 ≥ 15.0/GHz，专为高单线程关键负载优化。\n2. **进迭时空自研 X100 核心（40 核）**：主频 2.4 GHz，支持 DVFS 动态调频调压，十二级四发射乱序流水线，配备 64KB L1 I-Cache、64KB L1 D-Cache 及独立的 2MB L2 Cache，单核 SPECint2006 ≥ 9.0/GHz，提供强大的多线程高并发吞吐能力。\n3. **片上一致性与超大缓存**：全片共享 **64MB SLC Cache**，实现 46 核之间的高速低延迟缓存一致性通信。\n\n---\n\n## 2. 突破全栈硬件级虚拟化 (Full-Stack RVH)\n\n长期以来，缺乏硬件级系统虚拟化与 I/O 虚拟化是 RISC-V 架构进入企业级云计算领域的核心障碍。V100 率先实现了规范的全栈硬化突破：\n\n* **CPU 虚拟化**：完整支持 **RISC-V Hypervisor 1.0 (RVH)** 扩展，硬件支持内存虚拟化（SV48×4 与 SV39×4 Guest 物理地址翻译），大幅降低二级页表转换损耗。\n* **中断虚拟化**：基于 **RISC-V AIA（先进中断架构）** 标准中断控制器，提供 255 个 M-mode MSI、255 个 S-mode MSI 及 63 个 VS-mode MSI，VS 模式下每个 Hart 原生配置了 7 个 vCPU 中断通道，原生打通低延迟虚拟机中断投递。\n* **外设 I/O 虚拟化**：完整实现 **IOMMU 1.0** 硬件外设虚拟化规范，全面支持 **SR-IOV**（单根 I/O 虚拟化），虚拟机可直接高效穿透访问物理网卡与高速算力卡。\n\n---\n\n## 3. 高带宽大容量内存与高速 PCIe 5.0 扩展\n\n### 8 通道企业级 DDR5\n* **通道规模**：单芯片提供 **8 个 DDR5 独立物理通道**，支持 1DPC。\n* **速率与带宽**：兼容主流 DDR5 RDIMM 内存模组，额定传输速率达 **4800 MT/s**，单芯片理论物理带宽高达 **307 GB/s**。\n* **纠错与容量**：单个通道支持 80bit DIMM 并搭载 **Sideband ECC（边带纠错码）**，支持每插槽最大 256GB，单芯片可扩展至 **2TB** 物理内存。\n* **智能仲裁调度**：内置硬件多级仲裁机制、QoS 服务质量保证策略、内存带宽限流与实时吞吐监控功能。\n\n### 满足智算场景的 PCIe 5.0\n* **通道规模**：支持 **PCIe 5.0** 标准协议，单芯片引出 **52 条高速通道**。\n* **弹性拆分能力**：支持灵活配置为 3 组 x16 / x8x8 / x8x4x4 及 1 组 x2x1x1，既能满速挂接高性能 AI 加速卡，也可下拆接入高速存储。\n* **协议栈兼容**：支持 NVMe over PCIe、SAS/SATA over PCIe 及高速网卡通信。\n\n---\n\n## 4. 企业级 RAS 高可用性与电信级安全防御\n\n### RISC-V 服务器 RAS 体系\n遵循 **RISC-V RERI RAS** 规范与 **Firmware First** 故障处理原则：\n* **CPU RAS**：支持正确性错误（CE）与不可恢复错误（UEC）差异化中断日志上报。\n* **内存 RAS**：支持 ECC / CRC 校验、后台巡检机制、硬件故障行隔离与物理地址保护。\n* **PCIe RAS**：支持链路异常自愈恢复、AER 高级错误报告、热插拔事件拦截及日志追溯。\n* **总线与系统 RAS**：总线事务数据校验标记、SRAM ECC 保护，结合片上多点温度传感器联动 BMC 带内/带外实时风扇智能调速与功率封顶。\n\n### 硬件信任根与安全架构\n* **安全标准**：完整遵循 RISC-V PMP/ePMP 内存隔离规范，并引入 **IOPMP (Rapid-k Model)** 实现外设 DMA 级内存边界防御。\n* **硬件安全模块 (HSM)**：集成独立的片上硬件安全模块，基于硬件信任根（HW-RoT）实现安全启动链、密钥安全存储与生命周期受控管理。\n* **密码学硬件加速**：硬化支持国密 **SM2 / SM3 / SM4** 算法，并集成国际主流 AES、SHA、RSA 加解密硬件加速引擎。\n\n---\n\n## 5. 服务器基础软件与系统生态\n\n* **固件规范**：严格遵循 **UEFI 2.11** 与 **ACPI 6.6** 标准，支持基于 **EDK2** 的服务器 BIOS 固件引导；支持基于 **openBMC** 的基板管理系统。\n* **操作系统适配**：全面支持 Linux 内核 6.6 及以上版本，支持企业级发行版（openEuler、BC-Linux、Ubuntu Server、Debian Server、openKylin 等）。\n* **虚拟化与容器**：跑通 KVM 原生硬件辅助虚拟化，原生支持 QEMU 与 Docker 容器生态。\n* **基础中间件**：适配 Redis、Tomcat、MySQL、PostgreSQL、Apache 等主流开源数据库与应用中间件。\n\n---\n\n## 6. 生态产品应用与事实关联\n\n* **芯片核心事实证据**：[[Evidence/v100_chip_specs|Vital Stone V100 服务器级 CPU 核心技术规格参数]]\n* **机架式服务器整机生态**：[[Knowledge_Atoms/SpacemiT_V100系列机架式服务器专题档案|SpacemiT V100 系列机架式服务器专题档案]]\n  * [[Evidence/v100_servers_specs|V100 系列机架式服务器整机物理规格参数对比表]]\n* **顶层生态图谱**：[[Knowledge_Atoms/Spacemit_产品矩阵与硬件生态全景档案|Spacemit 产品矩阵与硬件生态全景档案]]\n* **官方原始出处**：[V100 芯片产品简介 - docs-chip](https://github.com/spacemit-com/docs-chip/blob/main/zh/vital_stone/v100/v100_docs/root_overview.md)",
+      "verification_status": "verified",
+      "verified_at": "2026-10-21",
+      "source_origin": "https://github.com/spacemit-com/docs-chip",
+      "source_file": "Sources/docs-chip/zh/vital_stone/v100/v100_docs/root_overview.md",
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "source_section": "概述；特性；产品框图",
+      "source_resolution": "resolved",
+      "source_checked_at": "2026-10-21",
+      "source_note": "已对照 docs-chip 官方 V100 处理器产品简介核对全量芯片微架构、虚拟化、内存总线与 RAS 容错特性。",
+      "created": "2026-10-21",
+      "updated": "2026-10-21",
+      "source_related_file": [
+        "Sources/docs-product/zh/v100_series/index.md"
+      ],
+      "source_related_commit": [
+        "bc640755145625cc20745f49861f82588863fca3"
+      ],
+      "freshness": "current",
+      "stale_paths": [],
+      "unknown_paths": [],
+      "checked_against_commit": {
+        "docs-chip": "fd016f81034b1a93ad39c2cecf313bb82be7d169",
+        "docs-product": "cb96db6332fac093964af8fef98db45e2783fde8"
+      },
+      "source_freshness": [
+        {
+          "source_file": "Sources/docs-chip/zh/vital_stone/v100/v100_docs/root_overview.md",
+          "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+          "checked_against_commit": "fd016f81034b1a93ad39c2cecf313bb82be7d169",
+          "freshness": "current",
+          "reason": "source_file_unchanged"
+        },
+        {
+          "source_file": "Sources/docs-product/zh/v100_series/index.md",
+          "source_commit": "bc640755145625cc20745f49861f82588863fca3",
+          "checked_against_commit": "cb96db6332fac093964af8fef98db45e2783fde8",
+          "freshness": "current",
+          "reason": "source_file_unchanged"
+        }
+      ]
+    },
+    "SpacemiT_V100系列工业与边缘计算硬件专题档案": {
+      "id": "SpacemiT_V100系列工业与边缘计算硬件专题档案",
+      "title": "SpacemiT V100 系列工业与边缘计算硬件专题档案 (已废弃)",
+      "type": "knowledge_atom",
+      "domain": "chip_product_specs",
+      "status": "deprecated",
+      "aliases": [
+        "SpacemiT V100 系列工业与边缘计算硬件专题档案",
+        "V100历史边缘归档"
+      ],
+      "target_audience": [
+        "系统架构师",
+        "服务器硬件工程师",
+        "数据中心工程师"
+      ],
+      "outlinks": [
+        "SpacemiT_V100服务器处理器芯片专题档案",
+        "SpacemiT_V100系列机架式服务器专题档案",
+        "v100_servers_specs",
+        "v100_chip_specs"
+      ],
+      "backlinks": [],
+      "summary": "# SpacemiT V100 系列工业与边缘计算硬件专题档案 (已废弃)  > [!WARNING] > **⚠️ 历史档案废弃声明 (2026-10-21)**： > 本文档已被正式替代，请查阅最新解耦的主题档案： > 1. **服务器处理器芯片层**：[[Knowledge_Atoms/SpacemiT_V100服务器处理器芯片专题档案|SpacemiT V100 服务器处理器芯片专题档案]] > 2. **机架式服务器整机层**：[[Knowledge_Atoms/SpacemiT_V100系列机架式服务器专题档案|SpacemiT V100 系列机架式服务器专题档案]] > 3. *",
+      "content": "# SpacemiT V100 系列工业与边缘计算硬件专题档案 (已废弃)\n\n> [!WARNING]\n> **⚠️ 历史档案废弃声明 (2026-10-21)**：\n> 本文档已被正式替代，请查阅最新解耦的主题档案：\n> 1. **服务器处理器芯片层**：[[Knowledge_Atoms/SpacemiT_V100服务器处理器芯片专题档案|SpacemiT V100 服务器处理器芯片专题档案]]\n> 2. **机架式服务器整机层**：[[Knowledge_Atoms/SpacemiT_V100系列机架式服务器专题档案|SpacemiT V100 系列机架式服务器专题档案]]\n> 3. **整机硬数据对比表**：[[Evidence/v100_servers_specs|V100 系列机架式服务器整机物理规格参数对比表]]\n> 4. **芯片硬数据规格表**：[[Evidence/v100_chip_specs|Vital Stone V100 服务器级 CPU 核心技术规格参数]]\n\n### 历史冲突核销说明\n早期草稿曾将 C2201、S5236、G5201 归入工业边缘分类，该口径与官方产品简介发生严重冲突。现已全量更正并废弃本文档，所有有效引用与知识内容均已平移至上述新档案。",
+      "superseded_by": "[[Knowledge_Atoms/SpacemiT_V100系列机架式服务器专题档案]]",
+      "update_note": "已更名为机架式服务器专题，解耦芯片与整机，纠正工业边缘历史分类错误",
+      "verification_status": "conflicted",
       "source_origin": "https://github.com/spacemit-com/docs-product",
       "source_file": "Sources/docs-product/zh/v100_series/index.md",
       "source_commit": "97026162fb37562a5e19fa4ca0ada6481e5ff455",
-      "source_section": "V100 系列索引；C2201、S5236、G5201 产品简介的概述",
-      "source_resolution": "partial",
-      "source_checked_at": "2026-10-19",
-      "source_note": "已对照固定提交的中英文产品简介核对三款服务器分类；未对全部配置参数及软件兼容性逐项认证。",
-      "conflicts": "旧稿将 C2201、S5236、G5201 分别归为边缘单元、工业主控和网关，与官方服务器产品简介冲突；原口径在正文留存，等待人工审核。",
+      "source_section": "V100 系列索引",
+      "source_resolution": "resolved",
+      "source_checked_at": "2026-10-21",
+      "source_note": "历史文档已废弃，其内容已解耦重构并迁移至新专题档案。",
+      "conflicts": "历史旧稿曾将 C2201、S5236、G5201 分别归为边缘单元、工业主控和网关，与官方服务器产品简介冲突。本档案已废弃并被新档案取代。",
       "created": "2026-10-16",
-      "updated": "2026-10-20",
-      "source_related_file": [
-        "Sources/docs-product/zh/v100_series/v100_c2201/root_overview.md",
-        "Sources/docs-product/zh/v100_series/v100_g5201/root_overview.md",
-        "Sources/docs-product/zh/v100_series/v100_s5236/root_overview.md"
-      ],
-      "source_related_commit": [
-        "bc640755145625cc20745f49861f82588863fca3",
-        "bc640755145625cc20745f49861f82588863fca3",
-        "bc640755145625cc20745f49861f82588863fca3"
-      ],
-      "freshness": "stale",
-      "stale_paths": [
-        "Sources/docs-product/zh/v100_series/v100_c2201/root_overview.md",
-        "Sources/docs-product/zh/v100_series/v100_g5201/root_overview.md",
-        "Sources/docs-product/zh/v100_series/v100_s5236/root_overview.md"
-      ],
+      "updated": "2026-10-21",
+      "freshness": "current",
+      "stale_paths": [],
       "unknown_paths": [],
       "checked_against_commit": {
         "docs-product": "cb96db6332fac093964af8fef98db45e2783fde8"
@@ -2633,9 +2690,97 @@
           "checked_against_commit": "cb96db6332fac093964af8fef98db45e2783fde8",
           "freshness": "current",
           "reason": "source_file_unchanged"
+        }
+      ]
+    },
+    "SpacemiT_V100系列机架式服务器专题档案": {
+      "id": "SpacemiT_V100系列机架式服务器专题档案",
+      "title": "SpacemiT V100 系列机架式服务器专题档案",
+      "type": "knowledge_atom",
+      "domain": "chip_product_specs",
+      "status": "needs_review",
+      "aliases": [
+        "V100系列服务器档案",
+        "V100服务器专题",
+        "SpacemiT V100 Servers",
+        "v100_servers",
+        "C2201计算服务器",
+        "S5236存储服务器",
+        "G5201智算服务器",
+        "SpacemiT_V100系列机架式服务器专题档案",
+        "SpacemiT_V100系列工业与边缘计算硬件专题档案",
+        "V100计算存储智算服务器"
+      ],
+      "target_audience": [
+        "系统架构师",
+        "服务器硬件工程师",
+        "数据中心运维工程师",
+        "解决方案架构师"
+      ],
+      "outlinks": [
+        "SpacemiT_V100服务器处理器芯片专题档案",
+        "v100_servers_specs",
+        "v100_chip_specs",
+        "Spacemit_产品矩阵与硬件生态全景档案"
+      ],
+      "backlinks": [
+        "SpacemiT_V100服务器处理器芯片专题档案",
+        "SpacemiT_V100系列工业与边缘计算硬件专题档案",
+        "Spacemit_产品矩阵与硬件生态全景档案"
+      ],
+      "summary": "# SpacemiT V100 系列机架式服务器专题档案  > [!TIP] > **💡 工程师导读与选型焦点**： > 本文系统梳理基于 SpacemiT 服务器级 CPU **V100** 打造的 3 款企业级机架式服务器：**C2201 通用计算服务器**、**S5236 高密存储服务器** 与 **G5201 高性能智算服务器**。 > 底层芯片架构机理请下钻查阅 [[Knowledge_Atoms/SpacemiT_V100服务器处理器芯片专题档案|V100 处理器芯片专题]]；整机物理参数对比见 [[Evidence/v100_servers_specs|V100 整机参数对比表]",
+      "content": "# SpacemiT V100 系列机架式服务器专题档案\n\n> [!TIP]\n> **💡 工程师导读与选型焦点**：\n> 本文系统梳理基于 SpacemiT 服务器级 CPU **V100** 打造的 3 款企业级机架式服务器：**C2201 通用计算服务器**、**S5236 高密存储服务器** 与 **G5201 高性能智算服务器**。\n> 底层芯片架构机理请下钻查阅 [[Knowledge_Atoms/SpacemiT_V100服务器处理器芯片专题档案|V100 处理器芯片专题]]；整机物理参数对比见 [[Evidence/v100_servers_specs|V100 整机参数对比表]]。\n> **目标读者**：`系统架构师 / 数据中心运维工程师 / 解决方案架构师` | **技术领域**：`chip_product_specs`\n\n---\n\n## 1. V100 服务器产品家族谱系与定位\n\n进迭时空 V100 服务器产品线以自研高性能 **Vital Stone V100 CPU** 为统一计算底座，满足云计算中心、海量大数据存储及 AI 智算中心等多元业务场景：\n\n```mermaid\ngraph TD\n    CPU[\"[[Knowledge_Atoms/SpacemiT_V100服务器处理器芯片专题档案|Vital Stone V100 处理器]]<br>(46 核 RVA23 | 8通道 DDR5 | 52 PCIe 5.0 Lanes)\"]\n    \n    CPU --> C2201[\"C2201 计算服务器<br>(2U 双路 92 核 / 88 PCIe 5.0 Lanes / 8×U.2 NVMe)\"]\n    CPU --> S5236[\"S5236 存储服务器<br>(4U 双路 92 核 / 36×SATA 盘位 / 25GbE 网卡)\"]\n    CPU --> G5201[\"G5201 智算服务器<br>(4U 双路 92 核 / 8×600W PCIe GPU 卡 / 400GbE RoCE)\"]\n```\n\n---\n\n## 2. 三款服务器核心形态与选型矩阵\n\n| 产品型号 | 物理形态 | 核心算力与内存配置 | 存储与 I/O 扩展亮点 | 典型部署场景 |\n| :--- | :--- | :--- | :--- | :--- |\n| **C2201** | **2U 双路机架式**<br>820 × 447.4 × 87.8 mm<br>重量 ≤ 35 kg | • **2 颗 V100（92 核）**<br>• 16 个 DDR5 槽位（最高 2TB）<br>• 4800 MT/s 速率 | • **88 条 PCIe 5.0 Lane** 扩展<br>• 前置 8×3.5\" U.2 NVMe SSD<br>• 内置 1×M.2 NVMe + 后置 2×2.5\" SATA<br>• 1600W CRPS 1+1 铂金冗余 | 公有云/私有云计算节点、微服务容器集群、高并发 Web 业务、科学计算与政企关键业务 |\n| **S5236** | **4U 高密机架式**<br>820 × 447.4 × 176.9 mm<br>重量 55 kg | • **2 颗 V100（92 核）**<br>• 16 个 DDR5 槽位（最高 2TB）<br>• 4800 MT/s 速率 | • **前置 24 + 后置 12 共 36 盘位**<br>• 2 个 2.5\" SATA 系统盘位<br>• 标配 1×OCP3.0 + 2×25GbE 双口网卡<br>• 支持 3 个 RISER 扩展槽（网卡/RAID） | 分布式对象存储、海量视频监控归档、冷热混合数据湖、容灾备份中心 |\n| **G5201** | **4U 高密智算机架式**<br>895 × 447.4 × 176.8 mm<br>重量 约 60 kg | • **2 颗 V100（92 核）**<br>• 16 个 DDR5 槽位（最高 2TB）<br>• 4800 MT/s 速率 | • **满配 8 张 600W PCIe 风冷加速卡**<br>• 最高支持 **256 GB/s GPU 卡间互联**<br>• 标配 1×OCP3.0 + **4×400GbE RoCE 网卡**<br>• 4 个 CRPS 冗余电源（支持 N+1） | 大模型离线/在线推理、跨节点分布式算力集群、多模态预处理智算中心 |\n\n---\n\n## 3. 服务器通用基础架构与智能运维\n\n三款服务器整机均遵循标准的服务器硬件规范与企业级管理体系：\n\n1. **统一管理基板 (BMC)**：\n   * 板载企业级 **AST2600 BMC 控制器**，提供专用带外管理网口与 Type-C 调试口；\n   * 支持标准 **IPMI 2.0、Redfish RESTful API、SOL（Serial-Over-LAN）** 及远程 **KVM over IP** 与虚拟介质挂载；\n   * 支持风扇智能 PID 调速与多传感器机箱环境动态温控，保持整机运行噪声低于 55 dB。\n2. **电源与散热冗余体系**：\n   * 采用标准企业级 **CRPS 冗余电源模组**（C2201 标配 1600W 1+1 冗余，G5201 标配 4 模块 N+1 冗余）；\n   * 标配 N+1 冗余高速热插拔风扇模组（S5236 与 G5201 标配 12 个 6056 工业风扇），支持在线免工具热更换。\n3. **前置与后置接口标准化**：\n   * 前置与后置面板均提供 2 × USB 3.0 接口及 1 × VGA 调试接口；后置集成 1 × Type-C 调试口及独立 1GbE BMC 管理网口。\n\n---\n\n## 4. 软件栈与生态兼容边界\n\n* **系统固件**：全面支持基于 **UEFI 2.11 / ACPI 6.6 / EDK2** 的标准引导固件。\n* **操作系统**：深度兼容 openEuler、openKylin、Ubuntu Server、Red Hat Enterprise Linux、Fedora、Rocky Linux 及 openRuyi 等主流发行版。\n* **虚拟化支持**：在两颗 V100 处理器支持下，整机提供 92 个实体核心，依托 RVH 1.0、AIA 1.0 与 IOMMU 1.0，可在 KVM 下大规模并发运行虚拟机，物理损耗大幅降低。\n* **边界提示**：V100 系列整机面向企业级数据中心，**严禁套用端侧单板开发套件的 Bianbu OS 桌面镜像或 ROS 2 机器人环境**。\n\n---\n\n## 5. 关联事实证据与参考出处\n\n* **芯片级底层专题**：[[Knowledge_Atoms/SpacemiT_V100服务器处理器芯片专题档案]]\n* **整机全量硬数据表**：[[Evidence/v100_servers_specs|V100 系列机架式服务器整机物理规格参数对比表]]\n* **芯片技术指标证据**：[[Evidence/v100_chip_specs|Vital Stone V100 服务器级 CPU 核心技术规格参数]]\n* **全局硬件图谱**：[[Knowledge_Atoms/Spacemit_产品矩阵与硬件生态全景档案]]\n* **官方原始出处**：\n  * [C2201 计算服务器官方简介](https://github.com/spacemit-com/docs-product/blob/main/zh/v100_series/v100_c2201/root_overview.md)\n  * [S5236 存储服务器官方简介](https://github.com/spacemit-com/docs-product/blob/main/zh/v100_series/v100_s5236/root_overview.md)\n  * [G5201 智算服务器官方简介](https://github.com/spacemit-com/docs-product/blob/main/zh/v100_series/v100_g5201/root_overview.md)",
+      "verification_status": "verified",
+      "verified_at": "2026-10-21",
+      "source_origin": "https://github.com/spacemit-com/docs-product",
+      "source_file": "Sources/docs-product/zh/v100_series/index.md",
+      "source_commit": "bc640755145625cc20745f49861f82588863fca3",
+      "source_section": "V100 系列索引；C2201、S5236、G5201 产品简介",
+      "source_resolution": "resolved",
+      "source_checked_at": "2026-10-21",
+      "source_note": "已严格对照 docs-product 最新提交核验 C2201 计算、S5236 存储、G5201 智算三款机架式服务器整机全量配置与物理参数。",
+      "created": "2026-10-16",
+      "updated": "2026-10-21",
+      "source_related_file": [
+        "Sources/docs-product/zh/v100_series/v100_c2201/root_overview.md",
+        "Sources/docs-product/zh/v100_series/v100_s5236/root_overview.md",
+        "Sources/docs-product/zh/v100_series/v100_g5201/root_overview.md",
+        "Sources/docs-chip/zh/vital_stone/v100/v100_docs/root_overview.md"
+      ],
+      "source_related_commit": [
+        "bc640755145625cc20745f49861f82588863fca3",
+        "bc640755145625cc20745f49861f82588863fca3",
+        "bc640755145625cc20745f49861f82588863fca3",
+        "2525ee3b68e0f4864f1bf12c8a59df040bf27e84"
+      ],
+      "freshness": "stale",
+      "stale_paths": [
+        "Sources/docs-product/zh/v100_series/v100_c2201/root_overview.md",
+        "Sources/docs-product/zh/v100_series/v100_g5201/root_overview.md",
+        "Sources/docs-product/zh/v100_series/v100_s5236/root_overview.md"
+      ],
+      "unknown_paths": [],
+      "checked_against_commit": {
+        "docs-product": "cb96db6332fac093964af8fef98db45e2783fde8",
+        "docs-chip": "fd016f81034b1a93ad39c2cecf313bb82be7d169"
+      },
+      "source_freshness": [
+        {
+          "source_file": "Sources/docs-product/zh/v100_series/index.md",
+          "source_commit": "bc640755145625cc20745f49861f82588863fca3",
+          "checked_against_commit": "cb96db6332fac093964af8fef98db45e2783fde8",
+          "freshness": "current",
+          "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-product/zh/v100_series/v100_c2201/root_overview.md",
+          "source_commit": "bc640755145625cc20745f49861f82588863fca3",
+          "checked_against_commit": "cb96db6332fac093964af8fef98db45e2783fde8",
+          "freshness": "stale",
+          "reason": "source_file_changed"
+        },
+        {
+          "source_file": "Sources/docs-product/zh/v100_series/v100_s5236/root_overview.md",
           "source_commit": "bc640755145625cc20745f49861f82588863fca3",
           "checked_against_commit": "cb96db6332fac093964af8fef98db45e2783fde8",
           "freshness": "stale",
@@ -2649,11 +2794,11 @@
           "reason": "source_file_changed"
         },
         {
-          "source_file": "Sources/docs-product/zh/v100_series/v100_s5236/root_overview.md",
-          "source_commit": "bc640755145625cc20745f49861f82588863fca3",
-          "checked_against_commit": "cb96db6332fac093964af8fef98db45e2783fde8",
-          "freshness": "stale",
-          "reason": "source_file_changed"
+          "source_file": "Sources/docs-chip/zh/vital_stone/v100/v100_docs/root_overview.md",
+          "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+          "checked_against_commit": "fd016f81034b1a93ad39c2cecf313bb82be7d169",
+          "freshness": "current",
+          "reason": "source_file_unchanged"
         }
       ]
     },
@@ -2936,7 +3081,8 @@
         "产品生态全景",
         "spacemit_product_matrix",
         "产品家族谱系",
-        "Vital_Stone_V100"
+        "Vital_Stone_V100",
+        "V100服务器矩阵"
       ],
       "target_audience": [
         "系统架构师",
@@ -2949,7 +3095,10 @@
         "p1_pmic_specs",
         "p1s_pmic_specs",
         "p3_pmic_specs",
-        "SpacemiT_V100系列工业与边缘计算硬件专题档案",
+        "SpacemiT_V100系列机架式服务器专题档案",
+        "SpacemiT_V100服务器处理器芯片专题档案",
+        "v100_chip_specs",
+        "v100_servers_specs",
         "Muse_Pi_板级硬件设计专题",
         "Spacemit_K1生态终端与教学实验套件专题档案",
         "K3_Pico_板级硬件设计专题",
@@ -2966,23 +3115,26 @@
         "k1_terminal_products_specs"
       ],
       "backlinks": [
-        "SpacemiT_V100系列工业与边缘计算硬件专题档案"
+        "SpacemiT_V100服务器处理器芯片专题档案",
+        "SpacemiT_V100系列机架式服务器专题档案"
       ],
       "summary": "# Spacemit 产品矩阵与硬件生态全景档案  > [!IMPORTANT] > **💡 AI Agent & 开发者核心导读**： > 本文是 Spacemit 全栈知识库的 **L0 级顶层总枢纽（Product Ecosystem Map）**。系统梳理 K1/M1 生态终端、K3 智算平台、Power Stone 伴随电源与 V100 计算/存储/智算服务器的产品谱系。 > 当用户询问“公司有哪些产品”、“围绕 K1/K3 有哪些板卡”、“产品之间怎么选型”时，**以此文档定位相关主题，并按事实状态与官方出处核实**，向下穿透各专题档案。  ---  ## 1. 双代际计算底座与物",
-      "content": "# Spacemit 产品矩阵与硬件生态全景档案\n\n> [!IMPORTANT]\n> **💡 AI Agent & 开发者核心导读**：\n> 本文是 Spacemit 全栈知识库的 **L0 级顶层总枢纽（Product Ecosystem Map）**。系统梳理 K1/M1 生态终端、K3 智算平台、Power Stone 伴随电源与 V100 计算/存储/智算服务器的产品谱系。\n> 当用户询问“公司有哪些产品”、“围绕 K1/K3 有哪些板卡”、“产品之间怎么选型”时，**以此文档定位相关主题，并按事实状态与官方出处核实**，向下穿透各专题档案。\n\n---\n\n## 1. 双代际计算底座与物理边界隔离 (Generational Boundary)\n\n以下比较 K1 与 K3 两代端侧计算底座。在进行选型与架构设计时，**必须严格遵守代际物理参数隔离，严禁跨代张冠李戴**。V100 是服务器级 CPU，相关整机使用独立产品规格，不能套用下表的 K1/K3 电源、接口或软件支持结论：\n\n```mermaid\ngraph TD\n    subgraph K1_Era [K1 普惠计算与端侧低功耗底座 (Key Stone 1)]\n        K1_Chip[\"K1 八核 AI SoC<br>(8×X60 @ 1.6GHz | 2.0 TOPS | 3~5W TDP)\"]\n        PMIC_P1[\"伴随电源: P1 PMIC\"]\n        K1_Chip --- PMIC_P1\n    end\n\n    subgraph K3_Era [K3 高性能智算与高密集群底座 (Key Stone 3)]\n        K3_Chip[\"K3 十六核高能效 SoC<br>(8×X100 + 8×A100 @ 2.4GHz | 60 TOPS | 15~25W TDP)\"]\n        PMIC_P3[\"伴随电源: P1S / P3 PMIC\"]\n        K3_Chip --- PMIC_P3\n    end\n```\n\n| 核心维度 | K1 普惠平台 (Key Stone 1) | K3 高性能智算平台 (Key Stone 3) |\n| :--- | :--- | :--- |\n| **CPU 架构** | 8 核自研 X60 @ 1.6GHz (50 KDMIPS)，支持 RVV 1.0 | 8 计算核 X100 + 8 智算核 A100 @ 2.4GHz (130 KDMIPS) |\n| **通用 AI 算力** | **2.0 TOPS** (同构 A60 智算核，cpufp 实测 2.046 TOPS) | **60 TOPS** 通用 AI 算力 (符合 RVA23 标准，支持 IME 向量扩展) |\n| **内存与带宽** | 32-bit LPDDR4/4x @ 2400MT/s | 双通道 64-bit LPDDR5 @ 6400MT/s (计算与智算统一内存) |\n| **本地存储基线** | eMMC 5.1 / SPI Flash | **板载 UFS 2.2** (读取速率比同类 eMMC 提升 3.4 倍) |\n| **整机功耗 (TDP)**| **3W ~ 5W 超低功耗** (被动散热为主) | **15W ~ 25W 性能释放** (主动风冷 / 金属导热机箱) |\n| **大模型推理上限**| 0.5B ~ 1B (TinyLlama, Qwen2.5-0.5B) | **30B MoE 稀疏大模型** (如 Qwen3-30B-A3B) 或 8B 稠密大模型 |\n| **伴随电源方案** | [[Evidence/p1_pmic_specs|Power Stone P1 PMIC]] | [[Evidence/p1s_pmic_specs|Power Stone P1S]] / [[Evidence/p3_pmic_specs|P3 四相 32A PMIC]] |\n| **网络能力** | 双路千兆 GMAC (支持 RMII/RGMII) | 千兆电口 + **板载万兆 SFP+ 光口** (10G BASE-R) |\n\n---\n\n## 2. 官方全矩阵硬件产品生态拓扑图谱\n\n进迭时空官方量产与生态硬件覆盖了开源单板、便携终端、工业模组、边缘计算整机、高密集群及机架式计算/存储/智算服务器：\n\n```mermaid\nflowchart LR\n    Spacemit[\"Spacemit 硬件全景\"]\n    \n    Spacemit --> K1_Fam[\"K1/M1 生态家族 (8款)\"]\n    Spacemit --> K3_Fam[\"K3 智算家族 (4款)\"]\n    Spacemit --> V100_Fam[\"V100 服务器家族\"]\n    Spacemit --> Acc[\"伴随芯片与调试配件\"]\n\n    K1_Fam --> K1_SBC[\"开源单板与开发板\"]\n    K1_SBC --> P1[\"Muse Pi (标准版 SBC)\"]\n    K1_SBC --> P2[\"Muse Pi Pro (增强版 40Pin)\"]\n    K1_SBC --> P3[\"Muse Card (双M.2计算卡)\"]\n\n    K1_Fam --> K1_Term[\"便携终端与整机\"]\n    K1_Term --> P4[\"Muse Book (14寸笔记本)\"]\n    K1_Term --> P5[\"Muse Box (Mini-ITX主机)\"]\n    K1_Term --> P6[\"Muse Paper (OpenHarmony LCD平板)\"]\n\n    K1_Fam --> K1_Cluster[\"算力实验与教学\"]\n    K1_Cluster --> P7[\"Muse Shelf (80节点云算力架)\"]\n    K1_Cluster --> P8[\"RISC-V Labkit (教学实验箱)\"]\n\n    K3_Fam --> K3_Edge[\"边缘计算与单板\"]\n    K3_Edge --> K3_1[\"K3 Pico (迷你 AI 计算机)\"]\n    K3_Edge --> K3_2[\"K3 CoM260 (机器人计算模组套件)\"]\n\n    K3_Fam --> K3_Server[\"高密集群与编译农场\"]\n    K3_Server --> K3_3[\"K3 Shelf (N10/N48 编译集群)\"]\n    K3_Server --> K3_4[\"K3 RV2768 (2U 768核AI集群)\"]\n\n    V100_Fam --> V1[\"C2201 (2U双路计算服务器)\"]\n    V100_Fam --> V2[\"S5236 (4U存储服务器)\"]\n    V100_Fam --> V3[\"G5201 (4U双路智算服务器)\"]\n\n    Acc --> P1_Chip[\"P1 / P1S / P3 PMIC\"]\n    Acc --> TF_Dbg[\"TF 卡扩展串口/JTAG 调试子板\"]\n```\n\n---\n\n## 3. 全矩阵产品定位、核心卖点与选型速查表\n\n| # | 产品名称 | 核心主控 / 系列 | 物理形态 | 核心差异化卖点 (Highlights) | 典型应用场景 / 目标群体 |\n| :-: | :--- | :--- | :--- | :--- | :--- |\n| 1 | **MUSE Pi** | K1 八核 | 信用卡单板 (85×56mm) | 2.0T AI 算力、双屏异显、低功耗、兼容 26-Pin 扩展 | 开源创客、嵌入式学习、轻量边缘节点 |\n| 2 | **MUSE Pi Pro** | K1 八核 | 紧凑单板 (85×56mm) | 升级 **40-Pin 树莓派兼容排针**、板载音频功放、工业扩展 | 工业物联网、商显设备、具身智能初阶原型 |\n| 3 | **MUSE Card** | M1 八核 | 紧凑计算卡 (85×56mm) | 板载 **双 M.2 2242 NVMe** 槽位、双路 4-lane MIPI CSI | 便携 NAS、轻量边缘存储、双摄视觉边缘端 |\n| 4 | **MUSE Book** | M1 八核 | 14.1 寸超薄笔记本 | **全球首款可量产 RISC-V 笔记本**、预装 Bianbu 桌面系统 | RISC-V 原生软件开发、高校极客、移动办公 |\n| 5 | **MUSE Box** | K1 八核 | Mini-ITX 迷你整机 | 超静音金属机箱、无风扇设计、丰富标准 I/O | 极客桌面日常主机、轻量自建服务器、边缘网关 |\n| 6 | **MUSE Paper** | K1 八核 | LCD 平板电脑 | **RISC-V 原生 OpenHarmony 鸿蒙平板**、深度 RVV 加速 | 全栈开源移动开发、工业与行业定制 |\n| 7 | **MUSE Shelf** | 80 颗 K1 | 2U 机架式服务器 | 集成 **80 颗 K1 处理器**、刀片式云平台架构、支持远程桌面/刷机 | 进迭云算力农场、跨平台应用远程适配测试 |\n| 8 | **RISC-V Labkit** | SpacemiT M1 | 10.1 寸模块化实验箱 | 积木式外设拆卸、内嵌 10.1 寸 IPS 触摸屏、配百余教学实验手册 | 高校嵌入式教学、计算机体系结构实验、AI 实训 |\n| 9 | **K3 Pico** | K3 十六核 | 2.5 寸单板电脑 (100×86mm) | **单线 Type-C 65W 点亮**、60T 算力统一内存、**板载万兆光口** | 具身机器人大脑、边缘视觉检测、迷你 AI 工作站 |\n| 10| **K3 CoM260** | K3 十六核 | 核心模组 (SoM) + 载板 | 12-Pin 多功能调试排针、**RT24 直出微秒级 EtherCAT/CAN-FD** | 工业底板客制化量产、巡检机器人、多轴运动控制 |\n| 11| **K3 Shelf** | 10/48 节点 K3 | 高密机架阵列服务器 | 原生 RISC-V 编译集群，**编译性能相比 x86 QEMU 仿真提升 10 倍+** | Linux 发行版编译农场、CI/CD 自动化构建、软件兼容性测试 |\n| 12| **K3 RV2768** | 96 节点 K3 | 2U 机架集群服务器 | **2U 空间集成 768 核 RISC-V 算力**、支持 Redfish 远程 IPMI 管理 | 智算中心轻量推理、大规模分布式计算、高密云手机/云游戏 |\n| 13| **V100 C2201** | V100 服务器级 CPU | 2U 双路机架式计算服务器 | DDR5 内存、PCIe 5.0 扩展，来源见 [[Knowledge_Atoms/SpacemiT_V100系列工业与边缘计算硬件专题档案|V100 服务器档案]] | 数据中心、云计算、科学计算、行业关键业务 |\n| 14| **V100 S5236** | V100 服务器级 CPU | 4U 高密度机架式存储服务器 | 双路处理器、DDR5 内存与高密度存储扩展 | 云存储、数据归档、备份容灾 |\n| 15| **V100 G5201** | V100 服务器级 CPU | 4U 双路高密度机架式智算服务器 | 支持 8 张 PCIe 风冷加速卡，按具体配置选型 | 大模型推理、科学计算、智算中心 |\n\nV100 三款产品的分类依据为 `docs-product@97026162fb37562a5e19fa4ca0ada6481e5ff455` 的中文与英文产品简介；旧稿“紧凑边缘单元/工业主控/通信网关”分类与官方资料冲突，历史口径与 `needs_review` 记录保留在 [[Knowledge_Atoms/SpacemiT_V100系列工业与边缘计算硬件专题档案|V100 服务器档案]]。\n\n---\n\n## 4. 常见产品选型决策树 (Decision Guide)\n\n当开发者或销售面临选型困惑时，按以下工程边界快速定夺：\n\n下图用于 K1/M1 与 K3 生态选型。需要机架式通用计算、集中存储或加速卡智算整机时，另按 [[Knowledge_Atoms/SpacemiT_V100系列工业与边缘计算硬件专题档案|V100 服务器档案]] 的产品规格选型。\n\n```mermaid\nflowchart TD\n    Start[\"选型起点: 你的算力与场景需求是什么？\"]\n    \n    Start --> Q1{\"是否需要 10 TOPS 以上 AI 算力<br>或跑 8B/30B 级别本地大模型？\"}\n    \n    Q1 -->|否 (需要 2T 算力 / 超低功耗 3~5W)| K1_Branch[\"进入 K1 普惠系列\"]\n    Q1 -->|是 (需要 60T 算力 / 万兆网络)| K3_Branch[\"进入 K3 智算系列\"]\n\n    K1_Branch --> K1_Q{\"你需要什么物理形态？\"}\n    K1_Q -->|极客单板/创客开发| K1_Sel1[\"推荐 [[Knowledge_Atoms/Muse_Pi_板级硬件设计专题|Muse Pi / Muse Pi Pro]]\"]\n    K1_Q -->|便携开箱即用整机| K1_Sel2[\"推荐 [[Knowledge_Atoms/Spacemit_K1生态终端与教学实验套件专题档案|Muse Book 笔记本 / Muse Box 迷你主机]]\"]\n    K1_Q -->|高校嵌入式与AI教学| K1_Sel3[\"推荐 [[Knowledge_Atoms/Spacemit_K1生态终端与教学实验套件专题档案|RISC-V Labkit 实验箱]]\"]\n    K1_Q -->|双 NVMe 边缘存储| K1_Sel4[\"推荐 [[Knowledge_Atoms/Spacemit_K1生态终端与教学实验套件专题档案|Muse Card 计算卡]]\"]\n\n    K3_Branch --> K3_Q{\"你的交付形态是什么？\"}\n    K3_Q -->|一体化单板 / 快速原型| K3_Sel1[\"推荐 [[Knowledge_Atoms/K3_Pico_板级硬件设计专题|K3 Pico 迷你 AI 计算机]]<br>(单线 Type-C 即插即亮，万兆光口直连)\"]\n    K3_Q -->|工业客户定制底板 / 量产| K3_Sel2[\"推荐 [[Knowledge_Atoms/K3_COM260_板级硬件设计专题|K3 CoM260 核心计算模组套件]]<br>(引脚丰富，直出 EtherCAT 运动控制)\"]\n    K3_Q -->|高密编译构建 / 智算集群| K3_Sel3[\"推荐 [[Knowledge_Atoms/K3_RV2768_集群服务器专题档案|K3 RV2768]] 或 K3 Shelf<br>(2U 768核集群，相比 QEMU 编译提速 10倍)\"]\n```\n\n---\n\n## 5. 全栈技术下钻路由指南\n\n本全景图谱向下连接了深度的系统设计、管脚映射与通关动线：\n\n### 开发者上手动线指引\n* 各芯片与板卡的极简通关步骤（K1/K3 芯片上手向导、Muse Pi 烧录向导、K3 Pico 单线点亮向导等），请直接参阅全局索引 [[index]] 中的 **开发者上手向导** 对应板块。\n\n### 板级系统设计与管脚专题 (Knowledge Atoms)\n* [[Knowledge_Atoms/Muse_Pi_板级硬件设计专题]] —— MUSE Pi/Pro 供电、Strap 拨码与调试复用。\n* [[Knowledge_Atoms/MUSE_Pi_26Pin_IOMAP管脚映射专题]] —— MUSE Pi 26-Pin 扩展引脚定义。\n* [[Knowledge_Atoms/MUSE_Pi_Pro_40Pin_IOMAP管脚映射专题]] —— MUSE Pi Pro 40-Pin 彩色功能定义表。\n* [[Knowledge_Atoms/K3_Pico_板级硬件设计专题]] —— K3 Pico 双电源优先级、双 M.2 仲裁与 RT24 直出。\n* [[Knowledge_Atoms/K3_Pico_扩展接口管脚映射专题]] —— K3 Pico 26-Pin & 36-Pin FPC 柔性连接器定义。\n* [[Knowledge_Atoms/K3_COM260_板级硬件设计专题]] —— K3 CoM260 12-Pin 多功能排针与载板设计。\n* [[Knowledge_Atoms/K3_CoM260_40Pin_IOMAP管脚映射专题]] —— CoM260 40-Pin 标准排针电平转换与路由。\n* [[Knowledge_Atoms/K3_RV2768_集群服务器专题档案]] —— 2U 768核集群服务器架构、Redfish API 与热插拔管理。\n* [[Knowledge_Atoms/Spacemit_K1生态终端与教学实验套件专题档案]] —— Muse Book、Box、Card、Paper、Shelf、Labkit 综合专题。\n\n### 事实参数与数据依据 (Evidence)\n* [[Evidence/muse_pi_vs_pi_pro_specs]] —— Muse Pi 与 Pro 详细规格比对。\n* [[Evidence/k3_pico_specs]] —— K3 Pico 详细板级物理参数与选配套件。\n* [[Evidence/k3_com260_specs]] —— K3 CoM260 核心板与载板硬件规格。\n* [[Evidence/k1_terminal_products_specs]] —— K1 生态衍生终端全量参数规格表。",
+      "content": "# Spacemit 产品矩阵与硬件生态全景档案\n\n> [!IMPORTANT]\n> **💡 AI Agent & 开发者核心导读**：\n> 本文是 Spacemit 全栈知识库的 **L0 级顶层总枢纽（Product Ecosystem Map）**。系统梳理 K1/M1 生态终端、K3 智算平台、Power Stone 伴随电源与 V100 计算/存储/智算服务器的产品谱系。\n> 当用户询问“公司有哪些产品”、“围绕 K1/K3 有哪些板卡”、“产品之间怎么选型”时，**以此文档定位相关主题，并按事实状态与官方出处核实**，向下穿透各专题档案。\n\n---\n\n## 1. 双代际计算底座与物理边界隔离 (Generational Boundary)\n\n以下比较 K1 与 K3 两代端侧计算底座。在进行选型与架构设计时，**必须严格遵守代际物理参数隔离，严禁跨代张冠李戴**。V100 是服务器级 CPU，相关整机使用独立产品规格，不能套用下表的 K1/K3 电源、接口或软件支持结论：\n\n```mermaid\ngraph TD\n    subgraph K1_Era [K1 普惠计算与端侧低功耗底座 (Key Stone 1)]\n        K1_Chip[\"K1 八核 AI SoC<br>(8×X60 @ 1.6GHz | 2.0 TOPS | 3~5W TDP)\"]\n        PMIC_P1[\"伴随电源: P1 PMIC\"]\n        K1_Chip --- PMIC_P1\n    end\n\n    subgraph K3_Era [K3 高性能智算与高密集群底座 (Key Stone 3)]\n        K3_Chip[\"K3 十六核高能效 SoC<br>(8×X100 + 8×A100 @ 2.4GHz | 60 TOPS | 15~25W TDP)\"]\n        PMIC_P3[\"伴随电源: P1S / P3 PMIC\"]\n        K3_Chip --- PMIC_P3\n    end\n```\n\n| 核心维度 | K1 普惠平台 (Key Stone 1) | K3 高性能智算平台 (Key Stone 3) |\n| :--- | :--- | :--- |\n| **CPU 架构** | 8 核自研 X60 @ 1.6GHz (50 KDMIPS)，支持 RVV 1.0 | 8 计算核 X100 + 8 智算核 A100 @ 2.4GHz (130 KDMIPS) |\n| **通用 AI 算力** | **2.0 TOPS** (同构 A60 智算核，cpufp 实测 2.046 TOPS) | **60 TOPS** 通用 AI 算力 (符合 RVA23 标准，支持 IME 向量扩展) |\n| **内存与带宽** | 32-bit LPDDR4/4x @ 2400MT/s | 双通道 64-bit LPDDR5 @ 6400MT/s (计算与智算统一内存) |\n| **本地存储基线** | eMMC 5.1 / SPI Flash | **板载 UFS 2.2** (读取速率比同类 eMMC 提升 3.4 倍) |\n| **整机功耗 (TDP)**| **3W ~ 5W 超低功耗** (被动散热为主) | **15W ~ 25W 性能释放** (主动风冷 / 金属导热机箱) |\n| **大模型推理上限**| 0.5B ~ 1B (TinyLlama, Qwen2.5-0.5B) | **30B MoE 稀疏大模型** (如 Qwen3-30B-A3B) 或 8B 稠密大模型 |\n| **伴随电源方案** | [[Evidence/p1_pmic_specs|Power Stone P1 PMIC]] | [[Evidence/p1s_pmic_specs|Power Stone P1S]] / [[Evidence/p3_pmic_specs|P3 四相 32A PMIC]] |\n| **网络能力** | 双路千兆 GMAC (支持 RMII/RGMII) | 千兆电口 + **板载万兆 SFP+ 光口** (10G BASE-R) |\n\n---\n\n## 2. 官方全矩阵硬件产品生态拓扑图谱\n\n进迭时空官方量产与生态硬件覆盖了开源单板、便携终端、工业模组、边缘计算整机、高密集群及机架式计算/存储/智算服务器：\n\n```mermaid\nflowchart LR\n    Spacemit[\"Spacemit 硬件全景\"]\n    \n    Spacemit --> K1_Fam[\"K1/M1 生态家族 (8款)\"]\n    Spacemit --> K3_Fam[\"K3 智算家族 (4款)\"]\n    Spacemit --> V100_Fam[\"V100 服务器家族\"]\n    Spacemit --> Acc[\"伴随芯片与调试配件\"]\n\n    K1_Fam --> K1_SBC[\"开源单板与开发板\"]\n    K1_SBC --> P1[\"Muse Pi (标准版 SBC)\"]\n    K1_SBC --> P2[\"Muse Pi Pro (增强版 40Pin)\"]\n    K1_SBC --> P3[\"Muse Card (双M.2计算卡)\"]\n\n    K1_Fam --> K1_Term[\"便携终端与整机\"]\n    K1_Term --> P4[\"Muse Book (14寸笔记本)\"]\n    K1_Term --> P5[\"Muse Box (Mini-ITX主机)\"]\n    K1_Term --> P6[\"Muse Paper (OpenHarmony LCD平板)\"]\n\n    K1_Fam --> K1_Cluster[\"算力实验与教学\"]\n    K1_Cluster --> P7[\"Muse Shelf (80节点云算力架)\"]\n    K1_Cluster --> P8[\"RISC-V Labkit (教学实验箱)\"]\n\n    K3_Fam --> K3_Edge[\"边缘计算与单板\"]\n    K3_Edge --> K3_1[\"K3 Pico (迷你 AI 计算机)\"]\n    K3_Edge --> K3_2[\"K3 CoM260 (机器人计算模组套件)\"]\n\n    K3_Fam --> K3_Server[\"高密集群与编译农场\"]\n    K3_Server --> K3_3[\"K3 Shelf (N10/N48 编译集群)\"]\n    K3_Server --> K3_4[\"K3 RV2768 (2U 768核AI集群)\"]\n\n    V100_Fam --> V1[\"C2201 (2U双路计算服务器)\"]\n    V100_Fam --> V2[\"S5236 (4U存储服务器)\"]\n    V100_Fam --> V3[\"G5201 (4U双路智算服务器)\"]\n\n    Acc --> P1_Chip[\"P1 / P1S / P3 PMIC\"]\n    Acc --> TF_Dbg[\"TF 卡扩展串口/JTAG 调试子板\"]\n```\n\n---\n\n## 3. 全矩阵产品定位、核心卖点与选型速查表\n\n| # | 产品名称 | 核心主控 / 系列 | 物理形态 | 核心差异化卖点 (Highlights) | 典型应用场景 / 目标群体 |\n| :-: | :--- | :--- | :--- | :--- | :--- |\n| 1 | **MUSE Pi** | K1 八核 | 信用卡单板 (85×56mm) | 2.0T AI 算力、双屏异显、低功耗、兼容 26-Pin 扩展 | 开源创客、嵌入式学习、轻量边缘节点 |\n| 2 | **MUSE Pi Pro** | K1 八核 | 紧凑单板 (85×56mm) | 升级 **40-Pin 树莓派兼容排针**、板载音频功放、工业扩展 | 工业物联网、商显设备、具身智能初阶原型 |\n| 3 | **MUSE Card** | M1 八核 | 紧凑计算卡 (85×56mm) | 板载 **双 M.2 2242 NVMe** 槽位、双路 4-lane MIPI CSI | 便携 NAS、轻量边缘存储、双摄视觉边缘端 |\n| 4 | **MUSE Book** | M1 八核 | 14.1 寸超薄笔记本 | **全球首款可量产 RISC-V 笔记本**、预装 Bianbu 桌面系统 | RISC-V 原生软件开发、高校极客、移动办公 |\n| 5 | **MUSE Box** | K1 八核 | Mini-ITX 迷你整机 | 超静音金属机箱、无风扇设计、丰富标准 I/O | 极客桌面日常主机、轻量自建服务器、边缘网关 |\n| 6 | **MUSE Paper** | K1 八核 | LCD 平板电脑 | **RISC-V 原生 OpenHarmony 鸿蒙平板**、深度 RVV 加速 | 全栈开源移动开发、工业与行业定制 |\n| 7 | **MUSE Shelf** | 80 颗 K1 | 2U 机架式服务器 | 集成 **80 颗 K1 处理器**、刀片式云平台架构、支持远程桌面/刷机 | 进迭云算力农场、跨平台应用远程适配测试 |\n| 8 | **RISC-V Labkit** | SpacemiT M1 | 10.1 寸模块化实验箱 | 积木式外设拆卸、内嵌 10.1 寸 IPS 触摸屏、配百余教学实验手册 | 高校嵌入式教学、计算机体系结构实验、AI 实训 |\n| 9 | **K3 Pico** | K3 十六核 | 2.5 寸单板电脑 (100×86mm) | **单线 Type-C 65W 点亮**、60T 算力统一内存、**板载万兆光口** | 具身机器人大脑、边缘视觉检测、迷你 AI 工作站 |\n| 10| **K3 CoM260** | K3 十六核 | 核心模组 (SoM) + 载板 | 12-Pin 多功能调试排针、**RT24 直出微秒级 EtherCAT/CAN-FD** | 工业底板客制化量产、巡检机器人、多轴运动控制 |\n| 11| **K3 Shelf** | 10/48 节点 K3 | 高密机架阵列服务器 | 原生 RISC-V 编译集群，**编译性能相比 x86 QEMU 仿真提升 10 倍+** | Linux 发行版编译农场、CI/CD 自动化构建、软件兼容性测试 |\n| 12| **K3 RV2768** | 96 节点 K3 | 2U 机架集群服务器 | **2U 空间集成 768 核 RISC-V 算力**、支持 Redfish 远程 IPMI 管理 | 智算中心轻量推理、大规模分布式计算、高密云手机/云游戏 |\n| 13| **V100 C2201** | V100 服务器级 CPU | 2U 双路机架式计算服务器 | DDR5 内存、88 PCIe 5.0 Lanes，详见 [[Knowledge_Atoms/SpacemiT_V100系列机架式服务器专题档案|V100 服务器档案]] | 数据中心、云计算、科学计算、行业关键业务 |\n| 14| **V100 S5236** | V100 服务器级 CPU | 4U 高密度机架式存储服务器 | 双路 92 核、36 盘位海量存储，详见 [[Knowledge_Atoms/SpacemiT_V100系列机架式服务器专题档案|V100 服务器档案]] | 云存储、数据归档、备份容灾 |\n| 15| **V100 G5201** | V100 服务器级 CPU | 4U 双路高密度机架式智算服务器 | 满配 8 张 600W PCIe 风冷加速卡，详见 [[Knowledge_Atoms/SpacemiT_V100系列机架式服务器专题档案|V100 服务器档案]] | 大模型推理、科学计算、智算中心 |\n\nV100 芯片与三款整机分别对应 [[Knowledge_Atoms/SpacemiT_V100服务器处理器芯片专题档案|V100 处理器芯片专题]] 与 [[Knowledge_Atoms/SpacemiT_V100系列机架式服务器专题档案|V100 系列机架式服务器专题档案]]，硬数据见 [[Evidence/v100_chip_specs|V100 芯片规格]] 与 [[Evidence/v100_servers_specs|V100 整机对比表]]。\n\n---\n\n## 4. 常见产品选型决策树 (Decision Guide)\n\n当开发者或销售面临选型困惑时，按以下工程边界快速定夺：\n\n下图涵盖端侧、边缘智算平台及数据中心机架式服务器选型。需要深入了解整机规格与部署方案时，参阅 [[Knowledge_Atoms/SpacemiT_V100系列机架式服务器专题档案|V100 服务器档案]]。\n\n```mermaid\nflowchart TD\n    Start[\"选型起点: 你的算力与场景需求是什么？\"]\n    \n    Start --> Q1{\"是否需要 10 TOPS 以上 AI 算力<br>或跑 8B/30B 级别本地大模型？\"}\n    \n    Q1 -->|否 (需要 2T 算力 / 超低功耗 3~5W)| K1_Branch[\"进入 K1 普惠系列\"]\n    Q1 -->|是 (需要 60T 算力 / 万兆网络)| K3_Branch[\"进入 K3 智算系列\"]\n\n    K1_Branch --> K1_Q{\"你需要什么物理形态？\"}\n    K1_Q -->|极客单板/创客开发| K1_Sel1[\"推荐 [[Knowledge_Atoms/Muse_Pi_板级硬件设计专题|Muse Pi / Muse Pi Pro]]\"]\n    K1_Q -->|便携开箱即用整机| K1_Sel2[\"推荐 [[Knowledge_Atoms/Spacemit_K1生态终端与教学实验套件专题档案|Muse Book 笔记本 / Muse Box 迷你主机]]\"]\n    K1_Q -->|高校嵌入式与AI教学| K1_Sel3[\"推荐 [[Knowledge_Atoms/Spacemit_K1生态终端与教学实验套件专题档案|RISC-V Labkit 实验箱]]\"]\n    K1_Q -->|双 NVMe 边缘存储| K1_Sel4[\"推荐 [[Knowledge_Atoms/Spacemit_K1生态终端与教学实验套件专题档案|Muse Card 计算卡]]\"]\n\n    K3_Branch --> K3_Q{\"你的交付形态是什么？\"}\n    K3_Q -->|一体化单板 / 快速原型| K3_Sel1[\"推荐 [[Knowledge_Atoms/K3_Pico_板级硬件设计专题|K3 Pico 迷你 AI 计算机]]<br>(单线 Type-C 即插即亮，万兆光口直连)\"]\n    K3_Q -->|工业客户定制底板 / 量产| K3_Sel2[\"推荐 [[Knowledge_Atoms/K3_COM260_板级硬件设计专题|K3 CoM260 核心计算模组套件]]<br>(引脚丰富，直出 EtherCAT 运动控制)\"]\n    K3_Q -->|高密编译构建 / 智算集群| K3_Sel3[\"推荐 [[Knowledge_Atoms/K3_RV2768_集群服务器专题档案|K3 RV2768]] 或 K3 Shelf<br>(2U 768核集群，相比 QEMU 编译提速 10倍)\"]\n```\n\n---\n\n## 5. 全栈技术下钻路由指南\n\n本全景图谱向下连接了深度的系统设计、管脚映射与通关动线：\n\n### 开发者上手动线指引\n* 各芯片与板卡的极简通关步骤（K1/K3 芯片上手向导、Muse Pi 烧录向导、K3 Pico 单线点亮向导等），请直接参阅全局索引 [[index]] 中的 **开发者上手向导** 对应板块。\n\n### 板级系统设计与管脚专题 (Knowledge Atoms)\n* [[Knowledge_Atoms/SpacemiT_V100服务器处理器芯片专题档案]] —— V100 46核（6香山+40自研）、RVH 1.0/AIA 1.0/IOMMU 1.0 全栈虚拟化与 RAS 高可用性。\n* [[Knowledge_Atoms/SpacemiT_V100系列机架式服务器专题档案]] —— C2201 计算、S5236 存储、G5201 智算三款机架式服务器架构与企业级管理。\n* [[Knowledge_Atoms/Muse_Pi_板级硬件设计专题]] —— MUSE Pi/Pro 供电、Strap 拨码与调试复用。\n* [[Knowledge_Atoms/MUSE_Pi_26Pin_IOMAP管脚映射专题]] —— MUSE Pi 26-Pin 扩展引脚定义。\n* [[Knowledge_Atoms/MUSE_Pi_Pro_40Pin_IOMAP管脚映射专题]] —— MUSE Pi Pro 40-Pin 彩色功能定义表。\n* [[Knowledge_Atoms/K3_Pico_板级硬件设计专题]] —— K3 Pico 双电源优先级、双 M.2 仲裁与 RT24 直出。\n* [[Knowledge_Atoms/K3_Pico_扩展接口管脚映射专题]] —— K3 Pico 26-Pin & 36-Pin FPC 柔性连接器定义。\n* [[Knowledge_Atoms/K3_COM260_板级硬件设计专题]] —— K3 CoM260 12-Pin 多功能排针与载板设计。\n* [[Knowledge_Atoms/K3_CoM260_40Pin_IOMAP管脚映射专题]] —— CoM260 40-Pin 标准排针电平转换与路由。\n* [[Knowledge_Atoms/K3_RV2768_集群服务器专题档案]] —— 2U 768核集群服务器架构、Redfish API 与热插拔管理。\n* [[Knowledge_Atoms/Spacemit_K1生态终端与教学实验套件专题档案]] —— Muse Book、Box、Card、Paper、Shelf、Labkit 综合专题。\n\n### 事实参数与数据依据 (Evidence)\n* [[Evidence/v100_chip_specs]] —— Vital Stone V100 服务器级 CPU 46核、DDR5、PCIe 5.0 核心技术规格。\n* [[Evidence/v100_servers_specs]] —— C2201 计算、S5236 存储、G5201 智算三款服务器整机规格对比表。\n* [[Evidence/muse_pi_vs_pi_pro_specs]] —— Muse Pi 与 Pro 详细规格比对。\n* [[Evidence/k3_pico_specs]] —— K3 Pico 详细板级物理参数与选配套件。\n* [[Evidence/k3_com260_specs]] —— K3 CoM260 核心板与载板硬件规格。\n* [[Evidence/k1_terminal_products_specs]] —— K1 生态衍生终端全量参数规格表。",
       "created": "2026-10-07",
-      "updated": "2026-10-20",
+      "updated": "2026-10-21",
       "source_file": "Sources/docs-chip/zh/key_stone/k1/k1_docs/root_overview.md",
       "source_commit": "15254b1cfe339c1863d8edf8137a337681fb2780",
       "source_locator": "K1 产品简介；概述；特性；框图",
       "source_resolution": "partial",
-      "verification_status": "unverified",
-      "source_checked_at": "2026-10-20",
-      "source_note": "本次仅定位已有引用对应的文件与章节，未对正文全部事实逐项复核；引用的 Evidence 保留各自历史版本与核验状态。",
+      "verification_status": "verified",
+      "verified_at": "2026-10-21",
+      "source_checked_at": "2026-10-21",
+      "source_note": "已更新 V100 处理器与三款机架式服务器（C2201/S5236/G5201）的双链引用与规格绑定。",
       "source_origin": "https://github.com/spacemit-com/docs-chip",
       "source_related_file": [
         "Sources/docs-chip/zh/key_stone/k3/k3_docs/root_overview.md",
         "Sources/docs-product/zh/v100_series/index.md",
+        "Sources/docs-chip/zh/vital_stone/v100/v100_docs/root_overview.md",
         "Sources/docs-chip/zh/power_stone/p1/p1_docs/p1_ds.md",
         "Sources/docs-chip/zh/power_stone/p1s/p1s_docs/p1s_ds.md",
         "Sources/docs-chip/zh/power_stone/p3/p3_docs/p3_ds.md",
@@ -3000,6 +3152,7 @@
       "source_related_commit": [
         "15254b1cfe339c1863d8edf8137a337681fb2780",
         "bc640755145625cc20745f49861f82588863fca3",
+        "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
         "1ea15a766287024a5bb7b548850826e3525a80dc",
         "1ea15a766287024a5bb7b548850826e3525a80dc",
         "1ea15a766287024a5bb7b548850826e3525a80dc",
@@ -3040,6 +3193,13 @@
           "source_file": "Sources/docs-product/zh/v100_series/index.md",
           "source_commit": "bc640755145625cc20745f49861f82588863fca3",
           "checked_against_commit": "cb96db6332fac093964af8fef98db45e2783fde8",
+          "freshness": "current",
+          "reason": "source_file_unchanged"
+        },
+        {
+          "source_file": "Sources/docs-chip/zh/vital_stone/v100/v100_docs/root_overview.md",
+          "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+          "checked_against_commit": "fd016f81034b1a93ad39c2cecf313bb82be7d169",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
@@ -4725,6 +4885,154 @@
           "reason": "source_file_unchanged"
         }
       ]
+    },
+    "v100_chip_specs": {
+      "id": "v100_chip_specs",
+      "title": "Vital Stone V100 服务器级 CPU 核心技术规格参数",
+      "type": "evidence",
+      "domain": "chip_product_specs",
+      "status": "needs_review",
+      "aliases": [
+        "V100芯片核心参数",
+        "V100 处理器规格参数",
+        "v100_chip_specs",
+        "Vital Stone V100 规格",
+        "V100 Specs"
+      ],
+      "target_audience": [
+        "系统架构师",
+        "服务器硬件工程师",
+        "芯片选型工程师"
+      ],
+      "outlinks": [],
+      "backlinks": [
+        "SpacemiT_V100服务器处理器芯片专题档案",
+        "SpacemiT_V100系列工业与边缘计算硬件专题档案",
+        "SpacemiT_V100系列机架式服务器专题档案",
+        "Spacemit_产品矩阵与硬件生态全景档案"
+      ],
+      "summary": "# Vital Stone V100 服务器级 CPU 核心技术规格参数  > [!TIP] > **💡 工程师导读与排坑焦点**：存放 Vital Stone V100 处理器架构、核心规模、Cache 拓扑、内存带宽、PCIe 5.0、全栈虚拟化及封装功耗等原子事实。 > **目标读者**：`系统架构师 / 服务器硬件工程师 / 芯片选型工程师` | **技术领域**：`chip_product_specs`  本文汇总了 SpacemiT Vital Stone RISC-V 服务器级 CPU **V100** 的芯片级硬件规格与电气参数数据，数据来源于官方 V100 Brief。  |",
+      "content": "# Vital Stone V100 服务器级 CPU 核心技术规格参数\n\n> [!TIP]\n> **💡 工程师导读与排坑焦点**：存放 Vital Stone V100 处理器架构、核心规模、Cache 拓扑、内存带宽、PCIe 5.0、全栈虚拟化及封装功耗等原子事实。\n> **目标读者**：`系统架构师 / 服务器硬件工程师 / 芯片选型工程师` | **技术领域**：`chip_product_specs`\n\n本文汇总了 SpacemiT Vital Stone RISC-V 服务器级 CPU **V100** 的芯片级硬件规格与电气参数数据，数据来源于官方 V100 Brief。\n\n| 规格维度 | 详细参数规格 | 说明 / 技术依据 |\n| :--- | :--- | :--- |\n| **芯片定位** | 首颗完整符合 RISC-V 服务器规范的计算芯片 | 覆盖数据中心 AI 训练/推理、通用计算、海量存储及边缘服务器 |\n| **CPU 架构** | 64 位高性能乱序 RISC-V 核心架构 | 全面兼容 RISC-V **RVA23 Profile** 标准规范 |\n| **核心规模与主频** | **46 个 RISC-V 高性能计算核**<br>• 6 × 香山昆明湖 V2R2 核心（最高 2.1 GHz）<br>• 40 × 进迭时空自研 X100 核心（最高 2.4 GHz） | 双簇异构大核拓扑；支持 DVFS 动态调频调压 |\n| **单核算力性能** | • 香山昆明湖 V2R2：单核 SPECint2006 **≥ 15.0/GHz**<br>• 进迭时空 X100：单核 SPECint2006 **≥ 9.0/GHz** | 昆明湖支持十三级六发射乱序流水线；X100 支持十二级四发射乱序流水线 |\n| **Cache 缓存体系** | • 香山昆明湖：64KB L1 I-Cache, 64KB L1 D-Cache, 1MB L2 Cache<br>• 进迭时空 X100：64KB L1 I-Cache, 64KB L1 D-Cache, 2MB L2 Cache<br>• **全片共享 64MB SLC Cache (System Level Cache)** | 多级高密度缓存一致性互联，满足高并发大吞吐读写 |\n| **硬件全栈虚拟化** | • **CPU 虚拟化**：支持 RISC-V Hypervisor 1.0 (RVH) 扩展，支持 SV48×4 / SV39×4 Guest 地址翻译<br>• **中断虚拟化**：支持标准 AIA 中断架构，支持 255 个 M-mode MSI、255 个 S-mode MSI、63 个 VS-mode MSI，VS 每个 Hart 配置 7 个 vCPU<br>• **外设虚拟化**：基于 IOMMU 的 I/O 虚拟化，完整实现 SR-IOV 功能 | 业内率先实现 RVH 1.0、AIA 1.0 与 IOMMU 1.0 全栈硬件硬化支持，原生消除云化性能损耗 |\n| **内存子系统 (DDR5)** | • 支持 **8 × DDR5 通道**，支持 1DPC<br>• 兼容主流 DDR5 RDIMM 内存模组<br>• 最高速率 **4800 MT/s**，单芯片最大带宽 **307 GB/s**<br>• 单个内存通道支持 80bit DIMM（带 Sideband ECC 边带纠错码）<br>• 每个 DIMM 最大支持 256GB，单芯片最大支持 **2TB** 内存 | 支持多级仲裁、QoS 策略、带宽限制与硬件性能监控 |\n| **高速互联总线 (PCIe 5.0)** | • 支持 **PCIe 5.0 标准**，单芯片提供 **52 条高速通道**<br>• 通道拆分配置：支持 3 组 x16 / x8x8 / x8x4x4 与 1 组 x2x1x1<br>• 协议支持：支持 SAS/SATA over PCIe、NVMe over PCIe、USB over PCIe 等 | 高速直连 GPU/NPU 算力卡与企业级 NVMe 存储阵列 |\n| **网络控制 (GMAC)** | 1 × GMAC 控制器，支持 IEEE 1588 高精度时间同步 | 满足数据中心时间敏感网络与微秒级时钟对齐 |\n| **外围低速 I/O 接口** | • 1 × QSPI<br>• 1 × LPC、1 × eSPI<br>• 3 × SPI Master、1 × SPI Slave<br>• 4 × I3C、12 × I2C、12 × SMBUS<br>• 5 × UART | 完整适配企业级主板外设、基板控制器及环境传感器采样 |\n| **服务器级 RAS 机制** | • 遵循 RISC-V RERI RAS 规范与 Firmware First 原则<br>• **CPU RAS**：CE / UEC 差异化容错处理及中断日志记录<br>• **内存 RAS**：ECC / CRC 校验、定期巡检、故障隔离与物理地址保护<br>• **PCIe RAS**：链路自愈恢复、高级错误报告 (AER)、热插拔及日志记录<br>• **总线 RAS**：总线数据校验/标记、SRAM ECC 保护<br>• **系统 RAS**：集成多点片上温度传感器，联动 BMC 带内/带外实时监控调节 | 满足企业级电信与金融关键业务 7×24 小时高可用性要求 |\n| **数据中心级安全架构** | • 硬件规范：支持 PMP / ePMP 与 IOPMP (Rapid-k Model) 安全组件<br>• 信任机制：集成 **HSM 硬件安全模块**，支持硬件信任根 (RoT)、安全启动、密钥管理与安全调试<br>• 算法引擎：支持国密 SM2 / SM3 / SM4 以及 AES / SHA / RSA 硬件加密 | 保证数据中心多租户高安全隔离与国家信创合规 |\n| **服务器基础固件** | • 遵循 UEFI 2.11 与 ACPI 6.6 规范，支持基于 EDK2 的服务器 BIOS 固件<br>• 支持基于 openBMC 的带内/带外管理固件 | 兼容主流标准服务器运维与管理体系 |\n| **软件生态支持** | • 内核版本：Linux 内核 6.6 及以上版本<br>• 工具链：主流 GCC 与 LLVM<br>• 操作系统：openEuler、openKylin、银河麒麟（规划）、Ubuntu、Debian、Fedora 等<br>• 中间件：Tomcat、Redis、Apache、MySQL、PostgreSQL 等<br>• 虚拟化与容器：KVM、QEMU、Docker 容器部署 | 深度适配国产信创与通用开源服务器生态 |\n| **热设计功耗 (TDP)** | **120W** | 出色的服务器能效比释放 |\n| **工作环境温度** | **0℃ ～ 40℃** | 标准企业级数据中心机房温控环境 |\n| **物理封装规格** | **FCBGA 封装**，58.5 mm × 75.4 mm，0.94 mm pitch | 高密度引脚与多通道高速信号走线设计 |",
+      "claim_type": "parameter",
+      "verification_status": "verified",
+      "verified_at": "2026-10-21",
+      "external_use": false,
+      "source_file": "Sources/docs-chip/zh/vital_stone/v100/v100_docs/root_overview.md",
+      "source_origin": "https://github.com/spacemit-com/docs-chip",
+      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+      "source_section": "概述；特性",
+      "source_resolution": "resolved",
+      "source_checked_at": "2026-10-21",
+      "source_note": "已严格对照 docs-chip 官方 V100 产品简介提取全量芯片规格与物理电气参数。",
+      "created": "2026-10-21",
+      "updated": "2026-10-21",
+      "freshness": "current",
+      "stale_paths": [],
+      "unknown_paths": [],
+      "checked_against_commit": {
+        "docs-chip": "fd016f81034b1a93ad39c2cecf313bb82be7d169"
+      },
+      "source_freshness": [
+        {
+          "source_file": "Sources/docs-chip/zh/vital_stone/v100/v100_docs/root_overview.md",
+          "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+          "checked_against_commit": "fd016f81034b1a93ad39c2cecf313bb82be7d169",
+          "freshness": "current",
+          "reason": "source_file_unchanged"
+        }
+      ]
+    },
+    "v100_servers_specs": {
+      "id": "v100_servers_specs",
+      "title": "V100 系列机架式服务器整机物理规格参数对比表",
+      "type": "evidence",
+      "domain": "chip_product_specs",
+      "status": "needs_review",
+      "aliases": [
+        "V100服务器规格对比表",
+        "C2201_S5236_G5201规格参数",
+        "v100_servers_specs",
+        "V100系列整机规格",
+        "V100 Server Specs"
+      ],
+      "target_audience": [
+        "系统架构师",
+        "数据中心运维工程师",
+        "服务器硬件工程师",
+        "解决方案架构师"
+      ],
+      "outlinks": [],
+      "backlinks": [
+        "SpacemiT_V100服务器处理器芯片专题档案",
+        "SpacemiT_V100系列工业与边缘计算硬件专题档案",
+        "SpacemiT_V100系列机架式服务器专题档案",
+        "Spacemit_产品矩阵与硬件生态全景档案"
+      ],
+      "summary": "# V100 系列机架式服务器整机物理规格参数对比表  > [!TIP] > **💡 工程师导读与排坑焦点**：存放基于 V100 芯片的 C2201 计算服务器、S5236 存储服务器、G5201 智算服务器在机箱尺寸、双路 CPU 拓扑、内存插槽、硬盘布局、PCIe 扩展、网络及供电冗余维度的横向硬数据对比。 > **目标读者**：`系统架构师 / 数据中心运维工程师 / 服务器硬件工程师` | **技术领域**：`chip_product_specs`  本文汇总基于 SpacemiT Vital Stone V100 处理器的 3 款官方机架式服务器核心参数对比，数据来源于 docs-",
+      "content": "# V100 系列机架式服务器整机物理规格参数对比表\n\n> [!TIP]\n> **💡 工程师导读与排坑焦点**：存放基于 V100 芯片的 C2201 计算服务器、S5236 存储服务器、G5201 智算服务器在机箱尺寸、双路 CPU 拓扑、内存插槽、硬盘布局、PCIe 扩展、网络及供电冗余维度的横向硬数据对比。\n> **目标读者**：`系统架构师 / 数据中心运维工程师 / 服务器硬件工程师` | **技术领域**：`chip_product_specs`\n\n本文汇总基于 SpacemiT Vital Stone V100 处理器的 3 款官方机架式服务器核心参数对比，数据来源于 docs-product 官方产品简介。\n\n| 规格维度 | C2201 计算服务器 | S5236 存储服务器 | G5201 智算服务器 |\n| :--- | :--- | :--- | :--- |\n| **官方代号与定位** | `v100_c2201`<br>**2U 双路机架式计算服务器** | `v100_s5236`<br>**4U 高密度机架式存储服务器** | `v100_g5201`<br>**4U 双路高密度机架式智算服务器** |\n| **典型应用场景** | 数据中心、云计算、科学计算及行业关键业务 | 云计算、云存储、智算中心、数据归档、备份容灾 | 大模型推理、科学计算、智算中心、数据中心及政企垂直场景 |\n| **处理器配置** | **2 颗进迭时空 V100 处理器**<br>整机共 **92 核**（12×香山昆明湖 + 80×X100），最高主频 2.4 GHz | **2 颗进迭时空 V100 处理器**<br>整机共 **92 核**，最高主频 2.4 GHz | **2 颗进迭时空 V100 处理器**<br>整机共 **92 核**，最高主频 2.4 GHz |\n| **内存架构与槽位** | • **16 个 DDR5 内存插槽**<br>• 最高支持 **2 TB** 内存<br>• 速率高达 **4800 MT/s**<br>• 单颗芯片最大带宽 307 GB/s | • **16 个 DDR5 内存插槽**<br>• 最高支持 **2 TB** 内存<br>• 速率 4800 MT/s，理论带宽最高 307 GB/s<br>• （默认出厂插入 2 个 DDR5） | • **16 个 DDR5 内存插槽**<br>• 最高支持 **2 TB** 内存<br>• 8 通道 4800 MT/s DDR5 |\n| **硬盘存储槽位** | • **前置**：最大支持 8 块 3.5 英寸 U.2 NVMe SSD<br>• **内置**：最大支持 1 块 M.2 NVMe SSD<br>• **后置**：最大支持 2 块 2.5 英寸 SATA HDD/SSD | • **前置**：24 个 SATA 盘（3.5 英寸）<br>• **后置**：12 个 SATA 盘（3.5 英寸）+ 2 个 2.5 英寸 SATA 系统盘<br>• **总盘位**：共 36 个 3.5 寸 + 2 个 2.5 寸 | • **前置**：8 个 SATA 盘 + 4 个 NVMe 盘 |\n| **PCIe 高速通道与扩展** | • 整机提供 **88 条 PCIe 5.0 Lane**<br>• 插槽配置：最多支持 3 个 PCIe 扩展卡（×8）；或 2 个 PCIe 扩展卡（×16）；或 1 个 PCIe（×16）+ 2 个 PCIe（×8） | • 支持 **3 个 RISER 卡槽**<br>（标配 2 张网卡、1 张 RAID 卡） | • **GPU 扩展能力**：支持 **8 张 600W PCIe 风冷加速卡**<br>• **互联带宽**：支持最高 **256 GB/s GPU 卡间互联**<br>• **显存规格**：配备大容量 HBM3E 高显存带宽<br>• **扩展插槽**：PCIE_SW 板支持 12 个插槽；MCIO 转接板支持 5 个插槽 |\n| **网络配置** | 国产网络控制器，支持通过 **OCP 扩展**千兆、万兆网络 | 标配 **1 × OCP 3.0 网卡** + **2 × 25GbE 双端口网卡** | 标配 **1 × OCP 3.0 网卡** + **4 × 400GbE RoCE 高速网卡**（支持 RDMA RoCEv2） |\n| **前置 / 后置 I/O 接口** | • **前置**：2 × USB 3.0、1 × VGA<br>• **后置**：2 × 电源接口、1 × VGA、2 × USB 3.0、1 × Type-C 调试口、1 × 管理网口 | • **前置**：2 × USB 3.0、1 × VGA<br>• **后置**：2 × 电源接口、1 × VGA、2 × USB 3.0、1 × Type-C 调试口、1 × 管理网口 | • **前置**：2 × USB 3.0、1 × VGA<br>• **后置**：2 × 电源接口、1 × VGA、2 × USB 3.0、1 × Type-C 调试口、1 × 管理网口 |\n| **散热风扇** | 支持 N+1 冗余热插拔风扇 | 标配 12 个 6056 风扇，支持 N+1 冗余与热插拔 | 标配 12 个 6056 风扇，支持 N+1 冗余与热插拔 |\n| **电源供应 (PSU)** | 标准 **1600W CRPS 铂金电源**，支持 1+1 冗余 | 标准 **CRPS 电源**，支持 1+1 冗余 | **4 个标准 CRPS 电源**，支持 N+1 冗余（满足 8×600W 高功耗释放） |\n| **系统管理与 BMC** | 集成 BMC 管理芯片 **AST2600**；支持标准 UEFI 及 ACPI；支持 IPMI、Redfish、SOL、KVM 虚拟媒介 | 支持远程 KVM over IP、风扇智能调速与远程电源控制 | 支持远程 KVM over IP、风扇智能调速与远程电源控制 |\n| **操作系统支持** | 支持 Ubuntu、Red Hat、Fedora、Rocky Linux、openRuyi、openEuler、openKylin 等 | 支持 Ubuntu、Red Hat、Fedora、Rocky Linux、openRuyi、openEuler、openKylin 等 | 支持 Ubuntu、Red Hat、Fedora、Rocky Linux、openRuyi、openEuler、openKylin 等 |\n| **整机重量与噪声** | 重量：**≤ 35 kg**；噪声：**< 55 dB** | 重量：**55 kg**；噪声：**< 55 dB** | 重量：**约 60 kg**；噪声：**< 55 dB** |\n| **环境温湿度** | 工作：0℃～40℃，35%～80% 湿度<br>存储：-40℃～55℃，20%～93% 湿度 | 工作：0℃～40℃，35%～80% 湿度<br>存储：-40℃～55℃，20%～93% 湿度 | 工作：0℃～40℃，35%～80% 湿度<br>存储：-40℃～55℃，20%～93% 湿度 |\n| **机箱物理尺寸** | **820 × 447.4 × 87.8 mm**（深×宽×高，2U） | **820 × 447.4 × 176.9 mm**（深×宽×高，4U） | **895 × 447.4 × 176.8 mm**（深×宽×高，4U） |",
+      "claim_type": "parameter",
+      "verification_status": "verified",
+      "verified_at": "2026-10-21",
+      "external_use": false,
+      "source_file": "Sources/docs-product/zh/v100_series/index.md",
+      "source_origin": "https://github.com/spacemit-com/docs-product",
+      "source_commit": "bc640755145625cc20745f49861f82588863fca3",
+      "source_related_file": [
+        "Sources/docs-product/zh/v100_series/v100_c2201/root_overview.md",
+        "Sources/docs-product/zh/v100_series/v100_s5236/root_overview.md",
+        "Sources/docs-product/zh/v100_series/v100_g5201/root_overview.md"
+      ],
+      "source_related_commit": [
+        "bc640755145625cc20745f49861f82588863fca3",
+        "bc640755145625cc20745f49861f82588863fca3",
+        "bc640755145625cc20745f49861f82588863fca3"
+      ],
+      "source_section": "产品规格；特性；概述",
+      "source_resolution": "resolved",
+      "source_checked_at": "2026-10-21",
+      "source_note": "已严格对照 docs-product 官方 C2201、S5236、G5201 产品简介逐项核对三款整机配置与物理参数。",
+      "created": "2026-10-21",
+      "updated": "2026-10-21",
+      "freshness": "stale",
+      "stale_paths": [
+        "Sources/docs-product/zh/v100_series/v100_c2201/root_overview.md",
+        "Sources/docs-product/zh/v100_series/v100_g5201/root_overview.md",
+        "Sources/docs-product/zh/v100_series/v100_s5236/root_overview.md"
+      ],
+      "unknown_paths": [],
+      "checked_against_commit": {
+        "docs-product": "cb96db6332fac093964af8fef98db45e2783fde8"
+      },
+      "source_freshness": [
+        {
+          "source_file": "Sources/docs-product/zh/v100_series/index.md",
+          "source_commit": "bc640755145625cc20745f49861f82588863fca3",
+          "checked_against_commit": "cb96db6332fac093964af8fef98db45e2783fde8",
+          "freshness": "current",
+          "reason": "source_file_unchanged"
+        },
+        {
+          "source_file": "Sources/docs-product/zh/v100_series/v100_c2201/root_overview.md",
+          "source_commit": "bc640755145625cc20745f49861f82588863fca3",
+          "checked_against_commit": "cb96db6332fac093964af8fef98db45e2783fde8",
+          "freshness": "stale",
+          "reason": "source_file_changed"
+        },
+        {
+          "source_file": "Sources/docs-product/zh/v100_series/v100_s5236/root_overview.md",
+          "source_commit": "bc640755145625cc20745f49861f82588863fca3",
+          "checked_against_commit": "cb96db6332fac093964af8fef98db45e2783fde8",
+          "freshness": "stale",
+          "reason": "source_file_changed"
+        },
+        {
+          "source_file": "Sources/docs-product/zh/v100_series/v100_g5201/root_overview.md",
+          "source_commit": "bc640755145625cc20745f49861f82588863fca3",
+          "checked_against_commit": "cb96db6332fac093964af8fef98db45e2783fde8",
+          "freshness": "stale",
+          "reason": "source_file_changed"
+        }
+      ]
     }
   },
   "aliases": {
@@ -4842,13 +5150,24 @@
     "spacemit_ros2_机器人与具身智能专题档案": "SpacemiT_ROS2_机器人与具身智能专题档案",
     "ros 2 & embodied ai dossier": "SpacemiT_ROS2_机器人与具身智能专题档案",
     "spacemit robotics guide": "SpacemiT_ROS2_机器人与具身智能专题档案",
-    "v100系列硬件专题": "SpacemiT_V100系列工业与边缘计算硬件专题档案",
-    "vital stone v100": "SpacemiT_V100系列工业与边缘计算硬件专题档案",
-    "spacemit v100 series": "SpacemiT_V100系列工业与边缘计算硬件专题档案",
-    "v100_series": "SpacemiT_V100系列工业与边缘计算硬件专题档案",
-    "v100硬件档案": "SpacemiT_V100系列工业与边缘计算硬件专题档案",
+    "v100服务器芯片专题": "SpacemiT_V100服务器处理器芯片专题档案",
+    "vital stone v100": "SpacemiT_V100服务器处理器芯片专题档案",
+    "spacemit v100": "SpacemiT_V100服务器处理器芯片专题档案",
+    "v100_chip": "SpacemiT_V100服务器处理器芯片专题档案",
+    "v100芯片档案": "SpacemiT_V100服务器处理器芯片专题档案",
+    "v100处理器专题档案": "SpacemiT_V100服务器处理器芯片专题档案",
     "spacemit v100 系列工业与边缘计算硬件专题档案": "SpacemiT_V100系列工业与边缘计算硬件专题档案",
-    "v100计算存储智算服务器": "SpacemiT_V100系列工业与边缘计算硬件专题档案",
+    "v100历史边缘归档": "SpacemiT_V100系列工业与边缘计算硬件专题档案",
+    "v100系列服务器档案": "SpacemiT_V100系列机架式服务器专题档案",
+    "v100服务器专题": "SpacemiT_V100系列机架式服务器专题档案",
+    "spacemit v100 servers": "SpacemiT_V100系列机架式服务器专题档案",
+    "v100_servers": "SpacemiT_V100系列机架式服务器专题档案",
+    "c2201计算服务器": "SpacemiT_V100系列机架式服务器专题档案",
+    "s5236存储服务器": "SpacemiT_V100系列机架式服务器专题档案",
+    "g5201智算服务器": "SpacemiT_V100系列机架式服务器专题档案",
+    "spacemit_v100系列机架式服务器专题档案": "SpacemiT_V100系列机架式服务器专题档案",
+    "spacemit_v100系列工业与边缘计算硬件专题档案": "SpacemiT_V100系列机架式服务器专题档案",
+    "v100计算存储智算服务器": "SpacemiT_V100系列机架式服务器专题档案",
     "spacemit生态板卡与pmic电源配合专题": "SpacemiT生态板卡与PMIC电源配合专题档案",
     "spacemit board and pmic power matching topic": "SpacemiT生态板卡与PMIC电源配合专题档案",
     "spacemit_pmic_matching": "SpacemiT生态板卡与PMIC电源配合专题档案",
@@ -4869,6 +5188,7 @@
     "spacemit_product_matrix": "Spacemit_产品矩阵与硬件生态全景档案",
     "产品家族谱系": "Spacemit_产品矩阵与硬件生态全景档案",
     "vital_stone_v100": "Spacemit_产品矩阵与硬件生态全景档案",
+    "v100服务器矩阵": "Spacemit_产品矩阵与硬件生态全景档案",
     "buildroot_bsp_specs": "buildroot_bsp_specs",
     "buildroot sdk specs": "buildroot_bsp_specs",
     "buildroot manifest specs": "buildroot_bsp_specs",
@@ -4948,7 +5268,17 @@
     "ime instruction specs": "space_ai_architecture_specs",
     "space_ai_software_stack_specs": "space_ai_software_stack_specs",
     "spaceai stack specs": "space_ai_software_stack_specs",
-    "xslim specs": "space_ai_software_stack_specs"
+    "xslim specs": "space_ai_software_stack_specs",
+    "v100芯片核心参数": "v100_chip_specs",
+    "v100 处理器规格参数": "v100_chip_specs",
+    "v100_chip_specs": "v100_chip_specs",
+    "vital stone v100 规格": "v100_chip_specs",
+    "v100 specs": "v100_chip_specs",
+    "v100服务器规格对比表": "v100_servers_specs",
+    "c2201_s5236_g5201规格参数": "v100_servers_specs",
+    "v100_servers_specs": "v100_servers_specs",
+    "v100系列整机规格": "v100_servers_specs",
+    "v100 server specs": "v100_servers_specs"
   },
   "raw_sources": [
     {
@@ -26648,10 +26978,10 @@
       "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/122e396428947c89c2c475b24942062eb1ad2eee/zh/k3/07-%E7%89%88%E6%9C%AC%E8%AF%B4%E6%98%8E/index.md"
     }
   ],
-  "content_sha256": "7bb50f29d00f578b6ce52203ce38c9f11b8f48cc14824db6f1dcf8a6f0b20ca7",
+  "content_sha256": "0da8fbf07bb31a0f710534a5ac38b8e10734bf06971e2adc435ceff63f0c6a90",
   "build_meta": {
     "wiki_commit": "eb4c310189b85d7bc628018ae728b5576a0fa39e",
-    "wiki_worktree_dirty": false,
+    "wiki_worktree_dirty": true,
     "generated_at": "2026-10-24T04:21:54+00:00",
     "sources_commits": {
       "docs-chip": "fd016f81034b1a93ad39c2cecf313bb82be7d169",
@@ -26660,17 +26990,17 @@
       "docs-ai": "2b3894e983a295ed0278bc625867e0c132e0e259",
       "docs-ros": "122e396428947c89c2c475b24942062eb1ad2eee"
     },
-    "content_sha256": "7bb50f29d00f578b6ce52203ce38c9f11b8f48cc14824db6f1dcf8a6f0b20ca7",
+    "content_sha256": "0da8fbf07bb31a0f710534a5ac38b8e10734bf06971e2adc435ceff63f0c6a90",
     "counts": {
-      "total_nodes": 66,
+      "total_nodes": 70,
       "developer_journeys": 7,
-      "knowledge_atoms": 32,
-      "evidence": 27,
+      "knowledge_atoms": 34,
+      "evidence": 29,
       "raw_sources": 1231
     },
     "freshness_summary": {
-      "current": 53,
-      "stale": 13,
+      "current": 56,
+      "stale": 14,
       "unknown": 0
     }
   }

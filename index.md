@@ -31,13 +31,17 @@ aliases: [index, index.md, 索引, 全局索引]
 
 ### 主题档案 (Knowledge Atoms)
 *   [[Knowledge_Atoms/Spacemit_产品矩阵与硬件生态全景档案]] —— 🗺️ **顶层总枢纽**：汇总 Spacemit 芯片底座与官方硬件、生态终端和服务器的家族图谱与选型矩阵。
-*   [[Knowledge_Atoms/SpacemiT_V100系列工业与边缘计算硬件专题档案]] —— 汇总 Vital Stone V100 系列 C2201 计算服务器、S5236 存储服务器和 G5201 智算服务器；旧稿产品分类冲突见专题核验说明。
+*   [[Knowledge_Atoms/SpacemiT_V100服务器处理器芯片专题档案]] —— 🆕 汇总 Vital Stone V100 服务器级 CPU 46核（6香山+40自研）、RVH 1.0/AIA 1.0/IOMMU 1.0 全栈硬件虚拟化、8 通道 DDR5 与 RAS 容错体系。
+*   [[Knowledge_Atoms/SpacemiT_V100系列机架式服务器专题档案]] —— 汇总 Vital Stone V100 系列 C2201 计算服务器（2U双路92核）、S5236 存储服务器（4U 36盘位）和 G5201 智算服务器（4U 8×600W GPU）。
+*   ~~[[Knowledge_Atoms/SpacemiT_V100系列工业与边缘计算硬件专题档案]]~~ —— ⚠️ **已废弃归档**：历史旧稿误归类为工业边缘，已由机架式服务器专题取代。
 *   [[Knowledge_Atoms/Spacemit_K1生态终端与教学实验套件专题档案]] —— 汇总 Muse Book 笔记本、Muse Box 迷你主机、Muse Card 计算卡、Muse Paper LCD 平板、Muse Shelf 云算力架及高校实验箱。
 *   [[Knowledge_Atoms/K1热设计与功耗专题档案]] —— 汇总 K1 芯片 3W ~ 5W 超低 TDP 功耗、DVFS 调压与极简被动散热。
 *   [[Knowledge_Atoms/K3热设计与散热专题档案]] —— 汇总 K3 芯片热学特性、结温限制与硬件散热设计指南。⚠️ 官方已撤回 `k3_thermal_design.md`。
 *   [[Knowledge_Atoms/K3_RV2768_集群服务器专题档案]] —— ᥰ 汇总基于 K3 处理器的 2U 768核 RISC-V 集群服务器架构、Redfish API 与计算节点管理。
 
 ### 事实证据与硬数据 (Evidence)
+*   [[Evidence/v100_chip_specs]] —— 🆕 Vital Stone V100 服务器级 CPU 核心技术规格参数（46核、DDR5、PCIe 5.0、全栈虚拟化）。
+*   [[Evidence/v100_servers_specs]] —— 🆕 V100 系列机架式服务器整机物理规格参数对比表（C2201计算、S5236存储、G5201智算）。
 *   [[Evidence/k1_terminal_products_specs]] —— K1 生态衍生终端全量参数规格表。
 *   [[Evidence/k1_thermal_specs]] —— K1 芯片工作温度与 3W ~ 5W TDP 参数。
 *   [[Evidence/k3_thermal_specs]] —— K3 芯片的热阻、最大功耗与极限结温参数。
@@ -213,7 +217,11 @@ aliases: [index, index.md, 索引, 全局索引]
 *   **MUSE Shelf 实验架**：[产品简介](Sources/docs-product/zh/k1_series/k1_muse_shelf/root_overview.md)
 *   **RISC-V Labkit 实验箱**：[产品简介](Sources/docs-product/zh/k1_series/k1_riscv_labkit/root_overview.md)
 *   **K3 RV2768 集群服务器**：[产品简介](Sources/docs-product/zh/k3_series/k3_rv2768/root_overview.md) · [技术白皮书](Sources/docs-product/zh/k3_series/k3_rv2768/rv2768_white_paper.md) · [Redfish 接口说明](Sources/docs-product/zh/k3_series/k3_rv2768/rv2768_redfish.md)
+*   **V100 系列机架式服务器**：[产品系列总览](Sources/docs-product/zh/v100_series/index.md) · [C2201 计算服务器简介](Sources/docs-product/zh/v100_series/v100_c2201/root_overview.md) · [S5236 存储服务器简介](Sources/docs-product/zh/v100_series/v100_s5236/root_overview.md) · [G5201 智算服务器简介](Sources/docs-product/zh/v100_series/v100_g5201/root_overview.md)
 *   **售后服务规范**：[售后服务说明](Sources/docs-product/zh/support_service/after_sales_service.md)
+
+### Vital Stone V100 服务器芯片系列 (docs-chip)
+*   [V100 处理器产品简介（原始文件）](Sources/docs-chip/zh/vital_stone/v100/v100_docs/root_overview.md)
 
 ---
 
