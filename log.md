@@ -3,13 +3,51 @@ type: vault_log
 title: "Spacemit LLM Wiki 知识库重构与演进日志"
 status: active
 created: 2026-06-29
-updated: 2026-10-21
+updated: 2026-10-27
 ---
 
 # Spacemit LLM Wiki 知识库重构与演进日志 (log.md)
 
 > [!NOTE]
 > 本文件用于记录 Spacemit LLM Wiki 知识库的重构、清理、验证与 MCP 服务演进日志。
+
+---
+
+## [2026-10-27] feat | 沉淀 K3 TEE 安全体系，同步 CoM260 硬件原理图 V03 与 ROS2 视觉推理调优规范
+
+- **点 (Evidence) 全量补全**：
+  - 新增 `Evidence/k3_tee_security_specs.md`：收录基于 OP-TEE 4.5.0 的 TEE RAM（16MB，`0x1_7100_0000`）、保留共享内存（16MB，`0x1_7200_0000`）、OpenSBI PMP 硬件域隔离、MPXY 通信 Mailbox 通道（16 per-hart 通道）、安全固件加载地址时序以及 LCS（CM/DM/SE/RMA）密钥派生规格。
+  - 更新 `Evidence/k3_com260_specs.md`：补充官方 V03 核心板原理图 PDF、物料清单 BOM (.xls)、底板原理图与 DSN 工程文件直达链接。
+  - 更新 `Evidence/ros2_platform_specs.md`：补充 SpaceMIT EP 独占后端配置规范与多线程（`SPACEMIT_EP_INTRA_THREAD_NUM`）调优参数。
+- **面 (Knowledge Atoms) 解耦沉淀**：
+  - 新建 `Knowledge_Atoms/SpacemiT_K3_TEE安全架构与安全启动专题档案.md`（Domain: `bsp_kernel_drivers`）：系统阐述 RISC-V 三域安全模型、无 SMC 指令下的 MPXY Mailbox 调用链、保留共享内存动态注入设备树（nomap non-reusable）排坑原则、TA/CA 开发规范与 GlobalPlatform API 契约。
+  - 更新 `Knowledge_Atoms/K3_COM260_板级硬件设计专题.md`：补充第 5 节官方硬件设计文件与资源清单。
+  - 更新 `Knowledge_Atoms/SpacemiT_ROS2_机器人与具身智能专题档案.md`：补充第 4.4 节目标检测算法（YOLOv8/11/12）统一底层复用架构与 SpaceMIT EP 独占执行配置。
+- **线 (Journey) 与网 (Index) 闭环**：
+  - 在 `Developer_Journeys/K3芯片开发快速上手向导.md` 的系统路径选择章节中挂载 TEE 安全镜像入口；
+  - 在 `index.md` 模块 3 中挂载新增安全专题与证据节点，更新 K3 Strap 证据描述。
+- **质量自检与双端构建**：
+  - `vault_linker_lint.py` 拓扑检查 100% 通过（75 篇物理文档、131 条双向拓扑链、0 死链、0 孤立节点）；
+  - `scripts/lint_wiki_integrity.py` 事实完整性自检 100% 通过；
+  - `scripts/build_mcp_index.py` 重构双端 72 个语义原子索引，Python 与 Worker 单测全量通过。
+
+---
+
+## [2026-10-27] fix | 闭环 K3 官方 Strap 管脚与 SPI 启动电平勘误，同步双端索引
+
+- **官方勘误已闭环（Commit `fd016f8`）**：官方开发在 `spacemit-com/docs-chip` 提交了《K3 硬件设计指南》V1.2，正式修复此前并列争议的两大硬件问题：
+  1. 第 1.1.5 小节明确 Strap Pin 共有完整的 6 个（GPIO52、GPIO64、GPIO65、GPIO66、GPIO68、GPIO69），彻底移除了旧版笔误出现的 GPIO90。
+  2. 启动模式组合修正为 `01 = SPI NOR`、`10 = SPI NAND`，与《K3 数据手册》§2.11.2 完全达成统一，两份官方文档不再冲突。
+- **Wiki 知识图谱对齐更新**：
+  - 更新 `Evidence/k3_strap_pins_config.md`：解除 conflicted 警告，更新官方统一启动映射表，标记 `verification_status: verified` 及 `verified_at: "2026-10-27"`。
+  - 更新 `Knowledge_Atoms/K3启动模式与Strap管脚配置专题档案.md`：移除冲突提示，同步 6 个引脚定义与统一启动逻辑，标记 `verification_status: verified`。
+  - 更新 `Developer_Journeys/K3芯片开发快速上手向导.md`：移除第 3 节“待官方确认”警告，对齐官方 V1.2 与数据手册标准。
+  - 更新归档 `docs/reviews/stage_b_2026-10-21/k3_strap_pending.json`：追踪状态标记为 `resolved`，停止周期性心跳检查。
+- **构建与测试全量回归**：
+  - `python3 scripts/lint_wiki_integrity.py` 事实完整性检查 100% 通过；
+  - `python3 vault_linker_lint.py` 知识拓扑自检 100% 通过（73 篇物理文档、126 条拓扑双链完全健康）；
+  - `python3 scripts/build_mcp_index.py` 重建双端 `wiki_graph.json` 索引并通过一致性校验；
+  - MCP Python 与 Worker Runtime 单元测试全部通过。
 
 ---
 

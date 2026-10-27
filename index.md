@@ -83,7 +83,7 @@ aliases: [index, index.md, 索引, 全局索引]
 
 ### 事实证据 (Evidence)
 *   [[Evidence/k1_strap_pins_config]] —— K1 芯片六类 Strap 管脚物理连接与 JTAG 路由组合。
-*   [[Evidence/k3_strap_pins_config]] —— K3 Strap 清单与 SPI NOR/NAND 电平映射存在官方冲突，接线结论待确认。
+*   [[Evidence/k3_strap_pins_config]] —— K3 芯片 6 个 Strap 管脚物理配置、官方 V1.2 启动映射与系统配置参数。
 *   [[Evidence/p1_pmic_specs]] —— Power Stone P1 PMIC 芯片各电轨输出电压、电流极限及引脚定义。
 *   [[Evidence/p1s_pmic_specs]] —— Power Stone P1S PMIC 芯片电轨规格及精简引脚定义。
 *   [[Evidence/p3_pmic_specs]] —— 🆕 Power Stone P3 PMIC 四相 32A 大电流规格、相位组合与电气参数。
@@ -101,12 +101,14 @@ aliases: [index, index.md, 索引, 全局索引]
 *   [[Knowledge_Atoms/K1系统启动与分区配置专题档案]] —— 汇总 K1 芯片 ramfs 调试启动、自启脚本、U-Boot与OpenSBI合并及隐藏分区配置。
 *   [[Knowledge_Atoms/K1驱动调试与设备控制专题档案]] —— 汇总 K1 芯片 PD 充电、DTS 启用 I2C、PWM 控制及 GPADC 采集调试方法。
 *   [[Knowledge_Atoms/K1_DDR_eMMC_AVL兼容性验证SOP专题档案]] —— 汇总 LPDDR4x 与 eMMC 兼容性测试、温箱压测及判定标准。
-*   [[Knowledge_Atoms/K3安全启动SecureBoot开发专题档案]] —— �ᥰ 汇总 K3 芯片安全启动信任链架构、eFuse 不可逆烧录约束、FIT 签名容器与密钥管理规范。
+*   [[Knowledge_Atoms/K3安全启动SecureBoot开发专题档案]] —— 汇总 K3 芯片安全启动信任链架构、eFuse 不可逆烧录约束、FIT 签名容器与密钥管理规范。
+*   [[Knowledge_Atoms/SpacemiT_K3_TEE安全架构与安全启动专题档案]] —— 汇总 K3 平台 OP-TEE 4.5.0 架构、RISC-V MPXY 通信机制、保留共享内存、硬件 PMP 隔离与 TA/CA 开发规范。
 
 ### 事实证据 (Evidence)
 *   [[Evidence/buildroot_bsp_specs]] —— K1 与 K3 Buildroot SDK 核心组件、Repo 版本分支映射表与宿主机/Docker 依赖规格。
 *   [[Evidence/buildroot_compilation_parameters]] —— Buildroot repo 拉取、离线第三方 dl 镜像地址与 Makefile 快捷指令对比。
 *   [[Evidence/esos_rcpu_firmware_specs]] —— RCPU (Real-Time CPU) `esos.elf` 固件规格、软硬件职责与启动硬依赖规则。
+*   [[Evidence/k3_tee_security_specs]] —— K3 芯片 OP-TEE 4.5.0 内存基址、保留共享内存、固件加载时序、PMP 域隔离与安全生命周期（LCS）规格。
 
 ---
 

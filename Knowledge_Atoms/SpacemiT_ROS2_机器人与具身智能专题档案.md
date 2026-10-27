@@ -3,7 +3,7 @@ type: knowledge_atom
 title: "SpacemiT ROS 2 机器人与具身智能专题档案"
 status: "needs_review"
 created: 2026-08-10
-updated: "2026-10-20"
+updated: "2026-10-27"
 aliases: [SpacemiT_ROS2_机器人与具身智能专题档案, ROS 2 & Embodied AI Dossier, SpacemiT Robotics Guide]
 domain: edge_ai_robotics
 target_audience: [机器人工程师, 具身 AI 开发者]
@@ -15,8 +15,8 @@ verification_status: "unverified"
 source_checked_at: "2026-10-20"
 source_note: "本次仅定位已有引用对应的文件与章节，未对正文全部事实逐项复核；引用的 Evidence 保留各自历史版本与核验状态。"
 source_origin: "https://github.com/spacemit-com/docs-ros"
-source_related_file: ["Sources/docs-ros/zh/k3/06-系统与平台/6.6-ROS2/6.6.1-ROS2-INSTALL.md", "Sources/docs-ros/zh/k1/06_Robot_development/6.1_OS_Preparation/6.1.2_ROS2_Installation.md", "Sources/docs-ros/zh/k3/03-参考方案/3.1-桌面机器人Reachy-mini.md"]
-source_related_commit: ["808d02c1bd11cf0d4376555919bd61c90e38d853", "808d02c1bd11cf0d4376555919bd61c90e38d853", "5b94e7e61e3be4bf00981fd74b7c9eba7595f4e1"]
+source_related_file: ["Sources/docs-ros/zh/k3/06-系统与平台/6.6-ROS2/6.6.1-ROS2-INSTALL.md", "Sources/docs-ros/zh/k1/06_Robot_development/6.1_OS_Preparation/6.1.2_ROS2_Installation.md", "Sources/docs-ros/zh/k3/03-参考方案/3.1-桌面机器人Reachy-mini.md", "Sources/docs-ros/zh/k3/04-AI与算法/4.2-视觉/4.2.1-目标检测.md"]
+source_related_commit: ["808d02c1bd11cf0d4376555919bd61c90e38d853", "808d02c1bd11cf0d4376555919bd61c90e38d853", "5b94e7e61e3be4bf00981fd74b7c9eba7595f4e1", "122e396428947c89c2c475b24942062eb1ad2eee"]
 ---
 
 # SpacemiT ROS 2 机器人与具身智能专题档案
@@ -130,5 +130,12 @@ SpacemiT 提供了从轻量级端侧抓取到多模态具身大模型的多层�
 ### 4.3 Linksee 移动机器人 SLAM 导航 (K3 Pico / Muse Pi)
 
 通过硬解码 (MPP) 处理 CSI 摄像头视频流，结合激光雷达点云，在 K3 Pico 上跑通 Cartographer 2D SLAM 建图与 Nav2 路径规划。
+
+### 4.4 机器人视觉感知与 SpaceMIT EP 推理优化 (YOLOv8/11/12)
+
+在 `spacemit_robot` 机器人视觉组件中，目标检测与跟踪算法（YOLOv8、YOLOv5、YOLOv11 与 YOLO12）统一复用了底层 `yolov8` 部署流水线：
+* **编译与 Wheel 安装**：在 `components/model_zoo/vision` 目录下编译并安装 `spacemit_vision` wheel 包。
+* **执行提供者 (EP) 独占规范**：YAML 配置文件中的 `providers` **必须单独配置 `SpaceMITExecutionProvider`**，严禁与 `CPUExecutionProvider` 并列配置，防止引发运行时动态回退。
+* **多线程调优**：推荐通过配置 `SPACEMIT_EP_INTRA_THREAD_NUM`（如 2~8 线程）实现计算吞吐与延迟的最佳平衡，详见 [[Evidence/ros2_platform_specs]]。
 
 详细硬件与 AI 模型性能对比详见 [[Evidence/robot_hardware_specs|SpacemiT 机器人硬件与具身 AI 模型参数规格]]。

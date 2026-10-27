@@ -1,7 +1,7 @@
 {
   "version": "2.3.0",
-  "wiki_commit": "9a50e561bb6ab9832ba4386caade5ada93c727c8",
-  "generated_at": "2026-10-26T04:28:39+00:00",
+  "wiki_commit": "7f1548738446e45f3e5d3b430238d55f3ce2b981",
+  "generated_at": "2026-10-27T04:47:38+00:00",
   "wiki_worktree_dirty": true,
   "source_versions": {
     "docs-chip": "fd016f81034b1a93ad39c2cecf313bb82be7d169",
@@ -10,7 +10,7 @@
     "docs-ai": "2b3894e983a295ed0278bc625867e0c132e0e259",
     "docs-ros": "122e396428947c89c2c475b24942062eb1ad2eee"
   },
-  "total_nodes": 70,
+  "total_nodes": 72,
   "total_raw_sources": 1243,
   "nodes": {
     "Buildroot_SDK_快速编译与镜像生成向导": {
@@ -229,21 +229,23 @@
         "k3_thermal_specs",
         "K3启动模式与Strap管脚配置专题档案",
         "k3_strap_pins_config",
+        "SpacemiT_K3_TEE安全架构与安全启动专题档案",
+        "k3_tee_security_specs",
         "K3大模型本地推理与AI算力专题档案",
         "k3_ai_performance_data"
       ],
       "backlinks": [],
       "summary": "# K3 芯片开发快速上手向导  先明确 K3 的板型、内存容量、系统镜像和 SDK 版本。30B-A3B 是 MoE 示例，总参数与激活参数分别记录，不能据激活量推定完整权重占用。  ## 1. 认识芯片与板卡边界  [K3 产品简介](../Sources/docs-chip/zh/key_stone/k3/k3_docs/root_overview.md) 列出 8 个 X100 计算核与 8 个 A100 智算核，支持 RVA23 Profile；K1 的 X60/RVA22 不能套用。SoC 能力、板卡引出接口和运行时支持分开核对；60 TOPS 不能直接换算成任何模型的生成速度。",
-      "content": "# K3 芯片开发快速上手向导\n\n先明确 K3 的板型、内存容量、系统镜像和 SDK 版本。30B-A3B 是 MoE 示例，总参数与激活参数分别记录，不能据激活量推定完整权重占用。\n\n## 1. 认识芯片与板卡边界\n\n[K3 产品简介](../Sources/docs-chip/zh/key_stone/k3/k3_docs/root_overview.md) 列出 8 个 X100 计算核与 8 个 A100 智算核，支持 RVA23 Profile；K1 的 X60/RVA22 不能套用。SoC 能力、板卡引出接口和运行时支持分开核对；60 TOPS 不能直接换算成任何模型的生成速度。\n\n## 2. 核对供电勘误与散热\n\nK3 指南 V1.1 的 1.2.5/1.2.6 与 [硬件设计 Buglist](../Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_buglist.md) 要求合并相关核心电源，并处理 VDD0V8_DDR 供电平面的专项勘误；读 [[Knowledge_Atoms/SpacemiT生态板卡与PMIC电源配合专题档案]]，不能复制旧独立供电方案。散热参考 [[Knowledge_Atoms/K3热设计与散热专题档案]] 和 [[Evidence/k3_thermal_specs]]：历史 θJC/PL1/PL2 缺少条件时不能作为已核验设计输入。\n\n## 3. 配置启动与烧录\n\n> [!WARNING]\n> **待官方确认（2026-10-21）**：① 完整 Strap 管脚清单及 GPIO90/64/52 的角色；② GPIO66/GPIO65 的 SPI NOR/NAND 启动映射。维护者已与开发同步修订，等待官方 GitHub 原文更新后再复核并修正本页。两份现有原表继续并列保留，争议接线结论尚未确定。\n\n读 [[Knowledge_Atoms/K3启动模式与Strap管脚配置专题档案]] 与 [[Evidence/k3_strap_pins_config]]。指南 1.1.5 的管脚清单存在内部矛盾，且与数据手册 2.11.2 对 GPIO66/65 的 SPI NOR/NAND 组合相反，不能直接采用某一套 SPI 接线。两份来源的 0/0 均为 TF/SD Card → eMMC 顺序；争议项须经官方或对应板型经审定原理图确认，不能从默认电平推导未核实的电阻/悬空接线。\n\n## 4. 选择系统路径\n\n[K3 SDK 概览](../Sources/docs-chip/zh/key_stone/k3/k3_sw/k3_sdk_user_guide.md) 区分 Buildroot、Bianbu、OpenHarmony 与 AI Robot。选择对应分支和板型镜像，再按该 SDK 编译/烧录；SDK 概览本身不支持用一条通用 `make` 命令构建所有系统。\n\n## 5. 运行并测量大模型\n\n读 [[Knowledge_Atoms/K3大模型本地推理与AI算力专题档案]] 与 [[Evidence/k3_ai_performance_data]]。当前 [Llama.cpp 指南](../Sources/docs-ai/zh/compute_stack/ai_compute_stack/llama.cpp.md) 的 Bianbu 路径安装 `llama.cpp-tools-spacemit`，以 Qwen3-30B-A3B-Instruct-2507-Q4_0 为例：\n\n```bash\nllama-bench -m Qwen3-30B-A3B-Instruct-2507-Q4_0.gguf -t 8 -p 64 -n 64 -mmp 0 -fa 1\n```\n\n模型需先按指南下载并确认内存足够；命令和参数绑定对应运行时版本。分别记录提示处理、生成速度、内存和上下文，不能把 FP8 硬件支持等同于所有框架已支持，也不能将单次实测推广为性能保证。",
+      "content": "# K3 芯片开发快速上手向导\n\n先明确 K3 的板型、内存容量、系统镜像和 SDK 版本。30B-A3B 是 MoE 示例，总参数与激活参数分别记录，不能据激活量推定完整权重占用。\n\n## 1. 认识芯片与板卡边界\n\n[K3 产品简介](../Sources/docs-chip/zh/key_stone/k3/k3_docs/root_overview.md) 列出 8 个 X100 计算核与 8 个 A100 智算核，支持 RVA23 Profile；K1 的 X60/RVA22 不能套用。SoC 能力、板卡引出接口和运行时支持分开核对；60 TOPS 不能直接换算成任何模型的生成速度。\n\n## 2. 核对供电勘误与散热\n\nK3 指南 V1.1 的 1.2.5/1.2.6 与 [硬件设计 Buglist](../Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_buglist.md) 要求合并相关核心电源，并处理 VDD0V8_DDR 供电平面的专项勘误；读 [[Knowledge_Atoms/SpacemiT生态板卡与PMIC电源配合专题档案]]，不能复制旧独立供电方案。散热参考 [[Knowledge_Atoms/K3热设计与散热专题档案]] 和 [[Evidence/k3_thermal_specs]]：历史 θJC/PL1/PL2 缺少条件时不能作为已核验设计输入。\n\n## 3. 配置启动与烧录\n\n读 [[Knowledge_Atoms/K3启动模式与Strap管脚配置专题档案]] 与 [[Evidence/k3_strap_pins_config]]。官方《K3 硬件设计指南》V1.2 已明确 Strap Pin 为 6 个（GPIO52/64/65/66/68/69），且启动模式映射与《数据手册》§2.11.2 完全统一：优先尝试 TF/SD 卡引导；次级介质中 `00` 对应 eMMC，`01` 对应 SPI NOR，`10` 对应 SPI NAND，`11` 对应 UFS。出厂烧录通过 GPIO69=1 配合 GPIO68 选择 USB(0) 或 UART(1) 通道。\n\n## 4. 选择系统路径\n\n[K3 SDK 概览](../Sources/docs-chip/zh/key_stone/k3/k3_sw/k3_sdk_user_guide.md) 区分 Buildroot、Bianbu、OpenHarmony 与 AI Robot。选择对应分支和板型镜像，再按该 SDK 编译/烧录；SDK 概览本身不支持用一条通用 `make` 命令构建所有系统。针对工业或量产安全场景，Buildroot 支持基于 OP-TEE 4.5.0 与 PMP 硬件隔离的安全镜像，详阅 [[Knowledge_Atoms/SpacemiT_K3_TEE安全架构与安全启动专题档案]] 与 [[Evidence/k3_tee_security_specs]]。\n\n## 5. 运行并测量大模型\n\n读 [[Knowledge_Atoms/K3大模型本地推理与AI算力专题档案]] 与 [[Evidence/k3_ai_performance_data]]。当前 [Llama.cpp 指南](../Sources/docs-ai/zh/compute_stack/ai_compute_stack/llama.cpp.md) 的 Bianbu 路径安装 `llama.cpp-tools-spacemit`，以 Qwen3-30B-A3B-Instruct-2507-Q4_0 为例：\n\n```bash\nllama-bench -m Qwen3-30B-A3B-Instruct-2507-Q4_0.gguf -t 8 -p 64 -n 64 -mmp 0 -fa 1\n```\n\n模型需先按指南下载并确认内存足够；命令和参数绑定对应运行时版本。分别记录提示处理、生成速度、内存和上下文，不能把 FP8 硬件支持等同于所有框架已支持，也不能将单次实测推广为性能保证。",
       "created": "2026-06-29",
-      "updated": "2026-10-21",
+      "updated": "2026-10-27",
       "source_file": "Sources/docs-chip/zh/key_stone/k3/k3_sw/k3_sdk_user_guide.md",
       "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
       "source_section": "SDK 概览；产品特性；硬件指南 1.1.5/1.2.5/1.2.6；Buglist 1/2；数据手册2.11.2；Llama.cpp 2",
       "source_resolution": "partial",
       "verification_status": "unverified",
       "source_checked_at": "2026-10-21",
-      "source_note": "覆盖启动、供电修订、SDK 分流及 GGUF 路径；Strap清单及指南/数据手册SPI启动选择冲突与热学历史待核验项保留。 本轮为来源与关键步骤定向核对，未在实物执行；关联节点保留各自核验状态。",
+      "source_note": "覆盖启动、供电修订、SDK 分流及 GGUF 路径；K3 Strap引脚清单与SPI启动电平已按官方硬件指南V1.2闭环修正；热学历史待核验项保留。本轮为来源与关键步骤定向核对，未在实物执行；关联节点保留各自核验状态。",
       "source_related_file": [
         "Sources/docs-chip/zh/key_stone/k3/k3_docs/root_overview.md",
         "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md",
@@ -1477,9 +1479,9 @@
         "Spacemit_产品矩阵与硬件生态全景档案"
       ],
       "summary": "# K3 CoM260 开发套件板级硬件设计与产品特点专题档案  > [!TIP] > **💡 工程师与架构师导读**： > 本文系统汇总了基于 SpacemiT K3 芯片的核心计算模组 **K3 CoM260** 及其开发套件的产品定位、模组特点、12-Pin 多功能调试接口、MIPI CSI 多链路复用与屏显接口设计。 > 快速掌握产品全貌请阅读第 0 节，深入硬件布线与引脚请阅读第 1~3 节。  ---  ## 0. 产品定位与计算模组核心特点 (Product Profile)  ### 0.1 一句话产品定位 > **K3 CoM260** 是一款专为**工业机器人、具身智能与高",
-      "content": "# K3 CoM260 开发套件板级硬件设计与产品特点专题档案\n\n> [!TIP]\n> **💡 工程师与架构师导读**：\n> 本文系统汇总了基于 SpacemiT K3 芯片的核心计算模组 **K3 CoM260** 及其开发套件的产品定位、模组特点、12-Pin 多功能调试接口、MIPI CSI 多链路复用与屏显接口设计。\n> 快速掌握产品全貌请阅读第 0 节，深入硬件布线与引脚请阅读第 1~3 节。\n\n---\n\n## 0. 产品定位与计算模组核心特点 (Product Profile)\n\n### 0.1 一句话产品定位\n> **K3 CoM260** 是一款专为**工业机器人、具身智能与高端嵌入式装备量产**打造的 RISC-V 核心计算模组（SoM）及开发套件。核心板高集成度封装了 60 TOPS 算力、LPDDR5 内存与电源系统，助力客户以极低成本定制专属载板。\n\n### 0.2 三大核心杀手级特点\n1. **核心计算模组与底板解耦设计 (Modular SoM Architecture)**：\n   * 采用高密连接器将 K3 芯片、高频 LPDDR5、UFS 本地存储及伴随 PMIC 全部集成在核心板上。终端客户仅需根据实际工业场景设计简单的双层或四层外设载板（引出所需接口），研发周期从半年缩短至数周，量产维护成本极低。\n2. **机器人全栈控制直出 (Robotics-Ready Control)**：\n   * 模组不仅具备 60 TOPS AI 视觉处理能力，更将芯片内部独立的实时微控制器 **RT24** 完整引出，原生支持 **EtherCAT、CAN-FD、多路 PWM**，实现从视觉感知、多模态决策到微秒级电机伺服驱动的“大脑+小脑”单模组闭环。\n3. **超灵活的多路 MIPI CSI 机器视觉复用**：\n   * 载板提供 2 路 22-Pin FPC 接口，出厂支持“4+4”、“4+2+2”或四路并发图像采集，满足工业巡检、无人机避障及多目立体相机视觉算法需求。\n\n### 0.3 选型建议：何时选 CoM260 而非单板电脑 (Pico)？\n* **选 K3 CoM260**：产品形态非标（如特殊外壳、导轨安装）、需要批量量产、需要引出自定义工业接口（如多路隔离 RS485、光电隔离 DI/DO）、或对接线接口位置有严格机械限制。\n* **选 K3 Pico**：需要开箱即用成品单板、追求极简单线 Type-C 供电、或需要板载万兆光口进行大带宽组网。\n\n---\n\n## 1. 12-Pin 多功能按键与调试接口\n\nK3 CoM260 参考载板上设计了一个高集成度的 **12-Pin 调试与控制排针**，汇总了状态显示、串口调试、启动控制与电源动作：\n\n| Pin 编号 | 信号名称 | 功能与硬件接法 |\n| :---: | :--- | :--- |\n| **1 / 2** | `PC_LED-` / `PC_LED+` | 外部状态指示灯（正负极），指示开机状态 |\n| **3 / 4** | `UART0_RXD` / `UART0_TXD` | **系统 DEBUG UART0 串口**，用于输出主控内核调试 Log |\n| **5 / 6** | `BMCU_ACOK` / `AUTO_ON_DIS` | **上电自启配置**：短接此二针可启用“上电自动开机”；断开则需通过按键手动开机 |\n| **7 / 9 / 11**| `GND` | 电源地 |\n| **8** | `PMIC_RST_OUTn` | 硬件复位引脚，短接至 GND 触发系统强制重启 |\n| **10** | `FORCE_RECOVERY` | 刷机/下载按键（FEL 模式），短接至 GND 并复位可进入烧录模式 |\n| **12** | `SLEEP/WAKE` | 开关机 / 休眠唤醒引脚，短接至 GND 触发电源动作 |\n\n---\n\n## 2. MIPI CSI 摄像头多链路复用配置\n\nK3 CoM260 载板提供 2 个 22-Pin MIPI CSI 摄像头 FPC 连接器，支持非常灵活的多路并发输入。\n\n### 2.1 链路复用机制\n官方用户指南 5.4 说明高速连接器引出两组 4 Lane 信号，可通过模组电阻配置选择链路。这里描述的是 CoM260 载板引出的信号；K3 SoC 的 12 Lanes 总能力不能直接当作本载板可用接口。以下组合还需按模组电阻、转接板和驱动配置核对，不构成 ISP/AI 同时处理帧率保证：\n* **“4 + 4” 模式**：CAM0 占用 4 lanes，CAM1 占用 4 lanes。适用于双路超高清图像并发输入。\n* **“4 + 2 + 2” 模式**：支持三路摄像头并发。\n* **“2 + 2 + 2 + 2” 模式**：支持四路摄像头并发。\n\n### 2.2 默认出厂配置 (Default)\n* **CAM0 连接器**：配置为 **2 lanes** 带宽。\n* **CAM1 连接器**：配置为 **2 + 2 lanes** 或 **4 lanes** 带宽。\n\n---\n\n## 3. MIPI DSI 屏接口设计与热插拔红线\n\n载板引出了一个 30-Pin 的 MIPI DSI 屏连接器，可完美适配树莓派标准的 4.3 英寸电容触摸显示屏（内置 I2C 触摸控制总线）：\n\n> [!CAUTION]\n> **MIPI DSI 显示接口与触控接口绝对不支持热插拔**。\n> 必须在**完全断电**的状态下连接好显示屏 FPC 线缆，然后再上电开机。在带电状态下插拔屏线极易导致 DSI PHY 或者是屏幕控制 IC 发生永久性静电击穿。\n\n---\n\n## 4. 关联事实证据与芯片专题\n\n> [!NOTE]\n> **2026-08 官方更新**：K3 硬件资源文件已更新至 **v2.1**，包括 `k3_pinlist_pinmux_v21.xlsx`、最小系统参考设计原理图 `k3-minisys-lp5-au4562-v2.1.DSN/PDF`。同时 eDP 信号命名已修正。请以最新硬件资源为准进行设计。\n\n* 物理规格数据：[[Evidence/k3_com260_specs|K3 CoM260 规格参数]]\n* 40-Pin 排针管脚映射：[[Knowledge_Atoms/K3_CoM260_40Pin_IOMAP管脚映射专题|K3 CoM260 40-Pin IOMAP 管脚映射专题]]\n* 摄像并发规范：[[Knowledge_Atoms/K1_K3摄像系统与图像处理专题档案|K1/K3 摄像系统与图像处理专题]]\n* 原始文档参考：[K3 CoM260 用户指南](../Sources/docs-product/zh/k3_series/k3_com260/com260_user_guide.md)",
+      "content": "# K3 CoM260 开发套件板级硬件设计与产品特点专题档案\n\n> [!TIP]\n> **💡 工程师与架构师导读**：\n> 本文系统汇总了基于 SpacemiT K3 芯片的核心计算模组 **K3 CoM260** 及其开发套件的产品定位、模组特点、12-Pin 多功能调试接口、MIPI CSI 多链路复用与屏显接口设计。\n> 快速掌握产品全貌请阅读第 0 节，深入硬件布线与引脚请阅读第 1~3 节。\n\n---\n\n## 0. 产品定位与计算模组核心特点 (Product Profile)\n\n### 0.1 一句话产品定位\n> **K3 CoM260** 是一款专为**工业机器人、具身智能与高端嵌入式装备量产**打造的 RISC-V 核心计算模组（SoM）及开发套件。核心板高集成度封装了 60 TOPS 算力、LPDDR5 内存与电源系统，助力客户以极低成本定制专属载板。\n\n### 0.2 三大核心杀手级特点\n1. **核心计算模组与底板解耦设计 (Modular SoM Architecture)**：\n   * 采用高密连接器将 K3 芯片、高频 LPDDR5、UFS 本地存储及伴随 PMIC 全部集成在核心板上。终端客户仅需根据实际工业场景设计简单的双层或四层外设载板（引出所需接口），研发周期从半年缩短至数周，量产维护成本极低。\n2. **机器人全栈控制直出 (Robotics-Ready Control)**：\n   * 模组不仅具备 60 TOPS AI 视觉处理能力，更将芯片内部独立的实时微控制器 **RT24** 完整引出，原生支持 **EtherCAT、CAN-FD、多路 PWM**，实现从视觉感知、多模态决策到微秒级电机伺服驱动的“大脑+小脑”单模组闭环。\n3. **超灵活的多路 MIPI CSI 机器视觉复用**：\n   * 载板提供 2 路 22-Pin FPC 接口，出厂支持“4+4”、“4+2+2”或四路并发图像采集，满足工业巡检、无人机避障及多目立体相机视觉算法需求。\n\n### 0.3 选型建议：何时选 CoM260 而非单板电脑 (Pico)？\n* **选 K3 CoM260**：产品形态非标（如特殊外壳、导轨安装）、需要批量量产、需要引出自定义工业接口（如多路隔离 RS485、光电隔离 DI/DO）、或对接线接口位置有严格机械限制。\n* **选 K3 Pico**：需要开箱即用成品单板、追求极简单线 Type-C 供电、或需要板载万兆光口进行大带宽组网。\n\n---\n\n## 1. 12-Pin 多功能按键与调试接口\n\nK3 CoM260 参考载板上设计了一个高集成度的 **12-Pin 调试与控制排针**，汇总了状态显示、串口调试、启动控制与电源动作：\n\n| Pin 编号 | 信号名称 | 功能与硬件接法 |\n| :---: | :--- | :--- |\n| **1 / 2** | `PC_LED-` / `PC_LED+` | 外部状态指示灯（正负极），指示开机状态 |\n| **3 / 4** | `UART0_RXD` / `UART0_TXD` | **系统 DEBUG UART0 串口**，用于输出主控内核调试 Log |\n| **5 / 6** | `BMCU_ACOK` / `AUTO_ON_DIS` | **上电自启配置**：短接此二针可启用“上电自动开机”；断开则需通过按键手动开机 |\n| **7 / 9 / 11**| `GND` | 电源地 |\n| **8** | `PMIC_RST_OUTn` | 硬件复位引脚，短接至 GND 触发系统强制重启 |\n| **10** | `FORCE_RECOVERY` | 刷机/下载按键（FEL 模式），短接至 GND 并复位可进入烧录模式 |\n| **12** | `SLEEP/WAKE` | 开关机 / 休眠唤醒引脚，短接至 GND 触发电源动作 |\n\n---\n\n## 2. MIPI CSI 摄像头多链路复用配置\n\nK3 CoM260 载板提供 2 个 22-Pin MIPI CSI 摄像头 FPC 连接器，支持非常灵活的多路并发输入。\n\n### 2.1 链路复用机制\n官方用户指南 5.4 说明高速连接器引出两组 4 Lane 信号，可通过模组电阻配置选择链路。这里描述的是 CoM260 载板引出的信号；K3 SoC 的 12 Lanes 总能力不能直接当作本载板可用接口。以下组合还需按模组电阻、转接板和驱动配置核对，不构成 ISP/AI 同时处理帧率保证：\n* **“4 + 4” 模式**：CAM0 占用 4 lanes，CAM1 占用 4 lanes。适用于双路超高清图像并发输入。\n* **“4 + 2 + 2” 模式**：支持三路摄像头并发。\n* **“2 + 2 + 2 + 2” 模式**：支持四路摄像头并发。\n\n### 2.2 默认出厂配置 (Default)\n* **CAM0 连接器**：配置为 **2 lanes** 带宽。\n* **CAM1 连接器**：配置为 **2 + 2 lanes** 或 **4 lanes** 带宽。\n\n---\n\n## 3. MIPI DSI 屏接口设计与热插拔红线\n\n载板引出了一个 30-Pin 的 MIPI DSI 屏连接器，可完美适配树莓派标准的 4.3 英寸电容触摸显示屏（内置 I2C 触摸控制总线）：\n\n> [!CAUTION]\n> **MIPI DSI 显示接口与触控接口绝对不支持热插拔**。\n> 必须在**完全断电**的状态下连接好显示屏 FPC 线缆，然后再上电开机。在带电状态下插拔屏线极易导致 DSI PHY 或者是屏幕控制 IC 发生永久性静电击穿。\n\n---\n\n## 4. 关联事实证据与芯片专题\n\n> [!NOTE]\n> **2026-08 官方更新**：K3 硬件资源文件已更新至 **v2.1**，包括 `k3_pinlist_pinmux_v21.xlsx`、最小系统参考设计原理图 `k3-minisys-lp5-au4562-v2.1.DSN/PDF`。同时 eDP 信号命名已修正。请以最新硬件资源为准进行设计。\n\n* 物理规格数据：[[Evidence/k3_com260_specs|K3 CoM260 规格参数]]\n* 40-Pin 排针管脚映射：[[Knowledge_Atoms/K3_CoM260_40Pin_IOMAP管脚映射专题|K3 CoM260 40-Pin IOMAP 管脚映射专题]]\n* 摄像并发规范：[[Knowledge_Atoms/K1_K3摄像系统与图像处理专题档案|K1/K3 摄像系统与图像处理专题]]\n* 原始文档参考：[K3 CoM260 用户指南](../Sources/docs-product/zh/k3_series/k3_com260/com260_user_guide.md)\n\n---\n\n## 5. 官方硬件设计文件与资源清单\n\n官方最新硬件资源已将核心板与底板设计解耦发布（详见 [[Evidence/k3_com260_specs]]）：\n* **核心板硬件原理图**：[K3-CoM260 核心板原理图 (PDF)](https://cdn-resource.spacemit.com/file/product/K3/k3_com260_hw/k3-com260_p1_lp5315b_32x2_v03_20260312.pdf)（最新 V03 版本）\n* **物料清单 (BOM)**：[K3-CoM260 开发套件完整 BOM (.xls)](https://cdn-resource.spacemit.com/file/product/K3/k3_com260_hw/K3-COM260_KIT_V02_20260318_BOM.xls)\n* **底板硬件原理图**：[K3-CoM260 套件底板原理图 (PDF)](https://cdn-resource.spacemit.com/file/product/K3/k3_com260_hw/k3-com260_kit_v02_20260306.pdf)\n* **底板工程文件与 PCB**：[底板工程文件 (.DSN)](https://cdn-resource.spacemit.com/file/product/K3/k3_com260_hw/K3-COM260_KIT_V02_20260306.DSN) 与 [底板 PCB 文件 (.brd)](https://cdn-resource.spacemit.com/file/product/K3/k3_com260_hw/K3-COM260_KIT_V02_20260306.brd)",
       "created": "2026-06-30",
-      "updated": "2026-10-21",
+      "updated": "2026-10-27",
       "source_file": "Sources/docs-product/zh/k3_series/k3_com260/com260_user_guide.md",
       "source_commit": "bc640755145625cc20745f49861f82588863fca3",
       "source_locator": "K3 CoM260 开发套件用户使用指南；PDF 版本下载；版本；1. 产品简介；1.1 概述",
@@ -1489,10 +1491,12 @@
       "source_note": "2026-10-21 定向复核用户指南 5.4，区分载板引出两组 4 Lane 与 K3 SoC 总通道能力；其他正文未全核验。",
       "source_origin": "https://github.com/spacemit-com/docs-product",
       "source_related_file": [
-        "Sources/docs-product/zh/k3_series/k3_com260/root_overview.md"
+        "Sources/docs-product/zh/k3_series/k3_com260/root_overview.md",
+        "Sources/docs-product/zh/k3_series/k3_com260/com260_hw_resources.md"
       ],
       "source_related_commit": [
-        "8c851807f2c54e8ba54d568b268100ca727d0777"
+        "8c851807f2c54e8ba54d568b268100ca727d0777",
+        "cb96db6332fac093964af8fef98db45e2783fde8"
       ],
       "freshness": "current",
       "stale_paths": [],
@@ -1511,6 +1515,13 @@
         {
           "source_file": "Sources/docs-product/zh/k3_series/k3_com260/root_overview.md",
           "source_commit": "8c851807f2c54e8ba54d568b268100ca727d0777",
+          "checked_against_commit": "cb96db6332fac093964af8fef98db45e2783fde8",
+          "freshness": "current",
+          "reason": "source_file_unchanged"
+        },
+        {
+          "source_file": "Sources/docs-product/zh/k3_series/k3_com260/com260_hw_resources.md",
+          "source_commit": "cb96db6332fac093964af8fef98db45e2783fde8",
           "checked_against_commit": "cb96db6332fac093964af8fef98db45e2783fde8",
           "freshness": "current",
           "reason": "source_file_unchanged"
@@ -1863,18 +1874,18 @@
         "K3芯片开发快速上手向导",
         "K3安全启动SecureBoot开发专题档案"
       ],
-      "summary": "# K3 启动模式与 Strap 管脚配置专题档案  > [!WARNING] > **待官方确认（2026-10-21）**：① 完整 Strap 管脚清单及 GPIO90/64/52 的角色；② GPIO66/GPIO65 的 SPI NOR/NAND 启动映射。维护者已与开发同步修订，等待官方 GitHub 原文更新后再复核并修正本页。两份现有原表继续并列保留，争议接线结论尚未确定。  > [!TIP] > **💡 工程师导读与排坑焦点**：指导 K3 芯片 Strap Pins 硬件上下拉设计与物理启动介质配置。 > **目标读者**：`硬件电路工程师 / 嵌入式驱动` | **技术领",
-      "content": "# K3 启动模式与 Strap 管脚配置专题档案\n\n> [!WARNING]\n> **待官方确认（2026-10-21）**：① 完整 Strap 管脚清单及 GPIO90/64/52 的角色；② GPIO66/GPIO65 的 SPI NOR/NAND 启动映射。维护者已与开发同步修订，等待官方 GitHub 原文更新后再复核并修正本页。两份现有原表继续并列保留，争议接线结论尚未确定。\n\n> [!TIP]\n> **💡 工程师导读与排坑焦点**：指导 K3 芯片 Strap Pins 硬件上下拉设计与物理启动介质配置。\n> **目标读者**：`硬件电路工程师 / 嵌入式驱动` | **技术领域**：`hardware_schematic_design`\n\n本专题档案汇总了关于 SpacemiT K3 芯片上电初始化、Strap 管脚硬件设计、以及系统启动/烧录模式的配置要点。\n\n---\n\n## 1. 硬件配置核心原则\n\nK3 芯片在复位释放（Reset Release）的瞬间，会通过采样特定的配置管脚（Strap Pins）的电平状态，来决定芯片的启动介质、烧录通道、内存类型和接口电压。\n\n*   **硬件连接要求**：\n    *   功能表将相关项标为 default down，但同节的管脚数量/列表存在内部矛盾，必须同时保留 [[Evidence/k3_strap_pins_config]] 的冲突提示。\n    *   本轮未在声明来源中确认旧稿的通用 `4.7kΩ～10kΩ` 上拉范围或“默认可悬空”的板级接线保证。按对应版本原理图核对电阻、IO 电源域、采样与复用条件；不能照抄 K1 或其他板型的接线。\n\n---\n\n## 2. 核心配置逻辑对照\n\n进行单板原理图设计前，先阅读 [[Evidence/k3_strap_pins_config]] 的两份原表与冲突说明；争议项不能作为已确认的接线参数。\n\n### 2.1 启动介质（Boot Mode）\n两份来源均通过 **GPIO66 / GPIO65** 配置次级启动介质，并优先尝试 SD/TF：\n*   `0/0` 对应 **TF/SD Card → eMMC**，`1/1` 对应 **TF/SD Card → UFS**。\n*   **SPI 选择冲突**：硬件指南 §1.1.5 写 `1/0 → SPI NOR`、`0/1 → SPI NAND`；数据手册 §2.11.2 写 `1/0 → SPI NAND`、`0/1 → SPI NOR`。不能单方面采用其中一套或按文档日期裁决；接线与电阻实现须等待官方确认或对应板型经审定原理图。\n\n### 2.2 烧录与启动切换（Boot / Download）\n*   **GPIO69** 是决定单板是“正常工作”还是“进入烧录”的开关：\n    *   **正常运行**：功能表 GPIO69 为 `0`，具体上下拉接线按原理图。\n    *   **出厂烧录**：GPIO69=`1` 进入下载模式，仍由 GPIO68 选择通道：`0` 为 USB、`1` 为 UART。GPIO69=`1` 本身不能保证一定走 USB；电平实现按板型原理图核对。\n\n### 2.3 核心板强制刷机 (Recovery) 与升级限制\n对于基于 K3 核心板（如 CoM260）的设计：\n*   **强制刷机 (Recovery)**：核心板第 214 引脚为 `FORCE_RECOVERY`。在开发或量产时，将该引脚**下拉到 GND 状态后上电**，系统将强制进入 USB 刷机模式。\n*   **MMC 边界**：芯片指南 1.4.4 说明 MMC1 支持 SD 卡完整功能和动态电压切换；MMC2 只支持固定电平下的低速模式或仅 1.8V SD 卡。启动/升级还须核对核心板与 ROM 的支持，不能把该限制表述为 MMC2 完全不能接 SD 卡。\n\n### 2.4 GPIO 双电压自适应设计\nK3 芯片的 GPIO 电平支持 1.8V 与 3.3V 自适应切换：\n*   **电压参考**：`VCC18_GPIOx` 是 IO 内部 LDO 的参考基准，固定为 1.8V。\n*   **工作电平**：GPIO 的实际工作电平由其供电引脚 `VCCxx_1833GPIOx` 决定。当其接入 1.8V 时，该组 GPIO 电平自动为 1.8V；当其接入 3.3V 时，电平自动为 3.3V。**该自适应电平切换完全由硬件决定，无需软件进行任何寄存器配置**。\n*   **中断输入限制**：并非所有 IO 都支持中断输入，**仅复用为 GPIO 属性的引脚**才具备中断输入和唤醒功能。\n\n### 2.5 LPDDR 64-bit 物理连线红线\n*   **设计红线**：K3 芯片支持 LPDDR5 和 LPDDR4x。当设计中采用 64-bit 位宽的 DDR 拓扑时，**绝对不能仅使用其中的 32-bit 而将另外 32-bit 悬空**。必须保证 64-bit 物理连线完整，否则内存控制器将无法正确初始化。\n\n### 2.6 JTAG 调试连接与 CoM260 交叉接线注意事项\n\n> [!WARNING]\n> **2026-08 官方更新**：Spacemit 官方在 `docs-chip` 仓库的 `k3_hw_faq.md` 中新增了 K3 Pico-ITX 和 K3 CoM260 的 JTAG 调试接线详细说明。\n\n*   **K3 Pico-ITX 调试**：串口线 TX 接 K3 Pico-ITX 的 RX，RX 接 TX。串口调试要求使用 **3.3V** 电平串口线。PRI JTAG 直接连接即可。\n*   **K3 CoM260 JTAG 调试红线**：CoM260 开发套件支持通过 TF 卡接口转 JTAG 进行调试。**特别注意：JTAG 调试器与转接子板的 TMS 和 TDI 需要交叉连接（TDO 直连）**。误接将导致 JTAG 完全无法通信。\n*   详细接线图片参考官方文档：[K3 硬件 FAQ - JTAG 调试图解](../Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_faq.md)（含 `com260_debug_00.png` 配图）\n\n---\n\n## 3. 关联原始参考文档\n\n关于具体的 Strap Pin 电阻选型、PMIC 上电时序以及烧录软件的操作，请进一步参阅：\n*   [K3 硬件设计指南 - 原始文档](../Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md)\n*   [K3 数据手册 §2.11.2 - SPI 启动选择冲突对照](../Sources/docs-chip/zh/key_stone/k3/k3_docs/k3_ds.md)\n*   [K3 SDK 使用指南 - 原始文档](../Sources/docs-chip/zh/key_stone/k3/k3_sw/k3_sdk_user_guide.md)",
+      "summary": "# K3 启动模式与 Strap 管脚配置专题档案  > [!NOTE] > **官方勘误已闭环（2026-10-21）**：官方开发在《K3 硬件设计指南》V1.2 中正式修复了此前两项争议： > 1. 明确 Strap Pin 共有完整的 **6 个**（GPIO52、GPIO64、GPIO65、GPIO66、GPIO68、GPIO69），移除了旧版笔误出现的 GPIO90。 > 2. 修正了 SPI NOR 与 SPI NAND 的电平定义，与《K3 数据手册》§2.11.2 达成完全统一（`01` 为 SPI NOR，`10` 为 SPI NAND）。详细电气参数见 [[Evidenc",
+      "content": "# K3 启动模式与 Strap 管脚配置专题档案\n\n> [!NOTE]\n> **官方勘误已闭环（2026-10-21）**：官方开发在《K3 硬件设计指南》V1.2 中正式修复了此前两项争议：\n> 1. 明确 Strap Pin 共有完整的 **6 个**（GPIO52、GPIO64、GPIO65、GPIO66、GPIO68、GPIO69），移除了旧版笔误出现的 GPIO90。\n> 2. 修正了 SPI NOR 与 SPI NAND 的电平定义，与《K3 数据手册》§2.11.2 达成完全统一（`01` 为 SPI NOR，`10` 为 SPI NAND）。详细电气参数见 [[Evidence/k3_strap_pins_config]]。\n\n> [!TIP]\n> **💡 工程师导读与排坑焦点**：指导 K3 芯片 Strap Pins 硬件上下拉设计与物理启动介质配置。\n> **目标读者**：`硬件电路工程师 / 嵌入式驱动` | **技术领域**：`hardware_schematic_design`\n\n本专题档案汇总了关于 SpacemiT K3 芯片上电初始化、Strap 管脚硬件设计、以及系统启动/烧录模式的配置要点。\n\n---\n\n## 1. 硬件配置核心原则\n\nK3 芯片在复位释放（Reset Release）的瞬间，会通过采样特定的配置管脚（Strap Pins）的电平状态，来决定芯片的启动介质、烧录通道、内存类型和接口电压。\n\n*   **硬件连接要求**：\n    *   K3 共有完整的 **6 个 Strap Pin**（GPIO52、GPIO64、GPIO65、GPIO66、GPIO68、GPIO69），管脚在芯片内部默认下拉（default down）。\n    *   进行单板硬件设计时，需按对应板型原理图核对上下拉电阻阻值（推荐 4.7kΩ～10kΩ）、IO 电源域、采样时序及复位后的功能复用条件，不能照抄 K1 或其他不同代际芯片的接线。\n\n---\n\n## 2. 核心配置逻辑\n\n详细管脚与组合参数见 [[Evidence/k3_strap_pins_config]]。\n\n### 2.1 启动介质（Boot Mode）\n由 **GPIO66 (Strap 1)** 与 **GPIO65 (Strap 0)** 配置次级启动介质，上电后始终优先尝试 SD/TF 卡：\n*   `0/0` 对应 **TF/SD Card → eMMC [默认]**\n*   `0/1` 对应 **TF/SD Card → SPI NOR**\n*   `1/0` 对应 **TF/SD Card → SPI NAND**\n*   `1/1` 对应 **TF/SD Card → UFS**\n> 官方硬件指南 V1.2 与数据手册 §2.11.2 已完全统一，`01` 确认为 SPI NOR，`10` 确认为 SPI NAND。\n\n### 2.2 烧录与启动切换（Boot / Download）\n*   **GPIO69 (Strap 3)** 是决定单板是“正常工作”还是“进入烧录”的开关：\n    *   **正常运行**：GPIO69 为 `0`（芯片内部默认下拉）。\n    *   **出厂烧录**：GPIO69=`1` 进入下载模式，并由 **GPIO68 (Strap 2)** 选择通信通道：`0` 为 USB DRD 接口烧录，`1` 为 UART 串口烧录。\n\n### 2.3 核心板强制刷机 (Recovery) 与升级限制\n对于基于 K3 核心板（如 CoM260）的设计：\n*   **强制刷机 (Recovery)**：核心板第 214 引脚为 `FORCE_RECOVERY`。在开发或量产时，将该引脚**下拉到 GND 状态后上电**，系统将强制进入 USB 刷机模式。\n*   **MMC 边界**：芯片指南 1.4.4 说明 MMC1 支持 SD 卡完整功能和动态电压切换；MMC2 只支持固定电平下的低速模式或仅 1.8V SD 卡。启动/升级还须核对核心板与 ROM 的支持，不能把该限制表述为 MMC2 完全不能接 SD 卡。\n\n### 2.4 GPIO 双电压自适应设计\nK3 芯片的 GPIO 电平支持 1.8V 与 3.3V 自适应切换：\n*   **电压参考**：`VCC18_GPIOx` 是 IO 内部 LDO 的参考基准，固定为 1.8V。\n*   **工作电平**：GPIO 的实际工作电平由其供电引脚 `VCCxx_1833GPIOx` 决定。当其接入 1.8V 时，该组 GPIO 电平自动为 1.8V；当其接入 3.3V 时，电平自动为 3.3V。**该自适应电平切换完全由硬件决定，无需软件进行任何寄存器配置**。\n*   **中断输入限制**：并非所有 IO 都支持中断输入，**仅复用为 GPIO 属性的引脚**才具备中断输入和唤醒功能。\n\n### 2.5 LPDDR 64-bit 物理连线红线\n*   **设计红线**：K3 芯片支持 LPDDR5 和 LPDDR4x。当设计中采用 64-bit 位宽的 DDR 拓扑时，**绝对不能仅使用其中的 32-bit 而将另外 32-bit 悬空**。必须保证 64-bit 物理连线完整，否则内存控制器将无法正确初始化。\n\n### 2.6 JTAG 调试连接与 CoM260 交叉接线注意事项\n\n> [!WARNING]\n> **官方说明**：Spacemit 官方在 `docs-chip` 仓库的 `k3_hw_faq.md` 中说明了 K3 Pico-ITX 和 K3 CoM260 的 JTAG 调试接线：\n\n*   **K3 Pico-ITX 调试**：串口线 TX 接 K3 Pico-ITX 的 RX，RX 接 TX。串口调试要求使用 **3.3V** 电平串口线。PRI JTAG 直接连接即可。\n*   **K3 CoM260 JTAG 调试红线**：CoM260 开发套件支持通过 TF 卡接口转 JTAG 进行调试。**特别注意：JTAG 调试器与转接子板的 TMS 和 TDI 需要交叉连接（TDO 直连）**。误接将导致 JTAG 完全无法通信。\n*   详细接线图片参考官方文档：[K3 硬件 FAQ - JTAG 调试图解](../Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_faq.md)（含 `com260_debug_00.png` 配图）\n\n---\n\n## 3. 关联原始参考文档\n\n关于具体的 Strap Pin 电阻选型、PMIC 上电时序以及烧录软件的操作，请进一步参阅：\n*   [K3 硬件设计指南 - 原始文档](../Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md)\n*   [K3 数据手册 §2.11.2 - 启动模式映射](../Sources/docs-chip/zh/key_stone/k3/k3_docs/k3_ds.md)\n*   [K3 SDK 使用指南 - 原始文档](../Sources/docs-chip/zh/key_stone/k3/k3_sw/k3_sdk_user_guide.md)",
       "created": "2026-06-29",
-      "updated": "2026-10-21",
+      "updated": "2026-10-27",
       "source_file": "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md",
-      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
-      "source_locator": "硬件设计指南 1.1.5/1.4.4；数据手册 V1.9 2.11.2；其他正文未全文核验",
-      "source_resolution": "partial",
-      "verification_status": "conflicted",
-      "conflicts": "K3指南1.1.5的管脚概述与Strap0～5功能表不一致；该指南与数据手册2.11.2还将GPIO66/65的SPI NOR/NAND组合互换。SPI选择及完整管脚清单待官方裁决，详见k3_strap_pins_config。",
-      "source_checked_at": "2026-10-21",
-      "source_note": "2026-10-21 阶段B复核指南1.1.5/1.4.4，并与数据手册2.11.2逐位比较启动映射；补SPI选择电平冲突，下载模式按GPIO69与GPIO68共同判断。其他正文未全文核验，保持conflicted/needs_review。",
+      "source_commit": "fd016f81034b1a93ad39c2cecf313bb82be7d169",
+      "source_locator": "硬件设计指南 V1.2 1.1.5/1.4.4；数据手册 V1.9 2.11.2",
+      "source_resolution": "resolved",
+      "verification_status": "verified",
+      "verified_at": "2026-10-27",
+      "source_checked_at": "2026-10-27",
+      "source_note": "2026-10-21 官方发布硬件设计指南 V1.2（commit fd016f8），正式更正 1.1.5 小节：明确 Strap Pin 共 6 个（GPIO52/64/65/66/68/69，去除笔误 GPIO90），并将 SPI 启动组合修正为 01=SPI NOR、10=SPI NAND，与《K3数据手册》2.11.2 完全达成一致。官方勘误闭环，解除 conflicted 状态。",
       "source_origin": "https://github.com/spacemit-com/docs-chip",
       "source_related_file": [
         "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_faq.md",
@@ -1884,12 +1895,10 @@
       "source_related_commit": [
         "15254b1cfe339c1863d8edf8137a337681fb2780",
         "15254b1cfe339c1863d8edf8137a337681fb2780",
-        "2525ee3b68e0f4864f1bf12c8a59df040bf27e84"
+        "fd016f81034b1a93ad39c2cecf313bb82be7d169"
       ],
-      "freshness": "stale",
-      "stale_paths": [
-        "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md"
-      ],
+      "freshness": "current",
+      "stale_paths": [],
       "unknown_paths": [],
       "checked_against_commit": {
         "docs-chip": "fd016f81034b1a93ad39c2cecf313bb82be7d169"
@@ -1897,10 +1906,10 @@
       "source_freshness": [
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md",
-          "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+          "source_commit": "fd016f81034b1a93ad39c2cecf313bb82be7d169",
           "checked_against_commit": "fd016f81034b1a93ad39c2cecf313bb82be7d169",
-          "freshness": "stale",
-          "reason": "source_file_changed"
+          "freshness": "current",
+          "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_faq.md",
@@ -1918,7 +1927,7 @@
         },
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k3/k3_docs/k3_ds.md",
-          "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+          "source_commit": "fd016f81034b1a93ad39c2cecf313bb82be7d169",
           "checked_against_commit": "fd016f81034b1a93ad39c2cecf313bb82be7d169",
           "freshness": "current",
           "reason": "source_file_unchanged"
@@ -2424,6 +2433,91 @@
         }
       ]
     },
+    "SpacemiT_K3_TEE安全架构与安全启动专题档案": {
+      "id": "SpacemiT_K3_TEE安全架构与安全启动专题档案",
+      "title": "SpacemiT K3 TEE 安全架构与安全启动专题档案",
+      "type": "knowledge_atom",
+      "domain": "bsp_kernel_drivers",
+      "status": "needs_review",
+      "aliases": [
+        "K3 TEE安全架构专题",
+        "SpacemiT K3 OP-TEE Topic",
+        "k3_tee_security_architecture",
+        "K3安全启动"
+      ],
+      "target_audience": [
+        "嵌入式安全工程师",
+        "驱动工程师",
+        "固件工程师"
+      ],
+      "outlinks": [
+        "k3_tee_security_specs",
+        "esos_rcpu_firmware_specs",
+        "buildroot_bsp_specs"
+      ],
+      "backlinks": [
+        "K3芯片开发快速上手向导"
+      ],
+      "summary": "# SpacemiT K3 TEE 安全架构与安全启动专题档案  > [!TIP] > **💡 工程师导读与排坑焦点**：详解 SpacemiT K3 平台 OP-TEE 4.5.0 系统架构、RISC-V MPXY 通信机制、保留式共享内存、安全启动链与 TA/CA 开发规范。 > **目标读者**：`嵌入式安全工程师 / 驱动工程师 / 固件工程师` | **技术领域**：`bsp_kernel_drivers`  本专题系统阐述基于 SpacemiT K3 芯片平台的硬件安全架构与 TEE（Trusted Execution Environment）软件栈实现。重点解析在缺少传统 Arm",
+      "content": "# SpacemiT K3 TEE 安全架构与安全启动专题档案\n\n> [!TIP]\n> **💡 工程师导读与排坑焦点**：详解 SpacemiT K3 平台 OP-TEE 4.5.0 系统架构、RISC-V MPXY 通信机制、保留式共享内存、安全启动链与 TA/CA 开发规范。\n> **目标读者**：`嵌入式安全工程师 / 驱动工程师 / 固件工程师` | **技术领域**：`bsp_kernel_drivers`\n\n本专题系统阐述基于 SpacemiT K3 芯片平台的硬件安全架构与 TEE（Trusted Execution Environment）软件栈实现。重点解析在缺少传统 Arm SMC 指令的 RISC-V 架构下，K3 如何通过 OpenSBI 域管理与 MPXY 机制实现安全世界（Secure World）与普通世界（REE）的强隔离，并指导可信应用（TA）与客户端应用（CA）的工程落地。\n\n---\n\n## 1. RISC-V 三域安全模型与 OP-TEE 在系统中的位置\n\n在 K3 平台上，OP-TEE 运行于 RISC-V 的 **S 态（Supervisor Mode）**，通过 OpenSBI（运行于 M 态）提供的域模型与物理内存保护（PMP）实现硬件级边界隔离：\n\n*   **普通世界（REE, Rich Execution Environment）**：\n    *   包含用户态客户端应用（CA）、`libteec` 运行时库、守护进程 `tee-supplicant`，以及 Linux 内核驱动（`drivers/tee/optee/mpxy_sbi.c`）。\n    *   受限于 OpenSBI 的 Root Domain，无法直接访问安全世界的物理内存与外设寄存器。\n*   **监控层（M 态, Machine Mode）**：\n    *   由 **OpenSBI** 承担，负责平台域管理（Domain Management）、物理内存保护（PMP/IOPMP）配置，以及跨域分发器（`fdt_mpxy_opteed.c`）。\n*   **安全世界（TEE, Trusted Execution Environment）**：\n    *   运行 **OP-TEE OS 4.5.0**，包含 TEE 内核、用户态可信应用（TA）、动态加载器（ldelf）及密码学加速库，运行于专属的 Trusted Domain。\n\n---\n\n## 2. REE 到 TEE 的调用链与 RISC-V MPXY 通信机制\n\n由于 RISC-V 架构没有 Arm 的 `smc` 陷入指令，K3 创新采用了 **OpenSBI MPXY（Message Proxy）框架 + Per-Hart Mailbox** 实现跨域分发：\n\n1.  **CA 侧发起请求**：CA 通过 GlobalPlatform TEE Client API（如 `TEE_OpenSession` 或 `TEE_InvokeCommand`）发起调用，进入 Linux 内核 TEE 驱动。\n2.  **Mailbox 消息投递**：内核驱动通过 16 个独立 Per-Hart 通道绑定的 `mpxy_mbox`（定义于 `arch/riscv/dts/k3-optee.dtsi`），将请求上下文打包。\n3.  **M 态陷入与分发**：触发 RISC-V `ecall` 进入 OpenSBI M 态，由 OP-TEE 分发器接住并切换硬件上下文至 Trusted 域。\n4.  **安全世界执行**：进入 OP-TEE OS 的 `thread_std_abi_entry()`，分发至具体 TA 执行业务逻辑。\n5.  **反向 RPC 代理**：当 TA 需要进行文件系统存储或 RPMB 硬件操作时，OP-TEE 发起 RPC 请求，由普通世界的常驻守护进程 `tee-supplicant` 代理完成。\n\n---\n\n## 3. 内存隔离与设备树注入规范\n\n具体物理内存基址见 [[Evidence/k3_tee_security_specs]]。\n\n*   **保留式共享内存（Reserved SHM）**：\n    *   K3 平台固定配置 `CFG_CORE_RESERVED_SHM=y`，基址固定为 `0x1_7200_0000`（16 MB）。\n    *   **排坑红线**：静态设备树**严禁手动编写** `reserved-memory` 或 `memory-region`。OP-TEE 在启动阶段会主动向设备树动态插入 `optee_core` 与 `optee_shm` 节点。若在 DTS 中静态硬编码，将造成双重声明导致内核 Panic。\n*   **常驻内存保护（TEE RAM）**：\n    *   TEE RAM 位于 `0x1_7100_0000`（16 MB），受 OpenSBI PMP 硬件强制保护。\n    *   OP-TEE 初始化后**常驻内存不换出**。内核启动时打上 `nomap non-reusable` 标记。排查内存踩踏或偶发崩溃时，必须先在内核启动日志中确认两条 reserved mem 记录是否打印完整。\n\n---\n\n## 4. 安全启动链与固件时序\n\nK3 安全固件遵循严格的自底向上信任链加载顺序（相关 RCPU 固件依赖见 [[Evidence/esos_rcpu_firmware_specs]] 与 [[Evidence/buildroot_bsp_specs]]）：\n\n1.  **BootROM (ZSBL)**：从片内 ROM 执行，初始化基本时钟并加载 SPL。\n2.  **SPL (FSBL)**：运行于片内 SRAM，依次加载 `esos.itb`（RCPU）、`optee.itb`（DDR `0x1_7100_0000`）及 `u-boot.itb`（`0x1_0200_0000`）。\n3.  **OpenSBI**：运行于 M 态，建立 PMP 隔离域并首次跳转执行 OP-TEE。\n4.  **OP-TEE OS**：完成安全世界硬件配置、向设备树注入保留内存节点后常驻。\n5.  **U-Boot & Linux**：由 OpenSBI 将控制权切回普通世界执行 U-Boot，最终引导 Linux 内核。\n\n> [!CAUTION]\n> 在安全镜像中，MMC/MTD 启动介质将 TEE 设为必需项。若未烧录 `optee.itb` 或镜像签名损坏，SPL 将**直接中止启动**，绝不会静默回退至非安全环境。\n\n---\n\n## 5. TA/CA 开发规范与 GlobalPlatform 契约\n\nK3 平台全面遵循 GlobalPlatform（GP）国际标准，业务代码与平台底层解耦：\n\n*   **CA 开发（普通世界）**：\n    *   遵循 GP TEE Client API 规范，链接 `libteec.so`。\n    *   构建时通过 Buildroot 自动拉取 `optee_client`，头文件包含 `<tee_client_api.h>`。\n*   **TA 开发（安全世界）**：\n    *   遵循 GP TEE Internal Core API 规范，依赖 `optee_os` 提供的 `libutee`。\n    *   TA 采用独立 UUID 标识，编译为带签名的 `.ta` 格式（如 `bc303bda-6936-4945-82e7-010486e92645.ta`），部署于根文件系统的 `/lib/optee_armtz/` 目录下。\n\n---\n\n## 6. 关联证据与技术规范\n\n*   [[Evidence/k3_tee_security_specs]] - K3 芯片 TEE 内存基址、PMP 域与固件分区参数\n*   [[Evidence/esos_rcpu_firmware_specs]] - K3 协处理器固件与启动依赖\n*   [[Evidence/buildroot_bsp_specs]] - Buildroot 顶层构建与分区布局规格",
+      "verification_status": "verified",
+      "verified_at": "2026-10-27",
+      "source_file": "Sources/docs-buildroot/zh/k3_buildroot/security/tee_architecture.md",
+      "source_origin": "https://github.com/spacemit-com/docs-buildroot",
+      "source_commit": "c67b37b8a4a90408b95e5532c2df3ab800d80ffe",
+      "source_locator": "TEE在系统中的位置；启动流程；内存布局；安全存储；BSP集成",
+      "source_resolution": "resolved",
+      "source_checked_at": "2026-10-27",
+      "source_note": "基于 Buildroot 安全文档体系（commit c67b37b），详解 K3 平台 OP-TEE 4.5.0 在 RISC-V 架构下的三域模型、MPXY 通信机制、保留式内存与设备树注入规范、TA/CA 开发及 RPMB 密钥生命周期。",
+      "source_related_file": [
+        "Sources/docs-buildroot/zh/k3_buildroot/security/white_paper.md",
+        "Sources/docs-buildroot/zh/k3_buildroot/security/ta_guide.md",
+        "Sources/docs-buildroot/zh/k3_buildroot/security/key_management_lifecycle.md"
+      ],
+      "source_related_commit": [
+        "c67b37b8a4a90408b95e5532c2df3ab800d80ffe",
+        "c67b37b8a4a90408b95e5532c2df3ab800d80ffe",
+        "c67b37b8a4a90408b95e5532c2df3ab800d80ffe"
+      ],
+      "created": "2026-10-27",
+      "updated": "2026-10-27",
+      "freshness": "current",
+      "stale_paths": [],
+      "unknown_paths": [],
+      "checked_against_commit": {
+        "docs-buildroot": "0ca1a99e305738ccc0d71ea1e847dada49ae1e28"
+      },
+      "source_freshness": [
+        {
+          "source_file": "Sources/docs-buildroot/zh/k3_buildroot/security/tee_architecture.md",
+          "source_commit": "c67b37b8a4a90408b95e5532c2df3ab800d80ffe",
+          "checked_against_commit": "0ca1a99e305738ccc0d71ea1e847dada49ae1e28",
+          "freshness": "current",
+          "reason": "source_file_unchanged"
+        },
+        {
+          "source_file": "Sources/docs-buildroot/zh/k3_buildroot/security/white_paper.md",
+          "source_commit": "c67b37b8a4a90408b95e5532c2df3ab800d80ffe",
+          "checked_against_commit": "0ca1a99e305738ccc0d71ea1e847dada49ae1e28",
+          "freshness": "current",
+          "reason": "source_file_unchanged"
+        },
+        {
+          "source_file": "Sources/docs-buildroot/zh/k3_buildroot/security/ta_guide.md",
+          "source_commit": "c67b37b8a4a90408b95e5532c2df3ab800d80ffe",
+          "checked_against_commit": "0ca1a99e305738ccc0d71ea1e847dada49ae1e28",
+          "freshness": "current",
+          "reason": "source_file_unchanged"
+        },
+        {
+          "source_file": "Sources/docs-buildroot/zh/k3_buildroot/security/key_management_lifecycle.md",
+          "source_commit": "c67b37b8a4a90408b95e5532c2df3ab800d80ffe",
+          "checked_against_commit": "0ca1a99e305738ccc0d71ea1e847dada49ae1e28",
+          "freshness": "current",
+          "reason": "source_file_unchanged"
+        }
+      ]
+    },
     "SpacemiT_P3_PMIC电源芯片专题档案": {
       "id": "SpacemiT_P3_PMIC电源芯片专题档案",
       "title": "SpacemiT P3 PMIC 电源管理芯片专题档案",
@@ -2512,9 +2606,9 @@
         "ROS2_机器人与具身智能快速上手向导"
       ],
       "summary": "# SpacemiT ROS 2 机器人与具身智能专题档案  > [!TIP] > **💡 工程师导读与排坑焦点**：详解 ROS 2 架构、micro-ROS 串口总线、LeRobot SO101 ACT 模仿学习与 SLAM 导航。 > **目标读者**：`机器人工程师 / 具身 AI 开发者` | **技术领域**：`edge_ai_robotics`  本专题档案系统性解构基于 SpacemiT K1 与 K3 RISC-V 芯片平台的 ROS 2（Robot Operating System）软件架构与具身智能（Embodied AI）应用生态。包含 ROS 2 Humble/Jaz",
-      "content": "# SpacemiT ROS 2 机器人与具身智能专题档案\n\n> [!TIP]\n> **💡 工程师导读与排坑焦点**：详解 ROS 2 架构、micro-ROS 串口总线、LeRobot SO101 ACT 模仿学习与 SLAM 导航。\n> **目标读者**：`机器人工程师 / 具身 AI 开发者` | **技术领域**：`edge_ai_robotics`\n\n本专题档案系统性解构基于 SpacemiT K1 与 K3 RISC-V 芯片平台的 ROS 2（Robot Operating System）软件架构与具身智能（Embodied AI）应用生态。包含 ROS 2 Humble/Jazzy 运行时搭建、DDS 通信调优、micro-ROS 串口/硬件总线桥接、模仿学习模型 (ACT / SmolVLA) 端侧部署，以及 Reachy Mini、SO101 机械臂、Linksee 移动机器人的开发实践。\n\n---\n\n## 1. ROS 2 系统架构与中间件集成\n\nSpacemiT 为端侧机器人开发提供了从底层 Linux 内核到上层机器人框架的全栈支持：\n\n```mermaid\ngraph TD\n    Hardware[K1 / K3 RISC-V SoC & 生态开发板] --> BSP[SpacemiT BSP & Linux Kernel 6.6/6.18]\n    BSP --> RCPU[RCPU 固件 - K1 esos.elf / K3 rt24_os0及os1]\n    BSP --> ROS2[ROS 2 Humble / Jazzy 运行时]\n\n    subgraph Middleware [中间件 & 通信总线]\n        ROS2 --> DDS[Cyclone DDS / Fast DDS 组网调优]\n        ROS2 --> MicroROS[micro-ROS Agent - UART/USB 桥接]\n        BSP --> CAN[SocketCAN / PWM / GPIO 硬件接口]\n    end\n\n    subgraph EmbodiedAI [具身智能与机器人应用]\n        ROS2 --> Reachy[Reachy Mini - 桌面交互与视觉跟踪]\n        ROS2 --> LeRobot[LeRobot SO101 - ACT/SmolVLA 模仿学习抓取]\n        ROS2 --> Linksee[Linksee - 2D/3D SLAM 建图与 Nav2 导航]\n        ROS2 --> RL[MuJoCo 强化学习步态策略推理]\n    end\n```\n\n### 1.1 官方芯片与 ROS 2 平台支持基准\n\n根据 `docs-ros@808d02c1bd11cf0d4376555919bd61c90e38d853` 的平台支持列表（来源与适用条件见 [[Evidence/ros2_platform_specs|SpacemiT ROS 2 平台规格表]]）：\n\n| 芯片型号 | 当前支持的 ROS 2 版本 | 规划支持的 ROS 2 版本 | 当前推荐的操作系统 |\n| :---: | :---: | :---: | :---: |\n| **K3** | **Humble、Jazzy** | **Lyrical**（计划支持） | **Bianbu 4.x**（4.0.1 起） |\n| **K1** | **Humble、Jazzy** | — | **Bianbu 2.3.x** |\n\nLyrical 是平台适配规划，尚未正式提供；各版本的软件包、驱动和功能支持范围以平台文档及发布说明为准，当前 SDK 示例主要基于 Humble。\n\n> [!IMPORTANT]\n> **多机通信版本一致性红线**：\n> 官方建议**机器人端与上位机/工控机使用相同的 ROS 2 发行版**（例如统一采用 Humble 或统一采用 Jazzy），并按对应示例配置通信中间件、网络和 `ROS_DOMAIN_ID`。ROS 2 上游不保证不同发行版之间的节点通信兼容。\n\n---\n\n## 2. ROS 2 环境配置与 DDS 调优\n\n### 2.1 Bianbu OS 与 Docker 部署\n\n按上表对应的 Bianbu 系统和平台配套软件源安装 ROS 2 RISC-V 软件包，具体步骤使用各平台安装指南。下面保留既有 Docker 示例，复现前需核对镜像可用性、版本与板型，不将其等同于任意 Ubuntu 系统均可直接安装：\n\n```bash\n# 启动 ROS 2 镜像容器\ndocker run -it --net=host --privileged -v /dev:/dev spacemit/ros:humble-desktop\n```\n\n### 2.2 多节点 DDS 网络通信优化\n\n对于需要同时传输 MIPI CSI 图像帧或 3D 激光雷达点云的机器人节点，利用 K1/K3 芯片的双 GMAC 以太网与 Cyclone DDS 进行多播流量调优：\n\n```bash\nexport RMW_IMPLEMENTATION=rmw_cyclonedds_cpp\n```\n\n详细参数见 [[Evidence/ros2_platform_specs|ROS 2 平台支持与 DDS 参数]]。\n\n---\n\n## 3. micro-ROS 与底层硬件总线桥接\n\n为了实现毫秒级硬件电机控制，SpacemiT 方案支持将高层逻辑运行于 K1/K3 主核，而将底层 PWM / 编码器计数交付给协同 MCU，并通过 `micro-ROS` 节点通信：\n\n```bash\n# 启动 micro-ROS Agent 串口节点\nros2 run micro_ros_agent micro_ros_agent serial --dev /dev/ttyS1 -b 115200\n```\n\n板级 JTAG / UART 与串口物理排针参考 [[Knowledge_Atoms/Muse_Pi_板级硬件设计专题|Muse Pi 板级硬件设计专题]] 与 [[Knowledge_Atoms/K3_COM260_板级硬件设计专题|K3 COM260 板级硬件设计专题]]。\n\n---\n\n## 4. 具身智能 (Embodied AI) 模仿学习与端侧部署\n\nSpacemiT 提供了从轻量级端侧抓取到多模态具身大模型的多层级端侧部署支持：\n\n### 4.1 SO101 机械臂与 LeRobot 模仿学习 (K1 / K3 分级方案)\n\n* **K1 平台（2.0 TOPS AI / 8 核 X60 算力）**：\n  * 支持轻量级 **ACT (Action Chunking with Transformers)** 模仿学习抓取策略。\n  * 历史记录中的 **25 FPS** 尚未找到测试出处和条件，不作为已验证性能；见 [[Evidence/robot_hardware_specs|待复核机器人模型记录]]。\n  * 命令行运行：\n    ```bash\n    python3 -m lerobot.scripts.control_robot --robot-type so101 --policy-type act --eval\n    ```\n* **K3 平台（60 TOPS AI / 8 核 A100 智算核）**：\n  * 支持参数量更大的 **SmolVLA (Vision-Language-Action)** 多模态具身策略模型。\n  * **待核验适配记录**：SmolVLA 的 4 子图拆解、执行后端及 **8 FPS** 闭环控制记录尚未完整定位官方出处，使用前需核对 SDK 版本、模型和测试条件。\n\n### 4.2 Reachy Mini 桌面机器人 (K3-COM260)\n\n官方 Reachy Mini Lite 适配方案使用 **K3-COM260**，头部为 **6 自由度**，外设包括 Sony IMX708 摄像头、PDM MEMS 数字麦克风、扬声器和 XL330 舵机。方案集成视觉跟随与 VAD / ASR / LLM / TTS 语音交互，支持纯本地模型或云端模型；官方该章节没有限定为 SpaceLLM 1B。来源定位见 [[Evidence/robot_hardware_specs|Reachy Mini 硬件记录]]。\n\n### 4.3 Linksee 移动机器人 SLAM 导航 (K3 Pico / Muse Pi)\n\n通过硬解码 (MPP) 处理 CSI 摄像头视频流，结合激光雷达点云，在 K3 Pico 上跑通 Cartographer 2D SLAM 建图与 Nav2 路径规划。\n\n详细硬件与 AI 模型性能对比详见 [[Evidence/robot_hardware_specs|SpacemiT 机器人硬件与具身 AI 模型参数规格]]。",
+      "content": "# SpacemiT ROS 2 机器人与具身智能专题档案\n\n> [!TIP]\n> **💡 工程师导读与排坑焦点**：详解 ROS 2 架构、micro-ROS 串口总线、LeRobot SO101 ACT 模仿学习与 SLAM 导航。\n> **目标读者**：`机器人工程师 / 具身 AI 开发者` | **技术领域**：`edge_ai_robotics`\n\n本专题档案系统性解构基于 SpacemiT K1 与 K3 RISC-V 芯片平台的 ROS 2（Robot Operating System）软件架构与具身智能（Embodied AI）应用生态。包含 ROS 2 Humble/Jazzy 运行时搭建、DDS 通信调优、micro-ROS 串口/硬件总线桥接、模仿学习模型 (ACT / SmolVLA) 端侧部署，以及 Reachy Mini、SO101 机械臂、Linksee 移动机器人的开发实践。\n\n---\n\n## 1. ROS 2 系统架构与中间件集成\n\nSpacemiT 为端侧机器人开发提供了从底层 Linux 内核到上层机器人框架的全栈支持：\n\n```mermaid\ngraph TD\n    Hardware[K1 / K3 RISC-V SoC & 生态开发板] --> BSP[SpacemiT BSP & Linux Kernel 6.6/6.18]\n    BSP --> RCPU[RCPU 固件 - K1 esos.elf / K3 rt24_os0及os1]\n    BSP --> ROS2[ROS 2 Humble / Jazzy 运行时]\n\n    subgraph Middleware [中间件 & 通信总线]\n        ROS2 --> DDS[Cyclone DDS / Fast DDS 组网调优]\n        ROS2 --> MicroROS[micro-ROS Agent - UART/USB 桥接]\n        BSP --> CAN[SocketCAN / PWM / GPIO 硬件接口]\n    end\n\n    subgraph EmbodiedAI [具身智能与机器人应用]\n        ROS2 --> Reachy[Reachy Mini - 桌面交互与视觉跟踪]\n        ROS2 --> LeRobot[LeRobot SO101 - ACT/SmolVLA 模仿学习抓取]\n        ROS2 --> Linksee[Linksee - 2D/3D SLAM 建图与 Nav2 导航]\n        ROS2 --> RL[MuJoCo 强化学习步态策略推理]\n    end\n```\n\n### 1.1 官方芯片与 ROS 2 平台支持基准\n\n根据 `docs-ros@808d02c1bd11cf0d4376555919bd61c90e38d853` 的平台支持列表（来源与适用条件见 [[Evidence/ros2_platform_specs|SpacemiT ROS 2 平台规格表]]）：\n\n| 芯片型号 | 当前支持的 ROS 2 版本 | 规划支持的 ROS 2 版本 | 当前推荐的操作系统 |\n| :---: | :---: | :---: | :---: |\n| **K3** | **Humble、Jazzy** | **Lyrical**（计划支持） | **Bianbu 4.x**（4.0.1 起） |\n| **K1** | **Humble、Jazzy** | — | **Bianbu 2.3.x** |\n\nLyrical 是平台适配规划，尚未正式提供；各版本的软件包、驱动和功能支持范围以平台文档及发布说明为准，当前 SDK 示例主要基于 Humble。\n\n> [!IMPORTANT]\n> **多机通信版本一致性红线**：\n> 官方建议**机器人端与上位机/工控机使用相同的 ROS 2 发行版**（例如统一采用 Humble 或统一采用 Jazzy），并按对应示例配置通信中间件、网络和 `ROS_DOMAIN_ID`。ROS 2 上游不保证不同发行版之间的节点通信兼容。\n\n---\n\n## 2. ROS 2 环境配置与 DDS 调优\n\n### 2.1 Bianbu OS 与 Docker 部署\n\n按上表对应的 Bianbu 系统和平台配套软件源安装 ROS 2 RISC-V 软件包，具体步骤使用各平台安装指南。下面保留既有 Docker 示例，复现前需核对镜像可用性、版本与板型，不将其等同于任意 Ubuntu 系统均可直接安装：\n\n```bash\n# 启动 ROS 2 镜像容器\ndocker run -it --net=host --privileged -v /dev:/dev spacemit/ros:humble-desktop\n```\n\n### 2.2 多节点 DDS 网络通信优化\n\n对于需要同时传输 MIPI CSI 图像帧或 3D 激光雷达点云的机器人节点，利用 K1/K3 芯片的双 GMAC 以太网与 Cyclone DDS 进行多播流量调优：\n\n```bash\nexport RMW_IMPLEMENTATION=rmw_cyclonedds_cpp\n```\n\n详细参数见 [[Evidence/ros2_platform_specs|ROS 2 平台支持与 DDS 参数]]。\n\n---\n\n## 3. micro-ROS 与底层硬件总线桥接\n\n为了实现毫秒级硬件电机控制，SpacemiT 方案支持将高层逻辑运行于 K1/K3 主核，而将底层 PWM / 编码器计数交付给协同 MCU，并通过 `micro-ROS` 节点通信：\n\n```bash\n# 启动 micro-ROS Agent 串口节点\nros2 run micro_ros_agent micro_ros_agent serial --dev /dev/ttyS1 -b 115200\n```\n\n板级 JTAG / UART 与串口物理排针参考 [[Knowledge_Atoms/Muse_Pi_板级硬件设计专题|Muse Pi 板级硬件设计专题]] 与 [[Knowledge_Atoms/K3_COM260_板级硬件设计专题|K3 COM260 板级硬件设计专题]]。\n\n---\n\n## 4. 具身智能 (Embodied AI) 模仿学习与端侧部署\n\nSpacemiT 提供了从轻量级端侧抓取到多模态具身大模型的多层级端侧部署支持：\n\n### 4.1 SO101 机械臂与 LeRobot 模仿学习 (K1 / K3 分级方案)\n\n* **K1 平台（2.0 TOPS AI / 8 核 X60 算力）**：\n  * 支持轻量级 **ACT (Action Chunking with Transformers)** 模仿学习抓取策略。\n  * 历史记录中的 **25 FPS** 尚未找到测试出处和条件，不作为已验证性能；见 [[Evidence/robot_hardware_specs|待复核机器人模型记录]]。\n  * 命令行运行：\n    ```bash\n    python3 -m lerobot.scripts.control_robot --robot-type so101 --policy-type act --eval\n    ```\n* **K3 平台（60 TOPS AI / 8 核 A100 智算核）**：\n  * 支持参数量更大的 **SmolVLA (Vision-Language-Action)** 多模态具身策略模型。\n  * **待核验适配记录**：SmolVLA 的 4 子图拆解、执行后端及 **8 FPS** 闭环控制记录尚未完整定位官方出处，使用前需核对 SDK 版本、模型和测试条件。\n\n### 4.2 Reachy Mini 桌面机器人 (K3-COM260)\n\n官方 Reachy Mini Lite 适配方案使用 **K3-COM260**，头部为 **6 自由度**，外设包括 Sony IMX708 摄像头、PDM MEMS 数字麦克风、扬声器和 XL330 舵机。方案集成视觉跟随与 VAD / ASR / LLM / TTS 语音交互，支持纯本地模型或云端模型；官方该章节没有限定为 SpaceLLM 1B。来源定位见 [[Evidence/robot_hardware_specs|Reachy Mini 硬件记录]]。\n\n### 4.3 Linksee 移动机器人 SLAM 导航 (K3 Pico / Muse Pi)\n\n通过硬解码 (MPP) 处理 CSI 摄像头视频流，结合激光雷达点云，在 K3 Pico 上跑通 Cartographer 2D SLAM 建图与 Nav2 路径规划。\n\n### 4.4 机器人视觉感知与 SpaceMIT EP 推理优化 (YOLOv8/11/12)\n\n在 `spacemit_robot` 机器人视觉组件中，目标检测与跟踪算法（YOLOv8、YOLOv5、YOLOv11 与 YOLO12）统一复用了底层 `yolov8` 部署流水线：\n* **编译与 Wheel 安装**：在 `components/model_zoo/vision` 目录下编译并安装 `spacemit_vision` wheel 包。\n* **执行提供者 (EP) 独占规范**：YAML 配置文件中的 `providers` **必须单独配置 `SpaceMITExecutionProvider`**，严禁与 `CPUExecutionProvider` 并列配置，防止引发运行时动态回退。\n* **多线程调优**：推荐通过配置 `SPACEMIT_EP_INTRA_THREAD_NUM`（如 2~8 线程）实现计算吞吐与延迟的最佳平衡，详见 [[Evidence/ros2_platform_specs]]。\n\n详细硬件与 AI 模型性能对比详见 [[Evidence/robot_hardware_specs|SpacemiT 机器人硬件与具身 AI 模型参数规格]]。",
       "created": "2026-08-10",
-      "updated": "2026-10-20",
+      "updated": "2026-10-27",
       "source_file": "Sources/docs-ros/zh/root_overview.md",
       "source_commit": "808d02c1bd11cf0d4376555919bd61c90e38d853",
       "source_locator": "简介；ROS 2；Robot SDK",
@@ -2526,12 +2620,14 @@
       "source_related_file": [
         "Sources/docs-ros/zh/k3/06-系统与平台/6.6-ROS2/6.6.1-ROS2-INSTALL.md",
         "Sources/docs-ros/zh/k1/06_Robot_development/6.1_OS_Preparation/6.1.2_ROS2_Installation.md",
-        "Sources/docs-ros/zh/k3/03-参考方案/3.1-桌面机器人Reachy-mini.md"
+        "Sources/docs-ros/zh/k3/03-参考方案/3.1-桌面机器人Reachy-mini.md",
+        "Sources/docs-ros/zh/k3/04-AI与算法/4.2-视觉/4.2.1-目标检测.md"
       ],
       "source_related_commit": [
         "808d02c1bd11cf0d4376555919bd61c90e38d853",
         "808d02c1bd11cf0d4376555919bd61c90e38d853",
-        "5b94e7e61e3be4bf00981fd74b7c9eba7595f4e1"
+        "5b94e7e61e3be4bf00981fd74b7c9eba7595f4e1",
+        "122e396428947c89c2c475b24942062eb1ad2eee"
       ],
       "freshness": "current",
       "stale_paths": [],
@@ -2564,6 +2660,13 @@
         {
           "source_file": "Sources/docs-ros/zh/k3/03-参考方案/3.1-桌面机器人Reachy-mini.md",
           "source_commit": "5b94e7e61e3be4bf00981fd74b7c9eba7595f4e1",
+          "checked_against_commit": "122e396428947c89c2c475b24942062eb1ad2eee",
+          "freshness": "current",
+          "reason": "source_file_unchanged"
+        },
+        {
+          "source_file": "Sources/docs-ros/zh/k3/04-AI与算法/4.2-视觉/4.2.1-目标检测.md",
+          "source_commit": "122e396428947c89c2c475b24942062eb1ad2eee",
           "checked_against_commit": "122e396428947c89c2c475b24942062eb1ad2eee",
           "freshness": "current",
           "reason": "source_file_unchanged"
@@ -3320,7 +3423,8 @@
       ],
       "backlinks": [
         "Buildroot_SDK_快速编译与镜像生成向导",
-        "Buildroot_嵌入式系统定制与内核编译专题档案"
+        "Buildroot_嵌入式系统定制与内核编译专题档案",
+        "SpacemiT_K3_TEE安全架构与安全启动专题档案"
       ],
       "summary": "# SpacemiT Buildroot BSP SDK 软件栈与编译配置参数规格  > [!TIP] > **💡 工程师导读与排坑焦点**：存放 Buildroot SDK 软件栈组件、Repo 分支映射与 defconfig 矩阵。 > **目标读者**：`BSP 工程师 / 系统构建工程师` | **技术领域**：`bsp_kernel_drivers`  本文档汇总 SpacemiT K1 与 K3 处理器基于 Buildroot 构建的 Linux SDK 核心组件、Repo 版本分支映射、编译依赖环境及预置 `defconfig` 方案规格。  ---  ## 1. SDK 核心组",
       "content": "# SpacemiT Buildroot BSP SDK 软件栈与编译配置参数规格\n\n> [!TIP]\n> **💡 工程师导读与排坑焦点**：存放 Buildroot SDK 软件栈组件、Repo 分支映射与 defconfig 矩阵。\n> **目标读者**：`BSP 工程师 / 系统构建工程师` | **技术领域**：`bsp_kernel_drivers`\n\n本文档汇总 SpacemiT K1 与 K3 处理器基于 Buildroot 构建的 Linux SDK 核心组件、Repo 版本分支映射、编译依赖环境及预置 `defconfig` 方案规格。\n\n---\n\n## 1. SDK 核心组件架构规格\n\n| 组件名称 | 英文标识 | 源码位置 / 路径 | 核心功能与作用 |\n| :--- | :--- | :--- | :--- |\n| **监管程序接口** | OpenSBI | `bsp-src/opensbi` | RISC-V M-Mode 机器模式固件，提供 SBI 服务接口 |\n| **引导加载程序** | U-Boot | `bsp-src/uboot-2022.10` | 负责硬件初始化、加密校验、设备树加载与内核引导 |\n| **Linux 内核** | Linux Kernel | `bsp-src/linux-6.6` (K1) / `bsp-src/linux-6.18` (K3) | 操作系统主内核，包含驱动程序与系统调用 |\n| **实时固件** | ESOS (RCPU Firmware) | K1：`board/spacemit/k1/target_overlay/lib/firmware/esos.elf`；K3：`rt24_os0_rcpu.elf` / `rt24_os1_rcpu.elf` | 实时 CPU 固件，负责部分硬件初始化及 HDMI Audio 中断转发；两代均需安装到 initramfs `/lib/firmware/`，见 [[Evidence/esos_rcpu_firmware_specs|RCPU 固件启动依赖]] |\n| **GPU DDK** | PowerVR DDK | `package-src/img-gpu-powervr` & `mesa3d` | PowerVR GPU 硬件驱动与 OpenGL ES/Vulkan 图形库 |\n| **VPU/JPU 编解码** | VPU/JPU Firmware | `package-src/k1x-vpu-firmware` / `k3x-vpu-firmware` | 视频/JPEG 硬件编解码器 API 及固件 |\n| **多媒体平台** | MPP / FFmpeg / GStreamer | `package-src/mpp` | 硬件加速多媒体处理平台与硬解码中间件 |\n| **AI 推理引擎** | onnxruntime & ai-support | `package-src/ai-support` | 硬件加速 ONNX 推理框架及端侧 AI 演示程序 |\n\n---\n\n## 2. Repo 版本清单与分支映射表 (Manifest Specs)\n\n### K1 平台版本映射 (Buildroot 2.x)\n\n| SDK 版本 | Manifest 文件 | 推荐远程分支 | 托管平台支持 |\n| :--- | :--- | :--- | :--- |\n| **v1.0** | `bl-v1.0.y.xml` | `bl-v1.0.y` | Gitee |\n| **v2.0** | `bl-v2.0.y.xml` | `bl-v2.0.y` | Gitee |\n| **v2.1** | `k1-bl-v2.1.y.xml` | `k1-bl-v2.1.y` | Gitee |\n| **v2.2 (推荐)** | `k1-bl-v2.2.y.xml` | `k1-bl-v2.2.y` | GitHub & Gitee |\n\n> [!NOTE]\n> GitHub 仅托管 v2.2 及以后的版本；Gitee 上 v2.0 与 v2.1 分支因仓库容量原因，Linux 内核子仓库移至 `linux-6.6-v2.0.y` / `linux-6.6-v2.1.y`。\n\n### K3 平台版本映射 (Buildroot 1.x)\n\n| SDK 版本 | Manifest 文件 | 推荐远程分支 | 托管平台支持 |\n| :--- | :--- | :--- | :--- |\n| **v1.0 (推荐)** | `k3-br-v1.0.y.xml` | `k3-br-v1.0.y` | GitHub & Gitee |\n\n---\n\n## 3. 预置方案 (defconfig) 规格矩阵\n\n### K1 编译方案矩阵\n\n| 方案名称 (`defconfig`) | 方案索引 | 适用场景与特性描述 |\n| :--- | :--- | :--- |\n| `spacemit_k1_upstream_defconfig` | `1` | 主线 Linux 内核支持方案（极简通用驱动） |\n| `spacemit_k1_minimal_defconfig` | `2` | 极轻量根文件系统方案（快速启动/嵌入式裁剪） |\n| `spacemit_k1_plt_defconfig` | `3` | 自动化测试与平台验证方案 |\n| `spacemit_k1_rt_defconfig` | `4` | **PREEMPT_RT 硬实时内核** 方案（低延迟控制场景） |\n| `spacemit_k1_v2_defconfig` | `5` | **标准完整版图形多媒体 SDK**（带 GPU/VPU/QT5） |\n\n### K3 编译方案矩阵\n\n| 方案名称 (`defconfig`) | 方案索引 | 适用场景与特性描述 |\n| :--- | :--- | :--- |\n| `spacemit_k3_ci_defconfig` | `1` | CI/CD 持续集成构建方案 |\n| `spacemit_k3_defconfig` | `2` | **标准 K3 全功能 SDK 方案** |\n| `spacemit_k3_plt_defconfig` | `3` | K3 硬件平台测试验证方案 |\n| `spacemit_k3_rt_defconfig` | `4` | **K3 PREEMPT_RT 实时系统方案** |\n\n---\n\n## 4. 宿主机与 Docker 依赖规格\n\n* **推荐宿主机配置**：CPU 12th Gen Intel i5 以上 / 内存 16GB+ / 硬盘 SSD 256GB+。\n* **Docker 编译限制**：Buildroot 2.2.7 (K1) 和 1.0 (K3) 起默认推荐在 Docker 容器内部构建，宿主机仅需安装 Docker CE。\n* **宿主机直接编译的环境变量**：须在 Shell 环境设置 `export DIRECT_BUILD=1`。\n* **软件依赖包 (Ubuntu 20.04/22.04 LTS)**：\n  ```bash\n  sudo apt-get install git build-essential cpio unzip rsync file bc wget python3 python-is-python3 libncurses5-dev libssl-dev dosfstools mtools u-boot-tools flex bison python3-pip\n  sudo pip3 install pyyaml\n  ```",
@@ -3448,6 +3552,7 @@
       "outlinks": [],
       "backlinks": [
         "Buildroot_嵌入式系统定制与内核编译专题档案",
+        "SpacemiT_K3_TEE安全架构与安全启动专题档案",
         "buildroot_bsp_specs"
       ],
       "summary": "# SpacemiT RCPU (ESOS) 实时固件与启动依赖硬规范  > [!TIP] > **💡 工程师导读与排坑焦点**：记录 RCPU esos.elf 固件职责、HDMI Audio 转发与内核引导硬依赖红线。 > **目标读者**：`实时固件工程师 / BSP 驱动` | **技术领域**：`bsp_kernel_drivers`  本文档记录 SpacemiT K1 与 K3 处理器的 RCPU 固件启动依赖。K1 使用 `esos.elf`，K3 的 ESOS 构建输出为 `rt24_os0_rcpu.elf` 与 `rt24_os1_rcpu.elf`，不可跨代套用文件名。",
@@ -4203,7 +4308,7 @@
         "Spacemit_产品矩阵与硬件生态全景档案"
       ],
       "summary": "# K3 CoM260 机器人开发套件物理规格参数  > [!TIP] > **💡 工程师导读与排坑焦点**：存放 K3 CoM260 核心板与参考载板金手指引脚及物理规格。 > **目标读者**：`核心板选型工程师 / 硬件工程师` | **技术领域**：`chip_product_specs`  本文件汇总了 K3 CoM260 核心板及其参考载板的硬件规格数据，主要用于服务机器人、自主智能体开发与核心板集成参考。  ## 1. 核心模组 (CoM) 参数  | 规格维度 | 详细参数规格 | 说明 / 调试设计 | | :--- | :--- | :--- | | **主控芯片** |",
-      "content": "# K3 CoM260 机器人开发套件物理规格参数\n\n> [!TIP]\n> **💡 工程师导读与排坑焦点**：存放 K3 CoM260 核心板与参考载板金手指引脚及物理规格。\n> **目标读者**：`核心板选型工程师 / 硬件工程师` | **技术领域**：`chip_product_specs`\n\n本文件汇总了 K3 CoM260 核心板及其参考载板的硬件规格数据，主要用于服务机器人、自主智能体开发与核心板集成参考。\n\n## 1. 核心模组 (CoM) 参数\n\n| 规格维度 | 详细参数规格 | 说明 / 调试设计 |\n| :--- | :--- | :--- |\n| **主控芯片** | SpacemiT K3 RISC-V 芯片 | 机器人专用多核异构处理器 |\n| **通用 CPU** | 8 核 X100™ 64 位 RISC-V CPU | 2 Clusters x 4 Cores，每个 Cluster 拥有 4MB 共享 L2 缓存，通用计算 130 KDMIPS |\n| **智算 NPU** | 8 核 A100™ 64 位 AI 核心 | 融合 60 TOPS AI 算力，每个 Cluster 拥有 1MB L2 共享缓存及 1.5MB 专用 TCM 紧耦合存储 |\n| **图形 GPU** | 集成 3D-GPU | 支持 Vulkan、OpenCL、OpenGL ES，满足机器人图形化界面或视觉渲染 |\n| **内存 (DRAM)** | 64-bit LPDDR5，6400 MT/s | 可选 8GB / 16GB / 32GB 容量，统一内存架构，支持 30B MoE 稀疏大模型推理 |\n| **视频编码** | 4K @ 60Hz (H.264 / H.265) | 满足机器人多路高清行车记录与推流 |\n| **视频解码** | 4K @ 120Hz (单路) 或 1080p @ 60Hz (8路) | 支持多路摄像头并发画面的实时解码与视觉处理 |\n| **典型功耗** | 18W ~ 35W | 视算力负载动态调压与变频 |\n| **安全方案** | 基于 HW-RoT 的可信引导，PMP/IOPMP 隔离 | 支持 OP-TEE 安全可信操作系统，集成硬件加解密引擎（AES/SM4/RSA等） |\n\n## 2. 参考载板 (Carrier Board) 外设接口\n\n| 接口类别 | 详细物理接口规格 | 说明 / 调试设计 |\n| :--- | :--- | :--- |\n| **摄像头接口** | 2 × MIPI CSI-1.1 连接器 (22-Pin) | 支持多路差分摄像头视频信号接入 |\n| **PCIe 扩展槽** | 1 × M.2 M-Key (PCIe Gen3 x4)<br>1 × M.2 M-Key (PCIe Gen3 x1)<br>1 × M.2 E-Key | 用于扩展 NVMe SSD（最高带宽达 4GB/s）及 Wi-Fi/BT 无线网卡 |\n| **USB 接口** | 4 × USB 3.0 Type-A Host<br>1 × USB Type-C | 用于连接深度相机、激光雷达等外部机器人传感器 |\n| **以太网接口** | 1 × 千兆以太网 (RJ45) | 提供稳定的有线网络连接 |\n| **显示接口** | 1 × DP 1.2<br>1 × MIPI DSI-1.2 连接器 (30-Pin) | 支持多路双屏异显 |\n| **其他 I/O 排针** | 40-Pin 扩展接口 | 兼容主流开发套件引脚，支持 UART、SPI、I2S、I2C、GPIO 调试 |\n| **机械尺寸** | 103 mm x 90.5 mm x 35 mm | 包含底座脚垫、载板、核心模组及散热器整机尺寸 |",
+      "content": "# K3 CoM260 机器人开发套件物理规格参数\n\n> [!TIP]\n> **💡 工程师导读与排坑焦点**：存放 K3 CoM260 核心板与参考载板金手指引脚及物理规格。\n> **目标读者**：`核心板选型工程师 / 硬件工程师` | **技术领域**：`chip_product_specs`\n\n本文件汇总了 K3 CoM260 核心板及其参考载板的硬件规格数据，主要用于服务机器人、自主智能体开发与核心板集成参考。\n\n## 1. 核心模组 (CoM) 参数\n\n| 规格维度 | 详细参数规格 | 说明 / 调试设计 |\n| :--- | :--- | :--- |\n| **主控芯片** | SpacemiT K3 RISC-V 芯片 | 机器人专用多核异构处理器 |\n| **通用 CPU** | 8 核 X100™ 64 位 RISC-V CPU | 2 Clusters x 4 Cores，每个 Cluster 拥有 4MB 共享 L2 缓存，通用计算 130 KDMIPS |\n| **智算 NPU** | 8 核 A100™ 64 位 AI 核心 | 融合 60 TOPS AI 算力，每个 Cluster 拥有 1MB L2 共享缓存及 1.5MB 专用 TCM 紧耦合存储 |\n| **图形 GPU** | 集成 3D-GPU | 支持 Vulkan、OpenCL、OpenGL ES，满足机器人图形化界面或视觉渲染 |\n| **内存 (DRAM)** | 64-bit LPDDR5，6400 MT/s | 可选 8GB / 16GB / 32GB 容量，统一内存架构，支持 30B MoE 稀疏大模型推理 |\n| **视频编码** | 4K @ 60Hz (H.264 / H.265) | 满足机器人多路高清行车记录与推流 |\n| **视频解码** | 4K @ 120Hz (单路) 或 1080p @ 60Hz (8路) | 支持多路摄像头并发画面的实时解码与视觉处理 |\n| **典型功耗** | 18W ~ 35W | 视算力负载动态调压与变频 |\n| **安全方案** | 基于 HW-RoT 的可信引导，PMP/IOPMP 隔离 | 支持 OP-TEE 安全可信操作系统，集成硬件加解密引擎（AES/SM4/RSA等） |\n\n## 2. 参考载板 (Carrier Board) 外设接口\n\n| 接口类别 | 详细物理接口规格 | 说明 / 调试设计 |\n| :--- | :--- | :--- |\n| **摄像头接口** | 2 × MIPI CSI-1.1 连接器 (22-Pin) | 支持多路差分摄像头视频信号接入 |\n| **PCIe 扩展槽** | 1 × M.2 M-Key (PCIe Gen3 x4)<br>1 × M.2 M-Key (PCIe Gen3 x1)<br>1 × M.2 E-Key | 用于扩展 NVMe SSD（最高带宽达 4GB/s）及 Wi-Fi/BT 无线网卡 |\n| **USB 接口** | 4 × USB 3.0 Type-A Host<br>1 × USB Type-C | 用于连接深度相机、激光雷达等外部机器人传感器 |\n| **以太网接口** | 1 × 千兆以太网 (RJ45) | 提供稳定的有线网络连接 |\n| **显示接口** | 1 × DP 1.2<br>1 × MIPI DSI-1.2 连接器 (30-Pin) | 支持多路双屏异显 |\n| **其他 I/O 排针** | 40-Pin 扩展接口 | 兼容主流开发套件引脚，支持 UART、SPI、I2S、I2C、GPIO 调试 |\n| **机械尺寸** | 103 mm x 90.5 mm x 35 mm | 包含底座脚垫、载板、核心模组及散热器整机尺寸 |\n\n## 3. 官方硬件设计文件与资源清单\n\n根据官方硬件资源页面更新（Commit `cb96db6`）：\n\n*   **核心板硬件原理图**：[K3-CoM260 核心板原理图 (PDF)](https://cdn-resource.spacemit.com/file/product/K3/k3_com260_hw/k3-com260_p1_lp5315b_32x2_v03_20260312.pdf)（最新 V03 版本）\n*   **物料清单 (BOM)**：[K3-CoM260 开发套件完整 BOM (.xls)](https://cdn-resource.spacemit.com/file/product/K3/k3_com260_hw/K3-COM260_KIT_V02_20260318_BOM.xls)\n*   **底板硬件原理图**：[K3-CoM260 套件底板原理图 (PDF)](https://cdn-resource.spacemit.com/file/product/K3/k3_com260_hw/k3-com260_kit_v02_20260306.pdf)\n*   **底板工程文件与 PCB**：[底板工程文件 (.DSN)](https://cdn-resource.spacemit.com/file/product/K3/k3_com260_hw/K3-COM260_KIT_V02_20260306.DSN) 与 [底板 PCB 文件 (.brd)](https://cdn-resource.spacemit.com/file/product/K3/k3_com260_hw/K3-COM260_KIT_V02_20260306.brd)",
       "claim_type": "parameter",
       "verification_status": "unverified",
       "external_use": false,
@@ -4213,9 +4318,15 @@
       "source_section": "产品规格",
       "source_resolution": "resolved",
       "source_checked_at": "2026-10-13",
-      "source_note": "已定位正确的官方产品目录；模块与参考载板的规格适用范围仍需逐项复核。",
+      "source_note": "已定位正确的官方产品目录；同步官方最新 V03 核心板原理图与底板 DSN 工程文件。",
+      "source_related_file": [
+        "Sources/docs-product/zh/k3_series/k3_com260/com260_hw_resources.md"
+      ],
+      "source_related_commit": [
+        "cb96db6332fac093964af8fef98db45e2783fde8"
+      ],
       "created": "2026-06-30",
-      "updated": "2026-10-13",
+      "updated": "2026-10-27",
       "freshness": "current",
       "stale_paths": [],
       "unknown_paths": [],
@@ -4226,6 +4337,13 @@
         {
           "source_file": "Sources/docs-product/zh/k3_series/k3_com260/root_overview.md",
           "source_commit": "8c851807f2c54e8ba54d568b268100ca727d0777",
+          "checked_against_commit": "cb96db6332fac093964af8fef98db45e2783fde8",
+          "freshness": "current",
+          "reason": "source_file_unchanged"
+        },
+        {
+          "source_file": "Sources/docs-product/zh/k3_series/k3_com260/com260_hw_resources.md",
+          "source_commit": "cb96db6332fac093964af8fef98db45e2783fde8",
           "checked_against_commit": "cb96db6332fac093964af8fef98db45e2783fde8",
           "freshness": "current",
           "reason": "source_file_unchanged"
@@ -4350,31 +4468,29 @@
         "K3芯片开发快速上手向导",
         "K3启动模式与Strap管脚配置专题档案"
       ],
-      "summary": "# K3 芯片 Strap Pins 启动与系统配置参数  > [!WARNING] > **待官方确认（2026-10-21）**：① 完整 Strap 管脚清单及 GPIO90/64/52 的角色；② GPIO66/GPIO65 的 SPI NOR/NAND 启动映射。维护者已与开发同步修订，等待官方 GitHub 原文更新后再复核并修正本页。两份现有原表继续并列保留，争议接线结论尚未确定。  > [!TIP] > **💡 工程师导读与排坑焦点**：保留 K3 Strap 官方原表与冲突依据，接线前需确认具体板型与官方结论。 > **目标读者**：`硬件电路工程师 / 驱动工程师` | *",
-      "content": "# K3 芯片 Strap Pins 启动与系统配置参数\n\n> [!WARNING]\n> **待官方确认（2026-10-21）**：① 完整 Strap 管脚清单及 GPIO90/64/52 的角色；② GPIO66/GPIO65 的 SPI NOR/NAND 启动映射。维护者已与开发同步修订，等待官方 GitHub 原文更新后再复核并修正本页。两份现有原表继续并列保留，争议接线结论尚未确定。\n\n> [!TIP]\n> **💡 工程师导读与排坑焦点**：保留 K3 Strap 官方原表与冲突依据，接线前需确认具体板型与官方结论。\n> **目标读者**：`硬件电路工程师 / 驱动工程师` | **技术领域**：`hardware_schematic_design`\n\n本文件按 K3 指南 1.1.5 的功能表列出 Strap 0～5。\n\n> [!WARNING]\n> **两类官方冲突，待确认**：指南开头写“共有 5 个 strap pin”，并列 GPIO65/66/68/69/90，后面的 QSPI 与 LPDDR 表却写 GPIO64 和 GPIO52；同时，指南与数据手册对 SPI NOR/NAND 的 GPIO66/65 组合相反。不能将任一单表作为已确认的完整接线依据；电阻、供电和实际接线须对照对应板型经审定原理图及官方勘误。\n\n## 1. Boot 启动介质选择 (Strap 0 & 1)\n以下按相同的 **GPIO66 / GPIO65** 列顺序对照两份固定来源；正常启动对应 GPIO69=0。指南标注相关管脚 default down，数据手册表中的 x 表示不影响该启动模式选择。\n\n| GPIO66 | GPIO65 | 硬件设计指南 V1.1 §1.1.5 | 数据手册 V1.9 §2.11.2 |\n| :---: | :---: | :--- | :--- |\n| 0 | 0 | TF Card → eMMC [默认] | SD Card → eMMC |\n| 1 | 0 | TF Card → SPI NOR | SD Card → SPI NAND |\n| 0 | 1 | TF Card → SPI NAND | SD Card → SPI NOR |\n| 1 | 1 | TF Card → UFS | SD Card → UFS |\n\n**SPI 选择冲突尚未裁决**：两份来源均先尝试 SD/TF，00 的次级介质为 eMMC、11 为 UFS；10/01 的 SPI NOR 与 SPI NAND 互换。不能仅凭文档日期、表格编号或文件名决定哪一套电平正确，也不能将本表用于直接选择 SPI 启动接线。\n\n来源：[硬件设计指南 §1.1.5](../Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md)与[数据手册 §2.11.2](../Sources/docs-chip/zh/key_stone/k3/k3_docs/k3_ds.md)，均固定于 `2525ee3b68e0f4864f1bf12c8a59df040bf27e84`。\n\n## 2. Download sel 下载通道选择 (Strap 2)\n通过 **GPIO68 (Strap 2)** 选择系统烧录/下载接口：\n\n| GPIO[68] (Strap 2)<br>[默认下拉] | 烧录/下载接口功能 | 备注 |\n| :---: | :--- | :--- |\n| **0** | **USB [默认]** | 使用 USB DRD 接口 / Type-C 进行系统烧录 |\n| **1** | **UART** | 使用串口进行下载/调试 |\n\n## 3. Boot/down_sel 启动与下载模式选择 (Strap 3)\n通过 **GPIO69 (Strap 3)** 选择芯片上电后的工作状态：\n\n| GPIO[69] (Strap 3)<br>[默认下拉] | 芯片上电状态 | 说明 |\n| :---: | :--- | :--- |\n| **0** | **启动模式 [默认]** | 芯片正常读取启动介质并引导系统 |\n| **1** | **下载/烧录模式** | 芯片进入烧录接收状态，等待主机写入固件 |\n\n## 4. QSPI 电压选择 (Strap 4)\n通过 **GPIO64 (Strap 4)** 决定 QSPI Flash 接口的 IO 电压域：\n\n| GPIO[64] (Strap 4)<br>[默认下拉] | QSPI 电压功能 | 备注 |\n| :---: | :--- | :--- |\n| **0** | **3.3V [默认]** | 适用于 3.3V 工作电压的 SPI Flash |\n| **1** | **1.8V** | 适用于 1.8V 工作电压的 SPI Flash |\n\n## 5. LPDDR 内存类型选择 (Strap 5)\n通过 **GPIO52 (Strap 5)** 决定 DDR 控制器初始化的物理内存类型：\n\n| GPIO[52] (Strap 5)<br>[默认下拉] | 适配内存类型 | 备注 |\n| :---: | :--- | :--- |\n| **0** | **LPDDR5 [默认]** | 初始化为 LPDDR5 模式 |\n| **1** | **LPDDR4x** | 初始化为 LPDDR4x 模式 |",
+      "summary": "# K3 芯片 Strap Pins 启动与系统配置参数  > [!NOTE] > **官方勘误已闭环（2026-10-21）**：官方开发在《K3 硬件设计指南》V1.2 中正式修复了此前两项争议： > 1. 明确 Strap Pin 共有完整的 **6 个**（GPIO52、GPIO64、GPIO65、GPIO66、GPIO68、GPIO69），移除了旧版笔误出现的 GPIO90。 > 2. 修正了 SPI NOR 与 SPI NAND 的电平定义，与《K3 数据手册》§2.11.2 达成完全统一（`01` 为 SPI NOR，`10` 为 SPI NAND）。  > [!TIP] > *",
+      "content": "# K3 芯片 Strap Pins 启动与系统配置参数\n\n> [!NOTE]\n> **官方勘误已闭环（2026-10-21）**：官方开发在《K3 硬件设计指南》V1.2 中正式修复了此前两项争议：\n> 1. 明确 Strap Pin 共有完整的 **6 个**（GPIO52、GPIO64、GPIO65、GPIO66、GPIO68、GPIO69），移除了旧版笔误出现的 GPIO90。\n> 2. 修正了 SPI NOR 与 SPI NAND 的电平定义，与《K3 数据手册》§2.11.2 达成完全统一（`01` 为 SPI NOR，`10` 为 SPI NAND）。\n\n> [!TIP]\n> **💡 工程师导读与排坑焦点**：用于指导 K3 单板原理图 Strap 电路上下拉设计与启动介质硬件配置。\n> **目标读者**：`硬件电路工程师 / 驱动工程师` | **技术领域**：`hardware_schematic_design`\n\nK3 芯片共有 **6 个 Strap Pin**，分别对应 GPIO52、GPIO64、GPIO65、GPIO66、GPIO68、GPIO69。\n\n---\n\n## 1. Boot 启动介质选择 (Strap 0 & 1)\n\n通过 **GPIO66 (Strap 1)** 与 **GPIO65 (Strap 0)** 决定上电后的次级启动介质，正常启动模式下芯片始终优先尝试 TF/SD 卡引导，未检测到或无有效镜像时回退至次级介质：\n\n| GPIO66 (Strap 1)<br>[默认下拉] | GPIO65 (Strap 0)<br>[默认下拉] | 官方统一启动模式映射 (硬件指南 V1.2 & 数据手册 V1.9) | 说明 |\n| :---: | :---: | :--- | :--- |\n| **0** | **0** | **TF Card → eMMC [默认]** | 优先尝试 TF 卡，回退至板载 eMMC 启动 |\n| **0** | **1** | **TF Card → SPI NOR** | 优先尝试 TF 卡，回退至 SPI NOR Flash 启动 |\n| **1** | **0** | **TF Card → SPI NAND** | 优先尝试 TF 卡，回退至 SPI NAND Flash 启动 |\n| **1** | **1** | **TF Card → UFS** | 优先尝试 TF 卡，回退至 UFS 存储启动 |\n\n> 来源：[硬件设计指南 §1.1.5](../Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md) 与 [数据手册 §2.11.2](../Sources/docs-chip/zh/key_stone/k3/k3_docs/k3_ds.md)，均已对齐至官方最新版本。\n\n---\n\n## 2. Download sel 下载通道选择 (Strap 2)\n\n通过 **GPIO68 (Strap 2)** 选择系统烧录/下载接口：\n\n| GPIO[68] (Strap 2)<br>[默认下拉] | 烧录/下载接口功能 | 备注 |\n| :---: | :--- | :--- |\n| **0** | **USB [默认]** | 使用 USB DRD 接口 / Type-C 进行系统烧录 |\n| **1** | **UART** | 使用串口进行下载/调试 |\n\n---\n\n## 3. Boot/down_sel 启动与下载模式选择 (Strap 3)\n\n通过 **GPIO69 (Strap 3)** 选择芯片上电后的工作状态：\n\n| GPIO[69] (Strap 3)<br>[默认下拉] | 芯片上电状态 | 说明 |\n| :---: | :--- | :--- |\n| **0** | **启动模式 [默认]** | 芯片正常读取启动介质并引导系统 |\n| **1** | **下载/烧录模式** | 芯片进入烧录接收状态，等待主机写入固件 |\n\n---\n\n## 4. QSPI 电压选择 (Strap 4)\n\n通过 **GPIO64 (Strap 4)** 决定 QSPI Flash 接口的 IO 电压域：\n\n| GPIO[64] (Strap 4)<br>[默认下拉] | QSPI 电压功能 | 备注 |\n| :---: | :--- | :--- |\n| **0** | **3.3V [默认]** | 适用于 3.3V 工作电压的 SPI Flash |\n| **1** | **1.8V** | 适用于 1.8V 工作电压的 SPI Flash |\n\n---\n\n## 5. LPDDR 内存类型选择 (Strap 5)\n\n通过 **GPIO52 (Strap 5)** 决定 DDR 控制器初始化的物理内存类型：\n\n| GPIO[52] (Strap 5)<br>[默认下拉] | 适配内存类型 | 备注 |\n| :---: | :--- | :--- |\n| **0** | **LPDDR5 [默认]** | 初始化为 LPDDR5 模式 |\n| **1** | **LPDDR4x** | 初始化为 LPDDR4x 模式 |",
       "claim_type": "parameter",
-      "verification_status": "conflicted",
-      "conflicts": "K3指南1.1.5概述列5脚含GPIO90，功能表却列Strap0～5含GPIO64/52；另与K3数据手册2.11.2的GPIO66/65启动选择冲突：指南10=SPI NOR、01=SPI NAND，数据手册10=SPI NAND、01=SPI NOR。00/11一致；SPI接线与完整管脚清单待官方确认。",
-      "external_use": false,
+      "verification_status": "verified",
+      "verified_at": "2026-10-27",
+      "external_use": true,
       "source_file": "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md",
       "source_origin": "https://github.com/spacemit-com/docs-chip",
-      "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
-      "source_section": "硬件指南1.1.5；数据手册V1.9 2.11.2 启动模式映射",
+      "source_commit": "fd016f81034b1a93ad39c2cecf313bb82be7d169",
+      "source_section": "硬件指南V1.2 1.1.5；数据手册V1.9 2.11.2 启动模式映射",
       "source_resolution": "resolved",
-      "source_checked_at": "2026-10-21",
-      "source_note": "2026-10-21 阶段B再次定向对照指南1.1.5与数据手册2.11.2，发现SPI NOR/NAND选择电平互换；并列表格，不按文档日期自行裁决。来源定位成功不代表接线结论已确认，保持conflicted/needs_review。",
+      "source_checked_at": "2026-10-27",
+      "source_note": "2026-10-21 官方发布硬件设计指南V1.2（commit fd016f8），正式更正1.1.5小节：明确Strap管脚共6个（GPIO52/64/65/66/68/69，去除笔误GPIO90）；并将SPI启动组合修正为01=SPI NOR、10=SPI NAND，与《K3数据手册》2.11.2完全达成一致。官方勘误闭环，解除conflicted状态。",
       "source_related_file": [
         "Sources/docs-chip/zh/key_stone/k3/k3_docs/k3_ds.md"
       ],
       "source_related_commit": [
-        "2525ee3b68e0f4864f1bf12c8a59df040bf27e84"
+        "fd016f81034b1a93ad39c2cecf313bb82be7d169"
       ],
       "created": "2026-06-29",
-      "updated": "2026-10-21",
-      "freshness": "stale",
-      "stale_paths": [
-        "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md"
-      ],
+      "updated": "2026-10-27",
+      "freshness": "current",
+      "stale_paths": [],
       "unknown_paths": [],
       "checked_against_commit": {
         "docs-chip": "fd016f81034b1a93ad39c2cecf313bb82be7d169"
@@ -4382,15 +4498,90 @@
       "source_freshness": [
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md",
-          "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+          "source_commit": "fd016f81034b1a93ad39c2cecf313bb82be7d169",
           "checked_against_commit": "fd016f81034b1a93ad39c2cecf313bb82be7d169",
-          "freshness": "stale",
-          "reason": "source_file_changed"
+          "freshness": "current",
+          "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-chip/zh/key_stone/k3/k3_docs/k3_ds.md",
-          "source_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+          "source_commit": "fd016f81034b1a93ad39c2cecf313bb82be7d169",
           "checked_against_commit": "fd016f81034b1a93ad39c2cecf313bb82be7d169",
+          "freshness": "current",
+          "reason": "source_file_unchanged"
+        }
+      ]
+    },
+    "k3_tee_security_specs": {
+      "id": "k3_tee_security_specs",
+      "title": "K3 芯片 TEE 安全架构与固件分区参数",
+      "type": "evidence",
+      "domain": "bsp_kernel_drivers",
+      "status": "needs_review",
+      "aliases": [
+        "K3 TEE安全架构参数",
+        "K3 OP-TEE Specs",
+        "k3_tee_security_specs",
+        "K3安全启动与固件分区"
+      ],
+      "target_audience": [
+        "安全工程师",
+        "驱动工程师",
+        "系统架构师"
+      ],
+      "outlinks": [],
+      "backlinks": [
+        "K3芯片开发快速上手向导",
+        "SpacemiT_K3_TEE安全架构与安全启动专题档案"
+      ],
+      "summary": "# K3 芯片 TEE 安全架构与固件分区参数  > [!TIP] > **💡 工程师导读与排坑焦点**：存放 K3 芯片 OP-TEE 4.5.0 内存基址、保留共享内存、固件加载时序、PMP 域隔离与安全生命周期（LCS）规格。 > **目标读者**：`安全工程师 / 驱动工程师 / 系统架构师` | **技术领域**：`bsp_kernel_drivers`  本文件汇总了 SpacemiT K3 平台在 Buildroot 下启用 OP-TEE（Open Portable Trusted Execution Environment）安全环境的核心物理地址、内存切分、固件加载时序及安全生",
+      "content": "# K3 芯片 TEE 安全架构与固件分区参数\n\n> [!TIP]\n> **💡 工程师导读与排坑焦点**：存放 K3 芯片 OP-TEE 4.5.0 内存基址、保留共享内存、固件加载时序、PMP 域隔离与安全生命周期（LCS）规格。\n> **目标读者**：`安全工程师 / 驱动工程师 / 系统架构师` | **技术领域**：`bsp_kernel_drivers`\n\n本文件汇总了 SpacemiT K3 平台在 Buildroot 下启用 OP-TEE（Open Portable Trusted Execution Environment）安全环境的核心物理地址、内存切分、固件加载时序及安全生命周期参数。\n\n---\n\n## 1. TEE 物理内存布局与保留区规格\n\nK3 平台采用**保留式共享内存（Reserved SHM）**方案（`CFG_CORE_RESERVED_SHM=y`，`CFG_CORE_DYN_SHM=n`），不启用动态共享内存。\n\n| 区域名称 | 配置符号 | 物理起始基址 | 分配大小 | 访问权限与属性 | 说明 |\n| :--- | :--- | :---: | :---: | :--- | :--- |\n| **TEE RAM (TDDRAM)** | `CFG_TDDRAM_START` / `SIZE` | `0x1_7100_0000` | **16 MB** | 安全世界独占（S态 Trusted Domain），PMP 硬件保护，内核不可见 | 存放 TEE 内核本体、TA 代码、堆栈与安全驱动，常驻内存不换出 |\n| **共享内存 (SHMEM)** | `CFG_SHMEM_START` / `SIZE` | `0x1_7200_0000` | **16 MB** | REE 与 TEE 共同可见，普通世界注册，安全世界映射 | 用于 CA 与 TA 之间传递请求/响应参数包 |\n\n> [!IMPORTANT]\n> **设备树注入机制**：\n> 平台静态设备树（DTS）**不需要手动声明**共享内存与 TEE RAM。OP-TEE 启动后会主动向设备树 `/reserved-memory` 动态注入 `optee_core` 与 `optee_shm` 节点，内核据此打上 `nomap non-reusable` 标记。在静态设备树重复声明会导致重复映射冲突。\n\n---\n\n## 2. 固件加载顺序与目标内存地址\n\n在安全固件构建中，SPL（FSBL）承担安全镜像加载职责，各组件加载时序与目标地址如下：\n\n| 顺序 | 固件镜像文件 | 加载方 | 加载目标物理地址 | 运行时所处架构态 | 失败行为 |\n| :---: | :--- | :---: | :---: | :---: | :--- |\n| **1** | `FSBL.bin` (SPL) | BootROM (ZSBL) | `0xc080_1000` (SRAM) | M 态 (Machine Mode) | BROM 回退次级启动设备 |\n| **2** | `esos.itb` | SPL | — (RCPU 独立域) | 实时协处理器固件 | 内核启动死锁 |\n| **3** | `optee.itb` | SPL | `0x1_7100_0000` (DDR) | S 态 (安全 Trusted Domain) | MMC/MTD 路径直接中止启动 |\n| **4** | `u-boot.itb` | SPL | `0x1_0200_0000` (DDR) | S 态 (普通 Root Domain) | 启动终止 |\n| **5** | OpenSBI (`fw_dynamic.itb`) | U-Boot | `0x1_0000_0000` (DDR) | M 态 (监控层) | 引导失败 |\n\n---\n\n## 3. RISC-V 跨域通信与 Mailbox 通道\n\nRISC-V 架构没有 Arm 的 `smc` 指令，K3 平台通过 OpenSBI MPXY 框架与 Mailbox 进行世界间切换：\n\n| 维度 | 参数 / 配置 | 说明 |\n| :--- | :--- | :--- |\n| **通信机制** | OpenSBI MPXY 协议 + RISC-V `ecall` / `mret` | 普通世界驱动向 M 态发起 ecall，由 OpenSBI 切换至 Trusted 域分发 |\n| **通道数量** | **16 个 Per-Hart 通道** | 每个 CPU 核心独立绑定一组 Mailbox 通道，避免并发核间锁竞争 |\n| **设备树 Mailbox 绑定** | `mboxes = <&mpxy_mbox 0x1000 0x2>` | 定义于 U-Boot 源码树 `arch/riscv/dts/k3-optee.dtsi` |\n| **REE 侧驱动入口** | `drivers/tee/optee/mpxy_sbi.c` | 内核暴露 `/dev/tee0` 与 `/dev/teepriv0` 字符设备供用户态 CA 访问 |\n| **用户态守护进程** | `tee-supplicant` | 常驻进程，处理来自 OP-TEE 的反向 RPC 请求（如安全文件系统与 RPMB 访问） |\n\n---\n\n## 4. 密钥管理与安全生命周期 (LCS) 规格\n\nK3 安全方案符合 RISC-V Platform Security Model 0.9.1 规范：\n\n| 属性 | 规格 / 取值 | 说明 |\n| :--- | :--- | :--- |\n| **硬件根密钥 (HUK)** | 芯片内部硬件一次性烧录密钥 | 作为密钥派生树的根，不对外暴露，用于派生安全存储密钥（SSK） |\n| **安全存储介质** | eMMC RPMB（Replay Protected Memory Block） | 硬件防回滚与防重放攻击的安全存储分区 |\n| **生命周期状态 (LCS)** | **CM (Chip Manufacture)** | 芯片出厂状态，全功能开放，未烧录客户根密钥 |\n| | **DM (Device Manufacture)** | 设备量产状态，烧录 OEM 公钥哈希与 RPMB 密钥 |\n| | **SE (Secure / Production)** | 终端安全量产态，安全启动强校验开启，JTAG 调试通道默认关闭 |\n| | **RMA (Return Merchandise)** | 售后退回分析态，需特定厂商授权凭证解锁调试接口 |",
+      "claim_type": "parameter",
+      "verification_status": "verified",
+      "verified_at": "2026-10-27",
+      "external_use": true,
+      "source_file": "Sources/docs-buildroot/zh/k3_buildroot/security/tee_architecture.md",
+      "source_origin": "https://github.com/spacemit-com/docs-buildroot",
+      "source_commit": "c67b37b8a4a90408b95e5532c2df3ab800d80ffe",
+      "source_section": "TEE在系统中的位置；组件清单；启动流程；内存布局；安全存储",
+      "source_resolution": "resolved",
+      "source_checked_at": "2026-10-27",
+      "source_note": "基于 Buildroot 安全文档体系（commit c67b37b），系统梳理 OP-TEE 4.5.0 在 K3 上的内存划分、OpenSBI PMP 隔离基址、固件加载顺序、MPXY 通信与 LCS 生命周期规格。",
+      "source_related_file": [
+        "Sources/docs-buildroot/zh/k3_buildroot/security/white_paper.md",
+        "Sources/docs-buildroot/zh/k3_buildroot/security/key_management_lifecycle.md"
+      ],
+      "source_related_commit": [
+        "c67b37b8a4a90408b95e5532c2df3ab800d80ffe",
+        "c67b37b8a4a90408b95e5532c2df3ab800d80ffe"
+      ],
+      "created": "2026-10-27",
+      "updated": "2026-10-27",
+      "freshness": "current",
+      "stale_paths": [],
+      "unknown_paths": [],
+      "checked_against_commit": {
+        "docs-buildroot": "0ca1a99e305738ccc0d71ea1e847dada49ae1e28"
+      },
+      "source_freshness": [
+        {
+          "source_file": "Sources/docs-buildroot/zh/k3_buildroot/security/tee_architecture.md",
+          "source_commit": "c67b37b8a4a90408b95e5532c2df3ab800d80ffe",
+          "checked_against_commit": "0ca1a99e305738ccc0d71ea1e847dada49ae1e28",
+          "freshness": "current",
+          "reason": "source_file_unchanged"
+        },
+        {
+          "source_file": "Sources/docs-buildroot/zh/k3_buildroot/security/white_paper.md",
+          "source_commit": "c67b37b8a4a90408b95e5532c2df3ab800d80ffe",
+          "checked_against_commit": "0ca1a99e305738ccc0d71ea1e847dada49ae1e28",
+          "freshness": "current",
+          "reason": "source_file_unchanged"
+        },
+        {
+          "source_file": "Sources/docs-buildroot/zh/k3_buildroot/security/key_management_lifecycle.md",
+          "source_commit": "c67b37b8a4a90408b95e5532c2df3ab800d80ffe",
+          "checked_against_commit": "0ca1a99e305738ccc0d71ea1e847dada49ae1e28",
           "freshness": "current",
           "reason": "source_file_unchanged"
         }
@@ -4731,7 +4922,7 @@
         "SpacemiT_ROS2_机器人与具身智能专题档案"
       ],
       "summary": "# SpacemiT ROS 2 平台支持与底层硬件接口规格  > [!TIP] > **💡 工程师导读与排坑焦点**：存放 ROS 2 Humble/Jazzy 发行版、CycloneDDS 优化、micro-ROS 与节点开销。 > **目标读者**：`机器人工程师 / ROS 2 开发者` | **技术领域**：`edge_ai_robotics`  本文档记录 SpacemiT K1 与 K3 处理器平台支持的 ROS 2 发行版、DDS 网络中间件调优、micro-ROS 硬件通信接口及节点资源消耗参数。  ---  ## 1. 官方 ROS 2 平台与操作系统支持矩阵  根据 `d",
-      "content": "# SpacemiT ROS 2 平台支持与底层硬件接口规格\n\n> [!TIP]\n> **💡 工程师导读与排坑焦点**：存放 ROS 2 Humble/Jazzy 发行版、CycloneDDS 优化、micro-ROS 与节点开销。\n> **目标读者**：`机器人工程师 / ROS 2 开发者` | **技术领域**：`edge_ai_robotics`\n\n本文档记录 SpacemiT K1 与 K3 处理器平台支持的 ROS 2 发行版、DDS 网络中间件调优、micro-ROS 硬件通信接口及节点资源消耗参数。\n\n---\n\n## 1. 官方 ROS 2 平台与操作系统支持矩阵\n\n根据 `docs-ros@808d02c1bd11cf0d4376555919bd61c90e38d853` 的 [ROS 2 平台支持列表](https://github.com/spacemit-com/docs-ros/blob/808d02c1bd11cf0d4376555919bd61c90e38d853/zh/root_overview.md#ros-2)：\n\n| 芯片型号 | 当前支持的 ROS 2 版本 | 规划支持的 ROS 2 版本 | 当前推荐的操作系统 |\n| :---: | :---: | :---: | :---: |\n| **K3** | **Humble、Jazzy** | **Lyrical**（计划支持） | **Bianbu 4.x**（4.0.1 起） |\n| **K1** | **Humble、Jazzy** | — | **Bianbu 2.3.x** |\n\n“计划支持”尚未作为正式支持版本提供，时间和配套系统以官方后续发布为准。这里的支持指对应 Bianbu 系统上的 RISC-V 适配，需使用平台配套软件源；当前 SDK 示例主要基于 Humble，不同发行版的软件包、驱动和功能范围可能不同。安装分别参见 [K1 指南](https://github.com/spacemit-com/docs-ros/blob/808d02c1bd11cf0d4376555919bd61c90e38d853/zh/k1/06_Robot_development/6.1_OS_Preparation/6.1.2_ROS2_Installation.md)与 [K3 指南](https://github.com/spacemit-com/docs-ros/blob/808d02c1bd11cf0d4376555919bd61c90e38d853/zh/k3/06-系统与平台/6.6-ROS2/6.6.1-ROS2-INSTALL.md)。\n\n> [!NOTE]\n> **多机通信规范**：\n> 官方明确建议**板端与开发主机使用相同的 ROS 2 发行版**，并配置一致的 DDS 通信中间件与 `ROS_DOMAIN_ID`。ROS 2 上游官方并不保证不同发行版（如 Humble 与 Jazzy）之间的跨版本节点通信兼容性。\n\n### 1.1 DDS 中间件与底层规格（待核验记录）\n\n以下 DDS 配置及第 2 节硬件接口表保留历史适配记录，默认实现、速率和适用板型仍需核对。平台支持矩阵不构成这些参数已核验的依据。\n\n| 属性名称 | 规格参数与选项 | 推荐应用场景 |\n| :--- | :--- | :--- |\n| **底层 Linux 发行版** | Bianbu Linux / Ubuntu 22.04 & 24.04 LTS | 容器化或原生二进制部署 |\n| **默认 RMW 实现** | `rmw_cyclonedds_cpp` / `rmw_fastrtps_cpp` | 多节点低延迟通信 |\n| **双 GMAC 网口优化** | 支持 DDS 多播组网与网口绑定 | 传输高分辨率摄像头点云与 RAW 图像数据 |\n\n---\n\n## 2. 硬件控制接口与 micro-ROS 规格\n\n| 控制接口类型 | 硬件总线 / 引脚复用 | 通信速率 / 描述 | 适用于设备 |\n| :--- | :--- | :--- | :--- |\n| **micro-ROS Agent** | `/dev/ttyS1` / `/dev/ttyS3` | 波特率 115200 ~ 921600 bps | 串行连接 STM32 / ESP32 实时小板 |\n| **PWM 电机驱动** | K1/K3 PWM Channels (PWM0~PWM3) | 周期与占空比精准硬件输出 | 伺服舵机 / 无刷电机驱动板 |\n| **GPIO 中断触控** | 多功能复用 GPIO 引脚 | 支持上升沿/下降沿硬件中断 | 机器人碰撞开关 / 极限传感器 |\n| **CAN 总线控制** | SocketCAN 控制器 | 500 Kbps / 1 Mbps 通信速率 | 工业级关节电机 / 轮毂电机 |\n\n---\n\n## 3. 典型 ROS 2 节点资源开销 (K1 实测)\n\n> [!WARNING]\n> 以下历史数值尚未找到测试记录，测试环境与测量方法不明（`metric_source_resolution: unresolved`），不作为已验证的 CPU、RAM 或延迟指标。\n\n| 节点类型 | CPU 占用率 (8-Core X60) | 内存 (RAM) 占用 | 帧率 / 延迟 |\n| :--- | :--- | :--- | :--- |\n| **talker / listener 基础节点**| < 1.5% | ~ 18 MB | < 1 ms 延迟 |\n| **Camera Publisher (1080p)** | ~ 8.0% (硬解码/MPP) | ~ 65 MB | 30 FPS |\n| **2D Laser SLAM (Cartographer)**| ~ 22.0% | ~ 140 MB | 10 Hz 建图 |\n| **micro-ROS Agent 串口转发**| < 3.0% | ~ 24 MB | 100 Hz |",
+      "content": "# SpacemiT ROS 2 平台支持与底层硬件接口规格\n\n> [!TIP]\n> **💡 工程师导读与排坑焦点**：存放 ROS 2 Humble/Jazzy 发行版、CycloneDDS 优化、micro-ROS 与节点开销。\n> **目标读者**：`机器人工程师 / ROS 2 开发者` | **技术领域**：`edge_ai_robotics`\n\n本文档记录 SpacemiT K1 与 K3 处理器平台支持的 ROS 2 发行版、DDS 网络中间件调优、micro-ROS 硬件通信接口及节点资源消耗参数。\n\n---\n\n## 1. 官方 ROS 2 平台与操作系统支持矩阵\n\n根据 `docs-ros@808d02c1bd11cf0d4376555919bd61c90e38d853` 的 [ROS 2 平台支持列表](https://github.com/spacemit-com/docs-ros/blob/808d02c1bd11cf0d4376555919bd61c90e38d853/zh/root_overview.md#ros-2)：\n\n| 芯片型号 | 当前支持的 ROS 2 版本 | 规划支持的 ROS 2 版本 | 当前推荐的操作系统 |\n| :---: | :---: | :---: | :---: |\n| **K3** | **Humble、Jazzy** | **Lyrical**（计划支持） | **Bianbu 4.x**（4.0.1 起） |\n| **K1** | **Humble、Jazzy** | — | **Bianbu 2.3.x** |\n\n“计划支持”尚未作为正式支持版本提供，时间和配套系统以官方后续发布为准。这里的支持指对应 Bianbu 系统上的 RISC-V 适配，需使用平台配套软件源；当前 SDK 示例主要基于 Humble，不同发行版的软件包、驱动和功能范围可能不同。安装分别参见 [K1 指南](https://github.com/spacemit-com/docs-ros/blob/808d02c1bd11cf0d4376555919bd61c90e38d853/zh/k1/06_Robot_development/6.1_OS_Preparation/6.1.2_ROS2_Installation.md)与 [K3 指南](https://github.com/spacemit-com/docs-ros/blob/808d02c1bd11cf0d4376555919bd61c90e38d853/zh/k3/06-系统与平台/6.6-ROS2/6.6.1-ROS2-INSTALL.md)。\n\n> [!NOTE]\n> **多机通信规范**：\n> 官方明确建议**板端与开发主机使用相同的 ROS 2 发行版**，并配置一致的 DDS 通信中间件与 `ROS_DOMAIN_ID`。ROS 2 上游官方并不保证不同发行版（如 Humble 与 Jazzy）之间的跨版本节点通信兼容性。\n\n### 1.1 DDS 中间件与底层规格（待核验记录）\n\n以下 DDS 配置及第 2 节硬件接口表保留历史适配记录，默认实现、速率和适用板型仍需核对。平台支持矩阵不构成这些参数已核验的依据。\n\n| 属性名称 | 规格参数与选项 | 推荐应用场景 |\n| :--- | :--- | :--- |\n| **底层 Linux 发行版** | Bianbu Linux / Ubuntu 22.04 & 24.04 LTS | 容器化或原生二进制部署 |\n| **默认 RMW 实现** | `rmw_cyclonedds_cpp` / `rmw_fastrtps_cpp` | 多节点低延迟通信 |\n| **双 GMAC 网口优化** | 支持 DDS 多播组网与网口绑定 | 传输高分辨率摄像头点云与 RAW 图像数据 |\n\n---\n\n## 2. 硬件控制接口与 micro-ROS 规格\n\n| 控制接口类型 | 硬件总线 / 引脚复用 | 通信速率 / 描述 | 适用于设备 |\n| :--- | :--- | :--- | :--- |\n| **micro-ROS Agent** | `/dev/ttyS1` / `/dev/ttyS3` | 波特率 115200 ~ 921600 bps | 串行连接 STM32 / ESP32 实时小板 |\n| **PWM 电机驱动** | K1/K3 PWM Channels (PWM0~PWM3) | 周期与占空比精准硬件输出 | 伺服舵机 / 无刷电机驱动板 |\n| **GPIO 中断触控** | 多功能复用 GPIO 引脚 | 支持上升沿/下降沿硬件中断 | 机器人碰撞开关 / 极限传感器 |\n| **CAN 总线控制** | SocketCAN 控制器 | 500 Kbps / 1 Mbps 通信速率 | 工业级关节电机 / 轮毂电机 |\n\n---\n\n## 3. 典型 ROS 2 节点资源开销 (K1 实测)\n\n> [!WARNING]\n> 以下历史数值尚未找到测试记录，测试环境与测量方法不明（`metric_source_resolution: unresolved`），不作为已验证的 CPU、RAM 或延迟指标。\n\n| 节点类型 | CPU 占用率 (8-Core X60) | 内存 (RAM) 占用 | 帧率 / 延迟 |\n| :--- | :--- | :--- | :--- |\n| **talker / listener 基础节点**| < 1.5% | ~ 18 MB | < 1 ms 延迟 |\n| **Camera Publisher (1080p)** | ~ 8.0% (硬解码/MPP) | ~ 65 MB | 30 FPS |\n| **2D Laser SLAM (Cartographer)**| ~ 22.0% | ~ 140 MB | 10 Hz 建图 |\n| **micro-ROS Agent 串口转发**| < 3.0% | ~ 24 MB | 100 Hz |\n\n---\n\n## 4. 机器人视觉推理与 SpaceMIT EP 后端调优规格\n\n根据官方 `docs-ros` 视觉组件更新（Commit `122e396`）：\n\n*   **视觉算法模型支持**：官方覆盖 YOLOv8、YOLOv5、YOLOv11 与 YOLO12（YOLOv11 与 YOLO12 架构复用 `yolov8` 部署实现）。\n*   **ONNX Runtime 推理后端配置**：\n    *   **独占 Execution Provider**：YAML 配置中 `providers` **只允许配置单一后端** `SpaceMITExecutionProvider`，严禁并列添加 `CPUExecutionProvider`，避免运行时动态回退引发严重吞吐衰减。\n    *   **线程数调优**：推荐通过配置 `SPACEMIT_EP_INTRA_THREAD_NUM` 进行算子内多线程优化（K3 平台推荐 2~8 线程；目标检测与跟踪场景兼顾内存与帧率平衡）。",
       "verification_status": "unverified",
       "external_use": false,
       "source_file": "Sources/docs-ros/zh/root_overview.md",
@@ -4744,14 +4935,16 @@
       "source_note": "已定位官方 K1/K3 Humble、Jazzy 支持矩阵与安装指南，Lyrical 仅为 K3 规划支持；默认 DDS、micro-ROS 速率和 CPU/RAM/延迟实测出处仍未定位。",
       "source_related_file": [
         "Sources/docs-ros/zh/k3/06-系统与平台/6.6-ROS2/6.6.1-ROS2-INSTALL.md",
-        "Sources/docs-ros/zh/k1/06_Robot_development/6.1_OS_Preparation/6.1.2_ROS2_Installation.md"
+        "Sources/docs-ros/zh/k1/06_Robot_development/6.1_OS_Preparation/6.1.2_ROS2_Installation.md",
+        "Sources/docs-ros/zh/k3/04-AI与算法/4.2-视觉/4.2.1-目标检测.md"
       ],
       "source_related_commit": [
         "808d02c1bd11cf0d4376555919bd61c90e38d853",
-        "808d02c1bd11cf0d4376555919bd61c90e38d853"
+        "808d02c1bd11cf0d4376555919bd61c90e38d853",
+        "122e396428947c89c2c475b24942062eb1ad2eee"
       ],
       "created": "2026-08-10",
-      "updated": "2026-10-20",
+      "updated": "2026-10-27",
       "freshness": "current",
       "stale_paths": [],
       "unknown_paths": [],
@@ -4776,6 +4969,13 @@
         {
           "source_file": "Sources/docs-ros/zh/k1/06_Robot_development/6.1_OS_Preparation/6.1.2_ROS2_Installation.md",
           "source_commit": "808d02c1bd11cf0d4376555919bd61c90e38d853",
+          "checked_against_commit": "122e396428947c89c2c475b24942062eb1ad2eee",
+          "freshness": "current",
+          "reason": "source_file_unchanged"
+        },
+        {
+          "source_file": "Sources/docs-ros/zh/k3/04-AI与算法/4.2-视觉/4.2.1-目标检测.md",
+          "source_commit": "122e396428947c89c2c475b24942062eb1ad2eee",
           "checked_against_commit": "122e396428947c89c2c475b24942062eb1ad2eee",
           "freshness": "current",
           "reason": "source_file_unchanged"
@@ -5152,6 +5352,10 @@
     "spaceai_端侧大模型量化与部署专题档案": "SpaceAI_端侧大模型量化与部署专题档案",
     "spaceai deployment dossier": "SpaceAI_端侧大模型量化与部署专题档案",
     "spaceai sdk guide": "SpaceAI_端侧大模型量化与部署专题档案",
+    "k3 tee安全架构专题": "SpacemiT_K3_TEE安全架构与安全启动专题档案",
+    "spacemit k3 op-tee topic": "SpacemiT_K3_TEE安全架构与安全启动专题档案",
+    "k3_tee_security_architecture": "SpacemiT_K3_TEE安全架构与安全启动专题档案",
+    "k3安全启动": "SpacemiT_K3_TEE安全架构与安全启动专题档案",
     "spacemit p3 pmic 专题": "SpacemiT_P3_PMIC电源芯片专题档案",
     "spacemit p3 pmic topic": "SpacemiT_P3_PMIC电源芯片专题档案",
     "spacemit_p3_pmic": "SpacemiT_P3_PMIC电源芯片专题档案",
@@ -5251,6 +5455,10 @@
     "k3 strap管脚物理配置参数": "k3_strap_pins_config",
     "k3 strap pins config specs": "k3_strap_pins_config",
     "k3_strap_pins_config": "k3_strap_pins_config",
+    "k3 tee安全架构参数": "k3_tee_security_specs",
+    "k3 op-tee specs": "k3_tee_security_specs",
+    "k3_tee_security_specs": "k3_tee_security_specs",
+    "k3安全启动与固件分区": "k3_tee_security_specs",
     "k3热阻、功耗与结温参数": "k3_thermal_specs",
     "k3 thermal and temperature specs": "k3_thermal_specs",
     "k3_thermal_specs": "k3_thermal_specs",
@@ -27243,11 +27451,11 @@
       "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/122e396428947c89c2c475b24942062eb1ad2eee/zh/k3/07-%E7%89%88%E6%9C%AC%E8%AF%B4%E6%98%8E/index.md"
     }
   ],
-  "content_sha256": "0f0e6ae23123ce4cd690addd361e49782195570b481c601b391075b884bd66aa",
+  "content_sha256": "7a4c720f03610812c9168d4a257c2d1c1c7b8e28688cedcec7bd2f7a95850b9c",
   "build_meta": {
-    "wiki_commit": "9a50e561bb6ab9832ba4386caade5ada93c727c8",
+    "wiki_commit": "7f1548738446e45f3e5d3b430238d55f3ce2b981",
     "wiki_worktree_dirty": true,
-    "generated_at": "2026-10-26T04:28:39+00:00",
+    "generated_at": "2026-10-27T04:47:38+00:00",
     "sources_commits": {
       "docs-chip": "fd016f81034b1a93ad39c2cecf313bb82be7d169",
       "docs-buildroot": "0ca1a99e305738ccc0d71ea1e847dada49ae1e28",
@@ -27255,17 +27463,17 @@
       "docs-ai": "2b3894e983a295ed0278bc625867e0c132e0e259",
       "docs-ros": "122e396428947c89c2c475b24942062eb1ad2eee"
     },
-    "content_sha256": "0f0e6ae23123ce4cd690addd361e49782195570b481c601b391075b884bd66aa",
+    "content_sha256": "7a4c720f03610812c9168d4a257c2d1c1c7b8e28688cedcec7bd2f7a95850b9c",
     "counts": {
-      "total_nodes": 70,
+      "total_nodes": 72,
       "developer_journeys": 7,
-      "knowledge_atoms": 34,
-      "evidence": 29,
+      "knowledge_atoms": 35,
+      "evidence": 30,
       "raw_sources": 1243
     },
     "freshness_summary": {
-      "current": 52,
-      "stale": 18,
+      "current": 56,
+      "stale": 16,
       "unknown": 0
     }
   }

@@ -1,41 +1,42 @@
 {
   "id": "K3-STRAP-01",
-  "status": "awaiting_upstream_correction",
-  "fact_status": "conflicted",
-  "display_status": "待官方确认",
+  "status": "resolved",
+  "fact_status": "verified",
+  "display_status": "已解决（官方V1.2已统一）",
   "reported_to_development": {
     "reported_by": "repository maintainer (user)",
     "date": "2026-10-21",
-    "statement": "用户表示已与开发同步要修改；尚未提供官方修正结论或已合并的修订。"
+    "statement": "用户表示已与开发同步要修改；官方开发已于2026-10-21合入修订提交 fd016f8。"
   },
   "stage_b_disposition": {
     "date": "2026-10-21",
     "basis": "explicit user instruction",
     "user_instruction": "这两个问题现在相关的知识里标注待确定，然后我已经和开发同步要修改。等github上修正更新后，再帮我修正好wiki的内容。然后先继续处理 B1 验收",
-    "disposition": "单独跟踪两项官方勘误，继续本轮B1来源复核与处置验收；技术结论保持待确定。",
+    "disposition": "已随官方修订合入闭环修正，解除conflicted，更新为verified。",
     "blocks_review_workflow_acceptance": false,
     "permits_unconfirmed_wiring_claims": false
   },
   "source_snapshot": {
-    "fixed_commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
-    "fetched_commit": "aae85ae4b2071543dfec41b533f97feefc303924",
-    "relevant_files_changed": false,
-    "checked_at_utc": "2026-10-21T07:30:43.816644+00:00"
+    "fixed_commit": "fd016f81034b1a93ad39c2cecf313bb82be7d169",
+    "fetched_commit": "fd016f81034b1a93ad39c2cecf313bb82be7d169",
+    "relevant_files_changed": true,
+    "checked_at_utc": "2026-10-27T08:00:00+00:00"
   },
-  "pending_questions": [
+  "resolved_questions": [
     {
       "id": "K3-STRAP-01-PINS",
-      "status": "awaiting_upstream_correction",
+      "status": "resolved",
       "question": "完整Strap清单及GPIO90/64/52的角色",
-      "observed_conflict": "指南1.1.5概述5脚GPIO65/66/68/69/90，功能表却列Strap0～5含GPIO64/52。",
+      "resolution": "硬件指南V1.2正式更正为6个Strap Pin：GPIO52、GPIO64、GPIO65、GPIO66、GPIO68、GPIO69，彻底移除了笔误出现的GPIO90。",
       "source_file": "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md",
-      "section": "1.1.5"
+      "section": "1.1.5",
+      "resolved_commit": "fd016f81034b1a93ad39c2cecf313bb82be7d169"
     },
     {
       "id": "K3-STRAP-01-SPI",
-      "status": "awaiting_upstream_correction",
+      "status": "resolved",
       "question": "GPIO66/GPIO65=10或01究竟对应SPI NOR还是SPI NAND",
-      "observed_conflict": "指南10→SPI NOR、01→SPI NAND；数据手册10→SPI NAND、01→SPI NOR。",
+      "resolution": "硬件指南V1.2修改表格为01=SPI NOR、10=SPI NAND，与《K3数据手册》2.11.2完全达成统一，两份文档不再冲突。",
       "source_files": [
         "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md",
         "Sources/docs-chip/zh/key_stone/k3/k3_docs/k3_ds.md"
@@ -43,7 +44,8 @@
       "sections": [
         "1.1.5",
         "2.11.2"
-      ]
+      ],
+      "resolved_commit": "fd016f81034b1a93ad39c2cecf313bb82be7d169"
     }
   ],
   "affected_files": [
@@ -61,8 +63,8 @@
   "automation": {
     "id": "k3-strap-wiki",
     "kind": "heartbeat",
-    "status": "ACTIVE",
-    "schedule": "每天10:00（Asia/Shanghai），在本聊天检查官方相关章节；无有效变更时保持安静。",
+    "status": "COMPLETED",
+    "schedule": "已闭环完成，暂停周期跟踪。",
     "stop_condition": "两项均按官方依据修正并发布验证后暂停任务"
   }
 }

@@ -12,10 +12,10 @@ source_resolution: partial
 metric_source_resolution: unresolved
 source_checked_at: 2026-10-19
 source_note: "已定位官方 K1/K3 Humble、Jazzy 支持矩阵与安装指南，Lyrical 仅为 K3 规划支持；默认 DDS、micro-ROS 速率和 CPU/RAM/延迟实测出处仍未定位。"
-source_related_file: ["Sources/docs-ros/zh/k3/06-系统与平台/6.6-ROS2/6.6.1-ROS2-INSTALL.md", "Sources/docs-ros/zh/k1/06_Robot_development/6.1_OS_Preparation/6.1.2_ROS2_Installation.md"]
-source_related_commit: ["808d02c1bd11cf0d4376555919bd61c90e38d853", "808d02c1bd11cf0d4376555919bd61c90e38d853"]
+source_related_file: ["Sources/docs-ros/zh/k3/06-系统与平台/6.6-ROS2/6.6.1-ROS2-INSTALL.md", "Sources/docs-ros/zh/k1/06_Robot_development/6.1_OS_Preparation/6.1.2_ROS2_Installation.md", "Sources/docs-ros/zh/k3/04-AI与算法/4.2-视觉/4.2.1-目标检测.md"]
+source_related_commit: ["808d02c1bd11cf0d4376555919bd61c90e38d853", "808d02c1bd11cf0d4376555919bd61c90e38d853", "122e396428947c89c2c475b24942062eb1ad2eee"]
 created: 2026-08-10
-updated: "2026-10-20"
+updated: "2026-10-27"
 aliases: [ros2_platform_specs, ROS 2 Platform Specs, SpacemiT ROS2 Specs]
 domain: edge_ai_robotics
 target_audience: [机器人工程师, ROS 2 开发者]
@@ -80,3 +80,14 @@ target_audience: [机器人工程师, ROS 2 开发者]
 | **Camera Publisher (1080p)** | ~ 8.0% (硬解码/MPP) | ~ 65 MB | 30 FPS |
 | **2D Laser SLAM (Cartographer)**| ~ 22.0% | ~ 140 MB | 10 Hz 建图 |
 | **micro-ROS Agent 串口转发**| < 3.0% | ~ 24 MB | 100 Hz |
+
+---
+
+## 4. 机器人视觉推理与 SpaceMIT EP 后端调优规格
+
+根据官方 `docs-ros` 视觉组件更新（Commit `122e396`）：
+
+*   **视觉算法模型支持**：官方覆盖 YOLOv8、YOLOv5、YOLOv11 与 YOLO12（YOLOv11 与 YOLO12 架构复用 `yolov8` 部署实现）。
+*   **ONNX Runtime 推理后端配置**：
+    *   **独占 Execution Provider**：YAML 配置中 `providers` **只允许配置单一后端** `SpaceMITExecutionProvider`，严禁并列添加 `CPUExecutionProvider`，避免运行时动态回退引发严重吞吐衰减。
+    *   **线程数调优**：推荐通过配置 `SPACEMIT_EP_INTRA_THREAD_NUM` 进行算子内多线程优化（K3 平台推荐 2~8 线程；目标检测与跟踪场景兼顾内存与帧率平衡）。

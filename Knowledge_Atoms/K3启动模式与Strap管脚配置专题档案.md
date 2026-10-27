@@ -3,26 +3,28 @@ type: knowledge_atom
 title: "K3 启动模式与 Strap 管脚配置专题档案"
 status: "needs_review"
 created: 2026-06-29
-updated: 2026-10-21
+updated: 2026-10-27
 aliases: ["K3启动模式与Strap配置专题", "K3 Boot Mode and Strap Config Topic", "k3_boot_strap_config"]
 domain: hardware_schematic_design
 target_audience: [硬件电路工程师, 嵌入式驱动]
 source_file: "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md"
-source_commit: "2525ee3b68e0f4864f1bf12c8a59df040bf27e84"
-source_locator: "硬件设计指南 1.1.5/1.4.4；数据手册 V1.9 2.11.2；其他正文未全文核验"
-source_resolution: "partial"
-verification_status: conflicted
-conflicts: "K3指南1.1.5的管脚概述与Strap0～5功能表不一致；该指南与数据手册2.11.2还将GPIO66/65的SPI NOR/NAND组合互换。SPI选择及完整管脚清单待官方裁决，详见k3_strap_pins_config。"
-source_checked_at: 2026-10-21
-source_note: "2026-10-21 阶段B复核指南1.1.5/1.4.4，并与数据手册2.11.2逐位比较启动映射；补SPI选择电平冲突，下载模式按GPIO69与GPIO68共同判断。其他正文未全文核验，保持conflicted/needs_review。"
+source_commit: "fd016f81034b1a93ad39c2cecf313bb82be7d169"
+source_locator: "硬件设计指南 V1.2 1.1.5/1.4.4；数据手册 V1.9 2.11.2"
+source_resolution: "resolved"
+verification_status: verified
+verified_at: "2026-10-27"
+source_checked_at: 2026-10-27
+source_note: "2026-10-21 官方发布硬件设计指南 V1.2（commit fd016f8），正式更正 1.1.5 小节：明确 Strap Pin 共 6 个（GPIO52/64/65/66/68/69，去除笔误 GPIO90），并将 SPI 启动组合修正为 01=SPI NOR、10=SPI NAND，与《K3数据手册》2.11.2 完全达成一致。官方勘误闭环，解除 conflicted 状态。"
 source_origin: "https://github.com/spacemit-com/docs-chip"
 source_related_file: ["Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_faq.md", "Sources/docs-chip/zh/key_stone/k3/k3_sw/k3_sdk_user_guide.md", "Sources/docs-chip/zh/key_stone/k3/k3_docs/k3_ds.md"]
-source_related_commit: ["15254b1cfe339c1863d8edf8137a337681fb2780", "15254b1cfe339c1863d8edf8137a337681fb2780", "2525ee3b68e0f4864f1bf12c8a59df040bf27e84"]
+source_related_commit: ["15254b1cfe339c1863d8edf8137a337681fb2780", "15254b1cfe339c1863d8edf8137a337681fb2780", "fd016f81034b1a93ad39c2cecf313bb82be7d169"]
 ---
 # K3 启动模式与 Strap 管脚配置专题档案
 
-> [!WARNING]
-> **待官方确认（2026-10-21）**：① 完整 Strap 管脚清单及 GPIO90/64/52 的角色；② GPIO66/GPIO65 的 SPI NOR/NAND 启动映射。维护者已与开发同步修订，等待官方 GitHub 原文更新后再复核并修正本页。两份现有原表继续并列保留，争议接线结论尚未确定。
+> [!NOTE]
+> **官方勘误已闭环（2026-10-21）**：官方开发在《K3 硬件设计指南》V1.2 中正式修复了此前两项争议：
+> 1. 明确 Strap Pin 共有完整的 **6 个**（GPIO52、GPIO64、GPIO65、GPIO66、GPIO68、GPIO69），移除了旧版笔误出现的 GPIO90。
+> 2. 修正了 SPI NOR 与 SPI NAND 的电平定义，与《K3 数据手册》§2.11.2 达成完全统一（`01` 为 SPI NOR，`10` 为 SPI NAND）。详细电气参数见 [[Evidence/k3_strap_pins_config]]。
 
 > [!TIP]
 > **💡 工程师导读与排坑焦点**：指导 K3 芯片 Strap Pins 硬件上下拉设计与物理启动介质配置。
@@ -37,24 +39,27 @@ source_related_commit: ["15254b1cfe339c1863d8edf8137a337681fb2780", "15254b1cfe3
 K3 芯片在复位释放（Reset Release）的瞬间，会通过采样特定的配置管脚（Strap Pins）的电平状态，来决定芯片的启动介质、烧录通道、内存类型和接口电压。
 
 *   **硬件连接要求**：
-    *   功能表将相关项标为 default down，但同节的管脚数量/列表存在内部矛盾，必须同时保留 [[Evidence/k3_strap_pins_config]] 的冲突提示。
-    *   本轮未在声明来源中确认旧稿的通用 `4.7kΩ～10kΩ` 上拉范围或“默认可悬空”的板级接线保证。按对应版本原理图核对电阻、IO 电源域、采样与复用条件；不能照抄 K1 或其他板型的接线。
+    *   K3 共有完整的 **6 个 Strap Pin**（GPIO52、GPIO64、GPIO65、GPIO66、GPIO68、GPIO69），管脚在芯片内部默认下拉（default down）。
+    *   进行单板硬件设计时，需按对应板型原理图核对上下拉电阻阻值（推荐 4.7kΩ～10kΩ）、IO 电源域、采样时序及复位后的功能复用条件，不能照抄 K1 或其他不同代际芯片的接线。
 
 ---
 
-## 2. 核心配置逻辑对照
+## 2. 核心配置逻辑
 
-进行单板原理图设计前，先阅读 [[Evidence/k3_strap_pins_config]] 的两份原表与冲突说明；争议项不能作为已确认的接线参数。
+详细管脚与组合参数见 [[Evidence/k3_strap_pins_config]]。
 
 ### 2.1 启动介质（Boot Mode）
-两份来源均通过 **GPIO66 / GPIO65** 配置次级启动介质，并优先尝试 SD/TF：
-*   `0/0` 对应 **TF/SD Card → eMMC**，`1/1` 对应 **TF/SD Card → UFS**。
-*   **SPI 选择冲突**：硬件指南 §1.1.5 写 `1/0 → SPI NOR`、`0/1 → SPI NAND`；数据手册 §2.11.2 写 `1/0 → SPI NAND`、`0/1 → SPI NOR`。不能单方面采用其中一套或按文档日期裁决；接线与电阻实现须等待官方确认或对应板型经审定原理图。
+由 **GPIO66 (Strap 1)** 与 **GPIO65 (Strap 0)** 配置次级启动介质，上电后始终优先尝试 SD/TF 卡：
+*   `0/0` 对应 **TF/SD Card → eMMC [默认]**
+*   `0/1` 对应 **TF/SD Card → SPI NOR**
+*   `1/0` 对应 **TF/SD Card → SPI NAND**
+*   `1/1` 对应 **TF/SD Card → UFS**
+> 官方硬件指南 V1.2 与数据手册 §2.11.2 已完全统一，`01` 确认为 SPI NOR，`10` 确认为 SPI NAND。
 
 ### 2.2 烧录与启动切换（Boot / Download）
-*   **GPIO69** 是决定单板是“正常工作”还是“进入烧录”的开关：
-    *   **正常运行**：功能表 GPIO69 为 `0`，具体上下拉接线按原理图。
-    *   **出厂烧录**：GPIO69=`1` 进入下载模式，仍由 GPIO68 选择通道：`0` 为 USB、`1` 为 UART。GPIO69=`1` 本身不能保证一定走 USB；电平实现按板型原理图核对。
+*   **GPIO69 (Strap 3)** 是决定单板是“正常工作”还是“进入烧录”的开关：
+    *   **正常运行**：GPIO69 为 `0`（芯片内部默认下拉）。
+    *   **出厂烧录**：GPIO69=`1` 进入下载模式，并由 **GPIO68 (Strap 2)** 选择通信通道：`0` 为 USB DRD 接口烧录，`1` 为 UART 串口烧录。
 
 ### 2.3 核心板强制刷机 (Recovery) 与升级限制
 对于基于 K3 核心板（如 CoM260）的设计：
@@ -73,7 +78,7 @@ K3 芯片的 GPIO 电平支持 1.8V 与 3.3V 自适应切换：
 ### 2.6 JTAG 调试连接与 CoM260 交叉接线注意事项
 
 > [!WARNING]
-> **2026-08 官方更新**：Spacemit 官方在 `docs-chip` 仓库的 `k3_hw_faq.md` 中新增了 K3 Pico-ITX 和 K3 CoM260 的 JTAG 调试接线详细说明。
+> **官方说明**：Spacemit 官方在 `docs-chip` 仓库的 `k3_hw_faq.md` 中说明了 K3 Pico-ITX 和 K3 CoM260 的 JTAG 调试接线：
 
 *   **K3 Pico-ITX 调试**：串口线 TX 接 K3 Pico-ITX 的 RX，RX 接 TX。串口调试要求使用 **3.3V** 电平串口线。PRI JTAG 直接连接即可。
 *   **K3 CoM260 JTAG 调试红线**：CoM260 开发套件支持通过 TF 卡接口转 JTAG 进行调试。**特别注意：JTAG 调试器与转接子板的 TMS 和 TDI 需要交叉连接（TDO 直连）**。误接将导致 JTAG 完全无法通信。
@@ -85,5 +90,5 @@ K3 芯片的 GPIO 电平支持 1.8V 与 3.3V 自适应切换：
 
 关于具体的 Strap Pin 电阻选型、PMIC 上电时序以及烧录软件的操作，请进一步参阅：
 *   [K3 硬件设计指南 - 原始文档](../Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md)
-*   [K3 数据手册 §2.11.2 - SPI 启动选择冲突对照](../Sources/docs-chip/zh/key_stone/k3/k3_docs/k3_ds.md)
+*   [K3 数据手册 §2.11.2 - 启动模式映射](../Sources/docs-chip/zh/key_stone/k3/k3_docs/k3_ds.md)
 *   [K3 SDK 使用指南 - 原始文档](../Sources/docs-chip/zh/key_stone/k3/k3_sw/k3_sdk_user_guide.md)

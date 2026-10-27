@@ -11,9 +11,11 @@ source_commit: "8c851807f2c54e8ba54d568b268100ca727d0777"
 source_section: "产品规格"
 source_resolution: resolved
 source_checked_at: 2026-10-13
-source_note: "已定位正确的官方产品目录；模块与参考载板的规格适用范围仍需逐项复核。"
+source_note: "已定位正确的官方产品目录；同步官方最新 V03 核心板原理图与底板 DSN 工程文件。"
+source_related_file: ["Sources/docs-product/zh/k3_series/k3_com260/com260_hw_resources.md"]
+source_related_commit: ["cb96db6332fac093964af8fef98db45e2783fde8"]
 created: 2026-06-30
-updated: 2026-10-13
+updated: 2026-10-27
 aliases: ["K3 COM260板级核心参数", "K3 COM260 Board Hardware Specs", "k3_com260_specs"]
 domain: chip_product_specs
 target_audience: [核心板选型工程师, 硬件工程师]
@@ -51,3 +53,12 @@ target_audience: [核心板选型工程师, 硬件工程师]
 | **显示接口** | 1 × DP 1.2<br>1 × MIPI DSI-1.2 连接器 (30-Pin) | 支持多路双屏异显 |
 | **其他 I/O 排针** | 40-Pin 扩展接口 | 兼容主流开发套件引脚，支持 UART、SPI、I2S、I2C、GPIO 调试 |
 | **机械尺寸** | 103 mm x 90.5 mm x 35 mm | 包含底座脚垫、载板、核心模组及散热器整机尺寸 |
+
+## 3. 官方硬件设计文件与资源清单
+
+根据官方硬件资源页面更新（Commit `cb96db6`）：
+
+*   **核心板硬件原理图**：[K3-CoM260 核心板原理图 (PDF)](https://cdn-resource.spacemit.com/file/product/K3/k3_com260_hw/k3-com260_p1_lp5315b_32x2_v03_20260312.pdf)（最新 V03 版本）
+*   **物料清单 (BOM)**：[K3-CoM260 开发套件完整 BOM (.xls)](https://cdn-resource.spacemit.com/file/product/K3/k3_com260_hw/K3-COM260_KIT_V02_20260318_BOM.xls)
+*   **底板硬件原理图**：[K3-CoM260 套件底板原理图 (PDF)](https://cdn-resource.spacemit.com/file/product/K3/k3_com260_hw/k3-com260_kit_v02_20260306.pdf)
+*   **底板工程文件与 PCB**：[底板工程文件 (.DSN)](https://cdn-resource.spacemit.com/file/product/K3/k3_com260_hw/K3-COM260_KIT_V02_20260306.DSN) 与 [底板 PCB 文件 (.brd)](https://cdn-resource.spacemit.com/file/product/K3/k3_com260_hw/K3-COM260_KIT_V02_20260306.brd)
