@@ -1,12 +1,12 @@
 {
   "version": "2.3.0",
-  "wiki_commit": "50767d7b3e244ccdd9e03406fd9ab3165abb6f22",
-  "generated_at": "2026-10-27T08:27:14+00:00",
+  "wiki_commit": "bcbecee057995591634d31d86872ae72f53d28f5",
+  "generated_at": "2026-10-28T05:21:56+00:00",
   "wiki_worktree_dirty": true,
   "source_versions": {
     "docs-chip": "df43cfe4fbb6e1220b0bdf611d2cd233a4aa679d",
     "docs-buildroot": "0ca1a99e305738ccc0d71ea1e847dada49ae1e28",
-    "docs-product": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
+    "docs-product": "c8d9199423eb4555987cf120690730f85ca39d0b",
     "docs-ai": "2b3894e983a295ed0278bc625867e0c132e0e259",
     "docs-ros": "0fb2569c2ae40fefb1385e14a237a401dfb31814"
   },
@@ -191,14 +191,14 @@
       "stale_paths": [],
       "unknown_paths": [],
       "checked_against_commit": {
-        "docs-product": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
+        "docs-product": "c8d9199423eb4555987cf120690730f85ca39d0b",
         "docs-ai": "2b3894e983a295ed0278bc625867e0c132e0e259"
       },
       "source_freshness": [
         {
           "source_file": "Sources/docs-product/zh/k3_series/k3_pico/pico_user_guide.md",
           "source_commit": "bc640755145625cc20745f49861f82588863fca3",
-          "checked_against_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
+          "checked_against_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
@@ -352,14 +352,14 @@
       "stale_paths": [],
       "unknown_paths": [],
       "checked_against_commit": {
-        "docs-product": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
+        "docs-product": "c8d9199423eb4555987cf120690730f85ca39d0b",
         "docs-ai": "2b3894e983a295ed0278bc625867e0c132e0e259"
       },
       "source_freshness": [
         {
           "source_file": "Sources/docs-product/zh/k1_series/k1_muse_pi/pi_user_guide.md",
           "source_commit": "bc640755145625cc20745f49861f82588863fca3",
-          "checked_against_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
+          "checked_against_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
@@ -1242,7 +1242,7 @@
       "unknown_paths": [],
       "checked_against_commit": {
         "docs-chip": "df43cfe4fbb6e1220b0bdf611d2cd233a4aa679d",
-        "docs-product": "af56b0e326ce23f947ae768b3d1bf75436c1b52f"
+        "docs-product": "c8d9199423eb4555987cf120690730f85ca39d0b"
       },
       "source_freshness": [
         {
@@ -1269,7 +1269,7 @@
         {
           "source_file": "Sources/docs-product/zh/hw_accessories/tf_card_debug_board.md",
           "source_commit": "bc640755145625cc20745f49861f82588863fca3",
-          "checked_against_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
+          "checked_against_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
           "freshness": "current",
           "reason": "source_file_unchanged"
         }
@@ -1498,33 +1498,35 @@
         "8c851807f2c54e8ba54d568b268100ca727d0777",
         "cb96db6332fac093964af8fef98db45e2783fde8"
       ],
-      "freshness": "current",
-      "stale_paths": [],
+      "freshness": "stale",
+      "stale_paths": [
+        "Sources/docs-product/zh/k3_series/k3_com260/com260_hw_resources.md"
+      ],
       "unknown_paths": [],
       "checked_against_commit": {
-        "docs-product": "af56b0e326ce23f947ae768b3d1bf75436c1b52f"
+        "docs-product": "c8d9199423eb4555987cf120690730f85ca39d0b"
       },
       "source_freshness": [
         {
           "source_file": "Sources/docs-product/zh/k3_series/k3_com260/com260_user_guide.md",
           "source_commit": "bc640755145625cc20745f49861f82588863fca3",
-          "checked_against_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
+          "checked_against_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-product/zh/k3_series/k3_com260/root_overview.md",
           "source_commit": "8c851807f2c54e8ba54d568b268100ca727d0777",
-          "checked_against_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
+          "checked_against_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-product/zh/k3_series/k3_com260/com260_hw_resources.md",
           "source_commit": "cb96db6332fac093964af8fef98db45e2783fde8",
-          "checked_against_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-          "freshness": "current",
-          "reason": "source_file_unchanged"
+          "checked_against_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+          "freshness": "stale",
+          "reason": "source_file_changed"
         }
       ]
     },
@@ -1575,20 +1577,20 @@
       "stale_paths": [],
       "unknown_paths": [],
       "checked_against_commit": {
-        "docs-product": "af56b0e326ce23f947ae768b3d1bf75436c1b52f"
+        "docs-product": "c8d9199423eb4555987cf120690730f85ca39d0b"
       },
       "source_freshness": [
         {
           "source_file": "Sources/docs-product/en/k3_series/k3_com260/com260_user_guide.md",
           "source_commit": "bc640755145625cc20745f49861f82588863fca3",
-          "checked_against_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
+          "checked_against_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-product/zh/k3_series/k3_com260/root_overview.md",
           "source_commit": "8c851807f2c54e8ba54d568b268100ca727d0777",
-          "checked_against_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
+          "checked_against_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
           "freshness": "current",
           "reason": "source_file_unchanged"
         }
@@ -1641,20 +1643,20 @@
       "stale_paths": [],
       "unknown_paths": [],
       "checked_against_commit": {
-        "docs-product": "af56b0e326ce23f947ae768b3d1bf75436c1b52f"
+        "docs-product": "c8d9199423eb4555987cf120690730f85ca39d0b"
       },
       "source_freshness": [
         {
           "source_file": "Sources/docs-product/en/k3_series/k3_pico/pico_user_guide.md",
           "source_commit": "bc640755145625cc20745f49861f82588863fca3",
-          "checked_against_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
+          "checked_against_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-product/zh/k3_series/k3_pico/root_overview.md",
           "source_commit": "8c851807f2c54e8ba54d568b268100ca727d0777",
-          "checked_against_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
+          "checked_against_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
           "freshness": "current",
           "reason": "source_file_unchanged"
         }
@@ -1720,7 +1722,7 @@
       "unknown_paths": [],
       "checked_against_commit": {
         "docs-chip": "df43cfe4fbb6e1220b0bdf611d2cd233a4aa679d",
-        "docs-product": "af56b0e326ce23f947ae768b3d1bf75436c1b52f"
+        "docs-product": "c8d9199423eb4555987cf120690730f85ca39d0b"
       },
       "source_freshness": [
         {
@@ -1733,14 +1735,14 @@
         {
           "source_file": "Sources/docs-product/zh/k3_series/k3_pico/pico_user_guide.md",
           "source_commit": "bc640755145625cc20745f49861f82588863fca3",
-          "checked_against_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
+          "checked_against_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-product/zh/k3_series/k3_pico/root_overview.md",
           "source_commit": "8c851807f2c54e8ba54d568b268100ca727d0777",
-          "checked_against_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
+          "checked_against_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
@@ -1810,7 +1812,7 @@
       "stale_paths": [],
       "unknown_paths": [],
       "checked_against_commit": {
-        "docs-product": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
+        "docs-product": "c8d9199423eb4555987cf120690730f85ca39d0b",
         "docs-ai": "2b3894e983a295ed0278bc625867e0c132e0e259",
         "docs-chip": "df43cfe4fbb6e1220b0bdf611d2cd233a4aa679d"
       },
@@ -1818,21 +1820,21 @@
         {
           "source_file": "Sources/docs-product/zh/k3_series/k3_rv2768/root_overview.md",
           "source_commit": "bc640755145625cc20745f49861f82588863fca3",
-          "checked_against_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
+          "checked_against_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-product/zh/k3_series/k3_rv2768/rv2768_redfish.md",
           "source_commit": "bc640755145625cc20745f49861f82588863fca3",
-          "checked_against_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
+          "checked_against_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-product/zh/k3_series/k3_rv2768/rv2768_white_paper.md",
           "source_commit": "bc640755145625cc20745f49861f82588863fca3",
-          "checked_against_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
+          "checked_against_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
@@ -2169,27 +2171,27 @@
       "stale_paths": [],
       "unknown_paths": [],
       "checked_against_commit": {
-        "docs-product": "af56b0e326ce23f947ae768b3d1bf75436c1b52f"
+        "docs-product": "c8d9199423eb4555987cf120690730f85ca39d0b"
       },
       "source_freshness": [
         {
           "source_file": "Sources/docs-product/en/k1_series/k1_muse_pi/pi_user_guide.md",
           "source_commit": "bc640755145625cc20745f49861f82588863fca3",
-          "checked_against_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
+          "checked_against_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-product/zh/k1_series/k1_muse_pi/root_overview.md",
           "source_commit": "8c851807f2c54e8ba54d568b268100ca727d0777",
-          "checked_against_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
+          "checked_against_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-product/zh/k1_series/k1_muse_pi_pro/root_overview.md",
           "source_commit": "8c851807f2c54e8ba54d568b268100ca727d0777",
-          "checked_against_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
+          "checked_against_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
           "freshness": "current",
           "reason": "source_file_unchanged"
         }
@@ -2241,20 +2243,20 @@
       "stale_paths": [],
       "unknown_paths": [],
       "checked_against_commit": {
-        "docs-product": "af56b0e326ce23f947ae768b3d1bf75436c1b52f"
+        "docs-product": "c8d9199423eb4555987cf120690730f85ca39d0b"
       },
       "source_freshness": [
         {
           "source_file": "Sources/docs-product/en/k1_series/k1_muse_pi_pro/pi_pro_user_guide.md",
           "source_commit": "bc640755145625cc20745f49861f82588863fca3",
-          "checked_against_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
+          "checked_against_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-product/zh/k1_series/k1_muse_pi_pro/pi_pro_user_guide.md",
           "source_commit": "bc640755145625cc20745f49861f82588863fca3",
-          "checked_against_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
+          "checked_against_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
           "freshness": "current",
           "reason": "source_file_unchanged"
         }
@@ -2325,28 +2327,28 @@
       "stale_paths": [],
       "unknown_paths": [],
       "checked_against_commit": {
-        "docs-product": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
+        "docs-product": "c8d9199423eb4555987cf120690730f85ca39d0b",
         "docs-chip": "df43cfe4fbb6e1220b0bdf611d2cd233a4aa679d"
       },
       "source_freshness": [
         {
           "source_file": "Sources/docs-product/zh/k1_series/k1_muse_pi/root_overview.md",
           "source_commit": "bc640755145625cc20745f49861f82588863fca3",
-          "checked_against_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
+          "checked_against_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-product/zh/k1_series/k1_muse_pi/pi_user_guide.md",
           "source_commit": "bc640755145625cc20745f49861f82588863fca3",
-          "checked_against_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
+          "checked_against_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-product/zh/k1_series/k1_muse_pi_pro/root_overview.md",
           "source_commit": "bc640755145625cc20745f49861f82588863fca3",
-          "checked_against_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
+          "checked_against_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
@@ -2728,7 +2730,7 @@
       "unknown_paths": [],
       "checked_against_commit": {
         "docs-chip": "df43cfe4fbb6e1220b0bdf611d2cd233a4aa679d",
-        "docs-product": "af56b0e326ce23f947ae768b3d1bf75436c1b52f"
+        "docs-product": "c8d9199423eb4555987cf120690730f85ca39d0b"
       },
       "source_freshness": [
         {
@@ -2741,7 +2743,7 @@
         {
           "source_file": "Sources/docs-product/zh/v100_series/index.md",
           "source_commit": "bc640755145625cc20745f49861f82588863fca3",
-          "checked_against_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
+          "checked_against_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
           "freshness": "current",
           "reason": "source_file_unchanged"
         }
@@ -2788,13 +2790,13 @@
       "stale_paths": [],
       "unknown_paths": [],
       "checked_against_commit": {
-        "docs-product": "af56b0e326ce23f947ae768b3d1bf75436c1b52f"
+        "docs-product": "c8d9199423eb4555987cf120690730f85ca39d0b"
       },
       "source_freshness": [
         {
           "source_file": "Sources/docs-product/zh/v100_series/index.md",
           "source_commit": "97026162fb37562a5e19fa4ca0ada6481e5ff455",
-          "checked_against_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
+          "checked_against_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
           "freshness": "current",
           "reason": "source_file_unchanged"
         }
@@ -2868,35 +2870,35 @@
       ],
       "unknown_paths": [],
       "checked_against_commit": {
-        "docs-product": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
+        "docs-product": "c8d9199423eb4555987cf120690730f85ca39d0b",
         "docs-chip": "df43cfe4fbb6e1220b0bdf611d2cd233a4aa679d"
       },
       "source_freshness": [
         {
           "source_file": "Sources/docs-product/zh/v100_series/index.md",
           "source_commit": "bc640755145625cc20745f49861f82588863fca3",
-          "checked_against_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
+          "checked_against_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-product/zh/v100_series/v100_c2201/root_overview.md",
           "source_commit": "bc640755145625cc20745f49861f82588863fca3",
-          "checked_against_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
+          "checked_against_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
           "freshness": "stale",
           "reason": "source_file_changed"
         },
         {
           "source_file": "Sources/docs-product/zh/v100_series/v100_s5236/root_overview.md",
           "source_commit": "bc640755145625cc20745f49861f82588863fca3",
-          "checked_against_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
+          "checked_against_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
           "freshness": "stale",
           "reason": "source_file_changed"
         },
         {
           "source_file": "Sources/docs-product/zh/v100_series/v100_g5201/root_overview.md",
           "source_commit": "bc640755145625cc20745f49861f82588863fca3",
-          "checked_against_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
+          "checked_against_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
           "freshness": "stale",
           "reason": "source_file_changed"
         },
@@ -2980,7 +2982,7 @@
       "unknown_paths": [],
       "checked_against_commit": {
         "docs-chip": "df43cfe4fbb6e1220b0bdf611d2cd233a4aa679d",
-        "docs-product": "af56b0e326ce23f947ae768b3d1bf75436c1b52f"
+        "docs-product": "c8d9199423eb4555987cf120690730f85ca39d0b"
       },
       "source_freshness": [
         {
@@ -3021,14 +3023,14 @@
         {
           "source_file": "Sources/docs-product/zh/k1_series/k1_muse_pi/root_overview.md",
           "source_commit": "8c851807f2c54e8ba54d568b268100ca727d0777",
-          "checked_against_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
+          "checked_against_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-product/zh/k1_series/k1_muse_pi_pro/root_overview.md",
           "source_commit": "8c851807f2c54e8ba54d568b268100ca727d0777",
-          "checked_against_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
+          "checked_against_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
@@ -3120,49 +3122,49 @@
       "stale_paths": [],
       "unknown_paths": [],
       "checked_against_commit": {
-        "docs-product": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
+        "docs-product": "c8d9199423eb4555987cf120690730f85ca39d0b",
         "docs-chip": "df43cfe4fbb6e1220b0bdf611d2cd233a4aa679d"
       },
       "source_freshness": [
         {
           "source_file": "Sources/docs-product/zh/k1_series/k1_muse_paper/root_overview.md",
           "source_commit": "8c851807f2c54e8ba54d568b268100ca727d0777",
-          "checked_against_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
+          "checked_against_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-product/zh/k1_series/k1_muse_book/root_overview.md",
           "source_commit": "8c851807f2c54e8ba54d568b268100ca727d0777",
-          "checked_against_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
+          "checked_against_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-product/zh/k1_series/k1_muse_box/root_overview.md",
           "source_commit": "8c851807f2c54e8ba54d568b268100ca727d0777",
-          "checked_against_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
+          "checked_against_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-product/zh/k1_series/k1_muse_card/root_overview.md",
           "source_commit": "8c851807f2c54e8ba54d568b268100ca727d0777",
-          "checked_against_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
+          "checked_against_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-product/zh/k1_series/k1_muse_shelf/root_overview.md",
           "source_commit": "8c851807f2c54e8ba54d568b268100ca727d0777",
-          "checked_against_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
+          "checked_against_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-product/zh/k1_series/k1_riscv_labkit/root_overview.md",
           "source_commit": "8c851807f2c54e8ba54d568b268100ca727d0777",
-          "checked_against_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
+          "checked_against_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
@@ -3279,7 +3281,7 @@
       "unknown_paths": [],
       "checked_against_commit": {
         "docs-chip": "df43cfe4fbb6e1220b0bdf611d2cd233a4aa679d",
-        "docs-product": "af56b0e326ce23f947ae768b3d1bf75436c1b52f"
+        "docs-product": "c8d9199423eb4555987cf120690730f85ca39d0b"
       },
       "source_freshness": [
         {
@@ -3299,7 +3301,7 @@
         {
           "source_file": "Sources/docs-product/zh/v100_series/index.md",
           "source_commit": "bc640755145625cc20745f49861f82588863fca3",
-          "checked_against_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
+          "checked_against_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
@@ -3334,70 +3336,70 @@
         {
           "source_file": "Sources/docs-product/zh/k1_series/k1_muse_pi/root_overview.md",
           "source_commit": "8c851807f2c54e8ba54d568b268100ca727d0777",
-          "checked_against_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
+          "checked_against_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-product/zh/k1_series/k1_muse_pi_pro/root_overview.md",
           "source_commit": "8c851807f2c54e8ba54d568b268100ca727d0777",
-          "checked_against_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
+          "checked_against_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-product/zh/k3_series/k3_pico/root_overview.md",
           "source_commit": "8c851807f2c54e8ba54d568b268100ca727d0777",
-          "checked_against_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
+          "checked_against_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-product/zh/k3_series/k3_com260/root_overview.md",
           "source_commit": "8c851807f2c54e8ba54d568b268100ca727d0777",
-          "checked_against_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
+          "checked_against_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-product/zh/k1_series/k1_muse_paper/root_overview.md",
           "source_commit": "8c851807f2c54e8ba54d568b268100ca727d0777",
-          "checked_against_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
+          "checked_against_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-product/zh/k1_series/k1_muse_book/root_overview.md",
           "source_commit": "8c851807f2c54e8ba54d568b268100ca727d0777",
-          "checked_against_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
+          "checked_against_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-product/zh/k1_series/k1_muse_box/root_overview.md",
           "source_commit": "8c851807f2c54e8ba54d568b268100ca727d0777",
-          "checked_against_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
+          "checked_against_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-product/zh/k1_series/k1_muse_card/root_overview.md",
           "source_commit": "8c851807f2c54e8ba54d568b268100ca727d0777",
-          "checked_against_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
+          "checked_against_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-product/zh/k1_series/k1_muse_shelf/root_overview.md",
           "source_commit": "8c851807f2c54e8ba54d568b268100ca727d0777",
-          "checked_against_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
+          "checked_against_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-product/zh/k1_series/k1_riscv_labkit/root_overview.md",
           "source_commit": "8c851807f2c54e8ba54d568b268100ca727d0777",
-          "checked_against_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
+          "checked_against_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
           "freshness": "current",
           "reason": "source_file_unchanged"
         }
@@ -4120,48 +4122,48 @@
       "stale_paths": [],
       "unknown_paths": [],
       "checked_against_commit": {
-        "docs-product": "af56b0e326ce23f947ae768b3d1bf75436c1b52f"
+        "docs-product": "c8d9199423eb4555987cf120690730f85ca39d0b"
       },
       "source_freshness": [
         {
           "source_file": "Sources/docs-product/zh/k1_series/k1_muse_paper/root_overview.md",
           "source_commit": "8c851807f2c54e8ba54d568b268100ca727d0777",
-          "checked_against_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
+          "checked_against_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-product/zh/k1_series/k1_muse_book/root_overview.md",
           "source_commit": "8c851807f2c54e8ba54d568b268100ca727d0777",
-          "checked_against_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
+          "checked_against_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-product/zh/k1_series/k1_muse_box/root_overview.md",
           "source_commit": "8c851807f2c54e8ba54d568b268100ca727d0777",
-          "checked_against_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
+          "checked_against_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-product/zh/k1_series/k1_muse_card/root_overview.md",
           "source_commit": "8c851807f2c54e8ba54d568b268100ca727d0777",
-          "checked_against_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
+          "checked_against_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-product/zh/k1_series/k1_muse_shelf/root_overview.md",
           "source_commit": "8c851807f2c54e8ba54d568b268100ca727d0777",
-          "checked_against_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
+          "checked_against_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-product/zh/k1_series/k1_riscv_labkit/root_overview.md",
           "source_commit": "8c851807f2c54e8ba54d568b268100ca727d0777",
-          "checked_against_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
+          "checked_against_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
           "freshness": "current",
           "reason": "source_file_unchanged"
         }
@@ -4327,26 +4329,28 @@
       ],
       "created": "2026-06-30",
       "updated": "2026-10-27",
-      "freshness": "current",
-      "stale_paths": [],
+      "freshness": "stale",
+      "stale_paths": [
+        "Sources/docs-product/zh/k3_series/k3_com260/com260_hw_resources.md"
+      ],
       "unknown_paths": [],
       "checked_against_commit": {
-        "docs-product": "af56b0e326ce23f947ae768b3d1bf75436c1b52f"
+        "docs-product": "c8d9199423eb4555987cf120690730f85ca39d0b"
       },
       "source_freshness": [
         {
           "source_file": "Sources/docs-product/zh/k3_series/k3_com260/root_overview.md",
           "source_commit": "8c851807f2c54e8ba54d568b268100ca727d0777",
-          "checked_against_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
+          "checked_against_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-product/zh/k3_series/k3_com260/com260_hw_resources.md",
           "source_commit": "cb96db6332fac093964af8fef98db45e2783fde8",
-          "checked_against_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-          "freshness": "current",
-          "reason": "source_file_unchanged"
+          "checked_against_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+          "freshness": "stale",
+          "reason": "source_file_changed"
         }
       ]
     },
@@ -4436,13 +4440,13 @@
       "stale_paths": [],
       "unknown_paths": [],
       "checked_against_commit": {
-        "docs-product": "af56b0e326ce23f947ae768b3d1bf75436c1b52f"
+        "docs-product": "c8d9199423eb4555987cf120690730f85ca39d0b"
       },
       "source_freshness": [
         {
           "source_file": "Sources/docs-product/zh/k3_series/k3_pico/root_overview.md",
           "source_commit": "8c851807f2c54e8ba54d568b268100ca727d0777",
-          "checked_against_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
+          "checked_against_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
           "freshness": "current",
           "reason": "source_file_unchanged"
         }
@@ -4684,20 +4688,20 @@
       "stale_paths": [],
       "unknown_paths": [],
       "checked_against_commit": {
-        "docs-product": "af56b0e326ce23f947ae768b3d1bf75436c1b52f"
+        "docs-product": "c8d9199423eb4555987cf120690730f85ca39d0b"
       },
       "source_freshness": [
         {
           "source_file": "Sources/docs-product/zh/k1_series/k1_muse_pi/root_overview.md",
           "source_commit": "bc640755145625cc20745f49861f82588863fca3",
-          "checked_against_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
+          "checked_against_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-product/zh/k1_series/k1_muse_pi_pro/root_overview.md",
           "source_commit": "bc640755145625cc20745f49861f82588863fca3",
-          "checked_against_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
+          "checked_against_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
           "freshness": "current",
           "reason": "source_file_unchanged"
         }
@@ -5209,34 +5213,34 @@
       ],
       "unknown_paths": [],
       "checked_against_commit": {
-        "docs-product": "af56b0e326ce23f947ae768b3d1bf75436c1b52f"
+        "docs-product": "c8d9199423eb4555987cf120690730f85ca39d0b"
       },
       "source_freshness": [
         {
           "source_file": "Sources/docs-product/zh/v100_series/index.md",
           "source_commit": "bc640755145625cc20745f49861f82588863fca3",
-          "checked_against_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
+          "checked_against_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-product/zh/v100_series/v100_c2201/root_overview.md",
           "source_commit": "bc640755145625cc20745f49861f82588863fca3",
-          "checked_against_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
+          "checked_against_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
           "freshness": "stale",
           "reason": "source_file_changed"
         },
         {
           "source_file": "Sources/docs-product/zh/v100_series/v100_s5236/root_overview.md",
           "source_commit": "bc640755145625cc20745f49861f82588863fca3",
-          "checked_against_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
+          "checked_against_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
           "freshness": "stale",
           "reason": "source_file_changed"
         },
         {
           "source_file": "Sources/docs-product/zh/v100_series/v100_g5201/root_overview.md",
           "source_commit": "bc640755145625cc20745f49861f82588863fca3",
-          "checked_against_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
+          "checked_against_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
           "freshness": "stale",
           "reason": "source_file_changed"
         }
@@ -16348,8 +16352,8 @@
       "title": "Ecosystem Products",
       "headers": [],
       "summary": "sidebar_position: 2",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/index.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/index.md"
     },
     {
       "submodule": "docs-product",
@@ -16359,8 +16363,8 @@
       "title": "Hardware Accessories",
       "headers": [],
       "summary": "sidebar_position: 99",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/hw_accessories/index.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/hw_accessories/index.md"
     },
     {
       "submodule": "docs-product",
@@ -16377,8 +16381,8 @@
         "FAQ"
       ],
       "summary": "sidebar_position: 1",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/hw_accessories/tf_card_debug_board.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/hw_accessories/tf_card_debug_board.md"
     },
     {
       "submodule": "docs-product",
@@ -16388,8 +16392,8 @@
       "title": "K1 Series",
       "headers": [],
       "summary": "sidebar_position: 2",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/k1_series/index.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/k1_series/index.md"
     },
     {
       "submodule": "docs-product",
@@ -16399,8 +16403,8 @@
       "title": "banner.txt",
       "headers": [],
       "summary": "MUSE BOOK",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/k1_series/k1_muse_book/banner.txt"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/k1_series/k1_muse_book/banner.txt"
     },
     {
       "submodule": "docs-product",
@@ -16410,8 +16414,8 @@
       "title": "K1 MUSE Book Hardware Design Resources",
       "headers": [],
       "summary": "sidebar_position: 3",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/k1_series/k1_muse_book/book_hw.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/k1_series/k1_muse_book/book_hw.md"
     },
     {
       "submodule": "docs-product",
@@ -16432,8 +16436,8 @@
         "Weight & Dimensions"
       ],
       "summary": "sidebar_position: 2",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/k1_series/k1_muse_book/book_user_guide.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/k1_series/k1_muse_book/book_user_guide.md"
     },
     {
       "submodule": "docs-product",
@@ -16443,8 +16447,8 @@
       "title": "K1 MUSE Book",
       "headers": [],
       "summary": "sidebar_position: 2",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/k1_series/k1_muse_book/index.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/k1_series/k1_muse_book/index.md"
     },
     {
       "submodule": "docs-product",
@@ -16457,8 +16461,8 @@
         "Business Cooperation & Purchase"
       ],
       "summary": "sidebar_position: 1",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/k1_series/k1_muse_book/root_overview.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/k1_series/k1_muse_book/root_overview.md"
     },
     {
       "submodule": "docs-product",
@@ -16468,8 +16472,8 @@
       "title": "banner.txt",
       "headers": [],
       "summary": "MUSE Box",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/k1_series/k1_muse_box/banner.txt"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/k1_series/k1_muse_box/banner.txt"
     },
     {
       "submodule": "docs-product",
@@ -16490,8 +16494,8 @@
         "Firmware Download and Installation"
       ],
       "summary": "sidebar_position: 2",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/k1_series/k1_muse_box/box_user_guide.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/k1_series/k1_muse_box/box_user_guide.md"
     },
     {
       "submodule": "docs-product",
@@ -16501,8 +16505,8 @@
       "title": "K1 MUSE Box",
       "headers": [],
       "summary": "sidebar_position: 4",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/k1_series/k1_muse_box/index.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/k1_series/k1_muse_box/index.md"
     },
     {
       "submodule": "docs-product",
@@ -16515,8 +16519,8 @@
         "Business Cooperation & Purchase"
       ],
       "summary": "sidebar_position: 1",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/k1_series/k1_muse_box/root_overview.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/k1_series/k1_muse_box/root_overview.md"
     },
     {
       "submodule": "docs-product",
@@ -16526,8 +16530,8 @@
       "title": "banner.txt",
       "headers": [],
       "summary": "MUSE Card",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/k1_series/k1_muse_card/banner.txt"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/k1_series/k1_muse_card/banner.txt"
     },
     {
       "submodule": "docs-product",
@@ -16537,8 +16541,8 @@
       "title": "K1 MUSE Card Hardware Design Resources",
       "headers": [],
       "summary": "sidebar_position: 3",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/k1_series/k1_muse_card/card_hw.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/k1_series/k1_muse_card/card_hw.md"
     },
     {
       "submodule": "docs-product",
@@ -16559,8 +16563,8 @@
         "Hardware Description"
       ],
       "summary": "sidebar_position: 2",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/k1_series/k1_muse_card/card_user_guide.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/k1_series/k1_muse_card/card_user_guide.md"
     },
     {
       "submodule": "docs-product",
@@ -16570,8 +16574,8 @@
       "title": "K1 MUSE Card",
       "headers": [],
       "summary": "sidebar_position: 8",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/k1_series/k1_muse_card/index.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/k1_series/k1_muse_card/index.md"
     },
     {
       "submodule": "docs-product",
@@ -16584,8 +16588,8 @@
         "Business Cooperation & Purchase"
       ],
       "summary": "sidebar_position: 1",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/k1_series/k1_muse_card/root_overview.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/k1_series/k1_muse_card/root_overview.md"
     },
     {
       "submodule": "docs-product",
@@ -16595,8 +16599,8 @@
       "title": "banner.txt",
       "headers": [],
       "summary": "K1 MUSE Paper",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/k1_series/k1_muse_paper/banner.txt"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/k1_series/k1_muse_paper/banner.txt"
     },
     {
       "submodule": "docs-product",
@@ -16606,8 +16610,8 @@
       "title": "K1 MUSE Paper",
       "headers": [],
       "summary": "sidebar_position: 3",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/k1_series/k1_muse_paper/index.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/k1_series/k1_muse_paper/index.md"
     },
     {
       "submodule": "docs-product",
@@ -16617,8 +16621,8 @@
       "title": "K1 MUSE Paper Hardware Reference Documents",
       "headers": [],
       "summary": "sidebar_position: 3",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/k1_series/k1_muse_paper/paper_hw.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/k1_series/k1_muse_paper/paper_hw.md"
     },
     {
       "submodule": "docs-product",
@@ -16639,8 +16643,8 @@
         "3. MUSE Paper Reference Design Block Diagram"
       ],
       "summary": "sidebar_position: 2",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/k1_series/k1_muse_paper/paper_user_guide.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/k1_series/k1_muse_paper/paper_user_guide.md"
     },
     {
       "submodule": "docs-product",
@@ -16654,8 +16658,8 @@
         "Business Cooperation & Purchase"
       ],
       "summary": "sidebar_position: 1",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/k1_series/k1_muse_paper/root_overview.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/k1_series/k1_muse_paper/root_overview.md"
     },
     {
       "submodule": "docs-product",
@@ -16665,8 +16669,8 @@
       "title": "banner.txt",
       "headers": [],
       "summary": "MUSE Pi",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/k1_series/k1_muse_pi/banner.txt"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/k1_series/k1_muse_pi/banner.txt"
     },
     {
       "submodule": "docs-product",
@@ -16676,8 +16680,8 @@
       "title": "K1 MUSE Pi",
       "headers": [],
       "summary": "sidebar_position: 6",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/k1_series/k1_muse_pi/index.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/k1_series/k1_muse_pi/index.md"
     },
     {
       "submodule": "docs-product",
@@ -16687,8 +16691,8 @@
       "title": "K1 MUSE Pi Hardware Design Resources",
       "headers": [],
       "summary": "sidebar_position: 3",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/k1_series/k1_muse_pi/pi_hw.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/k1_series/k1_muse_pi/pi_hw.md"
     },
     {
       "submodule": "docs-product",
@@ -16709,8 +16713,8 @@
         "Power Block Diagram"
       ],
       "summary": "sidebar_position: 2",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/k1_series/k1_muse_pi/pi_user_guide.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/k1_series/k1_muse_pi/pi_user_guide.md"
     },
     {
       "submodule": "docs-product",
@@ -16723,8 +16727,8 @@
         "Business Cooperation & Purchase"
       ],
       "summary": "sidebar_position: 1",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/k1_series/k1_muse_pi/root_overview.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/k1_series/k1_muse_pi/root_overview.md"
     },
     {
       "submodule": "docs-product",
@@ -16734,8 +16738,8 @@
       "title": "banner.txt",
       "headers": [],
       "summary": "K1 MUSE Pi Pro",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/k1_series/k1_muse_pi_pro/banner.txt"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/k1_series/k1_muse_pi_pro/banner.txt"
     },
     {
       "submodule": "docs-product",
@@ -16745,8 +16749,8 @@
       "title": "K1 MUSE Pi Pro",
       "headers": [],
       "summary": "sidebar_position: 1",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/k1_series/k1_muse_pi_pro/index.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/k1_series/k1_muse_pi_pro/index.md"
     },
     {
       "submodule": "docs-product",
@@ -16756,8 +16760,8 @@
       "title": "K1 MUSE Pi Pro Hardware Design Resources",
       "headers": [],
       "summary": "sidebar_position: 3",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/k1_series/k1_muse_pi_pro/pi_pro_hw.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/k1_series/k1_muse_pi_pro/pi_pro_hw.md"
     },
     {
       "submodule": "docs-product",
@@ -16778,8 +16782,8 @@
         "3.2 Start Up"
       ],
       "summary": "sidebar_position: 2",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/k1_series/k1_muse_pi_pro/pi_pro_user_guide.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/k1_series/k1_muse_pi_pro/pi_pro_user_guide.md"
     },
     {
       "submodule": "docs-product",
@@ -16793,8 +16797,8 @@
         "Business Cooperation & Purchase"
       ],
       "summary": "sidebar_position: 1",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/k1_series/k1_muse_pi_pro/root_overview.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/k1_series/k1_muse_pi_pro/root_overview.md"
     },
     {
       "submodule": "docs-product",
@@ -16804,8 +16808,8 @@
       "title": "banner.txt",
       "headers": [],
       "summary": "MUSE Shelf",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/k1_series/k1_muse_shelf/banner.txt"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/k1_series/k1_muse_shelf/banner.txt"
     },
     {
       "submodule": "docs-product",
@@ -16815,8 +16819,8 @@
       "title": "K1 MUSE Shelf",
       "headers": [],
       "summary": "sidebar_position: 7",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/k1_series/k1_muse_shelf/index.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/k1_series/k1_muse_shelf/index.md"
     },
     {
       "submodule": "docs-product",
@@ -16830,8 +16834,8 @@
         "Business Cooperation & Purchase"
       ],
       "summary": "sidebar_position: 1",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/k1_series/k1_muse_shelf/root_overview.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/k1_series/k1_muse_shelf/root_overview.md"
     },
     {
       "submodule": "docs-product",
@@ -16841,8 +16845,8 @@
       "title": "banner.txt",
       "headers": [],
       "summary": "RISC-V Lab kit",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/k1_series/k1_riscv_labkit/banner.txt"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/k1_series/k1_riscv_labkit/banner.txt"
     },
     {
       "submodule": "docs-product",
@@ -16852,8 +16856,8 @@
       "title": "K1 RISC-V Lab Kit",
       "headers": [],
       "summary": "sidebar_position: 5",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/k1_series/k1_riscv_labkit/index.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/k1_series/k1_riscv_labkit/index.md"
     },
     {
       "submodule": "docs-product",
@@ -16867,8 +16871,8 @@
         "Business Cooperation & Purchase"
       ],
       "summary": "sidebar_position: 1",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/k1_series/k1_riscv_labkit/root_overview.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/k1_series/k1_riscv_labkit/root_overview.md"
     },
     {
       "submodule": "docs-product",
@@ -16878,8 +16882,8 @@
       "title": "K3 Series",
       "headers": [],
       "summary": "sidebar_position: 1",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/k3_series/index.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/k3_series/index.md"
     },
     {
       "submodule": "docs-product",
@@ -16889,8 +16893,8 @@
       "title": "banner.txt",
       "headers": [],
       "summary": "K3 CoM260 Kit",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/k3_series/k3_com260/banner.txt"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/k3_series/k3_com260/banner.txt"
     },
     {
       "submodule": "docs-product",
@@ -16911,8 +16915,8 @@
         "3. Pin Definitions"
       ],
       "summary": "sidebar_position: 2",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/k3_series/k3_com260/com260_ds.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/k3_series/k3_com260/com260_ds.md"
     },
     {
       "submodule": "docs-product",
@@ -16924,11 +16928,12 @@
         "Resource List",
         "Core Board Schematic",
         "Bill of Materials (BOM)",
-        "Baseboard Schematic and PCB"
+        "Baseboard Schematic and PCB",
+        "Power Button Management MCU Firmware Flashing Guide"
       ],
       "summary": "sidebar_position: 4",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/k3_series/k3_com260/com260_hw_resources.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/k3_series/k3_com260/com260_hw_resources.md"
     },
     {
       "submodule": "docs-product",
@@ -16949,8 +16954,8 @@
         "3.3 K3 CoM260 Reference Solution Block Diagram"
       ],
       "summary": "sidebar_position: 3",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/k3_series/k3_com260/com260_user_guide.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/k3_series/k3_com260/com260_user_guide.md"
     },
     {
       "submodule": "docs-product",
@@ -16960,8 +16965,8 @@
       "title": "K3 CoM260 Kit",
       "headers": [],
       "summary": "sidebar_position: 2",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/k3_series/k3_com260/index.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/k3_series/k3_com260/index.md"
     },
     {
       "submodule": "docs-product",
@@ -16975,8 +16980,8 @@
         "Business Cooperation & Purchase"
       ],
       "summary": "sidebar_position: 1",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/k3_series/k3_com260/root_overview.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/k3_series/k3_com260/root_overview.md"
     },
     {
       "submodule": "docs-product",
@@ -16986,8 +16991,8 @@
       "title": "banner.txt",
       "headers": [],
       "summary": "K3 Pico-ITX",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/k3_series/k3_pico/banner.txt"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/k3_series/k3_pico/banner.txt"
     },
     {
       "submodule": "docs-product",
@@ -16997,8 +17002,8 @@
       "title": "K3 Pico-ITX",
       "headers": [],
       "summary": "sidebar_position: 1",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/k3_series/k3_pico/index.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/k3_series/k3_pico/index.md"
     },
     {
       "submodule": "docs-product",
@@ -17015,8 +17020,8 @@
         "3D Model"
       ],
       "summary": "sidebar_position: 3",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/k3_series/k3_pico/pico_hw_resources.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/k3_series/k3_pico/pico_hw_resources.md"
     },
     {
       "submodule": "docs-product",
@@ -17037,8 +17042,8 @@
         "2.4 Product Specifications"
       ],
       "summary": "sidebar_position: 2",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/k3_series/k3_pico/pico_user_guide.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/k3_series/k3_pico/pico_user_guide.md"
     },
     {
       "submodule": "docs-product",
@@ -17054,8 +17059,8 @@
         "Business Cooperation & Purchase"
       ],
       "summary": "sidebar_position: 1",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/k3_series/k3_pico/root_overview.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/k3_series/k3_pico/root_overview.md"
     },
     {
       "submodule": "docs-product",
@@ -17065,8 +17070,8 @@
       "title": "banner.txt",
       "headers": [],
       "summary": "Cluster Server RV2768",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/k3_series/k3_rv2768/banner.txt"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/k3_series/k3_rv2768/banner.txt"
     },
     {
       "submodule": "docs-product",
@@ -17076,8 +17081,8 @@
       "title": "Cluster Server RV2768",
       "headers": [],
       "summary": "sidebar_position: 4",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/k3_series/k3_rv2768/index.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/k3_series/k3_rv2768/index.md"
     },
     {
       "submodule": "docs-product",
@@ -17091,8 +17096,8 @@
         "Business Cooperation & Purchase"
       ],
       "summary": "sidebar_position: 1",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/k3_series/k3_rv2768/root_overview.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/k3_series/k3_rv2768/root_overview.md"
     },
     {
       "submodule": "docs-product",
@@ -17113,8 +17118,8 @@
         "Post-Installation Tasks"
       ],
       "summary": "sidebar_position: 2",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/k3_series/k3_rv2768/rv2768_quick_guide.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/k3_series/k3_rv2768/rv2768_quick_guide.md"
     },
     {
       "submodule": "docs-product",
@@ -17135,8 +17140,8 @@
         "2. CPU Asset Information APIs"
       ],
       "summary": "sidebar_position: 4",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/k3_series/k3_rv2768/rv2768_redfish.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/k3_series/k3_rv2768/rv2768_redfish.md"
     },
     {
       "submodule": "docs-product",
@@ -17157,8 +17162,8 @@
         "Boards"
       ],
       "summary": "sidebar_position: 3",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/k3_series/k3_rv2768/rv2768_white_paper.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/k3_series/k3_rv2768/rv2768_white_paper.md"
     },
     {
       "submodule": "docs-product",
@@ -17168,8 +17173,8 @@
       "title": "banner.txt",
       "headers": [],
       "summary": "K3 Shelf N10/N48",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/k3_series/k3_shelf/banner.txt"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/k3_series/k3_shelf/banner.txt"
     },
     {
       "submodule": "docs-product",
@@ -17179,8 +17184,8 @@
       "title": "K3 Shelf N10/N48",
       "headers": [],
       "summary": "sidebar_position: 3",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/k3_series/k3_shelf/index.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/k3_series/k3_shelf/index.md"
     },
     {
       "submodule": "docs-product",
@@ -17195,8 +17200,8 @@
         "Business Cooperation & Purchase"
       ],
       "summary": "sidebar_position: 1",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/k3_series/k3_shelf/root_overview.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/k3_series/k3_shelf/root_overview.md"
     },
     {
       "submodule": "docs-product",
@@ -17214,8 +17219,8 @@
         "Firmware & Drivers"
       ],
       "summary": "sidebar_position: 999",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/support_service/after_sales_service.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/support_service/after_sales_service.md"
     },
     {
       "submodule": "docs-product",
@@ -17225,8 +17230,8 @@
       "title": "Support Service",
       "headers": [],
       "summary": "sidebar_position: 999",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/support_service/index.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/support_service/index.md"
     },
     {
       "submodule": "docs-product",
@@ -17236,8 +17241,8 @@
       "title": "V100 Series",
       "headers": [],
       "summary": "sidebar_position: 11",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/v100_series/index.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/v100_series/index.md"
     },
     {
       "submodule": "docs-product",
@@ -17247,8 +17252,8 @@
       "title": "banner.txt",
       "headers": [],
       "summary": "C2201",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/v100_series/v100_c2201/banner.txt"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/v100_series/v100_c2201/banner.txt"
     },
     {
       "submodule": "docs-product",
@@ -17258,8 +17263,8 @@
       "title": "C2201",
       "headers": [],
       "summary": "sidebar_position: 1",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/v100_series/v100_c2201/index.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/v100_series/v100_c2201/index.md"
     },
     {
       "submodule": "docs-product",
@@ -17273,8 +17278,8 @@
         "Specifications"
       ],
       "summary": "title: V100 RISC-V Computing Server C2201 Brief",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/v100_series/v100_c2201/root_overview.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/v100_series/v100_c2201/root_overview.md"
     },
     {
       "submodule": "docs-product",
@@ -17284,8 +17289,8 @@
       "title": "banner.txt",
       "headers": [],
       "summary": "G5201",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/v100_series/v100_g5201/banner.txt"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/v100_series/v100_g5201/banner.txt"
     },
     {
       "submodule": "docs-product",
@@ -17295,8 +17300,8 @@
       "title": "G5201",
       "headers": [],
       "summary": "sidebar_position: 3",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/v100_series/v100_g5201/index.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/v100_series/v100_g5201/index.md"
     },
     {
       "submodule": "docs-product",
@@ -17310,8 +17315,8 @@
         "Specifications"
       ],
       "summary": "title: V100 Intelligent Computing Server G5201 Brief",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/v100_series/v100_g5201/root_overview.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/v100_series/v100_g5201/root_overview.md"
     },
     {
       "submodule": "docs-product",
@@ -17321,8 +17326,8 @@
       "title": "banner.txt",
       "headers": [],
       "summary": "S5236",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/v100_series/v100_s5236/banner.txt"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/v100_series/v100_s5236/banner.txt"
     },
     {
       "submodule": "docs-product",
@@ -17332,8 +17337,8 @@
       "title": "S5236",
       "headers": [],
       "summary": "sidebar_position: 2",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/v100_series/v100_s5236/index.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/v100_series/v100_s5236/index.md"
     },
     {
       "submodule": "docs-product",
@@ -17347,8 +17352,8 @@
         "Specifications"
       ],
       "summary": "title: V100 Storage Server S5236 Brief",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/en/v100_series/v100_s5236/root_overview.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/en/v100_series/v100_s5236/root_overview.md"
     },
     {
       "submodule": "docs-product",
@@ -17358,8 +17363,8 @@
       "title": "生态产品",
       "headers": [],
       "summary": "sidebar_position: 2",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/index.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/index.md"
     },
     {
       "submodule": "docs-product",
@@ -17369,8 +17374,8 @@
       "title": "硬件配件",
       "headers": [],
       "summary": "sidebar_position: 99",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/hw_accessories/index.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/hw_accessories/index.md"
     },
     {
       "submodule": "docs-product",
@@ -17387,8 +17392,8 @@
         "常见问题"
       ],
       "summary": "sidebar_position: 1",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/hw_accessories/tf_card_debug_board.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/hw_accessories/tf_card_debug_board.md"
     },
     {
       "submodule": "docs-product",
@@ -17398,8 +17403,8 @@
       "title": "K1 系列",
       "headers": [],
       "summary": "sidebar_position: 2",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/k1_series/index.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/k1_series/index.md"
     },
     {
       "submodule": "docs-product",
@@ -17409,8 +17414,8 @@
       "title": "banner.txt",
       "headers": [],
       "summary": "MUSE BOOK",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/k1_series/k1_muse_book/banner.txt"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/k1_series/k1_muse_book/banner.txt"
     },
     {
       "submodule": "docs-product",
@@ -17420,8 +17425,8 @@
       "title": "K1 MUSE Book 硬件设计资源",
       "headers": [],
       "summary": "sidebar_position: 3",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/k1_series/k1_muse_book/book_hw.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/k1_series/k1_muse_book/book_hw.md"
     },
     {
       "submodule": "docs-product",
@@ -17442,8 +17447,8 @@
         "重量＆体积："
       ],
       "summary": "sidebar_position: 2",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/k1_series/k1_muse_book/book_user_guide.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/k1_series/k1_muse_book/book_user_guide.md"
     },
     {
       "submodule": "docs-product",
@@ -17453,8 +17458,8 @@
       "title": "K1 MUSE Book",
       "headers": [],
       "summary": "sidebar_position: 2",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/k1_series/k1_muse_book/index.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/k1_series/k1_muse_book/index.md"
     },
     {
       "submodule": "docs-product",
@@ -17467,8 +17472,8 @@
         "合作与采购咨询"
       ],
       "summary": "sidebar_position: 1",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/k1_series/k1_muse_book/root_overview.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/k1_series/k1_muse_book/root_overview.md"
     },
     {
       "submodule": "docs-product",
@@ -17478,8 +17483,8 @@
       "title": "banner.txt",
       "headers": [],
       "summary": "MUSE Box",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/k1_series/k1_muse_box/banner.txt"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/k1_series/k1_muse_box/banner.txt"
     },
     {
       "submodule": "docs-product",
@@ -17500,8 +17505,8 @@
         "固件下载和安装"
       ],
       "summary": "sidebar_position: 2",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/k1_series/k1_muse_box/box_user_guide.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/k1_series/k1_muse_box/box_user_guide.md"
     },
     {
       "submodule": "docs-product",
@@ -17511,8 +17516,8 @@
       "title": "K1 MUSE Box",
       "headers": [],
       "summary": "sidebar_position: 4",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/k1_series/k1_muse_box/index.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/k1_series/k1_muse_box/index.md"
     },
     {
       "submodule": "docs-product",
@@ -17525,8 +17530,8 @@
         "合作与采购咨询"
       ],
       "summary": "sidebar_position: 1",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/k1_series/k1_muse_box/root_overview.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/k1_series/k1_muse_box/root_overview.md"
     },
     {
       "submodule": "docs-product",
@@ -17536,8 +17541,8 @@
       "title": "banner.txt",
       "headers": [],
       "summary": "MUSE Card",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/k1_series/k1_muse_card/banner.txt"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/k1_series/k1_muse_card/banner.txt"
     },
     {
       "submodule": "docs-product",
@@ -17547,8 +17552,8 @@
       "title": "MUSE Card 硬件设计资源",
       "headers": [],
       "summary": "sidebar_position: 3",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/k1_series/k1_muse_card/card_hw.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/k1_series/k1_muse_card/card_hw.md"
     },
     {
       "submodule": "docs-product",
@@ -17569,8 +17574,8 @@
         "硬件介绍"
       ],
       "summary": "sidebar_position: 2",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/k1_series/k1_muse_card/card_user_guide.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/k1_series/k1_muse_card/card_user_guide.md"
     },
     {
       "submodule": "docs-product",
@@ -17580,8 +17585,8 @@
       "title": "K1 MUSE Card",
       "headers": [],
       "summary": "sidebar_position: 8",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/k1_series/k1_muse_card/index.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/k1_series/k1_muse_card/index.md"
     },
     {
       "submodule": "docs-product",
@@ -17594,8 +17599,8 @@
         "合作与采购咨询"
       ],
       "summary": "sidebar_position: 1",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/k1_series/k1_muse_card/root_overview.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/k1_series/k1_muse_card/root_overview.md"
     },
     {
       "submodule": "docs-product",
@@ -17605,8 +17610,8 @@
       "title": "banner.txt",
       "headers": [],
       "summary": "K1 MUSE Paper",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/k1_series/k1_muse_paper/banner.txt"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/k1_series/k1_muse_paper/banner.txt"
     },
     {
       "submodule": "docs-product",
@@ -17616,8 +17621,8 @@
       "title": "K1 MUSE Paper",
       "headers": [],
       "summary": "sidebar_position: 3",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/k1_series/k1_muse_paper/index.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/k1_series/k1_muse_paper/index.md"
     },
     {
       "submodule": "docs-product",
@@ -17627,8 +17632,8 @@
       "title": "K1 MUSE Paper 硬件设计资源",
       "headers": [],
       "summary": "sidebar_position: 3",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/k1_series/k1_muse_paper/paper_hw.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/k1_series/k1_muse_paper/paper_hw.md"
     },
     {
       "submodule": "docs-product",
@@ -17649,8 +17654,8 @@
         "3. MUSE Paper参考方案框图"
       ],
       "summary": "sidebar_position: 2",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/k1_series/k1_muse_paper/paper_user_guide.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/k1_series/k1_muse_paper/paper_user_guide.md"
     },
     {
       "submodule": "docs-product",
@@ -17664,8 +17669,8 @@
         "合作与采购咨询"
       ],
       "summary": "sidebar_position: 1",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/k1_series/k1_muse_paper/root_overview.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/k1_series/k1_muse_paper/root_overview.md"
     },
     {
       "submodule": "docs-product",
@@ -17675,8 +17680,8 @@
       "title": "banner.txt",
       "headers": [],
       "summary": "MUSE Pi",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/k1_series/k1_muse_pi/banner.txt"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/k1_series/k1_muse_pi/banner.txt"
     },
     {
       "submodule": "docs-product",
@@ -17686,8 +17691,8 @@
       "title": "K1 MUSE Pi",
       "headers": [],
       "summary": "sidebar_position: 6",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/k1_series/k1_muse_pi/index.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/k1_series/k1_muse_pi/index.md"
     },
     {
       "submodule": "docs-product",
@@ -17697,8 +17702,8 @@
       "title": "K1 MUSE Pi 硬件设计资源",
       "headers": [],
       "summary": "sidebar_position: 3",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/k1_series/k1_muse_pi/pi_hw.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/k1_series/k1_muse_pi/pi_hw.md"
     },
     {
       "submodule": "docs-product",
@@ -17719,8 +17724,8 @@
         "电源框图"
       ],
       "summary": "sidebar_position: 2",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/k1_series/k1_muse_pi/pi_user_guide.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/k1_series/k1_muse_pi/pi_user_guide.md"
     },
     {
       "submodule": "docs-product",
@@ -17733,8 +17738,8 @@
         "合作与采购咨询"
       ],
       "summary": "sidebar_position: 1",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/k1_series/k1_muse_pi/root_overview.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/k1_series/k1_muse_pi/root_overview.md"
     },
     {
       "submodule": "docs-product",
@@ -17744,8 +17749,8 @@
       "title": "banner.txt",
       "headers": [],
       "summary": "K1 MUSE Pi Pro",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/k1_series/k1_muse_pi_pro/banner.txt"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/k1_series/k1_muse_pi_pro/banner.txt"
     },
     {
       "submodule": "docs-product",
@@ -17755,8 +17760,8 @@
       "title": "K1 MUSE Pi Pro",
       "headers": [],
       "summary": "sidebar_position: 1",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/k1_series/k1_muse_pi_pro/index.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/k1_series/k1_muse_pi_pro/index.md"
     },
     {
       "submodule": "docs-product",
@@ -17766,8 +17771,8 @@
       "title": "K1 MUSE Pi Pro 硬件设计资源",
       "headers": [],
       "summary": "sidebar_position: 3",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/k1_series/k1_muse_pi_pro/pi_pro_hw.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/k1_series/k1_muse_pi_pro/pi_pro_hw.md"
     },
     {
       "submodule": "docs-product",
@@ -17788,8 +17793,8 @@
         "3.2 开始启动"
       ],
       "summary": "sidebar_position: 2",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/k1_series/k1_muse_pi_pro/pi_pro_user_guide.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/k1_series/k1_muse_pi_pro/pi_pro_user_guide.md"
     },
     {
       "submodule": "docs-product",
@@ -17803,8 +17808,8 @@
         "合作与采购咨询"
       ],
       "summary": "sidebar_position: 1",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/k1_series/k1_muse_pi_pro/root_overview.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/k1_series/k1_muse_pi_pro/root_overview.md"
     },
     {
       "submodule": "docs-product",
@@ -17814,8 +17819,8 @@
       "title": "banner.txt",
       "headers": [],
       "summary": "MUSE Shelf",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/k1_series/k1_muse_shelf/banner.txt"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/k1_series/k1_muse_shelf/banner.txt"
     },
     {
       "submodule": "docs-product",
@@ -17825,8 +17830,8 @@
       "title": "K1 RISC-V 集群服务器",
       "headers": [],
       "summary": "sidebar_position: 7",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/k1_series/k1_muse_shelf/index.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/k1_series/k1_muse_shelf/index.md"
     },
     {
       "submodule": "docs-product",
@@ -17840,8 +17845,8 @@
         "合作与采购咨询"
       ],
       "summary": "sidebar_position: 1",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/k1_series/k1_muse_shelf/root_overview.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/k1_series/k1_muse_shelf/root_overview.md"
     },
     {
       "submodule": "docs-product",
@@ -17851,8 +17856,8 @@
       "title": "banner.txt",
       "headers": [],
       "summary": "RISC-V 教学实验箱",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/k1_series/k1_riscv_labkit/banner.txt"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/k1_series/k1_riscv_labkit/banner.txt"
     },
     {
       "submodule": "docs-product",
@@ -17862,8 +17867,8 @@
       "title": "K1 RISC-V 实验箱",
       "headers": [],
       "summary": "sidebar_position: 5",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/k1_series/k1_riscv_labkit/index.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/k1_series/k1_riscv_labkit/index.md"
     },
     {
       "submodule": "docs-product",
@@ -17877,8 +17882,8 @@
         "合作与采购咨询"
       ],
       "summary": "sidebar_position: 1",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/k1_series/k1_riscv_labkit/root_overview.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/k1_series/k1_riscv_labkit/root_overview.md"
     },
     {
       "submodule": "docs-product",
@@ -17888,8 +17893,8 @@
       "title": "K3 系列",
       "headers": [],
       "summary": "sidebar_position: 1",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/k3_series/index.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/k3_series/index.md"
     },
     {
       "submodule": "docs-product",
@@ -17899,8 +17904,8 @@
       "title": "banner.txt",
       "headers": [],
       "summary": "K3 CoM260 Kit",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/k3_series/k3_com260/banner.txt"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/k3_series/k3_com260/banner.txt"
     },
     {
       "submodule": "docs-product",
@@ -17921,8 +17926,8 @@
         "3. 引脚定义"
       ],
       "summary": "sidebar_position: 2",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/k3_series/k3_com260/com260_ds.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/k3_series/k3_com260/com260_ds.md"
     },
     {
       "submodule": "docs-product",
@@ -17934,11 +17939,12 @@
         "资源列表",
         "核心板原理图",
         "物料清单（BOM）",
-        "底板原理图和 PCB"
+        "底板原理图和 PCB",
+        "电源按键管理 MCU 固件烧录指南"
       ],
       "summary": "sidebar_position: 4",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/k3_series/k3_com260/com260_hw_resources.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/k3_series/k3_com260/com260_hw_resources.md"
     },
     {
       "submodule": "docs-product",
@@ -17959,8 +17965,8 @@
         "3.3 K3 CoM260 参考方案框图"
       ],
       "summary": "sidebar_position: 3",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/k3_series/k3_com260/com260_user_guide.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/k3_series/k3_com260/com260_user_guide.md"
     },
     {
       "submodule": "docs-product",
@@ -17970,8 +17976,8 @@
       "title": "K3 CoM260 Kit",
       "headers": [],
       "summary": "sidebar_position: 2",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/k3_series/k3_com260/index.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/k3_series/k3_com260/index.md"
     },
     {
       "submodule": "docs-product",
@@ -17985,8 +17991,8 @@
         "合作与采购咨询"
       ],
       "summary": "sidebar_position: 1",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/k3_series/k3_com260/root_overview.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/k3_series/k3_com260/root_overview.md"
     },
     {
       "submodule": "docs-product",
@@ -17996,8 +18002,8 @@
       "title": "banner.txt",
       "headers": [],
       "summary": "K3 Pico-ITX",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/k3_series/k3_pico/banner.txt"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/k3_series/k3_pico/banner.txt"
     },
     {
       "submodule": "docs-product",
@@ -18007,8 +18013,8 @@
       "title": "K3 Pico-ITX",
       "headers": [],
       "summary": "sidebar_position: 1",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/k3_series/k3_pico/index.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/k3_series/k3_pico/index.md"
     },
     {
       "submodule": "docs-product",
@@ -18025,8 +18031,8 @@
         "3D 模型图"
       ],
       "summary": "sidebar_position: 3",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/k3_series/k3_pico/pico_hw_resources.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/k3_series/k3_pico/pico_hw_resources.md"
     },
     {
       "submodule": "docs-product",
@@ -18047,8 +18053,8 @@
         "2.4 产品规格"
       ],
       "summary": "sidebar_position: 2",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/k3_series/k3_pico/pico_user_guide.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/k3_series/k3_pico/pico_user_guide.md"
     },
     {
       "submodule": "docs-product",
@@ -18064,8 +18070,8 @@
         "合作与采购咨询"
       ],
       "summary": "sidebar_position: 1",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/k3_series/k3_pico/root_overview.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/k3_series/k3_pico/root_overview.md"
     },
     {
       "submodule": "docs-product",
@@ -18075,8 +18081,8 @@
       "title": "banner.txt",
       "headers": [],
       "summary": "Cluster Server RV2768",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/k3_series/k3_rv2768/banner.txt"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/k3_series/k3_rv2768/banner.txt"
     },
     {
       "submodule": "docs-product",
@@ -18086,8 +18092,8 @@
       "title": "Cluster Server RV2768",
       "headers": [],
       "summary": "sidebar_position: 4",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/k3_series/k3_rv2768/index.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/k3_series/k3_rv2768/index.md"
     },
     {
       "submodule": "docs-product",
@@ -18101,8 +18107,8 @@
         "合作与采购咨询"
       ],
       "summary": "sidebar_position: 1",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/k3_series/k3_rv2768/root_overview.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/k3_series/k3_rv2768/root_overview.md"
     },
     {
       "submodule": "docs-product",
@@ -18123,8 +18129,8 @@
         "后续任务"
       ],
       "summary": "sidebar_position: 2",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/k3_series/k3_rv2768/rv2768_quick_guide.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/k3_series/k3_rv2768/rv2768_quick_guide.md"
     },
     {
       "submodule": "docs-product",
@@ -18145,8 +18151,8 @@
         "2. CPU 资产信息接口"
       ],
       "summary": "sidebar_position: 4",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/k3_series/k3_rv2768/rv2768_redfish.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/k3_series/k3_rv2768/rv2768_redfish.md"
     },
     {
       "submodule": "docs-product",
@@ -18167,8 +18173,8 @@
         "单板"
       ],
       "summary": "sidebar_position: 3",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/k3_series/k3_rv2768/rv2768_white_paper.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/k3_series/k3_rv2768/rv2768_white_paper.md"
     },
     {
       "submodule": "docs-product",
@@ -18178,8 +18184,8 @@
       "title": "banner.txt",
       "headers": [],
       "summary": "K3 Shelf N10/N48",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/k3_series/k3_shelf/banner.txt"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/k3_series/k3_shelf/banner.txt"
     },
     {
       "submodule": "docs-product",
@@ -18189,8 +18195,8 @@
       "title": "K3 Shelf N10/N48",
       "headers": [],
       "summary": "sidebar_position: 3",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/k3_series/k3_shelf/index.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/k3_series/k3_shelf/index.md"
     },
     {
       "submodule": "docs-product",
@@ -18205,8 +18211,8 @@
         "合作与采购咨询"
       ],
       "summary": "sidebar_position: 1",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/k3_series/k3_shelf/root_overview.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/k3_series/k3_shelf/root_overview.md"
     },
     {
       "submodule": "docs-product",
@@ -18224,8 +18230,8 @@
         "固件与驱动"
       ],
       "summary": "sidebar_position: 999",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/support_service/after_sales_service.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/support_service/after_sales_service.md"
     },
     {
       "submodule": "docs-product",
@@ -18235,8 +18241,8 @@
       "title": "支持服务",
       "headers": [],
       "summary": "sidebar_position: 999",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/support_service/index.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/support_service/index.md"
     },
     {
       "submodule": "docs-product",
@@ -18246,8 +18252,8 @@
       "title": "V100 系列",
       "headers": [],
       "summary": "sidebar_position: 11",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/v100_series/index.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/v100_series/index.md"
     },
     {
       "submodule": "docs-product",
@@ -18257,8 +18263,8 @@
       "title": "banner.txt",
       "headers": [],
       "summary": "C2201",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/v100_series/v100_c2201/banner.txt"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/v100_series/v100_c2201/banner.txt"
     },
     {
       "submodule": "docs-product",
@@ -18268,8 +18274,8 @@
       "title": "C2201",
       "headers": [],
       "summary": "sidebar_position: 1",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/v100_series/v100_c2201/index.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/v100_series/v100_c2201/index.md"
     },
     {
       "submodule": "docs-product",
@@ -18283,8 +18289,8 @@
         "产品规格"
       ],
       "summary": "title: V100 计算服务器 C2201 产品简介",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/v100_series/v100_c2201/root_overview.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/v100_series/v100_c2201/root_overview.md"
     },
     {
       "submodule": "docs-product",
@@ -18294,8 +18300,8 @@
       "title": "banner.txt",
       "headers": [],
       "summary": "G5201",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/v100_series/v100_g5201/banner.txt"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/v100_series/v100_g5201/banner.txt"
     },
     {
       "submodule": "docs-product",
@@ -18305,8 +18311,8 @@
       "title": "G5201",
       "headers": [],
       "summary": "sidebar_position: 3",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/v100_series/v100_g5201/index.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/v100_series/v100_g5201/index.md"
     },
     {
       "submodule": "docs-product",
@@ -18320,8 +18326,8 @@
         "产品规格"
       ],
       "summary": "title: V100 智算服务器 G5201 产品简介",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/v100_series/v100_g5201/root_overview.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/v100_series/v100_g5201/root_overview.md"
     },
     {
       "submodule": "docs-product",
@@ -18331,8 +18337,8 @@
       "title": "banner.txt",
       "headers": [],
       "summary": "S5236",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/v100_series/v100_s5236/banner.txt"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/v100_series/v100_s5236/banner.txt"
     },
     {
       "submodule": "docs-product",
@@ -18342,8 +18348,8 @@
       "title": "S5236",
       "headers": [],
       "summary": "sidebar_position: 2",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/v100_series/v100_s5236/index.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/v100_series/v100_s5236/index.md"
     },
     {
       "submodule": "docs-product",
@@ -18357,8 +18363,8 @@
         "产品规格"
       ],
       "summary": "title: V100 存储服务器 S5236 产品简介",
-      "source_commit": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/af56b0e326ce23f947ae768b3d1bf75436c1b52f/zh/v100_series/v100_s5236/root_overview.md"
+      "source_commit": "c8d9199423eb4555987cf120690730f85ca39d0b",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-product/c8d9199423eb4555987cf120690730f85ca39d0b/zh/v100_series/v100_s5236/root_overview.md"
     },
     {
       "submodule": "docs-ros",
@@ -27495,19 +27501,19 @@
       "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/0fb2569c2ae40fefb1385e14a237a401dfb31814/zh/k3/07-%E7%89%88%E6%9C%AC%E8%AF%B4%E6%98%8E/index.md"
     }
   ],
-  "content_sha256": "5a22f981e3ece808efc481bf8fa951717a3ef82cf31967389d7ce389187d28d2",
+  "content_sha256": "0af76ed3022671eaca134b5c61e16a066afcc6e3e7e0bf8ff4f9eb0649e628ec",
   "build_meta": {
-    "wiki_commit": "50767d7b3e244ccdd9e03406fd9ab3165abb6f22",
+    "wiki_commit": "bcbecee057995591634d31d86872ae72f53d28f5",
     "wiki_worktree_dirty": true,
-    "generated_at": "2026-10-27T08:27:14+00:00",
+    "generated_at": "2026-10-28T05:21:56+00:00",
     "sources_commits": {
       "docs-chip": "df43cfe4fbb6e1220b0bdf611d2cd233a4aa679d",
       "docs-buildroot": "0ca1a99e305738ccc0d71ea1e847dada49ae1e28",
-      "docs-product": "af56b0e326ce23f947ae768b3d1bf75436c1b52f",
+      "docs-product": "c8d9199423eb4555987cf120690730f85ca39d0b",
       "docs-ai": "2b3894e983a295ed0278bc625867e0c132e0e259",
       "docs-ros": "0fb2569c2ae40fefb1385e14a237a401dfb31814"
     },
-    "content_sha256": "5a22f981e3ece808efc481bf8fa951717a3ef82cf31967389d7ce389187d28d2",
+    "content_sha256": "0af76ed3022671eaca134b5c61e16a066afcc6e3e7e0bf8ff4f9eb0649e628ec",
     "counts": {
       "total_nodes": 72,
       "developer_journeys": 7,
@@ -27516,8 +27522,8 @@
       "raw_sources": 1245
     },
     "freshness_summary": {
-      "current": 56,
-      "stale": 16,
+      "current": 54,
+      "stale": 18,
       "unknown": 0
     }
   }
