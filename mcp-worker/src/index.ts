@@ -1007,7 +1007,7 @@ export default {
     // 访问可视化监控看板 /stats
     if (url.pathname === "/stats") {
       const token = url.searchParams.get("token");
-      const isAuthorized = !env.STATS_TOKEN || (token === env.STATS_TOKEN);
+      const isAuthorized = Boolean(env.STATS_TOKEN && token === env.STATS_TOKEN);
       return renderStatsDashboard(env, isAuthorized);
     }
 

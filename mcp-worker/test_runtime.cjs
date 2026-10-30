@@ -125,5 +125,55 @@ async function call(name, args, expectError = false) {
     assert.equal(result.has_more, more);
     assert.equal(result.next_start_line, more ? end + 1 : null);
   }
-  console.log("Worker runtime regression checks passed: ranking, types, ambiguity, metadata, pinned sources, URL encoding, bounded pages, continuation and EOF boundaries.");
+
+  // Populate sensitive rows so an accidental authorization bypass cannot pass
+  // merely because the fixture returned no query or feedback details.
+  for (const [label, configuredToken, suppliedToken, authorized] of [
+    ["missing configuration", undefined, null, false],
+    ["missing configuration with supplied token", undefined, "test-stats-token", false],
+    ["empty configuration and empty supplied token", "", "", false],
+    ["configured token absent from request", "test-stats-token", null, false],
+    ["empty supplied token", "test-stats-token", "", false],
+    ["incorrect token", "test-stats-token", "incorrect", false],
+    ["correct token", "test-stats-token", "test-stats-token", true],
+  ]) {
+    const statements = [];
+    const DB = { prepare(sql) {
+      statements.push(sql);
+      return {
+        async first() {
+          if (sql.includes("FROM mcp_issue_reports")) return { count: 2 };
+          return { count: sql.includes("WHERE status") ? 7 : 42 };
+        },
+        async all() {
+          if (sql.startsWith("SELECT category")) return { results: [{ category: "test category", count: 42 }] };
+          if (sql.startsWith("SELECT query_text")) return { results: [{
+            query_text: "PRIVATE_QUERY_SENTINEL", tool_name: "search_wiki", status: "ERROR",
+            error_message: "PRIVATE_ERROR_SENTINEL", timestamp: "2026-10-30 00:00:00",
+          }] };
+          if (sql.startsWith("SELECT topic")) return { results: [{
+            topic: "PRIVATE_TOPIC_SENTINEL", issue_type: "MISSING_DOC",
+            description: "PRIVATE_FEEDBACK_SENTINEL", timestamp: "2026-10-30 00:00:00",
+          }] };
+          throw Error("Unexpected stats SQL: " + sql);
+        },
+      };
+    } };
+    const url = new URL("https://test.invalid/stats");
+    if (suppliedToken !== null) url.searchParams.set("token", suppliedToken);
+    const env = { DB, ...(configuredToken === undefined ? {} : { STATS_TOKEN: configuredToken }) };
+    const response = await sandbox.worker.fetch(new Request(url), env);
+    assert.equal(response.status, 200, label);
+    const html = await response.text();
+    assert.ok(html.includes("总查询调用次数") && html.includes(">42</div>"), label);
+    assert.ok(html.includes("test category"), label);
+    for (const sentinel of ["PRIVATE_QUERY_SENTINEL", "PRIVATE_ERROR_SENTINEL", "PRIVATE_TOPIC_SENTINEL", "PRIVATE_FEEDBACK_SENTINEL"]) {
+      assert.equal(html.includes(sentinel), authorized, `${label}: ${sentinel}`);
+    }
+    assert.equal(statements.some(sql => sql.startsWith("SELECT query_text")), authorized, `${label}: query detail SQL`);
+    assert.equal(statements.some(sql => sql.startsWith("SELECT topic")), authorized, `${label}: feedback detail SQL`);
+    assert.equal(html.includes("明细查询日志已保护"), !authorized, label);
+    assert.equal(html.includes("反馈明细已保护"), !authorized, label);
+  }
+  console.log("Worker runtime regression checks passed: ranking, types, ambiguity, metadata, pinned sources, URL encoding, bounded pages, continuation, EOF boundaries and stats access protection.");
 })().catch(error => { console.error(error); process.exitCode = 1; });
