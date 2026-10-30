@@ -300,21 +300,21 @@
     },
     {
       "id": "B06",
-      "question": "K3默认启动、SPI NOR/NAND电平与完整Strap管脚清单能否确定？",
+      "question": "K3 V1.2 已如何修正 Strap 引脚清单与 SPI NOR/NAND 启动组合？",
       "domain": "hardware_schematic_design",
-      "product_version": "K3 指南V1.1 1.1.5 / 数据手册V1.9 2.11.2，固定docs-chip@2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
-      "reference_answer": "GPIO66/65=00的TF/SD→eMMC与11的TF/SD→UFS一致；指南10=SPI NOR、01=SPI NAND，数据手册10=SPI NAND、01=SPI NOR，不能自行裁决SPI接线。指南概述5脚含GPIO90与功能表GPIO64/52、Strap0～5也矛盾，完整清单等待官方确认。",
+      "product_version": "K3 硬件指南V1.2 1.1.5 / 数据手册V1.9 2.11.2，固定docs-chip@fd016f81034b1a93ad39c2cecf313bb82be7d169",
+      "reference_answer": "官方指南V1.2已修正为6个Strap：GPIO52/64/65/66/68/69；GPIO66/65为01时TF/SD→SPI NOR，10时TF/SD→SPI NAND，与数据手册一致。00为TF/SD→eMMC，11为TF/SD→UFS。当前知识已记录勘误闭环，但status仍为needs_review；硬件接线须核对对应板卡，不跨代套用。",
       "citations": [
         {
           "path": "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md",
-          "commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
-          "start_line": 243,
-          "end_line": 283,
-          "excerpt_sha256": "1b91ff5542f6ef9dcbf5f30926718a91818f5cf93b3b8214c5f775036455a6ab"
+          "commit": "fd016f81034b1a93ad39c2cecf313bb82be7d169",
+          "start_line": 244,
+          "end_line": 284,
+          "excerpt_sha256": "10facf95ce753109f2b209e6b4b4ddeacef632421265dd4714a6d20e1b05f855"
         },
         {
           "path": "Sources/docs-chip/zh/key_stone/k3/k3_docs/k3_ds.md",
-          "commit": "2525ee3b68e0f4864f1bf12c8a59df040bf27e84",
+          "commit": "fd016f81034b1a93ad39c2cecf313bb82be7d169",
           "start_line": 1476,
           "end_line": 1495,
           "excerpt_sha256": "99e1305e1a00babc6fc539cd5a9266b6351b2067a54902eb74023b8da862e7e2"
@@ -328,23 +328,24 @@
           },
           "expect": {
             "contains": [
-              "GPIO90",
-              "GPIO64",
-              "GPIO52",
-              "| 1 | 0 | TF Card → SPI NOR | SD Card → SPI NAND |",
-              "| 0 | 1 | TF Card → SPI NAND | SD Card → SPI NOR |",
-              "SPI 选择冲突尚未裁决",
-              "待官方确认（2026-10-21）",
-              "维护者已与开发同步修订",
-              "争议接线结论尚未确定"
+              "共有 **6 个 Strap Pin**",
+              "GPIO52、GPIO64、GPIO65、GPIO66、GPIO68、GPIO69",
+              "**0** | **1** | **TF Card → SPI NOR**",
+              "**1** | **0** | **TF Card → SPI NAND**",
+              "官方勘误已闭环"
             ],
             "notices": [
-              "CONFLICTED",
               "NEEDS_REVIEW",
               "GENERATION_BOUNDARY"
             ],
+            "not_notices": [
+              "CONFLICTED",
+              "UNVERIFIED"
+            ],
             "metadata": {
-              "verification_status": "conflicted"
+              "verification_status": "verified",
+              "source_resolution": "resolved",
+              "external_use": true
             }
           }
         },
@@ -352,17 +353,17 @@
           "name": "read_raw_source_file",
           "arguments": {
             "file_path_or_url": "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md",
-            "start_line": 243,
-            "end_line": 283
+            "start_line": 244,
+            "end_line": 284
           },
           "expect": {
             "contains": [
-              "共有 5 个",
+              "共有 6 个 strap pin",
               "GPIO[64]",
               "GPIO[52]"
             ],
             "source_file": "Sources/docs-chip/zh/key_stone/k3/k3_hw/k3_hw_design_guide.md",
-            "reference_excerpt_sha256": "1b91ff5542f6ef9dcbf5f30926718a91818f5cf93b3b8214c5f775036455a6ab"
+            "reference_excerpt_sha256": "10facf95ce753109f2b209e6b4b4ddeacef632421265dd4714a6d20e1b05f855"
           }
         },
         {
