@@ -1,0 +1,89 @@
+name: Configure protected stats access
+
+on:
+  workflow_dispatch:
+    inputs:
+      recovery_public_key:
+        description: Base64 DER RSA public key (3072+ bits) for the encrypted token backup
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: spacemit-wiki-production-deploy
+  cancel-in-progress: false
+
+jobs:
+  configure-stats:
+    runs-on: ubuntu-latest
+    env:
+      STATS_SECRET_DIR: ${{ runner.temp }}/stats-secret
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Install Worker dependencies
+        working-directory: mcp-worker
+        run: npm ci --no-audit --no-fund
+
+      - name: Generate secret and encrypted recovery copy
+        run: node scripts/prepare_stats_secret.cjs
+        env:
+          STATS_RECOVERY_PUBLIC_KEY: ${{ inputs.recovery_public_key }}
+
+      # Preserve recoverability before changing the running Worker.
+      - name: Save encrypted token backup
+        uses: actions/upload-artifact@v4
+        with:
+          name: stats-token-encrypted
+          path: ${{ runner.temp }}/stats-secret/STATS_TOKEN.rsa-oaep
+          if-no-files-found: error
+          retention-days: 1
+
+      - name: Configure Worker STATS_TOKEN
+        working-directory: mcp-worker
+        run: npx wrangler secret put STATS_TOKEN --name spacemit-wiki-mcp < "$STATS_SECRET_DIR/STATS_TOKEN"
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+
+      - name: Verify protected and authorized stats access
+        run: |
+          python3 - <<'PY'
+          import json, os, subprocess
+          from pathlib import Path
+          from urllib.parse import urlencode
+          token = (Path(os.environ['STATS_SECRET_DIR']) / 'STATS_TOKEN').read_text()
+          base = 'https://mcp.yao1302.xyz'
+          def get(url):
+              # Keep the private URL out of process arguments and exception text.
+              config = 'url = ' + json.dumps(url) + '\n'
+              result = subprocess.run(['curl', '--fail', '--silent', '--show-error', '--max-time', '30', '--config', '-'],
+                                      input=config, text=True, capture_output=True)
+              if result.returncode:
+                  raise RuntimeError('Stats request failed; curl exit ' + str(result.returncode))
+              return result.stdout
+          for label, suffix, protected in [
+              ('anonymous', '', True),
+              ('incorrect token', '?token=incorrect-verification-token', True),
+              ('correct token', '?' + urlencode({'token': token}), False),
+          ]:
+              html = get(base + '/stats' + suffix)
+              assert ('明细查询日志已保护' in html) == protected, label
+              assert ('反馈明细已保护' in html) == protected, label
+              assert '总查询调用次数' in html, label
+              print(label + ': passed')
+          health = json.loads(get(base + '/health'))
+          assert health['status'] == 'ok'
+          print('Healthy deployment ref: ' + health['deployment_ref'])
+          PY
+
+      - name: Remove temporary secret files
+        if: always()
+        run: rm -rf -- "$STATS_SECRET_DIR"
