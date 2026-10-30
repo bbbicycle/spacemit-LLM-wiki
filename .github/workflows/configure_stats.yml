@@ -19,7 +19,7 @@ jobs:
   configure-stats:
     runs-on: ubuntu-latest
     env:
-      STATS_SECRET_DIR: ${{ runner.temp }}/stats-secret
+      STATS_SECRET_DIR: /tmp/stats-secret
     steps:
       - uses: actions/checkout@v4
         with:
@@ -43,7 +43,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: stats-token-encrypted
-          path: ${{ runner.temp }}/stats-secret/STATS_TOKEN.rsa-oaep
+          path: /tmp/stats-secret/STATS_TOKEN.rsa-oaep
           if-no-files-found: error
           retention-days: 1
 
