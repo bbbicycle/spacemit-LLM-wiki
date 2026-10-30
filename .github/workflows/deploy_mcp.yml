@@ -10,6 +10,7 @@ on:
       - 'Evidence/**'
       - 'Sources/**'
       - 'scripts/**'
+      - 'evals/**'
       - 'mcp-worker/**'
       - 'mcp/**'
       - 'Agent.md'
@@ -63,6 +64,7 @@ jobs:
           python3 -B scripts/test_upstream_impact.py
           python3 -B -m unittest discover -s mcp -p 'test_server.py'
           python3 -B scripts/test_minimal_install.py
+          python3 -B scripts/test_eval_stage_b.py
 
       - name: Rebuild and validate MCP Dual-Layer Knowledge Index
         run: |

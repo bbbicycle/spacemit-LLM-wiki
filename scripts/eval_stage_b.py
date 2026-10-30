@@ -5,6 +5,7 @@ This evaluates available evidence and tool contracts, not a model's generated
 answers. Requires initialized Sources, Git history and Node.js 24+; no network.
 """
 import argparse
+from copy import deepcopy
 import hashlib
 import importlib.util
 import json
@@ -34,6 +35,50 @@ def normalize(result, tool):
     return value
 
 
+def relocate_excerpt(blob, excerpt, expected_digest):
+    """Allow line movement, while requiring the entire reviewed excerpt verbatim."""
+    if digest(excerpt) != expected_digest:
+        raise ValueError("Reviewed citation digest does not match its pinned excerpt")
+    lines, reference = blob.splitlines(), excerpt.split("\n")
+    matches = [i for i in range(len(lines) - len(reference) + 1)
+               if lines[i:i + len(reference)] == reference]
+    if not matches:
+        raise ValueError("Reviewed source excerpt changed or disappeared; review the source and rubric")
+    if len(matches) != 1:
+        raise ValueError("Reviewed source excerpt is ambiguous; narrow the citation")
+    return matches[0] + 1, matches[0] + len(reference)
+
+
+def resolve_raw_call(call, citations, raw_sources):
+    """Locate the reviewed citation in the source version pinned by today's index."""
+    expected = call["expect"]
+    if "source_file" not in expected:
+        return call, None
+    args = call["arguments"]
+    citations = [c for c in citations if c["path"] == expected["source_file"]
+                 and c["start_line"] == args["start_line"] and c["end_line"] == args["end_line"]
+                 and c["excerpt_sha256"] == expected["reference_excerpt_sha256"]]
+    if len(citations) != 1:
+        raise ValueError("Raw-source call must identify exactly one reviewed citation")
+    citation = citations[0]
+    item = next(s for s in raw_sources if "Sources/" + s["rel_path"] == citation["path"])
+    module_name, repo_path = citation["path"].removeprefix("Sources/").split("/", 1)
+    source_root = ROOT / "Sources" / module_name
+    original = git("show", citation["commit"] + ":" + repo_path, cwd=source_root)
+    excerpt = "\n".join(original.splitlines()[citation["start_line"] - 1:citation["end_line"]])
+    current = git("show", item["source_commit"] + ":" + repo_path, cwd=source_root)
+    start, end = relocate_excerpt(current, excerpt, citation["excerpt_sha256"])
+    resolved = deepcopy(call)
+    resolved["arguments"].update(start_line=start, end_line=end)
+    return resolved, {
+        "source_file": citation["path"], "reference_commit": citation["commit"],
+        "source_commit": item["source_commit"], "reference_start_line": citation["start_line"],
+        "reference_end_line": citation["end_line"], "start_line": start, "end_line": end,
+        "relocated": (start, end) != (citation["start_line"], citation["end_line"]),
+        "excerpt_sha256": citation["excerpt_sha256"],
+    }
+
+
 def run(output):
     suite = json.loads((ROOT / "evals/stage_b_core_20.json").read_text())
     cases = suite["cases"]
@@ -48,7 +93,7 @@ def run(output):
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     server = module.SpacemitMCPServer()
-    requests, python, context = [], [], []
+    requests, python, context, source_checks = [], [], [], []
     citation_results = {}
     for case in cases:
         assert all(case.get(k) for k in ("question", "product_version", "reference_answer", "citations", "calls"))
@@ -60,6 +105,11 @@ def run(output):
             assert digest(excerpt) == citation["excerpt_sha256"], citation
             citation_results[citation["path"] + ":" + str(citation["start_line"])] = "pinned excerpt checked"
         for call in case["calls"]:
+            try:
+                call, source_check = resolve_raw_call(call, case["citations"], data["raw_sources"])
+            except (ValueError, KeyError, StopIteration, subprocess.CalledProcessError) as exc:
+                source_check = {"error": str(exc) or type(exc).__name__,
+                                "source_file": call["expect"].get("source_file")}
             replay = call.get("replay_node")
             server.nodes = dict(data["nodes"])
             if replay:
@@ -68,15 +118,17 @@ def run(output):
             requests.append(call)
             python.append(result)
             context.append(case["id"])
+            source_checks.append(source_check)
     worker = json.loads(subprocess.check_output(
         ["node", "--disable-warning=ExperimentalWarning", str(ROOT / "scripts/eval_stage_b_worker.cjs")],
         input=json.dumps({"calls": requests, "fixture": fixture}), cwd=ROOT, text=True,
     ))
     assert len(worker) == len(requests)
     rows = {case["id"]: {**case, "actual": [], "failures": []} for case in cases}
-    for call, py, cf, case_id in zip(requests, python, worker, context):
+    for call, py, cf, case_id, source_check in zip(requests, python, worker, context, source_checks):
         row = rows[case_id]
         try:
+            assert not (source_check or {}).get("error"), source_check
             assert not py.get("isError"), py
             assert not cf.get("isError"), cf
             actual = normalize(py, call["name"])
@@ -91,6 +143,7 @@ def run(output):
                 assert actual == [], "Expected honest miss"
             codes = [n["code"] for n in actual.get("agent_notice", [])] if isinstance(actual, dict) else []
             assert set(expected.get("notices", [])) <= set(codes), codes
+            assert not set(expected.get("not_notices", [])) & set(codes), codes
             for key, value in expected.get("metadata", {}).items():
                 assert actual.get(key) == value, (key, actual.get(key), value)
             if "source_file" in expected:
@@ -105,10 +158,11 @@ def run(output):
                 "python_worker_equal": True, "matched_evidence": expected.get("contains", []),
                 "notice_codes": codes, "empty": actual == [],
                 "response_sha256": digest(text),
+                "source_check": source_check,
                 "metadata": {k: actual[k] for k in ("freshness", "verification_status", "status", "source_commit", "start_line", "end_line") if isinstance(actual, dict) and k in actual},
             })
         except (AssertionError, KeyError, ValueError) as exc:
-            row["failures"].append(str(exc))
+            row["failures"].append(f"{call['name']} {call['arguments']}: {exc}")
     results = list(rows.values())
     for row in results:
         row["tool_calls_per_backend"] = len(row["calls"])
