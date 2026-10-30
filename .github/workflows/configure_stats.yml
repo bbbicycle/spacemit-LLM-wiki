@@ -34,7 +34,18 @@ jobs:
         run: npm ci --no-audit --no-fund
 
       - name: Generate secret and encrypted recovery copy
-        run: node scripts/prepare_stats_secret.cjs
+        run: |
+          node scripts/prepare_stats_secret.cjs
+          # The encrypted copy is safe to display and can be recovered even
+          # when a browser cannot download GitHub artifacts.
+          python3 - <<'PY'
+          import base64, os
+          from pathlib import Path
+          encrypted = (Path(os.environ['STATS_SECRET_DIR']) / 'STATS_TOKEN.rsa-oaep').read_bytes()
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as summary:
+              summary.write('Encrypted STATS_TOKEN recovery (RSA-OAEP SHA-256):\n\n')
+              summary.write('```text\n' + base64.b64encode(encrypted).decode() + '\n```\n')
+          PY
         env:
           STATS_RECOVERY_PUBLIC_KEY: ${{ inputs.recovery_public_key }}
 
