@@ -1,8 +1,8 @@
 {
   "version": "2.3.0",
-  "wiki_commit": "3d6cf13501082be73dc1d4af6cac3706a4d941e4",
-  "generated_at": "2026-10-31T05:18:41+00:00",
-  "wiki_worktree_dirty": true,
+  "wiki_commit": "7d81b3a1eac58218a97e65ba2e076535848a7b30",
+  "generated_at": "2026-11-03T06:27:01+00:00",
+  "wiki_worktree_dirty": false,
   "source_versions": {
     "docs-chip": "3ea42a6af47f2595428e2870122829dc5e8fc856",
     "docs-buildroot": "0ca1a99e305738ccc0d71ea1e847dada49ae1e28",
@@ -27458,9 +27458,9 @@
   ],
   "content_sha256": "c1c5f4bdb0b5abbcf9b18e318d4a5ba5b378a1220bac874e0ca2e31f2e1bdc6c",
   "build_meta": {
-    "wiki_commit": "3d6cf13501082be73dc1d4af6cac3706a4d941e4",
-    "wiki_worktree_dirty": true,
-    "generated_at": "2026-10-31T05:18:41+00:00",
+    "wiki_commit": "7d81b3a1eac58218a97e65ba2e076535848a7b30",
+    "wiki_worktree_dirty": false,
+    "generated_at": "2026-11-03T06:27:01+00:00",
     "sources_commits": {
       "docs-chip": "3ea42a6af47f2595428e2870122829dc5e8fc856",
       "docs-buildroot": "0ca1a99e305738ccc0d71ea1e847dada49ae1e28",
