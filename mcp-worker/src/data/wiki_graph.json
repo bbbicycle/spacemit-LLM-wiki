@@ -1,17 +1,17 @@
 {
   "version": "2.3.0",
-  "wiki_commit": "747ce859e7386b24518b10ab099c98abecd02452",
-  "generated_at": "2026-11-16T06:06:31+00:00",
+  "wiki_commit": "b5914d4c91512b066d4a7e3882ca6da1050f9c81",
+  "generated_at": "2026-11-19T07:06:28+00:00",
   "wiki_worktree_dirty": true,
   "source_versions": {
     "docs-chip": "4879ed5dfb5415212099dd898906cd893b3fa286",
     "docs-buildroot": "a45778b0117b8fa52f88f936049df063359dfc10",
     "docs-product": "f63141099ebbbbd10f0ca9f533c166a27bd98560",
-    "docs-ai": "1a5776782807f957144993a89b13cc9d123fba6a",
+    "docs-ai": "055685e78b958ba082c591a04c2c258c59ed62a0",
     "docs-ros": "61e8e994d410b62507648f30088c2088a12738e8"
   },
   "total_nodes": 72,
-  "total_raw_sources": 1257,
+  "total_raw_sources": 1247,
   "nodes": {
     "Buildroot_SDK_快速编译与镜像生成向导": {
       "id": "Buildroot_SDK_快速编译与镜像生成向导",
@@ -120,7 +120,7 @@
       "unknown_paths": [],
       "checked_against_commit": {
         "docs-chip": "4879ed5dfb5415212099dd898906cd893b3fa286",
-        "docs-ai": "1a5776782807f957144993a89b13cc9d123fba6a"
+        "docs-ai": "055685e78b958ba082c591a04c2c258c59ed62a0"
       },
       "source_freshness": [
         {
@@ -147,7 +147,7 @@
         {
           "source_file": "Sources/docs-ai/zh/compute_stack/ai_compute_stack/llama.cpp.md",
           "source_commit": "2b3894e983a295ed0278bc625867e0c132e0e259",
-          "checked_against_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
+          "checked_against_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
           "freshness": "current",
           "reason": "source_file_unchanged"
         }
@@ -194,7 +194,7 @@
       "unknown_paths": [],
       "checked_against_commit": {
         "docs-product": "f63141099ebbbbd10f0ca9f533c166a27bd98560",
-        "docs-ai": "1a5776782807f957144993a89b13cc9d123fba6a"
+        "docs-ai": "055685e78b958ba082c591a04c2c258c59ed62a0"
       },
       "source_freshness": [
         {
@@ -207,7 +207,7 @@
         {
           "source_file": "Sources/docs-ai/zh/compute_stack/ai_compute_stack/llama.cpp.md",
           "source_commit": "2b3894e983a295ed0278bc625867e0c132e0e259",
-          "checked_against_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
+          "checked_against_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
           "freshness": "current",
           "reason": "source_file_unchanged"
         }
@@ -270,7 +270,7 @@
       "unknown_paths": [],
       "checked_against_commit": {
         "docs-chip": "4879ed5dfb5415212099dd898906cd893b3fa286",
-        "docs-ai": "1a5776782807f957144993a89b13cc9d123fba6a"
+        "docs-ai": "055685e78b958ba082c591a04c2c258c59ed62a0"
       },
       "source_freshness": [
         {
@@ -304,7 +304,7 @@
         {
           "source_file": "Sources/docs-ai/zh/compute_stack/ai_compute_stack/llama.cpp.md",
           "source_commit": "2b3894e983a295ed0278bc625867e0c132e0e259",
-          "checked_against_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
+          "checked_against_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
@@ -356,7 +356,7 @@
       "unknown_paths": [],
       "checked_against_commit": {
         "docs-product": "f63141099ebbbbd10f0ca9f533c166a27bd98560",
-        "docs-ai": "1a5776782807f957144993a89b13cc9d123fba6a"
+        "docs-ai": "055685e78b958ba082c591a04c2c258c59ed62a0"
       },
       "source_freshness": [
         {
@@ -369,7 +369,7 @@
         {
           "source_file": "Sources/docs-ai/zh/compute_stack/ai_compute_stack/llama.cpp.md",
           "source_commit": "2b3894e983a295ed0278bc625867e0c132e0e259",
-          "checked_against_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
+          "checked_against_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
           "freshness": "current",
           "reason": "source_file_unchanged"
         }
@@ -495,20 +495,20 @@
       "stale_paths": [],
       "unknown_paths": [],
       "checked_against_commit": {
-        "docs-ai": "1a5776782807f957144993a89b13cc9d123fba6a"
+        "docs-ai": "055685e78b958ba082c591a04c2c258c59ed62a0"
       },
       "source_freshness": [
         {
           "source_file": "Sources/docs-ai/zh/compute_stack/ai_compute_stack/quick_start.md",
           "source_commit": "2b3894e983a295ed0278bc625867e0c132e0e259",
-          "checked_against_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
+          "checked_against_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-ai/zh/compute_stack/ai_compute_stack/xslim.md",
           "source_commit": "2b3894e983a295ed0278bc625867e0c132e0e259",
-          "checked_against_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
+          "checked_against_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
           "freshness": "current",
           "reason": "source_file_unchanged"
         }
@@ -1115,7 +1115,7 @@
       "unknown_paths": [],
       "checked_against_commit": {
         "docs-chip": "4879ed5dfb5415212099dd898906cd893b3fa286",
-        "docs-ai": "1a5776782807f957144993a89b13cc9d123fba6a"
+        "docs-ai": "055685e78b958ba082c591a04c2c258c59ed62a0"
       },
       "source_freshness": [
         {
@@ -1135,7 +1135,7 @@
         {
           "source_file": "Sources/docs-ai/zh/architecture/concept.md",
           "source_commit": "2b3894e983a295ed0278bc625867e0c132e0e259",
-          "checked_against_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
+          "checked_against_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
           "freshness": "current",
           "reason": "source_file_unchanged"
         }
@@ -1831,7 +1831,7 @@
       "unknown_paths": [],
       "checked_against_commit": {
         "docs-product": "f63141099ebbbbd10f0ca9f533c166a27bd98560",
-        "docs-ai": "1a5776782807f957144993a89b13cc9d123fba6a",
+        "docs-ai": "055685e78b958ba082c591a04c2c258c59ed62a0",
         "docs-chip": "4879ed5dfb5415212099dd898906cd893b3fa286"
       },
       "source_freshness": [
@@ -1859,7 +1859,7 @@
         {
           "source_file": "Sources/docs-ai/zh/compute_stack/ai_compute_stack/modelzoo.md",
           "source_commit": "2b3894e983a295ed0278bc625867e0c132e0e259",
-          "checked_against_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
+          "checked_against_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
@@ -2007,7 +2007,7 @@
       "unknown_paths": [],
       "checked_against_commit": {
         "docs-chip": "4879ed5dfb5415212099dd898906cd893b3fa286",
-        "docs-ai": "1a5776782807f957144993a89b13cc9d123fba6a"
+        "docs-ai": "055685e78b958ba082c591a04c2c258c59ed62a0"
       },
       "source_freshness": [
         {
@@ -2027,7 +2027,7 @@
         {
           "source_file": "Sources/docs-ai/zh/compute_stack/ai_compute_stack/modelzoo.md",
           "source_commit": "2b3894e983a295ed0278bc625867e0c132e0e259",
-          "checked_against_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
+          "checked_against_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
           "freshness": "current",
           "reason": "source_file_unchanged"
         }
@@ -2432,27 +2432,27 @@
       "stale_paths": [],
       "unknown_paths": [],
       "checked_against_commit": {
-        "docs-ai": "1a5776782807f957144993a89b13cc9d123fba6a"
+        "docs-ai": "055685e78b958ba082c591a04c2c258c59ed62a0"
       },
       "source_freshness": [
         {
           "source_file": "Sources/docs-ai/zh/architecture/concept.md",
           "source_commit": "2b3894e983a295ed0278bc625867e0c132e0e259",
-          "checked_against_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
+          "checked_against_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-ai/zh/compute_stack/ai_compute_stack.md",
           "source_commit": "2b3894e983a295ed0278bc625867e0c132e0e259",
-          "checked_against_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
+          "checked_against_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-ai/zh/compute_stack/ai_compute_stack/onnxruntime.md",
           "source_commit": "2b3894e983a295ed0278bc625867e0c132e0e259",
-          "checked_against_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
+          "checked_against_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
           "freshness": "current",
           "reason": "source_file_unchanged"
         }
@@ -3679,7 +3679,7 @@
       "unknown_paths": [],
       "checked_against_commit": {
         "docs-chip": "4879ed5dfb5415212099dd898906cd893b3fa286",
-        "docs-ai": "1a5776782807f957144993a89b13cc9d123fba6a"
+        "docs-ai": "055685e78b958ba082c591a04c2c258c59ed62a0"
       },
       "source_freshness": [
         {
@@ -3692,7 +3692,7 @@
         {
           "source_file": "Sources/docs-ai/zh/architecture/concept.md",
           "source_commit": "2b3894e983a295ed0278bc625867e0c132e0e259",
-          "checked_against_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
+          "checked_against_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
           "freshness": "current",
           "reason": "source_file_unchanged"
         }
@@ -4303,14 +4303,14 @@
       "stale_paths": [],
       "unknown_paths": [],
       "checked_against_commit": {
-        "docs-ai": "1a5776782807f957144993a89b13cc9d123fba6a",
+        "docs-ai": "055685e78b958ba082c591a04c2c258c59ed62a0",
         "docs-chip": "4879ed5dfb5415212099dd898906cd893b3fa286"
       },
       "source_freshness": [
         {
           "source_file": "Sources/docs-ai/zh/compute_stack/ai_compute_stack/modelzoo.md",
           "source_commit": "2b3894e983a295ed0278bc625867e0c132e0e259",
-          "checked_against_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
+          "checked_against_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
@@ -5076,13 +5076,13 @@
       "stale_paths": [],
       "unknown_paths": [],
       "checked_against_commit": {
-        "docs-ai": "1a5776782807f957144993a89b13cc9d123fba6a"
+        "docs-ai": "055685e78b958ba082c591a04c2c258c59ed62a0"
       },
       "source_freshness": [
         {
           "source_file": "Sources/docs-ai/zh/architecture/concept.md",
           "source_commit": "2b3894e983a295ed0278bc625867e0c132e0e259",
-          "checked_against_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
+          "checked_against_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
           "freshness": "current",
           "reason": "source_file_unchanged"
         }
@@ -5131,20 +5131,20 @@
       "stale_paths": [],
       "unknown_paths": [],
       "checked_against_commit": {
-        "docs-ai": "1a5776782807f957144993a89b13cc9d123fba6a"
+        "docs-ai": "055685e78b958ba082c591a04c2c258c59ed62a0"
       },
       "source_freshness": [
         {
           "source_file": "Sources/docs-ai/zh/compute_stack/ai_compute_stack.md",
           "source_commit": "2b3894e983a295ed0278bc625867e0c132e0e259",
-          "checked_against_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
+          "checked_against_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
           "freshness": "current",
           "reason": "source_file_unchanged"
         },
         {
           "source_file": "Sources/docs-ai/zh/compute_stack/ai_compute_stack/onnxruntime.md",
           "source_commit": "2b3894e983a295ed0278bc625867e0c132e0e259",
-          "checked_against_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
+          "checked_against_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
           "freshness": "current",
           "reason": "source_file_unchanged"
         }
@@ -5561,8 +5561,8 @@
       "title": "AI",
       "headers": [],
       "summary": "",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/en/index.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/en/index.md"
     },
     {
       "submodule": "docs-ai",
@@ -5583,8 +5583,8 @@
         "3.3 TTS"
       ],
       "summary": "sidebar_position: 1",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/en/application_tools/ai-sdk.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/en/application_tools/ai-sdk.md"
     },
     {
       "submodule": "docs-ai",
@@ -5593,50 +5593,11 @@
       "repo_path": "en/application_tools/index.md",
       "title": "Application Software Stack",
       "headers": [
-        "AI SDK",
-        "LangChain",
-        "Ollama",
-        "LocalAI",
-        "OpenWebUI",
-        "LlamaIndex"
+        "AI SDK"
       ],
       "summary": "* Copyright 2022-2023 SPACEMIT. All rights reserved.",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/en/application_tools/index.md"
-    },
-    {
-      "submodule": "docs-ai",
-      "file_name": "langchain.md",
-      "rel_path": "docs-ai/en/application_tools/langchain.md",
-      "repo_path": "en/application_tools/langchain.md",
-      "title": "langchain",
-      "headers": [
-        "Platform Support",
-        "Installation",
-        "1.1 Install dependencies",
-        "1.2 Install LangChain",
-        "Usage"
-      ],
-      "summary": "sidebar_position: 4",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/en/application_tools/langchain.md"
-    },
-    {
-      "submodule": "docs-ai",
-      "file_name": "llamaindex.md",
-      "rel_path": "docs-ai/en/application_tools/llamaindex.md",
-      "repo_path": "en/application_tools/llamaindex.md",
-      "title": "LlamaIndex",
-      "headers": [
-        "Platform Support",
-        "Installation",
-        "1.1 Install Dependencies",
-        "1.2 Install LlamaIndex",
-        "Usage"
-      ],
-      "summary": "sidebar_position: 8",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/en/application_tools/llamaindex.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/en/application_tools/index.md"
     },
     {
       "submodule": "docs-ai",
@@ -5657,63 +5618,8 @@
         "POST `/api/models/download`"
       ],
       "summary": "sidebar_position: 2",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/en/application_tools/llmsdk.md"
-    },
-    {
-      "submodule": "docs-ai",
-      "file_name": "localai.md",
-      "rel_path": "docs-ai/en/application_tools/localai.md",
-      "repo_path": "en/application_tools/localai.md",
-      "title": "LocalAI",
-      "headers": [
-        "Overview",
-        "Platform Support",
-        "Build and Installation",
-        "Install System Dependencies",
-        "Build LocalAI",
-        "Adding Custom Inference Backends",
-        "Adding the RISC-V Accelerated llama.cpp Backend",
-        "Adding the RISC-V Accelerated ASR Backend",
-        "Adding the C++ TTS Backend"
-      ],
-      "summary": "sidebar_position: 6",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/en/application_tools/localai.md"
-    },
-    {
-      "submodule": "docs-ai",
-      "file_name": "ollama.md",
-      "rel_path": "docs-ai/en/application_tools/ollama.md",
-      "repo_path": "en/application_tools/ollama.md",
-      "title": "Ollama",
-      "headers": [
-        "Platform Support",
-        "Installation",
-        "Downloading Models",
-        "Option 1: Direct Pull (Recommended — requires v0.0.8+)",
-        "Option 2: Build a Model Manually",
-        "Usage"
-      ],
-      "summary": "sidebar_position: 5",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/en/application_tools/ollama.md"
-    },
-    {
-      "submodule": "docs-ai",
-      "file_name": "openwebui.md",
-      "rel_path": "docs-ai/en/application_tools/openwebui.md",
-      "repo_path": "en/application_tools/openwebui.md",
-      "title": "Open-WebUI",
-      "headers": [
-        "Platform Support",
-        "Installation",
-        "Usage",
-        "Create a Model (Optional)"
-      ],
-      "summary": "sidebar_position: 7",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/en/application_tools/openwebui.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/en/application_tools/llmsdk.md"
     },
     {
       "submodule": "docs-ai",
@@ -5734,8 +5640,8 @@
         "🚀 Quick Start"
       ],
       "summary": "sidebar_position: 3",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/en/application_tools/speechsdk.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/en/application_tools/speechsdk.md"
     },
     {
       "submodule": "docs-ai",
@@ -5748,8 +5654,8 @@
         "4.1.2 Architectural Practice"
       ],
       "summary": "sidebar_position: 1",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/en/architecture/concept.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/en/architecture/concept.md"
     },
     {
       "submodule": "docs-ai",
@@ -5770,8 +5676,8 @@
         "2.1.1 Implementation Parameters for A60"
       ],
       "summary": "sidebar_position: 3",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/en/architecture/ime_extension.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/en/architecture/ime_extension.md"
     },
     {
       "submodule": "docs-ai",
@@ -5781,8 +5687,8 @@
       "title": "Compute Architecture",
       "headers": [],
       "summary": "sidebar_position: 5",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/en/architecture/index.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/en/architecture/index.md"
     },
     {
       "submodule": "docs-ai",
@@ -5796,8 +5702,8 @@
         "4.2.3 Basic Usage"
       ],
       "summary": "sidebar_position: 2",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/en/architecture/instruction.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/en/architecture/instruction.md"
     },
     {
       "submodule": "docs-ai",
@@ -5814,8 +5720,8 @@
         "Examples"
       ],
       "summary": "sidebar_position: 1",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/en/compute_stack/ai_compute_stack.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/en/compute_stack/ai_compute_stack.md"
     },
     {
       "submodule": "docs-ai",
@@ -5833,8 +5739,8 @@
         "Current Support Status"
       ],
       "summary": "sidebar_position: 3",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/en/compute_stack/cv_library.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/en/compute_stack/cv_library.md"
     },
     {
       "submodule": "docs-ai",
@@ -5844,8 +5750,8 @@
       "title": "Compute Software Stack",
       "headers": [],
       "summary": "sidebar_position: 4",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/en/compute_stack/index.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/en/compute_stack/index.md"
     },
     {
       "submodule": "docs-ai",
@@ -5865,8 +5771,8 @@
         "Current Support Status"
       ],
       "summary": "sidebar_position: 4",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/en/compute_stack/math_library.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/en/compute_stack/math_library.md"
     },
     {
       "submodule": "docs-ai",
@@ -5876,8 +5782,8 @@
       "title": "AI Compute Stack List",
       "headers": [],
       "summary": "sidebar_position: 2",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/en/compute_stack/ai_compute_stack/index.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/en/compute_stack/ai_compute_stack/index.md"
     },
     {
       "submodule": "docs-ai",
@@ -5898,8 +5804,8 @@
         "3.3 Dual Inference"
       ],
       "summary": "sidebar_position: 5",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/en/compute_stack/ai_compute_stack/llama.cpp.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/en/compute_stack/ai_compute_stack/llama.cpp.md"
     },
     {
       "submodule": "docs-ai",
@@ -5920,8 +5826,8 @@
         "YOLOv8-Seg"
       ],
       "summary": "sidebar_position: 9",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/en/compute_stack/ai_compute_stack/modelzoo.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/en/compute_stack/ai_compute_stack/modelzoo.md"
     },
     {
       "submodule": "docs-ai",
@@ -5942,8 +5848,8 @@
         "`SPACEMIT_EP_DUMP_SUBGRAPHS`"
       ],
       "summary": "sidebar_position: 1",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/en/compute_stack/ai_compute_stack/onnxruntime.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/en/compute_stack/ai_compute_stack/onnxruntime.md"
     },
     {
       "submodule": "docs-ai",
@@ -5956,8 +5862,8 @@
         "Accuracy Issues"
       ],
       "summary": "sidebar_position: 3",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/en/compute_stack/ai_compute_stack/onnxruntime_ep_faq.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/en/compute_stack/ai_compute_stack/onnxruntime_ep_faq.md"
     },
     {
       "submodule": "docs-ai",
@@ -5978,8 +5884,8 @@
         "QuantizeLinear"
       ],
       "summary": "sidebar_position: 2",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/en/compute_stack/ai_compute_stack/onnxruntime_ep_ops.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/en/compute_stack/ai_compute_stack/onnxruntime_ep_ops.md"
     },
     {
       "submodule": "docs-ai",
@@ -5993,8 +5899,8 @@
         "Inference Application Integration"
       ],
       "summary": "sidebar_position: 8",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/en/compute_stack/ai_compute_stack/quick_start.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/en/compute_stack/ai_compute_stack/quick_start.md"
     },
     {
       "submodule": "docs-ai",
@@ -6015,8 +5921,8 @@
         "Development Guidelines"
       ],
       "summary": "sidebar_position: 7",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/en/compute_stack/ai_compute_stack/triton.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/en/compute_stack/ai_compute_stack/triton.md"
     },
     {
       "submodule": "docs-ai",
@@ -6026,8 +5932,8 @@
       "title": "vLLM",
       "headers": [],
       "summary": "sidebar_position: 6",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/en/compute_stack/ai_compute_stack/vllm.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/en/compute_stack/ai_compute_stack/vllm.md"
     },
     {
       "submodule": "docs-ai",
@@ -6042,8 +5948,8 @@
         "Changelog"
       ],
       "summary": "sidebar_position: 4",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/en/compute_stack/ai_compute_stack/xslim.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/en/compute_stack/ai_compute_stack/xslim.md"
     },
     {
       "submodule": "docs-ai",
@@ -6053,8 +5959,8 @@
       "title": "Introduction",
       "headers": [],
       "summary": "sidebar_position: 1",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/en/intro/index.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/en/intro/index.md"
     },
     {
       "submodule": "docs-ai",
@@ -6063,6 +5969,7 @@
       "repo_path": "en/intro/root_overview.md",
       "title": "SpacemiT RISC-V AI Computing Platform",
       "headers": [
+        "Software Architecture",
         "Document Structure",
         "1. Solutions",
         "2. Application Software Stack",
@@ -6070,8 +5977,8 @@
         "4. Compute Architecture"
       ],
       "summary": "sidebar_position: 1",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/en/intro/root_overview.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/en/intro/root_overview.md"
     },
     {
       "submodule": "docs-ai",
@@ -6081,8 +5988,8 @@
       "title": "Solution Overview",
       "headers": [],
       "summary": "sidebar_position: 1",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/en/solutions/airobot_solution_list.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/en/solutions/airobot_solution_list.md"
     },
     {
       "submodule": "docs-ai",
@@ -6092,8 +5999,8 @@
       "title": "Solution",
       "headers": [],
       "summary": "sidebar_position: 2",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/en/solutions/index.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/en/solutions/index.md"
     },
     {
       "submodule": "docs-ai",
@@ -6114,8 +6021,8 @@
         "Environment Variables"
       ],
       "summary": "sidebar_position: 6",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/en/solutions/aicomputer_solution/agentforce.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/en/solutions/aicomputer_solution/agentforce.md"
     },
     {
       "submodule": "docs-ai",
@@ -6136,8 +6043,8 @@
         "Installation"
       ],
       "summary": "sidebar_position: 8",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/en/solutions/aicomputer_solution/ailab.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/en/solutions/aicomputer_solution/ailab.md"
     },
     {
       "submodule": "docs-ai",
@@ -6158,8 +6065,8 @@
         "GStreamer User Guide"
       ],
       "summary": "sidebar_position: 1",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/en/solutions/aicomputer_solution/ainas.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/en/solutions/aicomputer_solution/ainas.md"
     },
     {
       "submodule": "docs-ai",
@@ -6180,8 +6087,8 @@
         "5. Connecting to On-Device AI: Basic Trial"
       ],
       "summary": "sidebar_position: 7",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/en/solutions/aicomputer_solution/claude.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/en/solutions/aicomputer_solution/claude.md"
     },
     {
       "submodule": "docs-ai",
@@ -6201,8 +6108,8 @@
         "Create the `dsh` Command"
       ],
       "summary": "sidebar_position: 11",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/en/solutions/aicomputer_solution/ds_harness.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/en/solutions/aicomputer_solution/ds_harness.md"
     },
     {
       "submodule": "docs-ai",
@@ -6223,8 +6130,8 @@
         "2. Add Files or a Web Page"
       ],
       "summary": "sidebar_position: 4",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/en/solutions/aicomputer_solution/file2md.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/en/solutions/aicomputer_solution/file2md.md"
     },
     {
       "submodule": "docs-ai",
@@ -6245,8 +6152,8 @@
         "Unavailable Features"
       ],
       "summary": "sidebar_position: 10",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/en/solutions/aicomputer_solution/hermes.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/en/solutions/aicomputer_solution/hermes.md"
     },
     {
       "submodule": "docs-ai",
@@ -6267,8 +6174,8 @@
         "Hermes"
       ],
       "summary": "sidebar_position: 2",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/en/solutions/aicomputer_solution/index.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/en/solutions/aicomputer_solution/index.md"
     },
     {
       "submodule": "docs-ai",
@@ -6289,8 +6196,8 @@
         "Method 1: Install the Bianbu DEB (Recommended)"
       ],
       "summary": "sidebar_position: 13",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/en/solutions/aicomputer_solution/multi_stream_asr.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/en/solutions/aicomputer_solution/multi_stream_asr.md"
     },
     {
       "submodule": "docs-ai",
@@ -6311,8 +6218,8 @@
         "Method 2: Build from Source (Developers)"
       ],
       "summary": "sidebar_position: 12",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/en/solutions/aicomputer_solution/multi_stream_vision.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/en/solutions/aicomputer_solution/multi_stream_vision.md"
     },
     {
       "submodule": "docs-ai",
@@ -6333,8 +6240,8 @@
         "Code Repository"
       ],
       "summary": "sidebar_position: 9",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/en/solutions/aicomputer_solution/openclaw.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/en/solutions/aicomputer_solution/openclaw.md"
     },
     {
       "submodule": "docs-ai",
@@ -6355,8 +6262,8 @@
         "Configure Parameters"
       ],
       "summary": "sidebar_position: 5",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/en/solutions/aicomputer_solution/seewise.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/en/solutions/aicomputer_solution/seewise.md"
     },
     {
       "submodule": "docs-ai",
@@ -6377,8 +6284,8 @@
         "1. Configure the `apt` Source"
       ],
       "summary": "sidebar_position: 3",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/en/solutions/aicomputer_solution/yumeet.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/en/solutions/aicomputer_solution/yumeet.md"
     },
     {
       "submodule": "docs-ai",
@@ -6399,8 +6306,8 @@
         "2. Download Models"
       ],
       "summary": "sidebar_position: 2",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/en/solutions/aicomputer_solution/zenow.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/en/solutions/aicomputer_solution/zenow.md"
     },
     {
       "submodule": "docs-ai",
@@ -6410,8 +6317,8 @@
       "title": "AI",
       "headers": [],
       "summary": "",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/zh/index.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/zh/index.md"
     },
     {
       "submodule": "docs-ai",
@@ -6432,8 +6339,8 @@
         "3.3 TTS"
       ],
       "summary": "sidebar_position: 1",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/zh/application_tools/ai-sdk.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/zh/application_tools/ai-sdk.md"
     },
     {
       "submodule": "docs-ai",
@@ -6442,50 +6349,11 @@
       "repo_path": "zh/application_tools/index.md",
       "title": "应用软件栈",
       "headers": [
-        "AI SDK",
-        "LangChain",
-        "Ollama",
-        "localAI",
-        "openwebUI",
-        "LlamaIndex"
+        "AI SDK"
       ],
       "summary": "* Copyright 2022-2023 SPACEMIT. All rights reserved.",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/zh/application_tools/index.md"
-    },
-    {
-      "submodule": "docs-ai",
-      "file_name": "langchain.md",
-      "rel_path": "docs-ai/zh/application_tools/langchain.md",
-      "repo_path": "zh/application_tools/langchain.md",
-      "title": "langchain",
-      "headers": [
-        "平台支持情况",
-        "安装",
-        "1.1. 安装依赖",
-        "1.2. 安装langchain",
-        "使用"
-      ],
-      "summary": "sidebar_position: 4",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/zh/application_tools/langchain.md"
-    },
-    {
-      "submodule": "docs-ai",
-      "file_name": "llamaindex.md",
-      "rel_path": "docs-ai/zh/application_tools/llamaindex.md",
-      "repo_path": "zh/application_tools/llamaindex.md",
-      "title": "LlamaIndex",
-      "headers": [
-        "平台支持情况",
-        "安装",
-        "1.1. 安装依赖",
-        "1.2. 安装langchain",
-        "使用"
-      ],
-      "summary": "* Copyright 2022-2023 SPACEMIT. All rights reserved.",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/zh/application_tools/llamaindex.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/zh/application_tools/index.md"
     },
     {
       "submodule": "docs-ai",
@@ -6506,63 +6374,8 @@
         "POST `/api/models/download`"
       ],
       "summary": "* Copyright 2022-2023 SPACEMIT. All rights reserved.",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/zh/application_tools/llmsdk.md"
-    },
-    {
-      "submodule": "docs-ai",
-      "file_name": "localai.md",
-      "rel_path": "docs-ai/zh/application_tools/localai.md",
-      "repo_path": "zh/application_tools/localai.md",
-      "title": "LocalAI",
-      "headers": [
-        "简介",
-        "平台支持情况",
-        "编译安装步骤",
-        "安装系统依赖",
-        "编译 LocalAI",
-        "添加自定义推理后端",
-        "添加 RISC-V 加速的 llama.cpp 后端",
-        "添加RISCV加速的ASR推理后端",
-        "添加C++版本的TTS推理后端"
-      ],
-      "summary": "sidebar_position: 6",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/zh/application_tools/localai.md"
-    },
-    {
-      "submodule": "docs-ai",
-      "file_name": "ollama.md",
-      "rel_path": "docs-ai/zh/application_tools/ollama.md",
-      "repo_path": "zh/application_tools/ollama.md",
-      "title": "Ollama",
-      "headers": [
-        "平台支持情况",
-        "安装",
-        "下载模型",
-        "方式一：直接拉取（推荐，需要 0.0.8+ 版本）",
-        "方式二：手动制作模型",
-        "使用"
-      ],
-      "summary": "* Copyright 2022-2023 SPACEMIT. All rights reserved.",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/zh/application_tools/ollama.md"
-    },
-    {
-      "submodule": "docs-ai",
-      "file_name": "openwebui.md",
-      "rel_path": "docs-ai/zh/application_tools/openwebui.md",
-      "repo_path": "zh/application_tools/openwebui.md",
-      "title": "Open-WebUI",
-      "headers": [
-        "平台支持情况",
-        "安装",
-        "使用",
-        "制作模型（可选）"
-      ],
-      "summary": "sidebar_position: 7",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/zh/application_tools/openwebui.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/zh/application_tools/llmsdk.md"
     },
     {
       "submodule": "docs-ai",
@@ -6583,8 +6396,8 @@
         "🚀 快速开始"
       ],
       "summary": "sidebar_position: 3",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/zh/application_tools/speechsdk.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/zh/application_tools/speechsdk.md"
     },
     {
       "submodule": "docs-ai",
@@ -6597,8 +6410,8 @@
         "4.1.2 架构实践"
       ],
       "summary": "sidebar_position: 1",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/zh/architecture/concept.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/zh/architecture/concept.md"
     },
     {
       "submodule": "docs-ai",
@@ -6619,8 +6432,8 @@
         "2.1.1 A60 采用的实现参数"
       ],
       "summary": "sidebar_position: 3",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/zh/architecture/ime_extension.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/zh/architecture/ime_extension.md"
     },
     {
       "submodule": "docs-ai",
@@ -6630,8 +6443,8 @@
       "title": "计算架构",
       "headers": [],
       "summary": "sidebar_position: 5",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/zh/architecture/index.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/zh/architecture/index.md"
     },
     {
       "submodule": "docs-ai",
@@ -6645,8 +6458,8 @@
         "4.2.3 简单使用"
       ],
       "summary": "sidebar_position: 2",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/zh/architecture/instruction.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/zh/architecture/instruction.md"
     },
     {
       "submodule": "docs-ai",
@@ -6663,8 +6476,8 @@
         "示例"
       ],
       "summary": "sidebar_position: 1",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/zh/compute_stack/ai_compute_stack.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/zh/compute_stack/ai_compute_stack.md"
     },
     {
       "submodule": "docs-ai",
@@ -6682,8 +6495,8 @@
         "当前支持状态"
       ],
       "summary": "sidebar_position: 3",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/zh/compute_stack/cv_library.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/zh/compute_stack/cv_library.md"
     },
     {
       "submodule": "docs-ai",
@@ -6693,8 +6506,8 @@
       "title": "计算软件栈",
       "headers": [],
       "summary": "sidebar_position: 4",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/zh/compute_stack/index.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/zh/compute_stack/index.md"
     },
     {
       "submodule": "docs-ai",
@@ -6714,8 +6527,8 @@
         "当前支持状态"
       ],
       "summary": "sidebar_position: 4",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/zh/compute_stack/math_library.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/zh/compute_stack/math_library.md"
     },
     {
       "submodule": "docs-ai",
@@ -6725,8 +6538,8 @@
       "title": "AI 计算软件栈列表",
       "headers": [],
       "summary": "sidebar_position: 2",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/zh/compute_stack/ai_compute_stack/index.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/zh/compute_stack/ai_compute_stack/index.md"
     },
     {
       "submodule": "docs-ai",
@@ -6747,8 +6560,8 @@
         "3.3. 双路推理"
       ],
       "summary": "sidebar_position: 5",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/zh/compute_stack/ai_compute_stack/llama.cpp.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/zh/compute_stack/ai_compute_stack/llama.cpp.md"
     },
     {
       "submodule": "docs-ai",
@@ -6769,8 +6582,8 @@
         "yolov8-seg"
       ],
       "summary": "sidebar_position: 9",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/zh/compute_stack/ai_compute_stack/modelzoo.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/zh/compute_stack/ai_compute_stack/modelzoo.md"
     },
     {
       "submodule": "docs-ai",
@@ -6790,8 +6603,8 @@
         "[FAQ](./onnxruntime_ep_faq.md)"
       ],
       "summary": "sidebar_position: 1",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/zh/compute_stack/ai_compute_stack/onnxruntime.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/zh/compute_stack/ai_compute_stack/onnxruntime.md"
     },
     {
       "submodule": "docs-ai",
@@ -6804,8 +6617,8 @@
         "精度问题"
       ],
       "summary": "sidebar_position: 3",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/zh/compute_stack/ai_compute_stack/onnxruntime_ep_faq.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/zh/compute_stack/ai_compute_stack/onnxruntime_ep_faq.md"
     },
     {
       "submodule": "docs-ai",
@@ -6826,8 +6639,8 @@
         "**QuantizeLinear**"
       ],
       "summary": "sidebar_position: 2",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/zh/compute_stack/ai_compute_stack/onnxruntime_ep_ops.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/zh/compute_stack/ai_compute_stack/onnxruntime_ep_ops.md"
     },
     {
       "submodule": "docs-ai",
@@ -6841,8 +6654,8 @@
         "推理应用集成"
       ],
       "summary": "sidebar_position: 8",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/zh/compute_stack/ai_compute_stack/quick_start.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/zh/compute_stack/ai_compute_stack/quick_start.md"
     },
     {
       "submodule": "docs-ai",
@@ -6863,8 +6676,8 @@
         "开发建议"
       ],
       "summary": "sidebar_position: 7",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/zh/compute_stack/ai_compute_stack/triton.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/zh/compute_stack/ai_compute_stack/triton.md"
     },
     {
       "submodule": "docs-ai",
@@ -6874,8 +6687,8 @@
       "title": "vLLM",
       "headers": [],
       "summary": "sidebar_position: 6",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/zh/compute_stack/ai_compute_stack/vllm.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/zh/compute_stack/ai_compute_stack/vllm.md"
     },
     {
       "submodule": "docs-ai",
@@ -6890,8 +6703,8 @@
         "ChangeLog"
       ],
       "summary": "sidebar_position: 4",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/zh/compute_stack/ai_compute_stack/xslim.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/zh/compute_stack/ai_compute_stack/xslim.md"
     },
     {
       "submodule": "docs-ai",
@@ -6901,8 +6714,8 @@
       "title": "简介",
       "headers": [],
       "summary": "sidebar_position: 1",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/zh/intro/index.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/zh/intro/index.md"
     },
     {
       "submodule": "docs-ai",
@@ -6911,6 +6724,7 @@
       "repo_path": "zh/intro/root_overview.md",
       "title": "进迭时空 RISC-V AI 计算平台",
       "headers": [
+        "软件架构",
         "文档结构",
         "第一章 解决方案",
         "第二章 应用软件栈",
@@ -6918,8 +6732,8 @@
         "第四章 计算架构"
       ],
       "summary": "* Copyright 2022-2023 SPACEMIT. All rights reserved.",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/zh/intro/root_overview.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/zh/intro/root_overview.md"
     },
     {
       "submodule": "docs-ai",
@@ -6929,8 +6743,8 @@
       "title": "解决方案汇总",
       "headers": [],
       "summary": "sidebar_position: 1",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/zh/solutions/airobot_solution_list.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/zh/solutions/airobot_solution_list.md"
     },
     {
       "submodule": "docs-ai",
@@ -6940,8 +6754,8 @@
       "title": "解决方案",
       "headers": [],
       "summary": "sidebar_position: 2",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/zh/solutions/index.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/zh/solutions/index.md"
     },
     {
       "submodule": "docs-ai",
@@ -6962,8 +6776,8 @@
         "环境变量"
       ],
       "summary": "* Copyright 2022-2023 SPACEMIT. All rights reserved.",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/zh/solutions/aicomputer_solution/agentforce.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/zh/solutions/aicomputer_solution/agentforce.md"
     },
     {
       "submodule": "docs-ai",
@@ -6984,8 +6798,8 @@
         "安装步骤"
       ],
       "summary": "sidebar_position: 8",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/zh/solutions/aicomputer_solution/ailab.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/zh/solutions/aicomputer_solution/ailab.md"
     },
     {
       "submodule": "docs-ai",
@@ -7006,8 +6820,8 @@
         "Gstreamer用户使用指南"
       ],
       "summary": "sidebar_position: 1",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/zh/solutions/aicomputer_solution/ainas.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/zh/solutions/aicomputer_solution/ainas.md"
     },
     {
       "submodule": "docs-ai",
@@ -7028,8 +6842,8 @@
         "5. 对接端侧AI(简单尝试，无需关注)"
       ],
       "summary": "* Copyright 2022-2023 SPACEMIT. All rights reserved.",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/zh/solutions/aicomputer_solution/claude.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/zh/solutions/aicomputer_solution/claude.md"
     },
     {
       "submodule": "docs-ai",
@@ -7049,8 +6863,8 @@
         "创建`dsh` 命令"
       ],
       "summary": "sidebar_position: 11",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/zh/solutions/aicomputer_solution/ds_harness.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/zh/solutions/aicomputer_solution/ds_harness.md"
     },
     {
       "submodule": "docs-ai",
@@ -7071,8 +6885,8 @@
         "2. 添加文件或网页"
       ],
       "summary": "sidebar_position: 4",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/zh/solutions/aicomputer_solution/file2md.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/zh/solutions/aicomputer_solution/file2md.md"
     },
     {
       "submodule": "docs-ai",
@@ -7093,8 +6907,8 @@
         "不可用功能"
       ],
       "summary": "* Copyright 2022-2023 SPACEMIT. All rights reserved.",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/zh/solutions/aicomputer_solution/hermes.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/zh/solutions/aicomputer_solution/hermes.md"
     },
     {
       "submodule": "docs-ai",
@@ -7115,8 +6929,8 @@
         "Hermes(云端算力)"
       ],
       "summary": "* Copyright 2022-2023 SPACEMIT. All rights reserved.",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/zh/solutions/aicomputer_solution/index.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/zh/solutions/aicomputer_solution/index.md"
     },
     {
       "submodule": "docs-ai",
@@ -7137,8 +6951,8 @@
         "方式一：安装 Bianbu DEB（推荐）"
       ],
       "summary": "sidebar_position: 13",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/zh/solutions/aicomputer_solution/multi_stream_asr.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/zh/solutions/aicomputer_solution/multi_stream_asr.md"
     },
     {
       "submodule": "docs-ai",
@@ -7159,8 +6973,8 @@
         "方式二：源码安装（开发者）"
       ],
       "summary": "sidebar_position: 12",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/zh/solutions/aicomputer_solution/multi_stream_vision.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/zh/solutions/aicomputer_solution/multi_stream_vision.md"
     },
     {
       "submodule": "docs-ai",
@@ -7181,8 +6995,8 @@
         "代码仓库"
       ],
       "summary": "sidebar_position: 9",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/zh/solutions/aicomputer_solution/openclaw.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/zh/solutions/aicomputer_solution/openclaw.md"
     },
     {
       "submodule": "docs-ai",
@@ -7203,8 +7017,8 @@
         "参数配置"
       ],
       "summary": "* Copyright 2022-2023 SPACEMIT. All rights reserved.",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/zh/solutions/aicomputer_solution/seewise.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/zh/solutions/aicomputer_solution/seewise.md"
     },
     {
       "submodule": "docs-ai",
@@ -7225,8 +7039,8 @@
         "1. 配置 `apt` 源"
       ],
       "summary": "sidebar_position: 3",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/zh/solutions/aicomputer_solution/yumeet.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/zh/solutions/aicomputer_solution/yumeet.md"
     },
     {
       "submodule": "docs-ai",
@@ -7247,8 +7061,8 @@
         "2. 下载模型"
       ],
       "summary": "sidebar_position: 2",
-      "source_commit": "1a5776782807f957144993a89b13cc9d123fba6a",
-      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/1a5776782807f957144993a89b13cc9d123fba6a/zh/solutions/aicomputer_solution/zenow.md"
+      "source_commit": "055685e78b958ba082c591a04c2c258c59ed62a0",
+      "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ai/055685e78b958ba082c591a04c2c258c59ed62a0/zh/solutions/aicomputer_solution/zenow.md"
     },
     {
       "submodule": "docs-buildroot",
@@ -27892,25 +27706,25 @@
       "raw_url": "https://raw.githubusercontent.com/spacemit-com/docs-ros/61e8e994d410b62507648f30088c2088a12738e8/zh/k3/07-%E7%89%88%E6%9C%AC%E8%AF%B4%E6%98%8E/index.md"
     }
   ],
-  "content_sha256": "d630e99ec543953374cfc4f50176c233524324b118ee09ed73b1dd1304d09b3d",
+  "content_sha256": "5438202bde4bb86867aecf8d778fe7bda65f98256d37291c0e28889591d84436",
   "build_meta": {
-    "wiki_commit": "747ce859e7386b24518b10ab099c98abecd02452",
+    "wiki_commit": "b5914d4c91512b066d4a7e3882ca6da1050f9c81",
     "wiki_worktree_dirty": true,
-    "generated_at": "2026-11-16T06:06:31+00:00",
+    "generated_at": "2026-11-19T07:06:28+00:00",
     "sources_commits": {
       "docs-chip": "4879ed5dfb5415212099dd898906cd893b3fa286",
       "docs-buildroot": "a45778b0117b8fa52f88f936049df063359dfc10",
       "docs-product": "f63141099ebbbbd10f0ca9f533c166a27bd98560",
-      "docs-ai": "1a5776782807f957144993a89b13cc9d123fba6a",
+      "docs-ai": "055685e78b958ba082c591a04c2c258c59ed62a0",
       "docs-ros": "61e8e994d410b62507648f30088c2088a12738e8"
     },
-    "content_sha256": "d630e99ec543953374cfc4f50176c233524324b118ee09ed73b1dd1304d09b3d",
+    "content_sha256": "5438202bde4bb86867aecf8d778fe7bda65f98256d37291c0e28889591d84436",
     "counts": {
       "total_nodes": 72,
       "developer_journeys": 7,
       "knowledge_atoms": 35,
       "evidence": 30,
-      "raw_sources": 1257
+      "raw_sources": 1247
     },
     "freshness_summary": {
       "current": 38,
